@@ -1,0 +1,255 @@
+{
+  "lucknow": {
+    "id": "lucknow",
+    "name": "Lucknow",
+    "state_eyebrow": "WELCOME TO THE CITY OF NAWABS",
+    "tagline": "Nawabi heritage, Awadhi cuisine & timeless tehzeeb",
+    "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=85",
+    "distance": "State Capital Hub",
+    "fee": "Bara Imambara: ₹50 Indian / ₹500 Foreigner",
+    "best_time": "October to March",
+    "rating": "4.8",
+    "budget": "₹1,500 – ₹4,000 / day",
+    "tip": "Hire an official guide at Bara Imambara to explore the labyrinthine Bhool Bhulaiya, and don't miss evening chaat at Hazratganj.",
+    "about": "Lucknow, the historic capital of Uttar Pradesh along the Gomti River, is globally celebrated for its refined Awadhi tehzeeb (etiquette), courtly poetry, classical kathak dance, delicate Chikankari hand-embroidery, and an unmatched culinary repertoire developed by the Nawabs of Awadh. From the soaring Rumi Darwaza to the quiet avenues of Hazratganj, every corner tells a story of royal grandeur.",
+    "places": "Bara Imambara & Bhool Bhulaiya, Rumi Darwaza, Chhota Imambara, The British Residency, Hazratganj, Dilkusha Kothi, Ambedkar Memorial Park",
+    "food": "Tunday Galawati Kebab, Awadhi Dum Biryani, Basket Chaat at Royal Cafe, Malai Makkhan (Nimish), Sheermal, Prakash Ki Kulfi",
+    "shopping": "Chikankari Kurtas & Sarees, Zardozi embroidered fabrics, Natural Attar Perfumes at Chowk, Aminabad bazaars",
+    "culture": "Famed for Awadhi tehzeeb, Hindustani classical music, kathak dance gharanas, Urdu literature, and warm hospitality.",
+    "history": "Under Nawab Asaf-ud-Daula, Lucknow became the cultural capital of northern India in the late 18th century. It later became an epicentre of the 1857 First War of Independence, centered around the historic British Residency.",
+    "nature": "The scenic Gomti Riverfront, Janeshwar Mishra Park (one of Asia's largest eco-parks), and green boulevard gardens.",
+    "why_visit": "Experience magnificent Nawabi monuments, savor India's most celebrated kebabs and biryanis, and shop for authentic handmade Chikankari textiles.",
+    "food_items": [
+      {"name": "Tunday Galawati Kebab", "desc": "Melt-in-mouth spiced minced kebabs crafted with over 160 secret spices since 1905.", "type": "Must Try"},
+      {"name": "Awadhi Dum Biryani", "desc": "Fragrant long-grain basmati rice slow-cooked on charcoal with marinated spices.", "type": "Signature Dish"},
+      {"name": "Basket Chaat at Royal Cafe", "desc": "Crispy fried potato basket filled with mashed tikkis, chickpeas, curd, and tangy chutneys.", "type": "Street Food"},
+      {"name": "Malai Makkhan / Nimish", "desc": "Airy saffron-infused milk froth topped with pistachios and silver vark, served on winter mornings.", "type": "Traditional Sweet"},
+      {"name": "Prakash Ki Kulfi", "desc": "Rich, creamy saffron and pistachio falooda kulfi served in Aminabad market.", "type": "Dessert"}
+    ],
+    "hotels": [
+      {"name": "Taj Mahal, Lucknow", "type": "Five-star Luxury Heritage Hotel", "address": "Vipin Khand, Gomti Nagar, Lucknow, Uttar Pradesh 226010", "phone": "+915226711000", "website": "https://www.tajhotels.com/"},
+      {"name": "Clarks Avadh Lucknow", "type": "Heritage Riverfront Hotel", "address": "8, Mahatma Gandhi Marg, Hazratganj, Lucknow, Uttar Pradesh 226001", "phone": "+915226201313", "website": "https://www.clarksavadh.com/"},
+      {"name": "Hyatt Regency Lucknow", "type": "Luxury Modern Hotel", "address": "Vibhuti Khand, Gomti Nagar, Lucknow, Uttar Pradesh 226010", "phone": "+915224261234", "website": "https://www.hyatt.com/"},
+      {"name": "The Centrum, Lucknow", "type": "Five-star Resort & Convention Centre", "address": "Pocket 7, Sector C, Sushant Golf City, Lucknow, Uttar Pradesh 226030", "phone": "+915226722222", "website": "https://thecentrum.in/"}
+    ],
+    "hospitals": [
+      {"name": "King George's Medical University (KGMU)", "type": "Premier Government Teaching Hospital", "address": "Shah Mina Road, Chowk, Lucknow, Uttar Pradesh 226003", "phone": "+915222257451", "extra": "Emergency Helpline: 0522-2258880", "website": "https://www.kgmu.org/"},
+      {"name": "Sanjay Gandhi Postgraduate Institute (SGPGIMS)", "type": "Apex Super-speciality Medical Institute", "address": "Raebareli Road, Lucknow, Uttar Pradesh 226014", "phone": "+915222494470", "extra": "Trauma Emergency 24x7", "website": "https://sgpgims.in/"},
+      {"name": "Medanta Super Speciality Hospital", "type": "Multi-speciality Tertiary Care", "address": "Sector-A, Sushant Golf City, Amar Shaheed Path, Lucknow 226030", "phone": "+915224505050", "website": "https://www.medanta.org/"}
+    ],
+    "transport": {
+      "rail_summary": "Lucknow is a premier railway hub with the majestic Charbagh Station (LKO / LJN) and modernized Gomti Nagar Terminal (GTNR), offering direct Vande Bharat, Tejas, and Shatabdi express trains across India.",
+      "air_summary": "Chaudhary Charan Singh International Airport (Amausi - LKO) operates high-frequency domestic and international flights, integrated directly with the Lucknow Metro Red Line.",
+      "road_summary": "Agra-Lucknow Expressway (3.5 hrs to Agra) and Purvanchal Expressway start here. World-class Alambagh ISBT connects to all 75 districts.",
+      "local_summary": "Lucknow Metro Red Line connects Airport to Munshi Pulia (23 km). E-rickshaws, city electric buses, and app cabs are available 24x7."
+    },
+    "malls": [
+      {"name": "Phoenix Palassio", "address": "Amar Shaheed Path, Gomti Nagar, Lucknow"},
+      {"name": "Lulu Mall, Lucknow", "address": "Golf City, Sector B, Ansal API, Lucknow"},
+      {"name": "Hazratganj High Street", "address": "Mahatma Gandhi Marg, Hazratganj, Lucknow"},
+      {"name": "Chowk Heritage Bazaars", "address": "Old City, Lucknow — Chikankari, Attar & Sweets"}
+    ],
+    "trip_plan_1day": "Morning: Explore Bara Imambara and Bhool Bhulaiya; drive past Rumi Darwaza. Afternoon: Savor authentic Galawati Kebabs at Tunday Kababi in Chowk. Evening: Stroll Hazratganj, enjoy basket chaat at Royal Cafe, and finish with Prakash Ki Kulfi.",
+    "trip_plan_2day": "Day 1: Old Lucknow monuments, Chhota Imambara, Clock Tower, and old city food trail. Day 2: Walk through the historic British Residency ruins, visit the State Museum, shop for Chikankari at Janpath, and relax at Gomti Riverfront."
+  },
+
+  "ayodhya": {
+    "id": "ayodhya",
+    "name": "Ayodhya",
+    "state_eyebrow": "WELCOME TO THE SACRED BIRTHPLACE OF LORD RAMA",
+    "tagline": "Ram Janmabhoomi, ancient temples & holy Sarayu ghats",
+    "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1600&q=85",
+    "distance": "Lucknow: 135 km • Varanasi: 200 km",
+    "fee": "Temple Darshan: Free (Book Aarti passes online)",
+    "best_time": "October to March",
+    "rating": "4.9",
+    "budget": "₹1,200 – ₹3,200 / day",
+    "tip": "Book your Sugam Darshan and Aarti passes in advance on the official Shri Ram Janmabhoomi Teerth Kshetra portal.",
+    "about": "Ayodhya, situated along the sacred Sarayu River, is venerated as the birthplace of Lord Rama and one of the seven most sacred Hindu cities (Sapta Puri). With the magnificent Shri Ram Janmabhoomi Mandir, redeveloped Ram Ki Paidi ghats, and modern airport connectivity, Ayodhya is welcoming millions of pilgrims and cultural travelers from around the world.",
+    "places": "Shri Ram Janmabhoomi Mandir, Hanuman Garhi, Kanak Bhawan, Ram Ki Paidi, Nageshwarnath Temple, Dashrath Mahal, Guptar Ghat",
+    "food": "Ayodhya Khurchan Peda, Chandrakala, Satvik Thali, Bedhai-Jalebi, Rabri-Malai, Sweet Lassi",
+    "shopping": "Ram Darbar brass statues, Sarayu holy water containers, Carved wooden mementos, Devotional books",
+    "culture": "Centuries of Ramayana chanting, evening Sarayu Maha Aarti, devotional bhajan traditions, and Diwali Deepotsav.",
+    "history": "Mentioned in the Atharvaveda and the Ramayana as the capital of the Ikshvaku dynasty. Ayodhya has been an enduring spiritual centre for millennia, also sacred in Jain tradition as the birthplace of five Tirthankaras.",
+    "nature": "The sacred, flowing Sarayu riverfront, Ram Ki Paidi lagoons, and tranquil gardens along Guptar Ghat.",
+    "why_visit": "Visit for darshan at the magnificent Ram Mandir, witness the mesmerizing Sarayu Aarti, and experience deep spiritual peace.",
+    "food_items": [
+      {"name": "Ayodhya Khurchan Peda", "desc": "Caramelized rich condensed milk peda with a distinctive rustic aroma and soft texture.", "type": "Must Try"},
+      {"name": "Chandrakala Sweet", "desc": "Crispy sweet pastry filled with mawa, nuts, and cardamom soaked in saffron syrup.", "type": "Traditional Sweet"},
+      {"name": "Satvik Temple Bhog Thali", "desc": "Pure vegetarian, no-onion-garlic nourishing meals served with lentils, rice, and kheer.", "type": "Spiritual Meal"},
+      {"name": "Bedhai & Hing Aloo Sabzi", "desc": "Puffy puris with spicy asafoetida potato gravy and fresh sweet curd.", "type": "Breakfast"}
+    ],
+    "hotels": [
+      {"name": "The Fern Residency, Ayodhya", "type": "Upscale Hotel", "address": "NH 27, Bypass Road, Ayodhya, Uttar Pradesh 224001", "phone": "+915278232000", "website": "https://www.fernhotels.com/"},
+      {"name": "Park Inn by Radisson Ayodhya", "type": "Modern Premium Hotel", "address": "Fatehganj Road, Ayodhya, Uttar Pradesh 224001", "phone": "+915278298000", "website": "https://www.radissonhotels.com/"},
+      {"name": "Hotel Ramprastha Heritage", "type": "Heritage Riverfront Hotel", "address": "Naya Ghat, Ram Katha Park, Ayodhya, Uttar Pradesh 224123", "phone": "+915278232222", "website": "https://www.ramprastha.com/"}
+    ],
+    "hospitals": [
+      {"name": "Rajarshi Dashrath State Medical College", "type": "Government Apex Medical College Hospital", "address": "Darshan Nagar, Ayodhya, Uttar Pradesh 224135", "phone": "+915278241001", "extra": "Emergency Trauma Unit 24x7", "website": "https://ayodhyamedicalcollege.edu.in/"},
+      {"name": "District Hospital Ayodhya (Sri Ram Hospital)", "type": "Government District Hospital", "address": "Kanpur Road, Civil Lines, Ayodhya, Uttar Pradesh 224001", "phone": "+915278222244", "extra": "Emergency 24x7", "website": "https://ayodhya.nic.in/"}
+    ],
+    "transport": {
+      "rail_summary": "Ayodhya Dham Junction (AY) features grand airport-like temple architecture. Multiple Vande Bharat and Amrit Bharat expresses connect directly to Delhi, Gorakhpur, and Lucknow.",
+      "air_summary": "Maharishi Valmiki International Airport Ayodhya Dham (AYJ) connects with direct flights from Delhi, Mumbai, Bengaluru, and Ahmedabad.",
+      "road_summary": "NH 27 connects directly to Lucknow (2.5 hrs) and Gorakhpur (2.5 hrs) with frequent UPSRTC AC buses.",
+      "local_summary": "Eco-friendly zero-emission travel: 200+ electric golf carts, electric buses, and battery e-rickshaws operate on Ram Path and Bhakti Path."
+    },
+    "malls": [
+      {"name": "Mall of Avadh", "address": "Naharbagh, Ayodhya, Uttar Pradesh 224001"},
+      {"name": "Ram Path Heritage Bazaar", "address": "Ram Janmabhoomi Marg, Ayodhya"}
+    ],
+    "trip_plan_1day": "Morning: Holy dip at Ram Ki Paidi; darshan at Shri Ram Janmabhoomi Mandir. Afternoon: Visit Hanuman Garhi and Kanak Bhawan; enjoy traditional Satvik lunch. Evening: Mesmerizing Sarayu Maha Aarti at Naya Ghat and night walk on illuminated Ram Path.",
+    "trip_plan_2day": "Day 1: Ram Mandir, Hanuman Garhi, Kanak Bhawan, and Sarayu Aarti. Day 2: Visit Dashrath Mahal, Sita Ki Rasoi, Nageshwarnath Temple, Ram Katha Museum, and sunset at peaceful Guptar Ghat."
+  },
+
+  "varanasi": {
+    "id": "varanasi",
+    "name": "Varanasi",
+    "state_eyebrow": "WELCOME TO THE SPIRITUAL CAPITAL OF INDIA",
+    "tagline": "Sacred Ganga ghats, Kashi Vishwanath & timeless living traditions",
+    "image": "https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1600&q=85",
+    "distance": "Lucknow: 300 km • Prayagraj: 120 km",
+    "fee": "Ghats: Free • Sarnath: ₹25",
+    "best_time": "October to March",
+    "rating": "4.9",
+    "budget": "₹1,200 – ₹3,800 / day",
+    "tip": "Witness the morning Subah-e-Banaras from a sunrise wooden boat, and attend the evening Ganga Aarti from Dashashwamedh Ghat.",
+    "about": "Varanasi (also called Kashi and Banaras) is one of the oldest continuously inhabited cities in human history. Resting along the crescent curve of the sacred Ganga, it is celebrated for its 84 stone ghats, the gilded dome of Kashi Vishwanath Temple, world-famous handwoven Banarasi silk sarees, Indian classical music traditions, and unmatched street food.",
+    "places": "Kashi Vishwanath Temple, Dashashwamedh Ghat, Assi Ghat, Manikarnika Ghat, Sarnath (Buddhist deer park), Banaras Hindu University, Ramnagar Fort",
+    "food": "Kachori-Sabzi at Ram Bhandar, Tamatar Chaat at Kashi Chaat, Malaiyo (winter), Banarasi Maghai Paan, Blue Lassi, Saffron Thandai",
+    "shopping": "Handwoven Banarasi Silk Sarees, Brass idols, Gulabi Meenakari jewelry, Hand-carved wooden toys",
+    "culture": "The spiritual heart of Hinduism and Buddhism; birthplace of classical music maestros (Bismillah Khan, Ravi Shankar), and daily Vedic rituals.",
+    "history": "Mark Twain famously wrote that Varanasi is older than history, older than tradition, older even than legend. Sarnath nearby is where Gautama Buddha taught his first sermon in 528 BCE.",
+    "nature": "The majestic Ganga River, sunrise riverfront boat cruises, and the green deer parks of Sarnath.",
+    "why_visit": "Experience transformative spirituality on the ghats, hear evening temple bells, taste iconic street chaat, and acquire heirloom Banarasi silks.",
+    "food_items": [
+      {"name": "Kachori-Sabzi at Ram Bhandar", "desc": "Crispy fried kachoris served with spicy black gram and potato curry at dawn.", "type": "Must Try"},
+      {"name": "Tamatar Chaat at Kashi Chaat", "desc": "Hot mashed tomatoes cooked with hing, roasted spices, topped with khoya, namkeen and syrup.", "type": "Street Food"},
+      {"name": "Banarasi Maghai Paan", "desc": "Fragrant digestive betel leaf packed with sweet gulkand, supari, and silver vark.", "type": "Local Legend"},
+      {"name": "Malaiyo (Winter Saffron Dew)", "desc": "Fluffy, cloud-like saffron milk foam served in clay pots topped with crushed pistachios.", "type": "Dessert"},
+      {"name": "Pehlwan Ki Thandai & Lassi", "desc": "Rich milk infused with crushed almonds, fennel, saffron, topped with thick clotted malai.", "type": "Drink"}
+    ],
+    "hotels": [
+      {"name": "BrijRama Palace, Varanasi", "type": "Heritage Palace Hotel directly on Darbhanga Ghat", "address": "Darbhanga Ghat, Dashashwamedh, Varanasi, Uttar Pradesh 221001", "phone": "+915422402120", "website": "https://www.brijhotels.com/"},
+      {"name": "Taj Ganges, Varanasi", "type": "Five-star Luxury Resort", "address": "Nadesar Palace Grounds, Varanasi, Uttar Pradesh 221002", "phone": "+915426660001", "website": "https://www.tajhotels.com/"},
+      {"name": "Radisson Hotel Varanasi", "type": "Luxury Business & Leisure Hotel", "address": "The Mall, Cantonment, Varanasi, Uttar Pradesh 221002", "phone": "+915422501515", "website": "https://www.radissonhotels.com/"}
+    ],
+    "hospitals": [
+      {"name": "Sir Sunderlal Hospital (IMS-BHU)", "type": "Apex Central University Teaching Hospital", "address": "BHU Campus, Varanasi, Uttar Pradesh 221005", "phone": "+915422369291", "extra": "24x7 Emergency Trauma Centre", "website": "https://www.bhu.ac.in/ims/"},
+      {"name": "Apex Super Speciality Hospital", "type": "Multi-speciality Hospital", "address": "DLW Hydel Road, Varanasi, Uttar Pradesh 221004", "phone": "+915422317540", "website": "https://www.apexhospital.in/"}
+    ],
+    "transport": {
+      "rail_summary": "Varanasi Junction (BSB / Cantt), modern Banaras Station (BSBS), and Pt. Deen Dayal Upadhyaya Junction (DDU) provide non-stop Vande Bharat links to Delhi in under 8 hours.",
+      "air_summary": "Lal Bahadur Shastri International Airport (VNS - Babatpur) is 24 km from the ghats with direct flights to Delhi, Mumbai, Bengaluru, and Bangkok.",
+      "road_summary": "Connected to Prayagraj via NH 19 (2.5 hrs) and Lucknow via 4-lane national highway.",
+      "local_summary": "E-rickshaws, shared autos, and heritage wooden boats on the Ganga between Assi Ghat and Rajghat."
+    },
+    "malls": [
+      {"name": "PDR Mall", "address": "Luxa Road, Sidhgiribagh, Varanasi"},
+      {"name": "JHV Mall", "address": "The Mall Road, Cantonment, Varanasi"},
+      {"name": "Vishwanath Gali & Godowlia", "address": "Centuries-old silk, brass and street food bazaars"}
+    ],
+    "trip_plan_1day": "05:30 AM: Dawn wooden boat ride along the ghats. 08:30 AM: Darshan at Kashi Vishwanath Temple corridor. 11:30 AM: Kachori-Sabzi at Ram Bhandar. 02:00 PM: Silk weaving tour in old city lanes. 06:00 PM: World-famous evening Ganga Aarti at Dashashwamedh Ghat.",
+    "trip_plan_2day": "Day 1: Ghats, Kashi Vishwanath corridor, silk markets, and evening Ganga Aarti. Day 2: Sarnath Buddhist pilgrimage (Dhamek Stupa and Museum), Banaras Hindu University, and sunset at Ramnagar Fort."
+  },
+
+  "agra": {
+    "id": "agra",
+    "name": "Agra",
+    "state_eyebrow": "WELCOME TO THE CITY OF THE TAJ",
+    "tagline": "Taj Mahal, imperial Mughal forts & world-famous Petha",
+    "image": "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1600&q=85",
+    "distance": "Delhi: 215 km (2.5 hrs via Yamuna Expressway)",
+    "fee": "Taj Mahal: ₹50 Indian / ₹1,100 Foreigner",
+    "best_time": "October to March",
+    "rating": "4.9",
+    "budget": "₹1,500 – ₹4,500 / day",
+    "tip": "Book Taj Mahal tickets online on the ASI portal (asi.payumoney.com). Remember the Taj Mahal is CLOSED on Fridays for general visitors!",
+    "about": "Agra on the banks of the Yamuna was the celebrated capital of the Mughal Empire during the reigns of Akbar, Jahangir, and Shah Jahan. It is home to three UNESCO World Heritage Sites: the Taj Mahal—the world's most breathtaking monument to love, the imposing red sandstone Agra Fort, and nearby Fatehpur Sikri. With the Yamuna Expressway and high-speed Gatimaan Express, it is easily visited from Delhi.",
+    "places": "Taj Mahal, Agra Fort, Mehtab Bagh (sunset view), Fatehpur Sikri, Tomb of I'timad-ud-Daulah (Baby Taj), Akbar's Tomb at Sikandra",
+    "food": "Agra Petha (Kesar, Angoori, Paan), Bedai & Dubki Wale Aloo, Mughlai Kebabs, Dalmoth, Deviram Jalebis",
+    "shopping": "Panchhi Petha, Marble Inlay Souvenirs (Pietra Dura), Sadar Bazaar handcrafted leather shoes & jackets",
+    "culture": "Mughal court architecture, Persian garden designs, master stonecraft artisans, and festive Taj Mahotsav.",
+    "history": "Transformed into a grand imperial metropolis by Mughal emperors. Shah Jahan constructed the Taj Mahal between 1632 and 1648 as the mausoleum for his beloved wife Mumtaz Mahal.",
+    "nature": "Yamuna riverfront vistas, the lush Mughal gardens of Mehtab Bagh, and Sur Sarovar Bird Sanctuary.",
+    "why_visit": "Stand before the wonder of the Taj Mahal, wander through palatial royal courtyards, and taste sweet saffron petha made nowhere else.",
+    "food_items": [
+      {"name": "Authentic Agra Petha", "desc": "Candied winter melon sweet made in varieties like Kesar, Angoori, Paan, and Chocolate.", "type": "Must Try"},
+      {"name": "Bedai & Dubki Wale Aloo", "desc": "Crisp puffed puris served with spicy, tangy fenugreek potato gravy and hot jalebis.", "type": "Breakfast"},
+      {"name": "Mughlai Kebabs & Korma", "desc": "Rich, slow-cooked royal delicacies along Nai Ki Mandi and Fatehabad Road.", "type": "Dinner"},
+      {"name": "Agra Dalmoth", "desc": "Crispy fried lentils with sev, cashews, and musk melon seeds tossed in spices.", "type": "Snack"}
+    ],
+    "hotels": [
+      {"name": "The Oberoi Amarvilas", "type": "Ultra-luxury Heritage Resort with Taj views from every room", "address": "Taj East Gate Road, Tajganj, Agra, Uttar Pradesh 282001", "phone": "+915622231515", "website": "https://www.oberoihotels.com/"},
+      {"name": "ITC Mughal, a Luxury Collection Hotel", "type": "Five-star Luxury & Spa Resort", "address": "Fatehabad Road, Tajganj, Agra, Uttar Pradesh 282001", "phone": "+915624021700", "website": "https://www.itchotels.com/"},
+      {"name": "Tajview, Agra - IHCL SeleQtions", "type": "Five-star Hotel with rooftop Taj view", "address": "Fatehabad Road, Tajganj, Agra, Uttar Pradesh 282001", "phone": "+915626602000", "website": "https://www.seleqtionshotels.com/"},
+      {"name": "Courtyard by Marriott Agra", "type": "Upscale Hotel", "address": "Taj Nagri Phase 2, Fatehabad Road, Agra, Uttar Pradesh 282001", "phone": "+915622457777", "website": "https://www.marriott.com/"}
+    ],
+    "hospitals": [
+      {"name": "Sarojini Naidu Medical College (SN Hospital)", "type": "Government Apex Teaching Hospital", "address": "Moti Katra, Civil Lines, Agra, Uttar Pradesh 282002", "phone": "+915622260353", "extra": "Emergency 24x7: 0562-2260353", "website": "https://snmcagra.ac.in/"},
+      {"name": "Pushpanjali Hospital & Research Centre", "type": "Multi-speciality Tertiary Hospital", "address": "Delhi Gate, Agra, Uttar Pradesh 282002", "phone": "+915622851500", "website": "https://pushpanjalihospital.in/"}
+    ],
+    "transport": {
+      "rail_summary": "Agra Cantt (AGC) connects high-speed Gatimaan Express (Delhi in 100 mins) and Vande Bharat. Agra Fort (AF) and Raja Ki Mandi (RKM) serve regional express routes.",
+      "air_summary": "Agra Airport (Kheria, AGR) operates flights to Lucknow, Mumbai, and Bengaluru. Delhi IGI International Airport is 3.5 hrs away via Yamuna Expressway.",
+      "road_summary": "Yamuna Expressway links Agra to Delhi-NCR in 2.5 hrs, and Agra-Lucknow Expressway reaches Lucknow in 3.5 hrs.",
+      "local_summary": "Agra Metro Priority Corridor (Taj East Gate to Jama Masjid / Fort) is active! Electric autos, app cabs, and prepaid taxis operate everywhere."
+    },
+    "malls": [
+      {"name": "Ashok Cosmos Mall", "address": "Sanjay Place, Civil Lines, Agra"},
+      {"name": "Pacific Mall", "address": "Fatehabad Road, Tajganj, Agra"},
+      {"name": "Sadar Bazaar", "address": "Agra Cantt — Premier leather and petha market"}
+    ],
+    "trip_plan_1day": "06:00 AM: Sunrise at the Taj Mahal. 11:30 AM: Tour Agra Fort. 02:00 PM: Authentic Mughlai lunch. 05:00 PM: Sunset view of the Taj from Mehtab Bagh. 07:00 PM: Bedai-Jalebi at Deviram & shopping for Panchhi Petha.",
+    "trip_plan_2day": "Day 1: Taj Mahal, Agra Fort, Mehtab Bagh, and Sadar Bazaar. Day 2: Day trip to UNESCO World Heritage site Fatehpur Sikri (Buland Darwaza & Salim Chishti Dargah) and visit Baby Taj (Itmad-ud-Daulah)."
+  },
+
+  "prayagraj": {
+    "id": "prayagraj",
+    "name": "Prayagraj",
+    "state_eyebrow": "WELCOME TO THE SACRED TRIVENI SANGAM",
+    "tagline": "Triveni Sangam confluence, Kumbh Mela & historic landmarks",
+    "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=85",
+    "distance": "Varanasi: 120 km • Lucknow: 200 km",
+    "fee": "Sangam Boat: ₹100–₹300 • Anand Bhavan: ₹70",
+    "best_time": "October to March (Magh Mela in Jan-Feb)",
+    "rating": "4.8",
+    "budget": "₹1,200 – ₹3,200 / day",
+    "tip": "Hire an authorized boat to the exact confluence where the distinct colors of Ganga and Yamuna merge.",
+    "about": "Prayagraj (formerly Allahabad) rests at the sacred Triveni Sangam—the confluence of the sacred Ganga, Yamuna, and mythical underground Saraswati. Revered in ancient scriptures as Prayag (king of pilgrimage sites), it hosts the monumental Kumbh Mela and Magh Mela gatherings, and preserves prominent colonial and independence-era history at Anand Bhavan.",
+    "places": "Triveni Sangam, Anand Bhavan, Allahabad Fort & Akshayavat, Khusro Bagh, All Saints Cathedral, Bade Hanuman Ji Temple",
+    "food": "Allahabadi Guava (Surkha), Kachori-Sabzi, Samosa, Dehati Rasgulla, Rabri-Jalebi, Netram Ki Thali",
+    "shopping": "Religious souvenirs, Hindi and Urdu literature, Khadi garments, Fresh seasonal red guavas",
+    "culture": "A powerhouse of Indian spiritual gatherings, national freedom movement heritage, and prestigious Hindi literary traditions.",
+    "history": "Mentioned in the Vedas and Mahabharata. In 1583, Akbar built the formidable Allahabad Fort on the Yamuna. Later, it was the home of the Nehru family and a nerve centre of India's freedom struggle.",
+    "nature": "The vast sandbanks and wide open waters at the Triveni Sangam, plus the green orchards of Khusro Bagh.",
+    "why_visit": "Take a sacred boat ride to the confluence, explore Anand Bhavan's freedom struggle museum, and experience the energy of the sacred Kumbh.",
+    "food_items": [
+      {"name": "Allahabadi Surkha Guava", "desc": "Sweet, aromatic, apple-red interior guavas grown in the fertile alluvial soils.", "type": "Seasonal Fruit"},
+      {"name": "Netram Ki Kachori & Sabzi", "desc": "Famous crispy kachoris served in sal leaf bowls with spicy potato-pumpkin curry.", "type": "Breakfast"},
+      {"name": "Dehati Rasgulla", "desc": "Warm, melt-in-mouth brown rasgullas soaked in fragrant sugar syrup.", "type": "Must Try"},
+      {"name": "Sangam Earthen Chai", "desc": "Steaming hot ginger-cardamom tea served in terracotta kulhads by the riverbanks.", "type": "Drink"}
+    ],
+    "hotels": [
+      {"name": "Hotel Kanha Shyam", "type": "Four-star Business & Luxury Hotel", "address": "Civil Lines, Prayagraj, Uttar Pradesh 211001", "phone": "+915322560123", "website": "https://www.hotelkanhashyam.com/"},
+      {"name": "The Legend Hotel", "type": "Boutique Hotel", "address": "Colvin Road, Civil Lines, Prayagraj, Uttar Pradesh 211001", "phone": "+915322420000", "website": "https://www.thelegendhotel.in/"},
+      {"name": "Grand Continental Hotel", "type": "Classic Hotel", "address": "Sardar Patel Marg, Civil Lines, Prayagraj 211001", "phone": "+915322260600", "website": "https://www.grandcontinentalhotel.com/"}
+    ],
+    "hospitals": [
+      {"name": "Swaroop Rani Nehru Hospital (MLN Medical College)", "type": "Government Apex Hospital", "address": "MG Marg, Prayagraj, Uttar Pradesh 211001", "phone": "+915322256420", "extra": "Trauma Emergency 24x7", "website": "https://mlnmc.ac.in/"},
+      {"name": "Kamla Nehru Memorial Hospital", "type": "Multi-speciality Hospital", "address": "Hashimpur Road, Prayagraj, Uttar Pradesh 211002", "phone": "+915322465431", "website": "https://www.knmh.org/"}
+    ],
+    "transport": {
+      "rail_summary": "Prayagraj Junction (PRYJ) is the North Central Railway headquarters. Connects to Delhi (under 6 hrs via Vande Bharat), Kolkata, Mumbai, and Varanasi.",
+      "air_summary": "Prayagraj Airport (Bamrauli, IXD) connects with daily flights to Delhi, Mumbai, Bengaluru, and Lucknow.",
+      "road_summary": "Civil Lines Bus Station runs AC buses to Varanasi (2.5 hrs), Lucknow (3.5 hrs), and Ayodhya (3 hrs).",
+      "local_summary": "Electric city buses, auto-rickshaws, app cabs, and boats at Sangam ghats."
+    },
+    "malls": [
+      {"name": "Vinayak City Centre", "address": "Civil Lines, Prayagraj"},
+      {"name": "Civil Lines High Street", "address": "Prayagraj's premier shopping and dining strip"}
+    ],
+    "trip_plan_1day": "Morning: Sunrise boat ride to Triveni Sangam; visit Bade Hanuman Ji Temple. Afternoon: Explore Anand Bhavan (Nehru memorial museum). Evening: Visit the Mughal tombs at Khusro Bagh and taste Dehati Rasgullas.",
+    "trip_plan_2day": "Day 1: Triveni Sangam, Allahabad Fort, Bade Hanuman Temple, and Civil Lines dining. Day 2: Anand Bhavan, All Saints Cathedral (Gothic architecture), Khusro Bagh, and local sweet tasting."
+  }
+}
