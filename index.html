@@ -1,0 +1,2693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ExploreUP — Explore Uttar Pradesh | Cities, Places, Food & Travel</title>
+<link id="canonicalLink" rel="canonical" href="https://www.upexplore.com/">
+<meta name="description" content="Explore Uttar Pradesh with city guides, tourist places, food, hotels, hospitals, shopping, transport, culture, history, local tips and trip planning.">
+<meta name="keywords" content="Uttar Pradesh tourism, UP tourism, Uttar Pradesh travel, Lucknow tourism, Ayodhya tourism, Varanasi tourism, Agra tourism, UP tourist places, ExploreUP">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#071b35">
+<link rel="manifest" href="manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ExploreUP">
+<meta property="og:title" content="ExploreUP — Explore Uttar Pradesh">
+<meta property="og:description" content="Discover the cities, heritage, food, hotels, hospitals, shopping, transport and hidden gems of Uttar Pradesh.">
+<meta property="og:url" content="https://www.upexplore.com/">
+<meta property="og:image" content="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1600&q=85">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ExploreUP — Explore Uttar Pradesh">
+<meta name="twitter:description" content="Your guide to Uttar Pradesh: cities, places, food, stays, services and travel information.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1600&q=85">
+<style>
+:root{--navy:#071b35;--blue:#0b67d1;--gold:#ffb51b;--bg:#f4f8fc;--text:#10233f;--muted:#60708a;--card:#fff;--line:#e2eaf3;--surface:#f8fbff}
+body.dark{--bg:#071525;--text:#eef5ff;--card:#10243c;--muted:#b3c3d8;--line:#223854;--surface:#0d1e33}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);text-rendering:optimizeSpeed;transition:background .2s,color .2s}
+a{text-decoration:none;color:inherit}
+
+/* Header & Nav */
+.nav{height:70px;background:rgba(7,27,53,.96);backdrop-filter:blur(14px);color:white;display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:90;box-shadow:0 6px 24px rgba(0,20,45,.16)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:23px;cursor:pointer}
+.pin{width:38px;height:38px;border-radius:50% 50% 50% 5px;transform:rotate(-45deg);background:var(--gold);display:grid;place-items:center;flex-shrink:0}
+.pin b{transform:rotate(45deg);color:var(--navy);font-size:19px}.logo span{color:var(--gold)}
+.tag{font-size:10px;display:block;letter-spacing:1.5px;font-weight:500;color:#d9e6f8}
+.navlinks{display:flex;gap:24px;font-size:14px;font-weight:650}
+.navlinks a{position:relative;padding:10px 0;transition:color .2s ease}.navlinks a:hover{color:var(--gold)}
+.actions{display:flex;gap:10px;align-items:center}
+.circle{width:38px;height:38px;border:1px solid #52708f;border-radius:50%;display:grid;place-items:center;background:transparent;color:#fff;cursor:pointer;transition:all .2s ease}
+.circle:hover{background:rgba(255,255,255,.15);border-color:var(--gold)}
+.lang{font-size:12px;border:1px solid #52708f;color:#fff;background:transparent;border-radius:18px;padding:8px 12px;cursor:pointer;font-weight:800;transition:all .2s ease}
+.lang:hover{border-color:var(--gold);color:var(--gold)}
+.adminbtn{border:1px solid #52708f;background:transparent;color:#fff;border-radius:999px;padding:8px 14px;font-weight:800;cursor:pointer;transition:all .2s}
+.adminbtn:hover{background:rgba(255,255,255,.15);border-color:var(--gold)}
+
+/* Hero Section */
+.hero{min-height:560px;padding:65px 7%;display:flex;align-items:center;gap:40px;color:#fff;background-image:linear-gradient(90deg,rgba(3,20,41,.92) 0%,rgba(3,20,41,.75) 50%,rgba(3,20,41,.3) 100%),url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1800&q=80');background-position:center;background-size:cover;position:relative}
+.hero>div:first-child{flex:1;min-width:0}
+.hero h1{font-size:clamp(38px,5.5vw,70px);line-height:1.02;margin:12px 0;text-shadow:0 4px 20px rgba(0,0,0,.4);letter-spacing:-1.5px}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{max-width:640px;font-size:18px;line-height:1.6;color:#edf5ff;text-shadow:0 2px 10px rgba(0,0,0,.3)}
+.eyebrow{letter-spacing:3px;font-size:13px;font-weight:800;color:#fff5db}
+.search{margin-top:25px;background:white;border-radius:50px;padding:7px;display:flex;max-width:740px;box-shadow:0 14px 40px rgba(0,22,50,.35);border:1px solid rgba(255,255,255,.8);position:relative}
+.search input{flex:1;border:0;outline:0;padding:14px 20px;font-size:16px;min-width:0;border-radius:40px}
+.search button{border:0;background:var(--gold);color:#071b35;border-radius:40px;padding:0 30px;font-weight:850;font-size:15px;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
+.search button:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(255,181,27,.4)}
+#results{display:none;background:white;padding:12px;border-radius:18px;margin-top:10px;box-shadow:0 15px 40px rgba(0,27,59,.25);position:absolute;width:100%;top:100%;left:0;z-index:30;color:var(--text);border:1px solid #e1eaf4;max-height:360px;overflow-y:auto}
+.result{padding:12px 16px;border-bottom:1px solid #edf2f8;cursor:pointer;border-radius:10px;transition:background .15s}
+.result:last-child{border:0}.result:hover{background:#f0f6ff}.result small{color:var(--muted)}
+.hero-buttons{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
+.hero-btn{padding:13px 22px;border-radius:28px;border:1px solid rgba(255,255,255,.4);font-weight:800;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .18s ease}
+.hero-btn.primary{background:var(--gold);color:#071b35;border:0;box-shadow:0 6px 20px rgba(255,181,27,.3)}
+.hero-btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(255,181,27,.45)}
+.hero-btn.secondary{background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(6px)}
+.hero-btn.secondary:hover{background:rgba(255,255,255,.25);transform:translateY(-2px)}
+.home-trust{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.home-trust span{padding:7px 13px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);border-radius:999px;color:#f2f7ff;font-size:12px;font-weight:750;backdrop-filter:blur(8px)}
+
+/* Arya AI Hero Widget */
+.hero-arya{width:min(390px,34vw);flex:0 0 auto;background:rgba(255,255,255,.98);color:var(--text);border-radius:22px;box-shadow:0 22px 60px rgba(0,0,0,.32);overflow:hidden;border:1px solid rgba(255,255,255,.8)}
+.hero-arya-head{display:flex;align-items:center;gap:12px;padding:16px 18px;background:linear-gradient(135deg,#071b35,#123d68);color:#fff}
+.arya-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#fff;font-size:24px}
+.hero-arya-head b{font-size:17px}.hero-arya-head small{display:block;opacity:.82;margin-top:2px}
+.hero-arya-body{padding:16px}.hero-arya-body p{color:var(--muted);font-size:13px;line-height:1.5;margin:4px 0 12px}
+.hero-arya-msg{background:#edf6ff;border-radius:14px;padding:12px;font-size:13px;line-height:1.5;border:1px solid #d9e8fa}
+.hero-arya-prompts{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.hero-arya-prompts button{border:1px solid #d8e5f3;background:#fff;color:#174d7d;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:750;cursor:pointer;transition:all .15s}
+.hero-arya-prompts button:hover{background:#eef6ff;border-color:var(--blue);transform:translateY(-1px)}
+.hero-arya-cta{width:100%;margin-top:14px;border:0;border-radius:14px;padding:12px;background:var(--gold);color:#071b35;font-weight:900;font-size:14px;cursor:pointer;transition:all .18s}
+.hero-arya-cta:hover{background:#ffc342;transform:translateY(-1px);box-shadow:0 6px 18px rgba(255,181,27,.35)}
+
+/* Main Container & Categories */
+.wrap{width:min(1400px,92%);margin:auto}
+.breadcrumb{padding:16px 0 0;color:var(--muted);font-size:13px}.breadcrumb b{color:var(--blue)}
+.categories{margin-top:-38px;position:relative;background:var(--card);border-radius:32px 32px 0 0;padding:26px 20px;display:grid;grid-template-columns:repeat(10,1fr);gap:10px;box-shadow:0 -8px 30px rgba(0,27,59,.12);border:1px solid var(--line);border-bottom:0}
+.cat{text-align:center;font-size:12px;font-weight:750;cursor:pointer;padding:8px 4px;border-radius:16px;transition:all .18s ease}
+.cat:hover{transform:translateY(-3px);background:var(--surface)}
+.ico{width:50px;height:50px;border-radius:50%;margin:auto auto 8px;display:grid;place-items:center;font-size:22px;background:#e8f1ff;transition:transform .18s ease,box-shadow .18s ease}
+.cat:hover .ico{box-shadow:0 8px 18px rgba(22,65,110,.14);transform:scale(1.05)}
+.cat:nth-child(2) .ico{background:#fff0d5}.cat:nth-child(3) .ico{background:#ffe7ef}.cat:nth-child(4) .ico{background:#e5f7e9}.cat:nth-child(5) .ico{background:#eee6ff}.cat:nth-child(6) .ico{background:#dff8f5}.cat:nth-child(7) .ico{background:#e5efff}.cat:nth-child(8) .ico{background:#ffe9df}.cat:nth-child(9) .ico{background:#fff1c9}.cat:nth-child(10) .ico{background:#e8edf5}
+
+/* Sections & Cards */
+.section{padding:45px 0}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px;gap:18px}
+.section h2{margin:0;font-size:28px;letter-spacing:-.4px}.sectionhead p{margin:5px 0 0;color:var(--muted);font-size:14px}
+.view{color:var(--blue);font-weight:800;font-size:14px;cursor:pointer;transition:color .18s}.view:hover{color:#074894}
+.cities{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}
+.city{height:230px;border-radius:16px;overflow:hidden;position:relative;color:white;cursor:pointer;background:#18324f;box-shadow:0 6px 20px rgba(16,35,63,.08);transition:transform .2s ease,box-shadow .2s ease}
+.city:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(0,0,0,.88))}
+.city img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}.city:hover img{transform:scale(1.07)}
+.city:hover{transform:translateY(-4px);box-shadow:0 15px 35px rgba(16,35,63,.18)}
+.citytext{position:absolute;z-index:2;bottom:54px;left:15px;right:15px}
+.citytext h3{margin:0 0 3px;font-size:19px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.citytext small{color:#e8f1ff;display:block;font-size:12px;line-height:1.3;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.citymeta{position:absolute;z-index:3;bottom:12px;left:15px;right:15px;display:flex;gap:5px;flex-wrap:wrap}
+.meta{font-size:11px;background:#ffffffdf;color:#071b35;border-radius:14px;padding:4px 8px;font-weight:750;backdrop-filter:blur(4px)}
+.meta.rating{background:#fff1cc;color:#8a5c00}
+.arrow{position:absolute;right:12px;bottom:12px;z-index:3;width:32px;height:32px;border:1px solid #fff8;border-radius:50%;display:grid;place-items:center;font-size:14px}
+
+/* Feature & Banner */
+.feature{display:grid;grid-template-columns:1.3fr 1fr;gap:18px}
+.panel{background:var(--card);border-radius:20px;padding:26px;border:1px solid var(--line);box-shadow:0 6px 22px rgba(16,35,63,.06)}
+.featurebanner{min-height:260px;border-radius:20px;padding:30px;color:#fff;background:linear-gradient(90deg,#071b35e6,#071b3520),url('https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1200&q=85') center/cover;display:flex;flex-direction:column;justify-content:center;box-shadow:0 6px 22px rgba(16,35,63,.08)}
+.featurebanner h2{font-size:36px;margin:8px 0}
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:20px}
+.check{display:flex;gap:10px}.check b{display:block}.check small{color:var(--muted)}
+
+/* Hidden Gems */
+.gems{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gem{background:var(--card);border-radius:18px;overflow:hidden;position:relative;border:1px solid var(--line);box-shadow:0 6px 22px rgba(16,35,63,.05);transition:transform .2s}
+.gem:hover{transform:translateY(-3px)}
+.gem img{width:100%;height:165px;object-fit:cover}.gem div{padding:16px}.gem h3{margin:0 0 5px;font-size:18px}.gem p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.save{position:absolute;right:12px;top:12px;width:38px;height:38px;border:0;border-radius:50%;background:#fff;color:#071b35;font-size:19px;cursor:pointer;box-shadow:0 4px 15px rgba(0,27,59,.25);display:grid;place-items:center;transition:all .15s}
+.save.saved{background:var(--gold);color:#071b35}
+.share{border:0;border-radius:20px;background:#eef5ff;color:#145eaf;padding:8px 14px;font-weight:750;cursor:pointer;margin-top:12px;font-size:12px}
+
+/* Districts Grid */
+.districts{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.district{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;font-weight:750;font-size:14px;cursor:pointer;transition:all .18s ease;box-shadow:0 2px 10px rgba(0,0,0,.03)}
+.district:hover{border-color:var(--gold);background:var(--surface);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,27,59,.08)}
+
+/* Festivals & Trails */
+.calendar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.festival{background:var(--card);border-radius:16px;padding:18px;border-left:5px solid var(--gold);border:1px solid var(--line);border-left-width:5px;box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.festival b{display:block;font-size:16px;margin:3px 0}.festival small{color:var(--muted)}.month{font-size:11px;font-weight:800;color:var(--blue);letter-spacing:1px}
+.trails{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.trail{border-radius:20px;min-height:200px;color:#fff;padding:25px;display:flex;flex-direction:column;justify-content:end;background-size:cover;background-position:center;overflow:hidden;position:relative;box-shadow:0 8px 25px rgba(0,0,0,.12)}
+.trail:before{content:"";position:absolute;inset:0;background:linear-gradient(transparent,#06162ddd)}.trail>*{position:relative;z-index:2}
+.trail h3{font-size:24px;margin:0 0 6px}.trail p{margin:0;font-size:14px;color:#eef5ff}
+.sustain{background:linear-gradient(135deg,#0b67d1,#071b35);color:white;border-radius:22px;padding:30px;display:grid;grid-template-columns:1fr 2fr;gap:28px;align-items:center}
+.sustain h2{margin:0 0 8px;font-size:28px}.tips{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tip{background:#ffffff15;border:1px solid #ffffff25;border-radius:14px;padding:14px;font-size:13px;line-height:1.5}.tip b{display:block;margin-bottom:4px}
+.blogs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.blog{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 5px 20px rgba(16,35,63,.06)}
+.blog img{height:150px;width:100%;object-fit:cover}.blog div{padding:16px}.blog h3{font-size:16px;margin:0 0 8px;line-height:1.4}.blog small{color:var(--muted)}
+
+/* Emergency & Government */
+.gov-profile{margin:28px 0;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#fff8ec,var(--card));box-shadow:0 8px 25px rgba(7,27,53,.06)}
+.gov-profile-inner{display:flex;align-items:center;gap:24px;padding:24px 26px}
+.gov-photo{width:96px;height:96px;border-radius:20px;object-fit:cover;background:#071b35;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;font-weight:800}
+.gov-copy{flex:1}.gov-eyebrow{font-size:11px;letter-spacing:.14em;font-weight:800;color:#c56b17;text-transform:uppercase}.gov-copy h3{margin:4px 0;font-size:23px;color:var(--navy)}body.dark .gov-copy h3{color:var(--gold)}.gov-copy p{margin:0;color:var(--muted)}
+.gov-actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}.gov-actions a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:700;background:var(--card);color:var(--text)}
+.emergencygrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.emergencycard{padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.emergencycard a{display:inline-block;margin-top:6px;font-weight:900;font-size:20px;color:var(--blue)}
+.footer{background:var(--navy);color:#cddbf0;padding:40px 5%;display:flex;justify-content:space-between;gap:20px;align-items:center}
+.footer strong{color:white;font-size:22px}.footer span{color:var(--gold)}
+
+/* ========================================================= */
+/* CRITICAL FIX: FULL DISTRICT PAGE / MODAL & NAVIGATION      */
+/* ========================================================= */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:var(--bg);
+  overflow-y:auto;
+  padding:0;
+  scroll-behavior:smooth;
+}
+.modalbox{
+  width:100%;
+  max-width:none;
+  min-height:100vh;
+  margin:0;
+  border-radius:0;
+  box-shadow:none;
+  background:var(--bg);
+  overflow:visible;
+  position:relative;
+}
+
+/* Modal Persistent Sticky Header */
+.modal-topbar{
+  position:sticky;
+  top:0;
+  left:0;
+  right:0;
+  height:62px;
+  background:rgba(7,27,53,0.96);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,0.14);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 max(5vw, 18px);
+  z-index:110;
+  box-shadow:0 6px 25px rgba(0,0,0,0.22);
+}
+.modal-topbar-left{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+.back-home-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--gold);
+  color:#071b35;
+  border:0;
+  border-radius:24px;
+  padding:8px 16px;
+  font-weight:850;
+  font-size:14px;
+  cursor:pointer;
+  transition:all .2s ease;
+  box-shadow:0 3px 12px rgba(255,181,27,0.35);
+}
+.back-home-btn:hover{
+  transform:translateX(-2px);
+  background:#ffc342;
+  box-shadow:0 5px 16px rgba(255,181,27,0.5);
+}
+.modal-logo{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#fff;
+  font-weight:800;
+  font-size:18px;
+  cursor:pointer;
+}
+.modal-logo span b{color:var(--gold)}
+.modal-breadcrumb{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  color:#a3bbd9;
+}
+.modal-breadcrumb a{
+  color:#d4e5fa;
+  text-decoration:none;
+  font-weight:600;
+  transition:color .2s;
+}
+.modal-breadcrumb a:hover{
+  color:var(--gold);
+  text-decoration:underline;
+}
+.modal-breadcrumb .active-crumb{
+  color:var(--gold);
+  font-weight:800;
+}
+.modal-topbar-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.modal-close-btn{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.25);
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+  font-weight:900;
+  cursor:pointer;
+  transition:all .2s ease;
+}
+.modal-close-btn:hover{
+  background:var(--gold);
+  color:#071b35;
+  border-color:var(--gold);
+  transform:rotate(90deg);
+}
+
+/* Modal Hero */
+.modalhero{
+  min-height:380px;
+  border-radius:0;
+  display:flex;
+  align-items:flex-end;
+  padding:45px max(5vw,24px) 38px;
+  position:relative;
+  background-size:cover;
+  background-position:center;
+  box-shadow:inset 0 -80px 100px rgba(0,0,0,0.7);
+}
+.modalhero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,27,53,0.3) 0%,rgba(7,27,53,0.85) 100%)}
+.modalhero>*{position:relative;z-index:2;color:#fff}
+.modalhero .close{
+  position:absolute;
+  right:max(5vw, 22px);
+  top:22px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  font-size:22px;
+  font-weight:900;
+  background:#fff;
+  color:#071b35;
+  border:1px solid rgba(0,0,0,0.15);
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+  display:grid;
+  place-items:center;
+  z-index:3;
+  cursor:pointer;
+  transition:all .2s ease;
+}
+.modalhero .close:hover{
+  background:var(--gold);
+  color:#071b35;
+  transform:scale(1.08);
+}
+.hero-back-tag{
+  position:absolute;
+  top:22px;
+  left:max(5vw, 22px);
+  z-index:3;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(7,27,53,0.85);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.25);
+  color:#fff;
+  border-radius:20px;
+  padding:8px 16px;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+  transition:all .2s ease;
+}
+.hero-back-tag:hover{
+  background:var(--gold);
+  color:#071b35;
+  border-color:var(--gold);
+}
+
+.modalcontent{max-width:1200px;margin:0 auto;padding:24px max(5vw,20px) 70px}
+
+/* Sticky Sub-navigation Pills */
+.district-subnav{
+  position:sticky;
+  top:62px;
+  z-index:90;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:12px 0;
+  margin:0 0 20px;
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(8px);
+  scrollbar-width:none;
+}
+.district-subnav::-webkit-scrollbar{display:none}
+.subnav-pill{
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  padding:8px 16px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:750;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .18s ease;
+}
+.subnav-pill:hover{
+  border-color:var(--gold);
+  color:var(--navy);
+  background:#fff9ed;
+  transform:translateY(-1px);
+}
+body.dark .subnav-pill:hover{
+  background:#172b43;
+  color:var(--gold);
+}
+
+/* Floating Return Button */
+.modal-floating-back{
+  position:fixed;
+  left:22px;
+  bottom:24px;
+  z-index:105;
+  display:none;
+  align-items:center;
+  gap:8px;
+  background:var(--navy);
+  color:#fff;
+  border:2px solid var(--gold);
+  border-radius:30px;
+  padding:11px 18px;
+  font-size:13px;
+  font-weight:850;
+  cursor:pointer;
+  box-shadow:0 8px 25px rgba(0,0,0,0.35);
+  transition:all .2s ease;
+}
+.modal-floating-back:hover{
+  background:var(--gold);
+  color:#071b35;
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.45);
+}
+
+/* Bottom Navigation Return Footer inside Modal */
+.modal-nav-footer{
+  margin-top:40px;
+  padding:36px 28px;
+  background:linear-gradient(135deg,#071b35 0%,#0e325c 100%);
+  border-radius:24px;
+  color:#fff;
+  text-align:center;
+  box-shadow:0 12px 35px rgba(7,27,53,0.18);
+  border:1px solid rgba(255,255,255,0.1);
+}
+.modal-nav-footer h3{margin:0 0 10px;font-size:24px;color:#fff}
+.modal-nav-footer p{margin:0 auto 24px;max-width:620px;color:#d0e1f7;font-size:15px;line-height:1.6}
+.nav-footer-buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn-back-home{background:var(--gold);color:#071b35;border:0;border-radius:28px;padding:14px 26px;font-size:15px;font-weight:850;cursor:pointer;transition:all .2s ease;box-shadow:0 6px 20px rgba(255,181,27,0.35)}
+.btn-back-home:hover{transform:translateY(-2px);background:#ffc444}
+.btn-all-cities, .btn-plan-trip{background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:28px;padding:14px 24px;font-size:14px;font-weight:750;cursor:pointer;transition:all .2s ease}
+.btn-all-cities:hover, .btn-plan-trip:hover{background:rgba(255,255,255,0.22);transform:translateY(-2px)}
+
+/* District Detail Content Styling */
+.district-search{background:var(--bg);padding:10px 0;margin-bottom:18px}
+.district-searchbox{display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;box-shadow:0 4px 18px rgba(0,0,0,.04)}
+.district-searchbox input{flex:1;border:0;outline:0;background:transparent;font:inherit;font-size:15px;color:inherit}
+.district-search-results{display:none;margin-top:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.dsr{padding:12px 14px;border-bottom:1px solid var(--line);cursor:pointer}.dsr:last-child{border-bottom:0}.dsr:hover{background:rgba(0,0,0,.035)}
+
+.cardmeta{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{background:#eef5ff;color:#1559a5;padding:7px 12px;border-radius:20px;font-size:12px;font-weight:750;border:1px solid #dbe8fa}
+body.dark .chip{background:#152942;color:#9ec5f5;border-color:#263e5e}
+.servicebar{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.servicebar a{display:inline-flex;align-items:center;gap:6px;padding:10px 15px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);font-weight:750;font-size:13px;transition:all .18s}
+.servicebar a:hover{border-color:var(--gold);transform:translateY(-1px);background:var(--surface)}
+.servicebar a.highlight{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+.detailgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0}
+.detail{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 16px rgba(0,0,0,.03)}
+.detail b{display:block;margin-bottom:6px;font-size:15px}.detail small{color:var(--muted);line-height:1.55;font-size:13px}
+
+.section-title{margin-top:36px;margin-bottom:8px;font-size:24px;letter-spacing:-.3px}
+.section-intro{color:var(--muted);line-height:1.65;font-size:15px}
+
+.knowledge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.knowledge-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 4px 16px rgba(0,0,0,.03)}
+.knowledge-card h3{margin:0 0 8px;font-size:18px}.knowledge-card p{margin:0;color:var(--muted);line-height:1.65;font-size:14px}
+
+/* Transport Guide */
+.transport-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.transport-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 6px 20px rgba(7,27,53,.05)}
+.transport-card h3{margin:0 0 8px;font-size:18px}.transport-card p{margin:6px 0;color:var(--muted);line-height:1.6;font-size:14px}
+.transport-list{display:grid;gap:8px;margin-top:12px}
+.transport-route{padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:13px;line-height:1.5}
+.transport-route b{display:block;color:var(--text);margin-bottom:3px;font-size:14px}
+.transport-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.transport-actions a,.transport-actions button{border:0;border-radius:10px;padding:9px 14px;background:var(--navy);color:#fff;text-decoration:none;font-size:12px;font-weight:750;cursor:pointer;transition:all .18s}
+.transport-actions a.secondary{background:var(--surface);color:var(--text);border:1px solid var(--line)}
+.transport-actions a:hover{opacity:.9;transform:translateY(-1px)}
+.transport-note{font-size:12px!important;color:var(--muted)!important;margin-top:12px!important}
+.transport-live{display:inline-flex;align-items:center;gap:6px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:800}
+
+/* Food Directory */
+.food-directory{margin-top:30px}
+.foodsearch{display:flex;gap:8px;margin:14px 0}.foodsearch input{flex:1;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:inherit;font:inherit;font-size:14px}
+.foodgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.foodcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 6px 20px rgba(10,30,60,.04)}
+.foodcard .foodtype{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:6px}
+.foodcard h3{margin:0 0 6px;font-size:18px}.foodcard p{margin:0;color:var(--muted);line-height:1.55;font-size:13px}
+.foodchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.foodchip{padding:5px 9px;border-radius:999px;background:#eef5ff;border:1px solid #dbe9fb;font-size:11px;font-weight:700}
+body.dark .foodchip{background:#15263c;border-color:#29415d}
+.foodnote{margin-top:12px;color:var(--muted);font-size:13px}
+
+/* Hotels & Hospitals */
+.contact-tabs{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap}
+.contact-tab{border:1px solid var(--line);background:var(--card);color:var(--text);padding:10px 18px;border-radius:999px;font-weight:800;font-size:13px;cursor:pointer;transition:all .18s}
+.contact-tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.contact-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 16px rgba(0,0,0,.03)}
+.contact-card h3{margin:0 0 4px;font-size:17px}.contact-card .type{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.7px}
+.contact-card p{margin:6px 0;color:var(--muted);line-height:1.5;font-size:13px}
+.contact-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.contact-actions a{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:10px;background:#eef5ff;color:#0b67d1;font-weight:800;font-size:12px;transition:all .15s}
+.contact-actions a:hover{background:#dbe9fb}
+body.dark .contact-actions a{background:#172943;color:#8ec0ff}
+
+/* Shopping Malls */
+.mallgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}
+.mallcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 4px 16px rgba(0,0,0,.03)}
+.mallcard b{display:block;margin-bottom:6px;font-size:15px}.mallcard small{display:block;color:var(--muted);line-height:1.5;font-size:13px}
+.mallcard a{display:inline-block;margin-top:10px;color:var(--blue);font-weight:800;font-size:12px}
+
+/* Suggestions & Reviews */
+.suggestbox{margin-top:28px;padding:22px;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:0 6px 20px rgba(0,0,0,.03)}
+.suggestbox h2{margin:0 0 6px}.suggestbox p{color:var(--muted);font-size:14px;line-height:1.6}
+.suggestform{display:grid;gap:10px;margin-top:14px}
+.suggestform input,.suggestform select,.suggestform textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;background:var(--bg);color:inherit}
+.suggestform textarea{min-height:100px;resize:vertical}.suggestrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.suggestbtn{border:0;border-radius:12px;padding:13px 20px;background:var(--navy);color:#fff;font-weight:800;cursor:pointer}
+.suggeststatus{font-size:13px;font-weight:700;margin-top:4px}
+.suggestions-list{display:grid;gap:10px;margin-top:16px}
+.suggestion-item{padding:13px 14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;font-size:13px;line-height:1.5}
+.suggestion-item small{display:block;color:var(--muted);margin-top:5px}
+
+/* ========================================================= */
+/* INTERACTIVE TRIP PLANNER MODAL                            */
+/* ========================================================= */
+.planner-modal{display:none;position:fixed;inset:0;background:rgba(6,22,45,.8);z-index:99999;backdrop-filter:blur(10px);padding:20px;align-items:center;justify-content:center;overflow-y:auto}
+.planner-box{width:min(920px,100%);background:var(--card);border-radius:24px;border:1px solid var(--line);box-shadow:0 25px 80px rgba(0,0,0,.45);overflow:hidden;max-height:92vh;display:flex;flex-direction:column}
+.planner-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:linear-gradient(135deg,#071b35,#103763);color:#fff}
+.planner-head h2{margin:0;font-size:22px}.planner-head small{display:block;opacity:.8;margin-top:2px}
+.planner-close{border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:20px;display:grid;place-items:center;transition:all .18s}
+.planner-close:hover{background:var(--gold);color:#071b35}
+.planner-body{padding:24px;overflow-y:auto}
+.planner-form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.planner-field label{display:block;font-size:12px;font-weight:800;text-transform:uppercase;color:var(--muted);margin-bottom:6px;letter-spacing:.5px}
+.planner-field select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:inherit;font:inherit;font-weight:600}
+.planner-btn{width:100%;background:var(--gold);color:#071b35;border:0;border-radius:14px;padding:14px;font-weight:900;font-size:15px;cursor:pointer;transition:all .18s;box-shadow:0 6px 20px rgba(255,181,27,.35)}
+.planner-btn:hover{background:#ffc444;transform:translateY(-1px)}
+.planner-output{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.itinerary-day{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+.itinerary-day h4{margin:0 0 10px;font-size:17px;color:var(--blue);display:flex;align-items:center;gap:8px}
+.itinerary-slot{padding:8px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5}
+.itinerary-slot:last-child{border:0}
+.itinerary-slot b{color:var(--navy);display:inline-block;width:95px}body.dark .itinerary-slot b{color:var(--gold)}
+.planner-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.planner-action-btn{padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:750;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+
+/* Arya Floating AI Assistant */
+.arya-fab{position:fixed;right:20px;bottom:20px;z-index:80;border:0;border-radius:999px;padding:13px 20px;background:var(--gold);color:#071b35;font-weight:900;box-shadow:0 12px 30px rgba(0,0,0,.22);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.arya-panel{display:none;position:fixed;right:20px;bottom:78px;width:min(400px,calc(100vw - 28px));height:min(580px,calc(100vh - 110px));z-index:81;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
+.arya-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(135deg,#071b35,#123d68);color:#fff}
+.arya-head b{font-size:18px}.arya-head small{display:block;opacity:.8;margin-top:2px}
+.arya-close{border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:20px}
+.arya-body{height:calc(100% - 126px);overflow:auto;padding:14px;background:var(--bg)}
+.arya-msg{max-width:88%;padding:11px 14px;border-radius:14px;margin:8px 0;line-height:1.5;font-size:13px;white-space:pre-line}
+.arya-msg.bot{background:var(--card);border:1px solid var(--line);margin-right:auto}
+.arya-msg.user{background:#e9f3ff;color:#12385d;margin-left:auto}
+body.dark .arya-msg.user{background:#18314d;color:#fff}
+.arya-suggest{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.arya-suggest button{border:1px solid var(--line);background:var(--card);color:inherit;border-radius:999px;padding:6px 10px;cursor:pointer;font-size:11px;font-weight:700}
+.arya-input{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);background:var(--card)}
+.arya-input input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:11px 14px;background:var(--bg);color:inherit;outline:0}
+.arya-input button{border:0;border-radius:12px;padding:0 18px;background:var(--gold);color:#071b35;font-weight:900;cursor:pointer}
+
+/* Floating Favourites & Recent */
+.favbar{position:fixed;right:16px;bottom:74px;background:var(--navy);color:#fff;padding:10px 18px;border-radius:30px;z-index:94;box-shadow:0 8px 25px rgba(0,27,59,.4);cursor:pointer;font-weight:800;font-size:13px;border:1px solid rgba(255,255,255,.15);display:inline-flex;align-items:center;gap:6px;transition:all .2s ease}
+.favbar:hover{transform:translateY(-2px);background:#0d284a}
+.favpanel{display:none;position:fixed;right:16px;bottom:128px;width:min(340px,90vw);background:var(--card);border:1px solid var(--line);border-radius:18px;z-index:96;padding:18px;box-shadow:0 12px 40px rgba(0,27,59,.35)}
+.favpanel h3{margin-top:0}.favitem{padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}.empty{color:var(--muted);font-size:13px}
+.recent-wrap{margin:18px auto 0;max-width:1400px;padding:0 5%}
+.recent-strip{display:flex;gap:10px;overflow-x:auto;padding:4px 0 8px;scrollbar-width:thin}
+.recent-card{flex:0 0 auto;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:10px 14px;cursor:pointer;font-weight:800;color:var(--text);box-shadow:0 4px 14px rgba(7,27,53,.06)}
+.recent-card small{display:block;color:var(--muted);font-weight:600;margin-top:3px}
+
+/* Mobile & Global Sticky Bottom Action Bar (Plan Trip + Ask Arya) */
+.bottom-sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:95;background:var(--navy);padding:8px 14px;box-shadow:0 -6px 22px rgba(0,0,0,.28);display:flex;justify-content:center;align-items:center}
+.sticky-bar-inner{width:100%;max-width:540px;background:var(--gold);border-radius:28px;padding:4px;display:flex;align-items:center;gap:4px;box-shadow:0 4px 15px rgba(255,181,27,.35)}
+.sticky-btn-plan,.sticky-btn-arya{flex:1;border:0;border-radius:24px;padding:10px 14px;font-weight:850;font-size:15px;color:#071b35;background:transparent;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;transition:all .18s ease;font-family:inherit}
+.sticky-btn-plan:hover{background:rgba(255,255,255,.22)}
+.sticky-btn-arya{background:rgba(255,255,255,.32);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.sticky-btn-arya:hover{background:rgba(255,255,255,.45)}
+body{padding-bottom:76px}
+
+/* Districts Grid */
+.districts{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.district{background:#fff;border:1px solid #e6edf6;border-radius:16px;padding:16px 12px;text-align:center;font-weight:750;font-size:15px;color:var(--text);cursor:pointer;transition:all .18s ease;box-shadow:0 2px 8px rgba(0,0,0,.03);display:flex;align-items:center;justify-content:center;min-height:52px}
+.district:hover{border-color:var(--gold);background:#f7faff;transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,27,59,.08)}
+body.dark .district{background:#10243c;border-color:#223854;color:#eef5ff}
+body.dark .district:hover{border-color:var(--gold);background:#162e4c}
+
+/* Responsive */
+@media(max-width:1050px){.categories{grid-template-columns:repeat(5,1fr)}.cities{grid-template-columns:repeat(3,1fr)}.hero-arya{display:none}.planner-form-grid{grid-template-columns:1fr 1fr}.districts{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:768px){
+  .navlinks{display:none}.nav{padding:0 4%;height:64px}.logo{font-size:19px}
+  .hero{min-height:500px;padding:45px 5% 65px}
+  .hero h1{font-size:40px}.search{flex-direction:column;border-radius:20px;padding:8px}
+  .search button{height:46px}.categories{grid-template-columns:repeat(2,1fr);margin-top:-28px}
+  .cities{grid-template-columns:repeat(2,1fr);gap:10px}.city{height:190px}
+  .districts{grid-template-columns:repeat(2,1fr);gap:10px}
+  .district{border-radius:14px;padding:14px 10px;font-size:14px}
+  .feature,.calendar,.trails,.sustain,.detailgrid,.knowledge-grid,.transport-grid,.foodgrid,.contact-grid,.mallgrid,.emergencygrid,.blogs,.footer{grid-template-columns:1fr}
+  .modalhero{min-height:300px;padding:24px 16px 28px}.modalhero h1{font-size:32px!important}
+  .modal-topbar{padding:0 14px;height:58px}.modal-breadcrumb{display:none}
+  .planner-form-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body id="top">
+
+<header class="nav">
+  <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})"><div class="pin"><b>●</b></div><div>Explore<span>UP</span><small class="tag">HAR SHEHAR KI KAHANI</small></div></div>
+  <nav class="navlinks">
+    <a href="#top">Home</a>
+    <a href="#cities">Cities</a>
+    <a href="javascript:void(0)" onclick="openTripPlanner()">Trip Planner</a>
+    <a href="#food">Food Trails</a>
+    <a href="#festivals">Festivals</a>
+    <a href="#emergency">Helplines</a>
+    <a href="#about">About</a>
+  </nav>
+  <div class="actions">
+    <button class="lang" onclick="toggleLanguage()" id="langBtn">हिंदी</button>
+    <button class="circle" onclick="toggleDark()" aria-label="Toggle dark mode">☾</button>
+    <button class="adminbtn" onclick="openAdminPanel()">Admin</button>
+  </div>
+</header>
+
+<section class="hero">
+ <div>
+  <div class="eyebrow" id="heroGreeting" style="font-size:clamp(26px,3.8vw,40px);letter-spacing:0;margin-bottom:8px">नमस्ते 🙏</div>
+  <h1>Explore <em>Uttar Pradesh</em></h1>
+  <p>Discover timeless heritage, legendary street food, spiritual sacred rivers, hotels, transport guides and hidden gems — city by city.</p>
+  <div style="position:relative">
+   <div class="search">
+    <input id="searchInput" placeholder="Search any city, monument or food (e.g. Agra, Taj Mahal, Petha, Varanasi, Ghats)..." autocomplete="off">
+    <button onclick="searchSite()">⌕ &nbsp; Search</button>
+   </div>
+   <div class="home-trust">
+     <span id="destinationCountBadge">36 Destinations</span>
+     <span>🚆 Live Transport Guides</span>
+     <span>🏨 Verified Stays & Healthcare</span>
+     <span>🧳 Smart Trip Planner</span>
+   </div>
+   <div class="hero-buttons">
+     <button class="hero-btn primary" onclick="document.getElementById('cities').scrollIntoView({behavior:'smooth'})">📍 Explore by City</button>
+     <button class="hero-btn secondary" onclick="openTripPlanner('Agra')">🧳 Plan Your Trip</button>
+     <button class="hero-btn secondary" onclick="document.getElementById('hidden-gems').scrollIntoView({behavior:'smooth'})">💎 Hidden Gems</button>
+   </div>
+   <div id="results"></div>
+  </div>
+ </div>
+ 
+ <div class="hero-arya" aria-label="Arya AI Assistant preview">
+  <div class="hero-arya-head">
+    <div class="arya-avatar">✨</div>
+    <div><b>Arya AI Assistant</b><small>Your Smart UP Travel Guide</small></div>
+  </div>
+  <div class="hero-arya-body">
+   <p>Ask Arya anything about UP cities, Taj Mahal timings, local food, budget itineraries, trains or hotels.</p>
+   <div class="hero-arya-msg"><b>Namaste! 👋</b><br>Planning a visit to Agra or Varanasi? Ask me for a customized itinerary!</div>
+   <div class="hero-arya-prompts">
+     <button onclick="heroAryaQuick('Agra Taj Mahal timing and trip plan')">Agra 1-Day Plan</button>
+     <button onclick="heroAryaQuick('Varanasi street food guide')">Varanasi Food</button>
+     <button onclick="heroAryaQuick('Ayodhya Ram Mandir travel guide')">Ayodhya Guide</button>
+     <button onclick="heroAryaQuick('Lucknow famous kebabs and places')">Lucknow Food</button>
+   </div>
+   <button class="hero-arya-cta" onclick="toggleArya()">✨ Chat with Arya AI</button>
+  </div>
+ </div>
+</section>
+
+<main class="wrap" id="mainContent">
+  <div class="breadcrumb" id="breadcrumb">Home <span>›</span> <b>Explore Uttar Pradesh</b></div>
+  
+  <div class="categories">
+    <div class="cat" onclick="document.getElementById('cities').scrollIntoView({behavior:'smooth'})"><div class="ico">🏛️</div>Famous Places</div>
+    <div class="cat" onclick="document.getElementById('food').scrollIntoView({behavior:'smooth'})"><div class="ico">🍛</div>Food & Cuisine</div>
+    <div class="cat" onclick="openCategoryShowcase('shopping')"><div class="ico">🛍️</div>Shopping & Crafts</div>
+    <div class="cat" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})"><div class="ico">🏺</div>Culture & History</div>
+    <div class="cat" onclick="document.getElementById('festivals').scrollIntoView({behavior:'smooth'})"><div class="ico">🎉</div>Festivals</div>
+    <div class="cat" onclick="openCategoryShowcase('stays')"><div class="ico">🛏️</div>Where to Stay</div>
+    <div class="cat" onclick="openCategoryShowcase('transport')"><div class="ico">🚌</div>Transport Guide</div>
+    <div class="cat" onclick="openTripPlanner()"><div class="ico">₹</div>Budget Planner</div>
+    <div class="cat" onclick="openCategoryShowcase('season')"><div class="ico">☀️</div>Best Time</div>
+    <div class="cat" onclick="document.getElementById('sustainabilitySection').scrollIntoView({behavior:'smooth'})"><div class="ico">💡</div>Local Tips</div>
+  </div>
+
+  <div class="recent-wrap" id="recentWrap" style="display:none">
+    <div class="sectionhead" style="margin-bottom:8px">
+      <div><h2 style="font-size:20px">🕘 Recently Viewed</h2><p>Quickly return to destinations you explored recently.</p></div>
+    </div>
+    <div class="recent-strip" id="recentStrip"></div>
+  </div>
+
+  <section class="section" id="cities">
+   <div class="sectionhead">
+     <div><h2>📍 Explore Our Cities</h2><p>Click on any city (like Agra, Varanasi, Lucknow) to view comprehensive travel guides, transport, hotels and food.</p></div>
+     <a class="view" href="#districts">View All 36 Districts ↓</a>
+   </div>
+   <div class="cities" id="cityGrid"></div>
+  </section>
+
+  <section class="section" id="featured">
+   <div class="feature">
+    <div class="featurebanner">
+      <div class="eyebrow">FEATURED DESTINATION</div>
+      <h2>Agra — City of the Taj</h2>
+      <p>Home to the Taj Mahal, Agra Fort, and Fatehpur Sikri. Experience world-class expressways, high-speed Gatimaan & Vande Bharat trains, Mughlai flavours, and famous Agra Petha.</p>
+      <div style="margin-top:14px">
+        <button onclick="safeOpenCity('Agra')" style="background:var(--gold);color:#071b35;border:0;border-radius:25px;padding:12px 24px;font-weight:850;cursor:pointer">Explore Agra Guide →</button>
+      </div>
+    </div>
+    <div class="panel" id="about">
+      <h2>⭐ Why ExploreUP?</h2>
+      <div class="checks">
+       <div class="check">✅<div><b>Complete City Directory</b><small>Places, food, stays and medical facilities</small></div></div>
+       <div class="check">🚆<div><b>Live Transport Routes</b><small>Airports, railway junctions & expressways</small></div></div>
+       <div class="check">🍴<div><b>Local Food Trails</b><small>Must-try authentic dishes & sweet shops</small></div></div>
+       <div class="check">🧳<div><b>Smart Trip Planning</b><small>Custom 1, 2, or 3-day realistic itineraries</small></div></div>
+      </div>
+    </div>
+   </div>
+  </section>
+
+  <section class="section" id="hidden-gems">
+   <div class="sectionhead">
+     <div><h2>💎 Hidden Gems of Uttar Pradesh</h2><p>Discover breathtaking lesser-known spots away from heavy tourist crowds</p></div>
+   </div>
+   <div class="gems">
+    <article class="gem">
+      <button class="save" onclick="toggleSave(this,'Chunar Fort')">♡</button>
+      <img loading="lazy" src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=700&q=70" onerror="exploreUpImageFallback(this)" alt="Chunar Fort">
+      <div><h3>Chunar Fort, Mirzapur</h3><p>Ancient sandstone fortress perched high above the Ganga with 1,500 years of legend.</p><button class="share" onclick="shareItem('Chunar Fort')">↗ Share</button></div>
+    </article>
+    <article class="gem">
+      <button class="save" onclick="toggleSave(this,'Deogarh')">♡</button>
+      <img loading="lazy" src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=700&q=70" onerror="exploreUpImageFallback(this)" alt="Deogarh">
+      <div><h3>Deogarh, Lalitpur</h3><p>Gupta-period Dashavatara Temple and Betwa river valley cliffs with 31 ancient Jain temples.</p><button class="share" onclick="shareItem('Deogarh')">↗ Share</button></div>
+    </article>
+    <article class="gem">
+      <button class="save" onclick="toggleSave(this,'Saman Bird Sanctuary')">♡</button>
+      <img loading="lazy" src="https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=700&q=70" onerror="exploreUpImageFallback(this)" alt="Saman Bird Sanctuary">
+      <div><h3>Saman Bird Sanctuary</h3><p>Ramsar wetland sanctuary hosting thousands of migratory birds during winter.</p><button class="share" onclick="shareItem('Saman Bird Sanctuary')">↗ Share</button></div>
+    </article>
+   </div>
+  </section>
+
+  <section class="section" id="districts">
+   <div class="sectionhead">
+     <div>
+       <h2>🧭 District-wise Exploration</h2>
+       <p>Choose a district to explore its places, food, services and travel information.</p>
+     </div>
+   </div>
+   <div class="districts" id="districtsPills">
+    <div class="district" onclick="safeOpenCity('Lucknow')" role="button" tabindex="0">Lucknow</div>
+    <div class="district" onclick="safeOpenCity('Ayodhya')" role="button" tabindex="0">Ayodhya</div>
+    <div class="district" onclick="safeOpenCity('Varanasi')" role="button" tabindex="0">Varanasi</div>
+    <div class="district" onclick="safeOpenCity('Agra')" role="button" tabindex="0">Agra</div>
+    <div class="district" onclick="safeOpenCity('Mathura')" role="button" tabindex="0">Mathura</div>
+    <div class="district" onclick="safeOpenCity('Vrindavan')" role="button" tabindex="0">Vrindavan</div>
+    <div class="district" onclick="safeOpenCity('Prayagraj')" role="button" tabindex="0">Prayagraj</div>
+    <div class="district" onclick="safeOpenCity('Kanpur')" role="button" tabindex="0">Kanpur</div>
+    <div class="district" onclick="safeOpenCity('Jhansi')" role="button" tabindex="0">Jhansi</div>
+    <div class="district" onclick="safeOpenCity('Chitrakoot')" role="button" tabindex="0">Chitrakoot</div>
+    <div class="district" onclick="safeOpenCity('Meerut')" role="button" tabindex="0">Meerut</div>
+    <div class="district" onclick="safeOpenCity('Moradabad')" role="button" tabindex="0">Moradabad</div>
+    <div class="district" onclick="safeOpenCity('Rampur')" role="button" tabindex="0">Rampur</div>
+    <div class="district" onclick="safeOpenCity('Bareilly')" role="button" tabindex="0">Bareilly</div>
+    <div class="district" onclick="safeOpenCity('Saharanpur')" role="button" tabindex="0">Saharanpur</div>
+    <div class="district" onclick="safeOpenCity('Firozabad')" role="button" tabindex="0">Firozabad</div>
+    <div class="district" onclick="safeOpenCity('Kannauj')" role="button" tabindex="0">Kannauj</div>
+    <div class="district" onclick="safeOpenCity('Mirzapur')" role="button" tabindex="0">Mirzapur</div>
+    <div class="district" onclick="safeOpenCity('Jaunpur')" role="button" tabindex="0">Jaunpur</div>
+    <div class="district" onclick="safeOpenCity('Gorakhpur')" role="button" tabindex="0">Gorakhpur</div>
+    <div class="district" onclick="safeOpenCity('Kushinagar')" role="button" tabindex="0">Kushinagar</div>
+    <div class="district" onclick="safeOpenCity('Lakhimpur Kheri')" role="button" tabindex="0">Lakhimpur Kheri</div>
+    <div class="district" onclick="safeOpenCity('Sonbhadra')" role="button" tabindex="0">Sonbhadra</div>
+    <div class="district" onclick="safeOpenCity('Bhadohi')" role="button" tabindex="0">Bhadohi</div>
+    <div class="district" onclick="safeOpenCity('Pratapgarh')" role="button" tabindex="0">Pratapgarh</div>
+    <div class="district" onclick="safeOpenCity('Etawah')" role="button" tabindex="0">Etawah</div>
+    <div class="district" onclick="safeOpenCity('Aligarh')" role="button" tabindex="0">Aligarh</div>
+    <div class="district" onclick="safeOpenCity('Bulandshahr')" role="button" tabindex="0">Bulandshahr</div>
+    <div class="district" onclick="safeOpenCity('Hapur')" role="button" tabindex="0">Hapur</div>
+    <div class="district" onclick="safeOpenCity('Muzaffarnagar')" role="button" tabindex="0">Muzaffarnagar</div>
+    <div class="district" onclick="safeOpenCity('Pilibhit')" role="button" tabindex="0">Pilibhit</div>
+    <div class="district" onclick="safeOpenCity('Amroha')" role="button" tabindex="0">Amroha</div>
+    <div class="district" onclick="safeOpenCity('Budaun')" role="button" tabindex="0">Budaun</div>
+    <div class="district" onclick="safeOpenCity('Chandauli')" role="button" tabindex="0">Chandauli</div>
+    <div class="district" onclick="safeOpenCity('Sultanpur')" role="button" tabindex="0">Sultanpur</div>
+    <div class="district" onclick="safeOpenCity('Unnao')" role="button" tabindex="0">Unnao</div>
+   </div>
+  </section>
+
+  <section class="section" id="festivals">
+   <div class="sectionhead">
+     <div><h2>🎉 Festivals Calendar</h2><p>Plan your Uttar Pradesh trip around vibrant cultural and spiritual festivals</p></div>
+   </div>
+   <div class="calendar">
+    <div class="festival"><div class="month">JAN–FEB</div><b>🕉️ Magh Mela & Kumbh</b><small>Prayagraj • Triveni Sangam</small></div>
+    <div class="festival"><div class="month">FEB (18–27)</div><b>🎪 Taj Mahotsav</b><small>Agra • Shilpgram Arts & Crafts</small></div>
+    <div class="festival"><div class="month">FEB–MAR</div><b>🎨 Braj Lathmar Holi</b><small>Mathura • Vrindavan • Barsana</small></div>
+    <div class="festival"><div class="month">MAR–APR</div><b>🏹 Ram Navami</b><small>Ayodhya • Sarayu Ghats</small></div>
+    <div class="festival"><div class="month">OCT–NOV</div><b>🪔 Deepotsav</b><small>Ayodhya • Guinness Record Diya spectacle</small></div>
+    <div class="festival"><div class="month">NOV (Kartik Purnima)</div><b>🕯️ Dev Deepawali</b><small>Varanasi • 1 Million lamps on 84 Ghats</small></div>
+    <div class="festival"><div class="month">NOV–DEC</div><b>🎭 Lucknow Mahotsav</b><small>Lucknow • Awadhi heritage & music</small></div>
+    <div class="festival"><div class="month">DEC–JAN</div><b>✨ Ganga Mahotsav</b><small>Varanasi • Classical dance & music</small></div>
+   </div>
+  </section>
+
+  <section class="section" id="food">
+   <div class="sectionhead">
+     <div><h2>🍴 Signature Food Trails</h2><p>Experience Uttar Pradesh through its world-famous culinary traditions</p></div>
+   </div>
+   <div class="trails">
+    <article class="trail" style="background-image:url('https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=80')">
+      <h3>Banaras Street-Food Trail</h3>
+      <p>Puri-Kachori-Sabzi at Ram Bhandar → Tamatar Chaat at Kashi Chaat → Malaiyo & Lassi → Banarasi Paan</p>
+    </article>
+    <article class="trail" style="background-image:url('https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=1000&q=80')">
+      <h3>Lucknow Royal Awadhi Trail</h3>
+      <p>Tunday Galawati Kebab at Chowk → Dastarkhwan Biryani → Basket Chaat at Royal Cafe → Prakash Kulfi</p>
+    </article>
+   </div>
+  </section>
+
+  <section class="section" id="sustainabilitySection">
+   <div class="sustain">
+    <div>
+      <div class="eyebrow">TRAVEL RESPONSIBLY</div>
+      <h2>🌱 Sustainable Travel in UP</h2>
+      <p style="color:#dbeaff;line-height:1.6">Help preserve Uttar Pradesh’s centuries-old monuments, sacred rivers, and natural habitats for future generations.</p>
+    </div>
+    <div class="tips">
+     <div class="tip">♻️ <b>Avoid Single-use Plastic</b> Carry a reusable water bottle, especially around ghats and heritage sites.</div>
+     <div class="tip">🛍️ <b>Support Local Artisans</b> Buy genuine Chikankari in Lucknow, Agra marble inlay, and Banarasi silk weavers.</div>
+     <div class="tip">🧹 <b>Respect Sacred Waters</b> Keep Ganga, Yamuna, and Sarayu ghats litter-free and honor local rituals.</div>
+     <div class="tip">🚶 <b>Green Local Transit</b> Prefer electric e-rickshaws, metro systems, and walking trails in old city cores.</div>
+    </div>
+   </div>
+  </section>
+
+  <section class="gov-profile" id="up-government">
+    <div class="gov-profile-inner">
+      <div class="gov-photo" id="govPhoto">UP</div>
+      <div class="gov-copy">
+        <div class="gov-eyebrow">Government of Uttar Pradesh</div>
+        <h3 id="govCmName">Yogi Adityanath</h3>
+        <p id="govCmRole">Hon’ble Chief Minister, Uttar Pradesh</p>
+        <div class="gov-actions">
+          <a id="govOfficialLink" href="https://www.vidhanparishad.up.gov.in/chief-minister" target="_blank" rel="noopener">Official Portal ↗</a>
+          <a href="https://uptourism.gov.in/" target="_blank" rel="noopener">UP Tourism Official (uptourism.gov.in) ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="emergency">
+    <div class="sectionhead">
+      <div><span class="eyebrow">SAFETY & TOURIST SUPPORT</span><h2>🚨 Emergency & 24/7 Helplines</h2><p>Official emergency helplines for travellers in Uttar Pradesh. Tap any number to call directly.</p></div>
+    </div>
+    <div class="emergencygrid">
+      <div class="emergencycard"><b>🚨 Police / Immediate Help</b><br><a href="tel:112">112</a><small>UP Integrated Emergency Response</small></div>
+      <div class="emergencycard"><b>🚑 Ambulance Emergency</b><br><a href="tel:108">108</a><small>Free emergency ambulance service</small></div>
+      <div class="emergencycard"><b>🧭 UP Tourist Helpline</b><br><a href="tel:1363">1363</a><small>Toll-free tourist guidance & assistance</small></div>
+      <div class="emergencycard"><b>👩 Women Powerline</b><br><a href="tel:1090">1090</a><small>Dedicated women safety support</small></div>
+      <div class="emergencycard"><b>📞 UP CM Helpline</b><br><a href="tel:1076">1076</a><small>Public grievances and assistance</small></div>
+      <div class="emergencycard"><b>🚆 Railway Help & Enquiry</b><br><a href="tel:139">139</a><small>Indian Railways 24x7 helpline</small></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div><strong>📍 Explore<span>UP</span></strong><div style="font-size:11px;letter-spacing:1px">HAR SHEHAR KI KAHANI • UTTAR PRADESH</div></div>
+  <div><a href="#top">Home</a> &nbsp;•&nbsp; <a href="#cities">Cities</a> &nbsp;•&nbsp; <a href="javascript:void(0)" onclick="openTripPlanner()">Trip Planner</a> &nbsp;•&nbsp; <a href="#emergency">Emergency</a></div>
+  <div>Explore • Discover • Experience ♥</div>
+</footer>
+
+<!-- ========================================================= -->
+<!-- THE FULL CITY / DISTRICT DETAIL MODAL                     -->
+<!-- ========================================================= -->
+<div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="City Details">
+  <div class="modalbox">
+    
+    <!-- Persistent Sticky Header inside Modal -->
+    <div class="modal-topbar">
+      <div class="modal-topbar-left">
+        <button class="back-home-btn" onclick="closeModal()" aria-label="Back to Home Screen">
+          <span style="font-size:16px">←</span> <b>Home</b>
+        </button>
+        <div class="modal-logo" onclick="closeModal()" title="Return to ExploreUP Home">
+          <div class="pin" style="width:30px;height:30px"><b style="font-size:15px">●</b></div>
+          <span>Explore<b>UP</b></span>
+        </div>
+        <div class="modal-breadcrumb">
+          <a href="javascript:void(0)" onclick="closeModal()">Home</a>
+          <span>›</span>
+          <a href="javascript:void(0)" onclick="closeModalAndScroll('cities')">Cities</a>
+          <span>›</span>
+          <span id="modalCrumbCity" class="active-crumb">City</span>
+        </div>
+      </div>
+      <div class="modal-topbar-right">
+        <button class="circle" onclick="toggleDark()" title="Toggle Dark Mode" style="width:36px;height:36px">☾</button>
+        <button class="modal-close-btn" onclick="closeModal()" aria-label="Close and return to home" title="Back to Home (Esc)">
+          <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Hero -->
+    <div class="modalhero" id="modalHero">
+      <button class="hero-back-tag" onclick="closeModal()" aria-label="Back to Home Screen">
+        <span>←</span> <b>Back to Home Screen</b>
+      </button>
+      <button class="close" onclick="closeModal()" aria-label="Close city view" title="Back to Home (Esc)">
+        ✕
+      </button>
+      <div>
+        <div class="eyebrow" id="modalState">WELCOME TO</div>
+        <h1 id="modalTitle" style="font-size:44px;margin:6px 0;text-shadow:0 3px 15px rgba(0,0,0,.6)">City</h1>
+        <div id="modalSubtitle" style="font-size:17px;opacity:.95"></div>
+      </div>
+    </div>
+
+    <!-- Modal Content -->
+    <div class="modalcontent">
+      
+      <!-- Safe Subnav Pills (Smooth scrolling without breaking browser history) -->
+      <div class="district-subnav" aria-label="District sections">
+        <button type="button" class="subnav-pill" onclick="scrollModalSection('districtOverview')">🏛️ Overview</button>
+        <button type="button" class="subnav-pill" onclick="scrollModalSection('districtFood')">🍴 Food & Cuisine</button>
+        <button type="button" class="subnav-pill" onclick="scrollModalSection('districtTransport')">🚆 Transport</button>
+        <button type="button" class="subnav-pill" onclick="scrollModalSection('districtStay')">🏨 Hotels & Stays</button>
+        <button type="button" class="subnav-pill" onclick="scrollModalSection('districtHospitalSection')">🏥 Hospitals</button>
+        <button type="button" class="subnav-pill" onclick="scrollModalSection('districtKnowledgeSection')">📖 Knowledge</button>
+        <button type="button" class="subnav-pill" onclick="scrollModalSection('districtPlanner')">🗓️ Trip Planner</button>
+        <button type="button" class="subnav-pill" onclick="scrollModalSection('districtShopping')">🛍️ Shopping</button>
+        <button type="button" class="subnav-pill" onclick="scrollModalSection('suggestionSection')">💬 Feedback</button>
+      </div>
+
+      <!-- In-District Quick Search -->
+      <div class="district-search">
+        <div class="district-searchbox">
+          <span>🔎</span>
+          <input id="districtSearchInput" placeholder="Search this city: places, dishes, trains, hotels, hospitals..." autocomplete="off">
+          <button onclick="clearDistrictSearch()" style="border:0;background:none;cursor:pointer;font-size:18px;color:var(--muted)">×</button>
+        </div>
+        <div id="districtSearchResults" class="district-search-results"></div>
+      </div>
+
+      <!-- Quick Badges -->
+      <div class="cardmeta">
+        <span class="meta">📍 <span id="mDistance">State Gateway</span></span>
+        <span class="meta">₹ <span id="mFee">Entry varies</span></span>
+        <span class="meta">☀️ Best: <span id="mTime">Oct – Mar</span></span>
+        <span class="meta rating">★ <span id="mRating">4.8</span> Verified</span>
+      </div>
+
+      <!-- Quick Service Links -->
+      <div class="servicebar">
+        <a id="mapBtn" class="highlight" target="_blank" rel="noopener">🗺️ Open in Google Maps</a>
+        <a href="https://asi.payumoney.com/" target="_blank" rel="noopener">🎟️ ASI Monument Tickets</a>
+        <a href="https://www.irctc.co.in/" target="_blank" rel="noopener">🚆 IRCTC Train Booking</a>
+        <a href="https://www.upsrtconline.co.in/" target="_blank" rel="noopener">🚌 UPSRTC Bus Booking</a>
+        <a href="https://www.swiggy.com/" target="_blank" rel="noopener">🍽️ Swiggy Food</a>
+        <a href="https://www.zomato.com/" target="_blank" rel="noopener">🍴 Zomato</a>
+      </div>
+
+      <!-- Overview Section -->
+      <h2 id="districtOverview" class="section-title">About <span id="aboutCityName">this city</span></h2>
+      <p id="dAbout" style="line-height:1.75;color:var(--muted);font-size:15px"></p>
+
+      <div class="detailgrid">
+        <div class="detail"><b>🏛️ Famous Places</b><small id="dPlaces"></small></div>
+        <div class="detail"><b>🍛 Signature Cuisine</b><small id="dFood"></small></div>
+        <div class="detail"><b>🛍️ Shopping & Crafts</b><small id="dShop"></small></div>
+        <div class="detail"><b>☀️ Best Time to Visit</b><small id="dTime"></small></div>
+        <div class="detail"><b>💰 Estimated Daily Budget</b><small id="dBudget"></small></div>
+        <div class="detail"><b>💡 Local Travel Advice</b><small id="dTip"></small></div>
+      </div>
+
+      <!-- Food Section -->
+      <section id="districtFood" class="district-section food-directory">
+        <h2 class="section-title">🍴 Food & Cuisine Guide</h2>
+        <p class="section-intro">Authentic regional flavors, famous street food counters, and signature sweets.</p>
+        <div class="foodsearch">
+          <input id="foodSearchInput" placeholder="Filter food: kebab, petha, chaat, sweet, lassi, breakfast..." aria-label="Search local food">
+        </div>
+        <div class="foodgrid" id="foodGrid"></div>
+      </section>
+
+      <!-- Transport Guide (Fully Populated) -->
+      <section id="districtTransport" class="district-section">
+        <h2 class="section-title">🚆✈️ Transport Guide — Getting There & Around</h2>
+        <p class="section-intro">Railway junctions, high-speed train routes, nearby airports, expressways, and city metro networks.</p>
+        <div class="transport-grid">
+          
+          <div class="transport-card">
+            <span class="transport-live">● TRAIN CONNECTIVITY</span>
+            <h3>🚆 Railway Junctions & Trains</h3>
+            <p id="transportRailSummary">Loading railway information…</p>
+            <div class="transport-list" id="transportRailList"></div>
+            <div class="transport-actions">
+              <a href="https://www.irctc.co.in/nget/train-search" target="_blank" rel="noopener">Search Trains on IRCTC ↗</a>
+              <a class="secondary" href="https://www.indianrail.gov.in/" target="_blank" rel="noopener">Railway Enquiry ↗</a>
+            </div>
+          </div>
+
+          <div class="transport-card">
+            <span class="transport-live">● FLIGHT OPTIONS</span>
+            <h3>✈️ Airports & Flight Access</h3>
+            <p id="transportAirSummary">Loading airport information…</p>
+            <div class="transport-list" id="transportAirList"></div>
+            <div class="transport-actions">
+              <a href="https://www.google.com/travel/flights" target="_blank" rel="noopener">Check Live Flights ↗</a>
+              <a class="secondary" href="https://www.aai.aero/" target="_blank" rel="noopener">AAI Airports ↗</a>
+            </div>
+          </div>
+
+          <div class="transport-card">
+            <h3>🚌 Highway, Expressway & Bus Stands</h3>
+            <p id="transportBusSummary">World-class expressways connect Uttar Pradesh destinations.</p>
+            <div class="transport-actions">
+              <a href="https://www.upsrtconline.co.in/" target="_blank" rel="noopener">Book UPSRTC Online ↗</a>
+              <a class="secondary" id="transportBusMap" target="_blank" rel="noopener">Find Bus Stand on Maps ↗</a>
+            </div>
+          </div>
+
+          <div class="transport-card">
+            <h3>🚇 City Transit & Getting Around</h3>
+            <p id="transportLocalSummary">Metro rails, electric e-rickshaws, and app-based cabs.</p>
+            <div class="transport-actions">
+              <a class="secondary" id="transportLocalMap" target="_blank" rel="noopener">Search Local Transit ↗</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Hotels & Hospitals Contact Directory -->
+      <section id="districtStay" class="district-section contact-section">
+        <h2 class="section-title">🏨 Hotels & Stays Directory</h2>
+        <p class="section-intro">Verified accommodation options from luxury heritage palaces to comfortable hotels and pilgrim guest houses. Tap <b>Call</b> or <b>Map</b> to use directly.</p>
+        <div id="hotelContacts" class="contact-grid"></div>
+      </section>
+
+      <section id="districtHospitalSection" class="district-section contact-section">
+        <h2 class="section-title">🏥 Emergency Hospitals & Healthcare</h2>
+        <p class="section-intro">Apex government medical colleges and 24/7 super-speciality emergency trauma centres.</p>
+        <div id="hospitalContacts" class="contact-grid"></div>
+      </section>
+
+      <!-- District Knowledge -->
+      <section id="districtKnowledgeSection" class="district-section">
+        <h2 class="section-title">📖 Heritage & Regional Insights</h2>
+        <p class="section-intro" id="districtKnowledge">Explore history, art, and landscapes.</p>
+        <div class="knowledge-grid">
+          <div class="knowledge-card"><h3>🏺 History & Monuments</h3><p id="districtHistory"></p></div>
+          <div class="knowledge-card"><h3>🎭 Culture & Local Traditions</h3><p id="districtCulture"></p></div>
+          <div class="knowledge-card"><h3>🌿 Geography & Riverfront</h3><p id="districtNature"></p></div>
+          <div class="knowledge-card"><h3>🧭 Why Travelers Love It</h3><p id="districtWhy"></p></div>
+        </div>
+      </section>
+
+      <!-- Trip Planner Section -->
+      <section id="districtPlanner" class="district-section">
+        <div class="sectionhead">
+          <div><h2 class="section-title">🗓️ Suggested Itineraries</h2><p class="section-intro">Practical day-by-day plans for your visit.</p></div>
+          <button class="hero-btn primary" onclick="openTripPlanner(currentExploreCity)" style="padding:9px 18px">🧳 Customize Plan in Trip Planner</button>
+        </div>
+        <div class="knowledge-grid">
+          <div class="knowledge-card" id="planCard1"><h3>1-Day Visit</h3><p id="plan1DayText"></p></div>
+          <div class="knowledge-card" id="planCard2"><h3>2-Day Visit</h3><p id="plan2DayText"></p></div>
+        </div>
+      </section>
+
+      <!-- Shopping Malls & Markets -->
+      <section id="districtShopping">
+        <h2 class="section-title">🛍️ Shopping Centres & Famous Markets</h2>
+        <div class="mallgrid" id="mallGrid"></div>
+      </section>
+
+      <!-- Suggestions & Reviews -->
+      <section class="suggestbox" id="suggestionSection">
+        <h2>💬 Suggest an Update or Local Tip</h2>
+        <p>Know a great local eatery, hidden spot, or correction for this city? Help fellow travelers explore better.</p>
+        <form class="suggestform" id="suggestionForm" onsubmit="submitSuggestion(event)">
+          <div class="suggestrow">
+            <input id="suggestionName" type="text" maxlength="60" placeholder="Your name (optional)">
+            <select id="suggestionCategory">
+              <option value="Food recommendation">Food recommendation</option>
+              <option value="Place to add">Place to add</option>
+              <option value="Local tip">Local tip</option>
+              <option value="Transport / service">Transport / service</option>
+              <option value="Correction">Correction</option>
+            </select>
+          </div>
+          <textarea id="suggestionText" maxlength="1000" required placeholder="Write your recommendation or tip here..." aria-label="City recommendation"></textarea>
+          <button class="suggestbtn" type="submit">Submit Suggestion →</button>
+          <div class="suggeststatus" id="suggestionStatus"></div>
+        </form>
+        <div class="suggestions-list" id="suggestionsList"></div>
+      </section>
+
+      <!-- Persistent Bottom Navigation Card (Never gets stuck) -->
+      <div class="modal-nav-footer">
+        <h3>Explore More of Uttar Pradesh</h3>
+        <p>Ready to discover another city or plan your next route? You can jump back to the home screen anytime.</p>
+        <div class="nav-footer-buttons">
+          <button class="btn-back-home" onclick="closeModal()">← Back to Home Screen</button>
+          <button class="btn-all-cities" onclick="closeModalAndScroll('cities')">📍 Explore All Cities</button>
+          <button class="btn-plan-trip" onclick="closeModalAndPlan()">🧳 Open Trip Planner</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Floating Return to Home Button inside Modal (Appears when scrolled) -->
+<button class="modal-floating-back" id="modalFloatingBack" onclick="closeModal()" aria-label="Return to Home Screen">
+  ← Back to Home
+</button>
+
+<!-- ========================================================= -->
+<!-- INTERACTIVE TRIP PLANNER MODAL                            -->
+<!-- ========================================================= -->
+<div class="planner-modal" id="plannerModal" role="dialog" aria-modal="true" aria-label="Interactive Trip Planner">
+  <div class="planner-box">
+    <div class="planner-head">
+      <div>
+        <h2>🧳 ExploreUP Smart Trip Planner</h2>
+        <small>Instant customized day-by-day itineraries across Uttar Pradesh</small>
+      </div>
+      <button class="planner-close" onclick="closeTripPlanner()">✕</button>
+    </div>
+    <div class="planner-body">
+      <div class="planner-form-grid">
+        <div class="planner-field">
+          <label for="plannerCitySelect">Destination City</label>
+          <select id="plannerCitySelect" onchange="generateTripPlan()">
+            <option value="Agra">Agra (Taj & Mughal Heritage)</option>
+            <option value="Varanasi">Varanasi / Banaras (Ghats & Spirituality)</option>
+            <option value="Lucknow">Lucknow (Awadh Culture & Food)</option>
+            <option value="Ayodhya">Ayodhya (Ram Mandir & Heritage)</option>
+            <option value="Mathura">Mathura & Vrindavan (Braj Bhumi)</option>
+            <option value="Prayagraj">Prayagraj (Sangam & History)</option>
+            <option value="Kanpur">Kanpur (Heritage & Cuisine)</option>
+            <option value="Jhansi">Jhansi (Bundelkhand & Forts)</option>
+          </select>
+        </div>
+        <div class="planner-field">
+          <label for="plannerDaysSelect">Trip Duration</label>
+          <select id="plannerDaysSelect" onchange="generateTripPlan()">
+            <option value="1">1 Day (Quick Highlights)</option>
+            <option value="2" selected>2 Days (Classic Itinerary)</option>
+            <option value="3">3 Days (Deep Dive)</option>
+          </select>
+        </div>
+        <div class="planner-field">
+          <label for="plannerStyleSelect">Travel Style</label>
+          <select id="plannerStyleSelect" onchange="generateTripPlan()">
+            <option value="heritage" selected>Heritage & Architecture</option>
+            <option value="food">Food & Street Cuisine</option>
+            <option value="spiritual">Spiritual & Temple Trail</option>
+            <option value="family">Family & Leisure</option>
+          </select>
+        </div>
+        <div class="planner-field">
+          <label for="plannerBudgetSelect">Daily Budget Tier</label>
+          <select id="plannerBudgetSelect" onchange="generateTripPlan()">
+            <option value="budget">Budget (₹1,000–₹1,500/day)</option>
+            <option value="mid" selected>Comfortable (₹2,500–₹4,000/day)</option>
+            <option value="luxury">Luxury (₹8,000+/day)</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="planner-btn" onclick="generateTripPlan()">⚡ Refresh Custom Itinerary</button>
+
+      <div class="planner-output" id="plannerOutput"></div>
+
+      <div class="planner-actions">
+        <button class="planner-action-btn" onclick="copyItinerary()">📋 Copy Itinerary</button>
+        <button class="planner-action-btn" onclick="openCityFromPlanner()">📍 Open Complete City Guide</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================= -->
+<!-- ARYA AI FLOATING ASSISTANT                                -->
+<!-- ========================================================= -->
+<div class="arya-panel" id="aryaPanel" role="dialog" aria-label="Arya AI Assistant">
+  <div class="arya-head">
+    <div><b>✨ Arya AI Travel Assistant</b><small>Trained on Uttar Pradesh Tourism</small></div>
+    <button class="arya-close" onclick="toggleArya()" aria-label="Close Arya">✕</button>
+  </div>
+  <div class="arya-body" id="aryaBody">
+    <div class="arya-msg bot">Namaste! I am Arya, your ExploreUP assistant. Ask me anything about Taj Mahal timings, Varanasi ghats, Lucknow kebabs, Ayodhya hotels, or train routes!</div>
+    <div class="arya-suggest">
+      <button onclick="aryaQuick('Agra Taj Mahal timing and trip plan')">Agra 1-Day Plan</button>
+      <button onclick="aryaQuick('Varanasi street food guide')">Varanasi Food</button>
+      <button onclick="aryaQuick('Ayodhya Ram Mandir travel guide')">Ayodhya Guide</button>
+      <button onclick="aryaQuick('How to reach Lucknow from Agra')">Agra to Lucknow</button>
+    </div>
+  </div>
+  <div class="arya-input">
+    <input id="aryaInput" placeholder="Ask Arya anything about UP..." autocomplete="off">
+    <button onclick="askArya()">Send</button>
+  </div>
+</div>
+
+<!-- Saved Favourites Widget (Floating above bottom bar) -->
+<button class="favbar" onclick="toggleFavPanel()" aria-label="My Favourites"><span style="font-size:15px">♡</span> My Favourites <span id="favCount">0</span></button>
+<div class="favpanel" id="favPanel">
+  <h3>❤️ Saved Destinations</h3>
+  <div id="favList"><div class="empty">No saved destinations yet.</div></div>
+</div>
+
+<!-- Sticky Bottom Action Bar (Plan Trip + Ask Arya) -->
+<div class="bottom-sticky-bar" id="bottomStickyBar">
+  <div class="sticky-bar-inner">
+    <button class="sticky-btn-plan" onclick="openTripPlanner()" aria-label="Plan Trip">
+      <span>🧳 Plan Trip</span>
+    </button>
+    <button class="sticky-btn-arya" onclick="toggleArya()" aria-label="Ask Arya">
+      <span>✨ Ask Arya</span>
+    </button>
+  </div>
+</div>
+
+<!-- Category Showcase Modal -->
+<div class="planner-modal" id="categoryModal" style="display:none" role="dialog" aria-modal="true">
+  <div class="planner-box" style="max-width:750px">
+    <div class="planner-head">
+      <div><h2 id="catModalTitle">Category Title</h2><small>Uttar Pradesh Highlights</small></div>
+      <button class="planner-close" onclick="closeCategoryModal()">✕</button>
+    </div>
+    <div class="planner-body" id="catModalBody"></div>
+  </div>
+</div>
+
+<!-- Admin Login Modal -->
+<div class="planner-modal" id="adminOverlay" style="display:none" role="dialog" aria-modal="true">
+  <div class="planner-box" style="max-width:500px">
+    <div class="planner-head">
+      <div><h2>ExploreUP Admin</h2><small>Administrator Sign In</small></div>
+      <button class="planner-close" onclick="closeAdminPanel()">✕</button>
+    </div>
+    <div class="planner-body">
+      <div style="display:grid;gap:10px">
+        <input id="adminEmail" type="email" placeholder="Admin email" style="padding:12px;border:1px solid var(--line);border-radius:10px">
+        <input id="adminPassword" type="password" placeholder="Password" style="padding:12px;border:1px solid var(--line);border-radius:10px">
+        <button class="hero-btn primary" style="width:100%;justify-content:center;margin-top:6px" onclick="adminLogin()">Sign In</button>
+        <div id="adminStatus" style="font-size:13px;color:#b91c1c"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Escape HTML utility to prevent XSS
+function escapeHtml(str){
+  if(!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+function exploreUpImageFallback(img){
+  try{
+    const label=(img.getAttribute('alt')||'ExploreUP').replace(/[<>&"']/g,'');
+    const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#071b35"/><stop offset="1" stop-color="#f28c28"/></linearGradient></defs><rect width="1200" height="700" fill="url(#g)"/><circle cx="1010" cy="120" r="75" fill="#fff" opacity=".16"/><path d="M0 560 L260 370 L430 500 L650 300 L900 520 L1200 350 L1200 700 L0 700Z" fill="#fff" opacity=".12"/><text x="70" y="590" font-family="Arial,sans-serif" font-size="58" font-weight="700" fill="#fff">${label}</text><text x="72" y="642" font-family="Arial,sans-serif" font-size="26" fill="#fff" opacity=".88">Explore Uttar Pradesh • ExploreUP</text></svg>`;
+    img.onerror=null;
+    img.src='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
+  }catch(e){ img.onerror=null; }
+}
+
+const exploreStorage={
+ get(k,fallback=null){try{return window.localStorage.getItem(k)??fallback}catch(e){return fallback}},
+ set(k,v){try{window.localStorage.setItem(k,v);return true}catch(e){return false}},
+ remove(k){try{window.localStorage.removeItem(k)}catch(e){}}
+};
+
+let currentExploreCity = '';
+
+// =========================================================
+// CITIES DATABASE (36 DESTINATIONS)
+// =========================================================
+const cities = [
+  {"name":"Agra","tag":"Taj Mahal & Mughal imperial heritage","img":"https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=80","places":"Taj Mahal, Agra Fort, Mehtab Bagh, Fatehpur Sikri, Itmad-ud-Daulah (Baby Taj)","food":"Agra Petha, Bedai-Jalebi, Mughlai Kebabs, Dalmoth","shop":"Panchhi Petha, Marble Inlay Souvenirs, Sadar Bazaar Leatherware","time":"Oct – Mar","budget":"₹1,500 – ₹4,500/day","tip":"Book Taj Mahal tickets online on the ASI portal; remember the Taj Mahal is closed on Fridays!","about":"Agra on the banks of the Yamuna was the celebrated capital of the Mughal Empire. It boasts three UNESCO World Heritage Sites: the Taj Mahal, Agra Fort, and nearby Fatehpur Sikri. With high-speed trains like Gatimaan Express and the Yamuna Expressway, it is one of the most accessible world-class destinations in India.","distance":"Delhi: 215 km • Lucknow: 330 km","fee":"Taj: ₹50 Indian / ₹1100 Foreigner","rating":"4.9"},
+  {"name":"Varanasi","tag":"Ghats, Ganga Aarti & spiritual capital","img":"https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=900&q=80","places":"Kashi Vishwanath Temple, Dashashwamedh Ghat, Assi Ghat, Manikarnika Ghat, Sarnath","food":"Kachori-Sabzi at Ram Bhandar, Tamatar Chaat, Malaiyo, Banarasi Paan, Blue Lassi","shop":"Banarasi Silk Sarees, Brass idols, Gulabi Meenakari, Wooden Toys","time":"Oct – Mar","budget":"₹1,200 – ₹3,500/day","tip":"Attend the evening Ganga Aarti at Dashashwamedh Ghat from a wooden boat around 6:00 PM.","about":"Varanasi (Kashi / Banaras) is one of the oldest continuously inhabited cities on earth. Sacred to Hinduism, Buddhism (Sarnath), and Jainism, it is renowned for its 84 stone ghats stretching along the holy Ganga, dawn boat rides, classical music, and world-famous Banarasi silk weaving.","distance":"Lucknow: 300 km • Prayagraj: 120 km","fee":"Ghats: Free • Sarnath: ₹25","rating":"4.9"},
+  {"name":"Lucknow","tag":"Nawabi tehzeeb, architecture & Awadhi food","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Bara Imambara & Bhool Bhulaiya, Rumi Darwaza, Chhota Imambara, Lucknow Residency, Hazratganj","food":"Tunday Galawati Kebab, Awadhi Dum Biryani, Basket Chaat, Malai Makkhan, Sheermal","shop":"Chikankari Kurta & Embroidery, Zardozi, Attar Perfume at Chowk","time":"Oct – Mar","budget":"₹1,500 – ₹4,000/day","tip":"Hire an official guide at Bara Imambara to navigate the fascinating Bhool Bhulaiya labyrinth.","about":"The capital of Uttar Pradesh, Lucknow is globally celebrated for its refined Awadhi tehzeeb (etiquette), courtly poetry, classical kathak dance, delicate Chikankari hand-embroidery, and unmatched culinary repertoire developed by the Nawabs of Awadh.","distance":"State Capital Hub","fee":"Imambara: ₹50 Indian","rating":"4.8"},
+  {"name":"Ayodhya","tag":"Ram Janmabhoomi & sacred Sarayu ghats","img":"https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80","places":"Shri Ram Janmabhoomi Mandir, Hanuman Garhi, Kanak Bhawan, Ram Ki Paidi, Nageshwarnath Temple","food":"Local Khurchan Peda, Chandrakala, Satvik Thali, Bedhai-Jalebi, Rabri","shop":"Ram Darbar statues, Sarayu holy water brass pots, Religious woodcraft","time":"Oct – Mar","budget":"₹1,200 – ₹3,000/day","tip":"Book Sugam Darshan and Aarti passes in advance on the official Sri Ram Janmabhoomi Teerth Kshetra portal.","about":"Ayodhya, on the banks of the sacred Sarayu River, is the revered birthplace of Lord Rama. With the majestic newly constructed Ram Janmabhoomi Mandir, redeveloped Ram Ki Paidi, and airport connectivity, Ayodhya is one of India's premier spiritual pilgrimage destinations.","distance":"Lucknow: 135 km • Varanasi: 200 km","fee":"Free Darshan","rating":"4.9"},
+  {"name":"Mathura","tag":"Krishna Janmabhoomi & sacred Braj culture","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Shri Krishna Janmasthan Temple, Dwarkadhish Temple, Vishram Ghat, Kans Qila, Gita Mandir","food":"Famous Mathura Peda, Makhan Mishri, Bedhai-Kachori, Dubki Wale Aloo, Lassi","shop":"Kanhaiya statues, Braj Poshaak, Brass handicrafts","time":"Sep – Mar","budget":"₹1,000 – ₹3,000/day","tip":"Attend the Yamuna Aarti at Vishram Ghat in the evening, and combine with Vrindavan (11 km away).","about":"Mathura is the ancient birthplace of Lord Krishna. Located on the Yamuna in the heart of Braj Bhumi, it has been a sacred cultural hub since antiquity, famous for its grand temples, river ghats, and joyful Holi festivals.","distance":"Agra: 55 km • Delhi: 150 km","fee":"Temple Entry: Free","rating":"4.8"},
+  {"name":"Vrindavan","tag":"Banke Bihari, Prem Mandir & bhakti traditions","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Banke Bihari Temple, Prem Mandir, ISKCON Vrindavan, Radha Raman Temple, Nidhivan, Keshi Ghat","food":"Khurchan, Malai Peda, Braj Satvik Bhog, Lassi in earthen kulhad","shop":"Devotional musical instruments, Tulsi malas, Radha-Krishna attire","time":"Oct – Mar","budget":"₹1,000 – ₹3,000/day","tip":"Prem Mandir is stunningly illuminated in rainbow colors every evening from 6:30 PM to 8:30 PM.","about":"Vrindavan is where Lord Krishna spent his playful childhood. Packed with over 5,000 temples and sacred groves, it resonates with the chanting of Radhe Radhe, ecstatic kirtans, and sublime architecture.","distance":"Mathura: 11 km • Agra: 65 km","fee":"Free Entry","rating":"4.9"},
+  {"name":"Prayagraj","tag":"Triveni Sangam, Kumbh Mela & colonial heritage","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Triveni Sangam, Anand Bhavan, Allahabad Fort & Akshayavat, Khusro Bagh, All Saints Cathedral","food":"Allahabadi Guava, Kachori-Sabzi, Samosa, Dehati Rasgulla, Rabri-Jalebi","shop":"Religious souvenirs, Books, Khadi garments","time":"Oct – Mar","budget":"₹1,200 – ₹3,200/day","tip":"Take a boat to the exact Sangam confluence where the clear Ganga meets the greenish Yamuna.","about":"Prayagraj (formerly Allahabad) stands at the sacred confluence (Sangam) of the Ganga, Yamuna, and mythical Saraswati. Host to the world's largest gathering of humanity—the Kumbh Mela—it is also deeply tied to India's independence movement.","distance":"Varanasi: 120 km • Lucknow: 200 km","fee":"Sangam Boat: ₹100–₹300","rating":"4.8"},
+  {"name":"Kanpur","tag":"Industrial powerhouse, Ganga barrage & sweets","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"JK Temple, Moti Jheel, Allen Forest Zoo, Kanpur Memorial Church, Bithoor heritage town","food":"Thaggu Ke Laddu, Badnaam Kulfi, Matka Kulfi, Biryani, Chaat at Swaroop Nagar","shop":"Fine Leather Shoes, Belts, Saddlery, Local Sweets","time":"Oct – Mar","budget":"₹1,200 – ₹3,500/day","tip":"Visit Bithoor on the banks of Ganga, associated with Maharishi Valmiki and Nana Sahib.","about":"Kanpur is Uttar Pradesh's major commercial and industrial centre on the Ganga, famous worldwide for fine leather craftsmanship, historic colonial monuments, prestigious institutions like IIT Kanpur, and delicious sweets.","distance":"Lucknow: 75 km","fee":"Zoo: ₹40","rating":"4.6"},
+  {"name":"Jhansi","tag":"Rani Lakshmibai & Bundelkhand heroic legacy","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Jhansi Fort, Rani Mahal, Government Museum Jhansi, St. Jude's Shrine, nearby Orchha","food":"Bundelkhandi Thali, Dal Bafla, Mawa Jalebi, Kadhi-Chawal","shop":"Bundeli handicrafts, Bell metal crafts, Local textiles","time":"Oct – Mar","budget":"₹1,200 – ₹3,000/day","tip":"Watch the evening Sound & Light show at Jhansi Fort depicting Rani Lakshmibai’s valor.","about":"Jhansi is the historic gateway to Bundelkhand, immortalized by the legendary courage of Rani Lakshmibai during the 1857 First War of Independence. Its massive hilltop fortress offers panoramic views of the city.","distance":"Gwalior: 100 km • Kanpur: 220 km","fee":"Fort: ₹25","rating":"4.7"},
+  {"name":"Chitrakoot","tag":"Ramayana sacred forests & Kamadgiri","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Ramghat on Mandakini, Kamadgiri Parikrama, Gupt Godavari Caves, Hanuman Dhara, Sati Anusuya","food":"Chitrakooti Peda, Mahua specialties, Satvik vegetarian thali","shop":"Wooden toys, Ayurvedic herbs, Devotional souvenirs","time":"Oct – Mar","budget":"₹1,000 – ₹2,500/day","tip":"Do the evening boat ride at Ramghat to watch the Mandakini Aarti.","about":"Chitrakoot, nestled along the holy Mandakini River in forested hills, is where Lord Rama, Sita, and Lakshmana spent eleven of their fourteen years in exile. It is an oasis of calm spirituality and natural caverns.","distance":"Prayagraj: 130 km","fee":"Gupt Godavari: ₹20","rating":"4.7"},
+  {"name":"Meerut","tag":"1857 Uprising birthplace, sports goods & Hastinapur","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Augarnath Temple (Kalipaltan), St. John's Church, Gandhi Bagh, ancient Hastinapur nearby","food":"Meerut Nankhatai, Rewri & Gajak, Falooda Kulfi, Chaat at Abu Lane","shop":"World-class Cricket bats & sports goods, Scissors, Gajak sweets","time":"Oct – Mar","budget":"₹1,200 – ₹3,000/day","tip":"Visit ancient Hastinapur (35 km), the legendary capital of the Mahabharata.","about":"Meerut in western UP is where the 1857 revolt against colonial rule was sparked at the Augarnath Temple. Today it is India's leading sports equipment and musical instrument manufacturing powerhouse.","distance":"Delhi: 70 km via Express Highway / RRTS","fee":"Free entry","rating":"4.6"},
+  {"name":"Moradabad","tag":"Peetal Nagri — India's Brass Capital","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Brass Handicraft Bazaars, Jama Masjid, Prem Wonderland, Raza Library nearby","food":"Moradabadi Dal with crunchy jalebi, Kebabs, Handi Halwa","shop":"Brass artifacts, Metal vases, Engraved lanterns, Copperware","time":"Oct – Mar","budget":"₹1,200 – ₹2,800/day","tip":"Moradabadi Dal served with butter, hing, and lemon juice is a must-try breakfast.","about":"Moradabad, known globally as 'Peetal Nagri' (Brass City), exports intricate brassware and artware across the world. Located on the Ramganga River, it boasts a vibrant artisan bazaar culture.","distance":"Delhi: 165 km • Bareilly: 90 km","fee":"Free markets","rating":"4.5"},
+  {"name":"Rampur","tag":"Nawabi cuisine, Raza Library & royal palaces","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Rampur Raza Library, Khas Bagh Palace, Gandhi Samadhi, Rampur Fort","food":"Rampuri Korma, Taar Gosht, Rampuri Biryani, Halwa Sohan","shop":"Rampuri Chhuri (traditional knives), Zari embroidery, Kites","time":"Oct – Mar","budget":"₹1,200 – ₹2,800/day","tip":"Visit Raza Library to see rare Mughal miniature paintings and ancient manuscripts.","about":"Rampur was a prominent princely state of Rohilkhand known for royal Nawabi patronage. The Indo-Saracenic Rampur Raza Library houses one of South Asia’s richest collections of rare oriental manuscripts.","distance":"Moradabad: 30 km • Delhi: 195 km","fee":"Library: ₹20","rating":"4.6"},
+  {"name":"Bareilly","tag":"Jhumka City, Zardozi embroidery & Nath temples","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Seven Shiva Nath Temples (Alakhnath, Trivatinath, Dhopeshwar), Jhumka Tiraha landmark","food":"Seekh Kebabs, Aloo Tikki, Bedmi Puri, Bareilly Ki Barfi","shop":"Zardozi embroidered fabrics, Cane furniture (Bamboo arts), Jhumka jewelry","time":"Oct – Mar","budget":"₹1,000 – ₹2,800/day","tip":"Pose at the famous giant Jhumka monument at the entrance of the city!","about":"Popularly called 'Nath Nagri' for its ancient Shiva shrines and 'Jhumka City' from Bollywood lore, Bareilly is an energetic trade hub celebrated for Zardozi craft, cane furniture, and delicious Rohilkhandi street food.","distance":"Lucknow: 250 km • Delhi: 250 km","fee":"Temples: Free","rating":"4.5"},
+  {"name":"Saharanpur","tag":"Master woodcarvers & gateway to Shivalik hills","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Maa Shakumbhari Devi Temple, Woodcraft carving market, Botanical Gardens","food":"Kachori-Sabzi, Paneer Jalebi, Mangoes in season","shop":"Hand-carved wooden screens, Sheesham furniture, Inlaid boxes","time":"Oct – Mar","budget":"₹1,000 – ₹2,600/day","tip":"Visit Shakumbhari Devi nestled in the Shivalik hill foothills during Navratri.","about":"Saharanpur in northern UP is world-famous for its exquisite hand-carved Sheesham wood furniture and handicrafts exported globally. It lies at the scenic foot of the Shivalik hills.","distance":"Dehradun: 70 km • Delhi: 180 km","fee":"Free entry","rating":"4.5"},
+  {"name":"Firozabad","tag":"Suhag Nagri — India’s Glass City","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Glass & Bangle Markets, Chandrawar Jain Temple, Kalan Masjid","food":"Kachori-Jalebi, Bedai, Mathri-Chaat, Local rabri","shop":"Glass Bangles, Chandeliers, Glass artware, Decorative glassware","time":"Oct – Mar","budget":"₹1,000 – ₹2,400/day","tip":"The buzzing Bangle Market (Gali Bohran) has millions of glittering glass bangles in every hue imaginable.","about":"Firozabad is known as 'The Glass City of India'. For centuries, its craftspeople have blown and designed colorful glass bangles, chandeliers, and decorative glassware that adorn weddings across India.","distance":"Agra: 40 km","fee":"Free markets","rating":"4.5"},
+  {"name":"Kannauj","tag":"Grame — Perfume Capital of India (Attar)","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Traditional Attar Distilleries (Deg-Bhapka), Archaeological Museum, Gauri Shankar Temple","food":"Gulab Jamun, Kachori-Sabzi, Seasonal Awadhi dishes","shop":"Mitti Attar (Petrichor / scent of rain), Ruh Gulab (Rose), Oud, Sandalwood oil","time":"Oct – Mar","budget":"₹1,000 – ₹2,500/day","tip":"Ask a local perfumer to demonstrate how 'Mitti Attar' captures the fragrance of baked earth after rain.","about":"Kannauj, former imperial capital of Emperor Harsha, has distilled exquisite organic essential oils and botanical attar using traditional copper degs and wood fires for over a millennium.","distance":"Kanpur: 80 km • Lucknow: 125 km","fee":"Museum: ₹15","rating":"4.7"},
+  {"name":"Mirzapur","tag":"Vindhyachal Shaktipeeth, waterfalls & carpets","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Maa Vindhyavasini Temple, Kali Khoh, Chunar Fort, Windom Falls, Sirsi Dam","food":"Kachori-Jalebi, Litti-Chokha, Sattu drink, Malai Peda","shop":"Hand-knotted woollen carpets, Brass utensils, Stone carvings","time":"Oct – Mar","budget":"₹1,000 – ₹2,500/day","tip":"Combine Vindhyachal darshan with the scenic trek to Windom Falls.","about":"Mirzapur sits where the fertile Gangetic plain meets the Vindhya mountains. Renowned for the sacred Vindhyachal Shaktipeeth, scenic monsoon waterfalls, and centuries of handmade carpet weaving.","distance":"Varanasi: 60 km • Prayagraj: 90 km","fee":"Free entry","rating":"4.6"},
+  {"name":"Jaunpur","tag":"Sharqi monuments, Gomti river & Shahi bridge","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Shahi Bridge (Akbari Pul), Atala Masjid, Jama Masjid, Shahi Qila","food":"Famous Jaunpuri Imarti, Beni Ram Ke Khas Tilke Laddu, Kebabs","shop":"Attar, Embroidered caps, Authentic Imarti boxes","time":"Oct – Mar","budget":"₹1,000 – ₹2,400/day","tip":"Taste the famous hot Jaunpuri Imarti made in pure desi ghee at Olandganj.","about":"Founded in the 14th century, Jaunpur was the capital of the Sharqi Sultanate and a celebrated centre of Islamic art, learning, and independent architectural splendor known for grand pylons and arched gateways.","distance":"Varanasi: 60 km • Lucknow: 220 km","fee":"Shahi Qila: ₹25","rating":"4.6"},
+  {"name":"Gorakhpur","tag":"Gorakhnath Temple & Gita Press headquarters","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Gorakhnath Mandir, Ramgarh Tal & Water Sports Complex, Gita Press, Rail Museum","food":"Galgal Ka Achar, Ghugni-Chaat, Peda, Eastern UP Samosa","shop":"Gita Press books & scripture, Terracotta art of Bhathat","time":"Oct – Mar","budget":"₹1,200 – ₹2,800/day","tip":"Enjoy an evening boating and musical fountain show by the Ramgarh Tal promenade.","about":"Gorakhpur is the cultural anchor of eastern UP, home to the revered Gorakhnath Math, the historic Gita Press (world's largest publisher of Hindu texts), and the vast scenic Ramgarh Tal lake.","distance":"Lucknow: 270 km • Ayodhya: 135 km","fee":"Free entry","rating":"4.7"},
+  {"name":"Kushinagar","tag":"The Buddha's Mahaparinirvana pilgrimage","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Mahaparinirvana Temple, Ramabhar Stupa, Matha Kuar Shrine, International Monasteries (Thai, Japanese, Burmese)","food":"Satvik vegetarian food, Lal Khurma, Kheer, Simple pilgrim meals","shop":"Buddhist prayer wheels, Brass Buddha statues, Bodhi tree souvenirs","time":"Oct – Mar","budget":"₹1,000 – ₹2,500/day","tip":"Step inside the serene Mahaparinirvana Temple to view the 6-metre reclining Buddha statue of red sandstone.","about":"Kushinagar is one of the four most sacred Buddhist pilgrimage destinations in the world, where Gautama Buddha attained Mahaparinirvana in 483 BCE. It features peaceful international monasteries and manicured gardens.","distance":"Gorakhpur: 50 km (Airport attached)","fee":"Temple: ₹25","rating":"4.8"},
+  {"name":"Lakhimpur Kheri","tag":"Dudhwa Tiger Reserve & Terai wild forests","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Dudhwa National Park, Kishanpur Wildlife Sanctuary, Frog Temple (Manduk Mandir) in Oel","food":"Terai freshwater fish, Banana chips, Local sugarcane jaggery","shop":"Pure organic jaggery (Gur), Tharu tribal handicrafts","time":"Nov – Apr (Park season)","budget":"₹2,000 – ₹5,000/day","tip":"Book jeep safari permits early on the UP Forest department portal to see Tigers and One-horned Rhinos!","about":"UP's largest district spans the Terai marshes bordering Nepal. Dudhwa National Park is a haven for the Royal Bengal Tiger, Indian Rhinoceros, Swamp Deer (Barasingha), and over 400 species of birds.","distance":"Lucknow: 135 km","fee":"Safari: ₹2,500–₹4,000","rating":"4.8"},
+  {"name":"Sonbhadra","tag":"Tribal art, ancient forts, dams & waterfalls","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Vijaygarh Fort, Rihand Dam (Govind Ballabh Pant Sagar), Salkhan Fossil Park, Mukha Falls","food":"Millet breads, Sattu snacks, Local river fish, Sweets","shop":"Stone crafts, Tribal bead jewelry, Bamboo items","time":"Oct – Mar","budget":"₹1,000 – ₹2,500/day","tip":"Visit Salkhan Fossil Park, featuring tree-algal fossils estimated to be over 1.4 billion years old!","about":"Sonbhadra in the far south of UP borders four states (MP, Chhattisgarh, Jharkhand, Bihar). Known for its dramatic hills, ancient rock-art shelters, giant dams, and raw natural beauty.","distance":"Varanasi: 110 km","fee":"Fossil Park: Free","rating":"4.6"},
+  {"name":"Bhadohi","tag":"Carpet Capital of South Asia","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Carpet Weaving Looms, Sita Samahit Sthal (Sitamarhi), Semradh Nath Temple","food":"Kachori-Jalebi, Samosa, Purvanchali Thali, Lassi","shop":"Hand-knotted Silk & Woollen Persian-style Carpets, Durries, Rugs","time":"Oct – Mar","budget":"₹1,000 – ₹2,500/day","tip":"Visit a master weaver's atelier to witness how thousands of intricate knots form a single silk carpet.","about":"Bhadohi produces and weaves the largest volume of hand-knotted carpets in South Asia, carrying an exquisite weaving lineage dating back to the reign of Emperor Akbar.","distance":"Varanasi: 45 km • Prayagraj: 75 km","fee":"Free entry","rating":"4.5"},
+  {"name":"Pratapgarh","tag":"Amla Capital & Bela Devi sacred temple","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Maa Bela Devi Temple, Sai Riverfront, Bhakti Dham Mangarh, Haudha Fort","food":"Amla Murabba, Amla Candy, Kadhai Puri, Red Peda","shop":"Organic Amla products, Ayurvedic tonics, Pickles","time":"Oct – Mar","budget":"₹900 – ₹2,200/day","tip":"Pick up fresh amla (Indian gooseberry) murabba and natural preserves directly from local growers.","about":"Pratapgarh on the Sai River is world-renowned as the 'Amla Capital', supplying nutrient-rich gooseberry products nationwide. It is also an important stop on the pilgrim trail between Prayagraj and Ayodhya.","distance":"Prayagraj: 60 km • Lucknow: 160 km","fee":"Free entry","rating":"4.5"},
+  {"name":"Etawah","tag":"Chambal ravines, Lion Safari & wildlife","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Etawah Safari Park (Lion & Leopard Safari), National Chambal Sanctuary, Victoria Memorial","food":"Etawah Bedai, Gulab Jamun, Kachori-Aloo","shop":"Khadi fabrics, Local dairy ghee, Sweets","time":"Oct – Mar","budget":"₹1,200 – ₹2,800/day","tip":"Take a boat safari on the crystal-clear Chambal River to spot Gharials, Gangetic Dolphins, and Skimmers.","about":"Located at the confluence of the Yamuna and Chambal rivers, Etawah features Asia's largest drive-through wildlife safari park and the pristine National Chambal Sanctuary.","distance":"Agra: 120 km (Connected by Expressway)","fee":"Safari: ₹200–₹300","rating":"4.6"},
+  {"name":"Aligarh","tag":"Lock Capital of India & AMU university heritage","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Aligarh Muslim University & Sir Syed Academy, Aligarh Fort, Naqvi Park, Achal Taal","food":"Aligarh Barfi, Chaat, Mughlai Kebabs, Dalmoth, Lassi","shop":"Handcrafted brass & steel locks, Hardware, Heritage books","time":"Oct – Mar","budget":"₹1,000 – ₹2,800/day","tip":"Explore the historic British-era and Indo-Saracenic university campus and its famed Maulana Azad Library.","about":"Known globally as 'Tala Nagri' (Lock City) for manufacturing over 75% of India’s brass and security locks, Aligarh is also renowned for its premier historical educational institutions.","distance":"Delhi: 130 km • Agra: 85 km","fee":"Free entry","rating":"4.6"},
+  {"name":"Bulandshahr","tag":"Khurja Pottery capital & Ganga ghats","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Khurja Ceramic Studios, Karnavas Ganga Ghats, Belon Devi Temple, Anupshahr","food":"Rabri, Khurja Peda, Dal Makhani, Samosa","shop":"Ceramic tableware, Glazed flower pots, Bone china, Hand-painted crockery","time":"Oct – Mar","budget":"₹1,000 – ₹2,400/day","tip":"Khurja is a shopper's paradise for studio pottery, tableware, and ceramic home decor at direct factory prices!","about":"Home to the world-famous ceramic cluster of Khurja, Bulandshahr produces handcrafted glazed ceramics, tiles, and crockery that travel from the banks of the Kali and Ganga to households worldwide.","distance":"Delhi: 75 km","fee":"Free markets","rating":"4.5"},
+  {"name":"Hapur","tag":"Pilkhuwa handloom bedsheets & regional trade","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Pilkhuwa Handloom Textile Market, Garhmukteshwar holy Ganga ghats nearby","food":"Papdi Chaat, Jalebi, Matar-Kulcha, Sweet Lassi","shop":"Pure cotton handloom bedsheets, Block-printed quilts, Jacquard home linen","time":"Oct – Mar","budget":"₹1,000 – ₹2,200/day","tip":"Garhmukteshwar on the holy Ganga is just 30 km away, ideal for Kartik Purnima snan.","about":"Hapur and neighboring Pilkhuwa are renowned across northern India for top-quality cotton handloom bedsheets, kantha quilts, and block-printed home textiles, complemented by historic Ganga pilgrimage sites.","distance":"Delhi: 55 km","fee":"Free entry","rating":"4.4"},
+  {"name":"Muzaffarnagar","tag":"Sugar bowl of India & Vahelna Jain temple","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Vahelna Jain Temple (Giant Parshvanatha statue), Shukratal on Ganga (Bhagavata Purana site)","food":"Desi Gur (Jaggery) sweets, Bedmi Puri, Rabri, Sugarcane juice","shop":"Artisanal organic jaggery, Sesame chikki, Agriculture tools","time":"Oct – Mar","budget":"₹1,000 – ₹2,400/day","tip":"Visit Shukratal (30 km), where Sage Shukadeva recited the Shrimad Bhagavata Purana to King Parikshit under the immortal banyan tree.","about":"Known as the 'Sugar Bowl of India' with the largest jaggery market in the country, Muzaffarnagar also preserves venerable spiritual shrines like Vahelna and Shukratal on the holy Ganga.","distance":"Delhi: 120 km • Meerut: 55 km","fee":"Free entry","rating":"4.5"},
+  {"name":"Pilibhit","tag":"Pilibhit Tiger Reserve & Chuka Beach wetland","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Pilibhit Tiger Reserve, Chuka Eco-Tourism Beach on Sharda Sagar, Gauri Shankar Temple","food":"Local Terai Kheer, Fresh dairy sweets, Dal-roti meals","shop":"Handcrafted bamboo flutes (Bansuri), Wood carvings, Pure honey","time":"Nov – Apr (Safari season)","budget":"₹1,800 – ₹4,500/day","tip":"Stay at the bamboo treehouses of Chuka Beach overlooking the vast serene Sharda reservoir.","about":"Pilibhit at the Himalayan foothills boasts the acclaimed Pilibhit Tiger Reserve (awarded TX2 for doubling wild tiger count) and the famous bamboo flute (bansuri) artisan community.","distance":"Bareilly: 50 km • Delhi: 300 km","fee":"Safari: ₹2,000–₹3,500","rating":"4.8"},
+  {"name":"Amroha","tag":"Dholak instrument city & mango orchards","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Traditional Dholak workshops, Dargah of Shah Vilayat, Vasudev Temple","food":"Amroha Mangoes (Dasheri/Chausa), Shahi Tukda, Kebabs","shop":"Handcrafted Dholaks, Tabla sets, Wooden musical instruments","time":"Oct – Mar","budget":"₹900 – ₹2,200/day","tip":"Visit an instrument workshop in Danishmandan to see how raw mango wood turns into resonant percussion instruments.","about":"Amroha is internationally famous for manufacturing handcrafted wooden dholaks, tablas, and folk percussion instruments, alongside lush mango orchards that yield some of India’s finest fruit.","distance":"Delhi: 130 km • Moradabad: 35 km","fee":"Free entry","rating":"4.5"},
+  {"name":"Budaun","tag":"Ancient historic shrines & Rohilkhand heritage","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Budaun Jama Masjid (Built by Iltutmish in 1223), Dargah of Hazrat Sultanji, Birua Badi Temple","food":"Budaun Peda, Sohan Halwa, Kachori-Aloo, Seekh Kebabs","shop":"Zari-Zardozi embroidery, Handloom fabrics, Traditional sweets","time":"Oct – Mar","budget":"₹1,000 – ₹2,200/day","tip":"The massive 800-year-old Jama Masjid is one of the largest early medieval mosques in India.","about":"Budaun is an ancient city of scholarly, Sufi, and imperial heritage mentioned in the Mahabharata as Vodamayuta. During the Delhi Sultanate, it was a pivotal seat of government and culture.","distance":"Bareilly: 45 km • Delhi: 220 km","fee":"Free entry","rating":"4.5"},
+  {"name":"Chandauli","tag":"Vindhyan waterfalls & Chandra Prabha Sanctuary","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Rajdari & Devdari Waterfalls, Chandra Prabha Wildlife Sanctuary, Latif Shah Dam","food":"Purvanchali Thali, Litti-Chokha, Sattu drink, Jalebi","shop":"Agricultural grains (Bowl of UP rice), Stone artifacts","time":"Jul – Feb (Waterfalls peak in monsoon/winter)","budget":"₹1,000 – ₹2,400/day","tip":"Visit Rajdari & Devdari waterfalls just after the monsoons when the tiered cascades plunge through forested canyons!","about":"Known as the 'Rice Bowl of Uttar Pradesh', Chandauli borders Bihar and Varanasi. Its southern hills conceal the forested gorges, wildlife, and dramatic stepped waterfalls of Chandra Prabha Sanctuary.","distance":"Varanasi: 35 km","fee":"Sanctuary: ₹30","rating":"4.7"},
+  {"name":"Sultanpur","tag":"Parijat holy tree, Gomti river & Awadhi charm","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Parijat Tree at Kurebhar, Victoria Manzil, Sitakund on Gomti, Dhopap pilgrim ghats","food":"Famous Red Peda, Kadhai Puri, Samosa, Awadhi sweets","shop":"Red Peda boxes, Local brassware, Traditional crafts","time":"Oct – Mar","budget":"₹900 – ₹2,200/day","tip":"Dhopap is where Lord Rama is believed to have bathed in the Gomti to wash away sins after defeating Ravana.","about":"Sultanpur is located on the Gomti River between Lucknow and Varanasi. It combines pastoral Awadhi warmth, legendary sacred spots like Dhopap, and distinctive red khoya pedas.","distance":"Lucknow: 140 km • Ayodhya: 65 km","fee":"Free entry","rating":"4.4"},
+  {"name":"Unnao","tag":"Nawabganj Bird Sanctuary & freedom fighters' soil","img":"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80","places":"Nawabganj Bird Sanctuary (Shahid Chandra Shekhar Azad), Chandrika Devi Temple, Buxar ghats","food":"Famous Unnao Kala Jamun, Kushli, Samosa, Chaat","shop":"Leather goods, Handloom textiles, Sweet boxes","time":"Oct – Mar","budget":"₹1,000 – ₹2,400/day","tip":"Nawabganj lake hosts over 250 species of migratory birds from Siberia and Tibet during winter months!","about":"Positioned conveniently between Lucknow and Kanpur, Unnao is celebrated for the birdwatching wetland haven of Nawabganj, delicious giant Kala Jamuns, and rich contributions to India’s freedom struggle.","distance":"Kanpur: 20 km • Lucknow: 55 km","fee":"Bird Sanctuary: ₹30","rating":"4.5"}
+];
+
+// =========================================================
+// TRANSPORT DATA REPOSITORY (COMPREHENSIVE FOR ALL CITIES)
+// =========================================================
+const transportData = {
+  "Agra": {
+    railSummary: "Agra is one of India's best-connected rail hubs with three primary stations: Agra Cantt (AGC), Agra Fort (AF), and Raja Ki Mandi (RKM). Superfast express trains like Gatimaan Express (Delhi-Agra in 100 min) and Vande Bharat operate daily.",
+    railStations: [
+      { name: "Agra Cantt (AGC)", type: "Primary Junction", desc: "Terminal for Gatimaan Express, Vande Bharat, Shatabdi, Taj Express, and major trunk routes to Mumbai, Chennai, Bengaluru, Kolkata, and Jaipur." },
+      { name: "Agra Fort (AF)", type: "Historic Terminal", desc: "Walking distance to Agra Fort monument. Direct trains to Varanasi, Lucknow, Kanpur, and Rajasthan (Jaipur, Ajmer)." },
+      { name: "Raja Ki Mandi (RKM)", type: "City Centre Station", desc: "Convenient for central city access and intercity shuttle trains." }
+    ],
+    airSummary: "Agra Airport (Kheria Airport - AGR) operates commercial domestic flights connecting to Lucknow, Mumbai, and Bengaluru. Delhi IGI International Airport is only 3 hours away via the 6-lane Yamuna Expressway.",
+    airports: [
+      { name: "Agra Airport (Kheria, AGR)", type: "Commercial Airport", desc: "7 km from Agra city centre. Direct flights to Lucknow, Mumbai, Ahmedabad, Bengaluru." },
+      { name: "Delhi IGI Airport (DEL)", type: "Nearest Major International Hub", desc: "215 km (approx. 3.5 hrs) via seamless Yamuna Expressway." }
+    ],
+    busSummary: "World-class expressway connectivity: Yamuna Expressway connects Agra to Delhi-NCR in 2.5 hrs, and the Agra-Lucknow Expressway (302 km) connects to Lucknow in 3.5 hrs. Major bus terminals: ISBT Agra (Transport Nagar) and Idgah Bus Stand.",
+    busSearch: "ISBT Agra Transport Nagar",
+    localSummary: "Agra Metro Priority Corridor (Taj East Gate to Jama Masjid / Agra Fort) is fully active! Electric autos (E-rickshaws), tourist taxis, and app-based cabs (Uber/Ola) operate across monuments.",
+    localSearch: "Agra Metro station Taj East Gate"
+  },
+  "Lucknow": {
+    railSummary: "Lucknow is the headquarters of Northern and North Eastern Railway divisions. Iconic Lucknow Charbagh Station (LKO/LJN) and modern Gomti Nagar Terminal (GTNR) link to every major city in India with Vande Bharat, Tejas, and Shatabdi.",
+    railStations: [
+      { name: "Lucknow Charbagh (LKO / LJN)", type: "Mega Railway Hub", desc: "Grand palace-like architectural station. High-frequency connectivity to Delhi, Mumbai, Kolkata, Varanasi, Ayodhya, and Gorakhpur." },
+      { name: "Gomti Nagar Terminal (GTNR)", type: "Redeveloped World-class Terminal", desc: "State-of-the-art terminal serving Gomti Nagar and Trans-Gomti; terminal for elite Vande Bharat trains." }
+    ],
+    airSummary: "Chaudhary Charan Singh International Airport (Amausi - LKO) with Terminal 3 connects Lucknow with non-stop flights to all major Indian metros and international destinations in the Gulf.",
+    airports: [
+      { name: "Chaudhary Charan Singh International Airport (LKO)", type: "International Airport (T1, T2, T3)", desc: "12 km from city; integrated directly with Lucknow Metro Red Line for fast transit." }
+    ],
+    busSummary: "Ultra-modern Alambagh Bus Terminal, Kaisarbagh Bus Stand, and Kamta Bus Station run round-the-clock air-conditioned Janrath and Scania buses across UP, Delhi, and Uttarakhand.",
+    busSearch: "Alambagh Bus Terminal Lucknow",
+    localSummary: "Lucknow Metro Red Line connects CCS Airport directly to Charbagh and Munshi Pulia (23 km). E-rickshaws, city electric buses, and app-based cabs operate 24x7.",
+    localSearch: "Lucknow Metro Charbagh Station"
+  },
+  "Varanasi": {
+    railSummary: "Served by Varanasi Junction (Cantt - BSB), modern Banaras Station (BSBS), and Pt. Deen Dayal Upadhyaya Junction (DDU / Mughal Sarai, 16 km away). Daily Vande Bharat expresses connect to New Delhi in under 8 hours.",
+    railStations: [
+      { name: "Varanasi Junction (BSB / Cantt)", type: "Main Railway Junction", desc: "Central station with executive lounges, escalators, and tourist help desks." },
+      { name: "Banaras Station (BSBS)", type: "World-class Redeveloped Station", desc: "Airport-like ambiance with heritage murals and Vande Bharat originations." },
+      { name: "Pt. Deen Dayal Upadhyaya Jn (DDU)", type: "Major Trunk Hub (16 km)", desc: "One of India's largest junctions on the Delhi-Howrah mainline." }
+    ],
+    airSummary: "Lal Bahadur Shastri International Airport (Babatpur - VNS) is 24 km from the ghats, offering frequent flights to Delhi, Mumbai, Bengaluru, Hyderabad, Kolkata, Bangkok, and Kathmandu.",
+    airports: [
+      { name: "Lal Bahadur Shastri International Airport (VNS)", type: "International Airport", desc: "Connected by the 4-lane Varanasi Ring Road and Airport Express Highway." }
+    ],
+    busSummary: "Cantt Bus Stand opposite Varanasi Cantt Railway Station runs regular services to Prayagraj (2.5 hrs), Gorakhpur, Ayodhya, Lucknow, and Bodh Gaya.",
+    busSearch: "Varanasi Cantt Bus Stand",
+    localSummary: "Shared and private e-rickshaws navigate old city lanes. Along the holy Ganga, electric tourist catamarans and traditional wooden boats connect Assi Ghat to Rajghat.",
+    localSearch: "Dashashwamedh Ghat Varanasi"
+  },
+  "Ayodhya": {
+    railSummary: "Ayodhya is served by the grand redeveloped Ayodhya Dham Junction (AY) and Ayodhya Cantt (AYC). Multiple Vande Bharat and Amrit Bharat Express trains connect directly to New Delhi, Anand Vihar, Gorakhpur, and Patna.",
+    railStations: [
+      { name: "Ayodhya Dham Junction (AY)", type: "Temple-architecture Junction", desc: "Steps from Ram Janmabhoomi Path; features air-conditioned waiting halls and electric shuttle transfers." },
+      { name: "Ayodhya Cantt (AYC)", type: "Primary Long-distance Terminal", desc: "Major stop for cross-country express trains." }
+    ],
+    airSummary: "Maharishi Valmiki International Airport Ayodhya Dham (AYJ) operates non-stop flights from Delhi, Mumbai, Ahmedabad, Bengaluru, Kolkata, and Chennai.",
+    airports: [
+      { name: "Maharishi Valmiki International Airport (AYJ)", type: "International Airport", desc: "8 km from the Ram Mandir complex; designed with magnificent traditional temple nagara architecture." }
+    ],
+    busSummary: "Ayodhya ISBT and Civil Lines Bus Stand offer frequent air-conditioned buses to Lucknow (2.5 hrs), Gorakhpur (2.5 hrs), Varanasi (3.5 hrs), and Prayagraj (3 hrs).",
+    busSearch: "Ayodhya Bus Stand",
+    localSummary: "Eco-friendly zero-emission transit: electric golf carts, AC electric city buses, and battery e-rickshaws operate on Ram Path, Bhakti Path, and Dharma Path.",
+    localSearch: "Ram Janmabhoomi Ayodhya"
+  },
+  "Mathura": {
+    railSummary: "Mathura Junction (MTJ) is a critical 7-route mega-junction on the main Delhi-Mumbai line. Hundreds of Rajdhani, Shatabdi, and superfast trains connect Mathura to Delhi in just 1.5–2 hours.",
+    railStations: [
+      { name: "Mathura Junction (MTJ)", type: "Primary 7-Route Junction", desc: "High-frequency express trains to Delhi, Agra (45 min), Mumbai, Kota, Jaipur, and Kanpur." },
+      { name: "Mathura Cantt (MRT)", type: "Secondary Station", desc: "Connects eastern routes towards Bareilly and Kasganj." }
+    ],
+    airSummary: "Nearest airports are Agra Airport (55 km, 1 hr) and Delhi IGI International Airport (150 km, 2.5 hrs via Yamuna Expressway).",
+    airports: [
+      { name: "Agra Airport (AGR)", type: "Domestic Airport (55 km)", desc: "1 hr drive via NH 19." },
+      { name: "Delhi IGI Airport (DEL)", type: "International Hub (150 km)", desc: "Smooth high-speed drive via Yamuna Expressway." }
+    ],
+    busSummary: "Mathura New Bus Stand and Old Bus Stand connect to Delhi (Sarai Kale Khan / Anand Vihar), Agra, Jaipur, Aligarh, and Vrindavan.",
+    busSearch: "Mathura New Bus Stand",
+    localSummary: "Shared electric autos, e-buses, and private cabs connect Mathura and Vrindavan (11 km) seamlessly. E-rickshaws handle temple lane access.",
+    localSearch: "Krishna Janmabhoomi Mathura"
+  },
+  "Vrindavan": {
+    railSummary: "Most long-distance travelers arrive at Mathura Junction (MTJ, 11 km away) and take a 20-minute taxi or e-rickshaw to Vrindavan. Vrindavan station also features a local rail shuttle.",
+    railStations: [
+      { name: "Mathura Junction (MTJ)", type: "Primary Rail Hub (11 km)", desc: "Major junction with trains from all Indian states; 20-min cab to Vrindavan." },
+      { name: "Vrindavan Station (BDB)", type: "Local Rail Link", desc: "Heritage rail bus service connecting to Mathura." }
+    ],
+    airSummary: "Agra Airport (65 km) and Delhi IGI Airport (155 km) connect easily via the Yamuna Expressway (Vrindavan Cut).",
+    airports: [
+      { name: "Delhi IGI Airport (DEL)", type: "International Gateway (155 km)", desc: "Fast highway drive via Yamuna Expressway." }
+    ],
+    busSummary: "Vrindavan Bus Stand (Chatikara Road) offers regular UPSRTC services to Delhi, Agra, Mathura, and Jaipur.",
+    busSearch: "Vrindavan Bus Stand",
+    localSummary: "Vrindavan is an eco-friendly pedestrian and e-rickshaw town. Most temple precincts around Banke Bihari, ISKCON, and Prem Mandir allow e-rickshaws and golf carts.",
+    localSearch: "Prem Mandir Vrindavan"
+  },
+  "Prayagraj": {
+    railSummary: "Prayagraj Junction (PRYJ) is the headquarters of North Central Railway. Subedarganj (SFG) and Prayagraj Chheoki (PCOI) handle heavy trans-India traffic, including Vande Bharat to New Delhi.",
+    railStations: [
+      { name: "Prayagraj Junction (PRYJ)", type: "Main Railway Junction", desc: "Delhi-Howrah trunk line. Upgraded passenger lounges and pilgrim amenities." },
+      { name: "Prayagraj Chheoki (PCOI)", type: "Southern/Central Bypass Junction", desc: "Serves trains towards Mumbai, Pune, Jabalpur, and Bengaluru." }
+    ],
+    airSummary: "Prayagraj Airport (Bamrauli - IXD) operates flights to Delhi, Mumbai, Bengaluru, Bhopal, and Lucknow.",
+    airports: [
+      { name: "Prayagraj Airport (Bamrauli, IXD)", type: "Commercial Airport", desc: "12 km from Civil Lines; upgraded for Kumbh Mela passenger capacity." }
+    ],
+    busSummary: "Civil Lines Bus Station and Zero Road Bus Stand connect to Varanasi (2.5 hrs), Lucknow (3.5 hrs), Kanpur (3 hrs), and Ayodhya (3 hrs).",
+    busSearch: "Civil Lines Bus Stand Prayagraj",
+    localSummary: "Electric city buses, app cabs, and autos operate across the city. Dedicated shuttle services connect Sangam ghats with railway stations.",
+    localSearch: "Triveni Sangam Prayagraj"
+  },
+  "Kanpur": {
+    railSummary: "Kanpur Central (CNB) is one of India's busiest railway junctions with 10 platforms handling over 300 trains daily. Vande Bharat, Shatabdi, and Rajdhani express trains connect Kanpur to Delhi in under 4.5 hours.",
+    railStations: [
+      { name: "Kanpur Central (CNB)", type: "Mega Railway Hub", desc: "Direct connectivity to all four corners of India. World-class facilities." },
+      { name: "Govindpuri Junction (GOY)", type: "Satellite Station", desc: "Connects Bundelkhand and central routes." }
+    ],
+    airSummary: "Kanpur Airport (Chakeri - KNU) features a modern terminal with flights to Delhi, Mumbai, and Bengaluru.",
+    airports: [
+      { name: "Kanpur Airport (Chakeri, KNU)", type: "Commercial Airport", desc: "10 km from city; Lucknow CCS Airport is also only 75 km away via expressway." }
+    ],
+    busSummary: "Jhakarkati Bus Station is one of UP's largest intercity bus depots. Chuniganj and Rawatpur stands also operate intercity routes.",
+    busSearch: "Jhakarkati Bus Stand Kanpur",
+    localSummary: "Kanpur Metro Orange Line (IIT Kanpur to Motijheel) is operational! E-rickshaws, city electric buses, and app cabs provide high-frequency transit.",
+    localSearch: "Kanpur Metro IIT Station"
+  },
+  "Jhansi": {
+    railSummary: "Virangana Lakshmibai Jhansi Junction (VGLJ) is the premier North-South gateway of Indian Railways. Delhi-Bhopal Shatabdi, Gatimaan Express, and hundreds of superfast trains pass through Jhansi.",
+    railStations: [
+      { name: "Virangana Lakshmibai Jhansi (VGLJ)", type: "Major Central Junction", desc: "Direct superfast connectivity to Delhi (4 hrs), Bhopal (3.5 hrs), Mumbai, and Chennai." }
+    ],
+    airSummary: "Nearest operational commercial airports are Gwalior Airport (GWL - 100 km, 1.5 hrs) and Khajuraho Airport (HJR - 175 km).",
+    airports: [
+      { name: "Gwalior Airport (GWL)", type: "Commercial Airport (100 km)", desc: "Daily flights to Delhi, Mumbai, Bengaluru, Hyderabad." }
+    ],
+    busSummary: "Jhansi ISBT near Medical College connects to Gwalior, Orchha, Khajuraho, Shivpuri, Kanpur, and Lucknow.",
+    busSearch: "Jhansi Bus Stand",
+    localSummary: "Autos, tempos, e-rickshaws, and tourist taxis to Jhansi Fort, Rani Mahal, and nearby Orchha (16 km across the MP border).",
+    localSearch: "Jhansi Fort"
+  }
+};
+
+// =========================================================
+// CONTACT DIRECTORY (HOTELS & HOSPITALS)
+// =========================================================
+const contactData = {
+  "Agra": {
+    hotels: [
+      { name: "The Oberoi Amarvilas", type: "Ultra-luxury Heritage Resort (600m from Taj)", address: "Taj East Gate Road, Tajganj, Agra, Uttar Pradesh 282001", phone: "+915622231515", website: "https://www.oberoihotels.com/" },
+      { name: "ITC Mughal, a Luxury Collection Hotel", type: "Five-star Luxury & Spa Resort", address: "Fatehabad Road, Tajganj, Agra, Uttar Pradesh 282001", phone: "+915624021700", website: "https://www.itchotels.com/" },
+      { name: "Tajview, Agra - IHCL SeleQtions", type: "Five-star Hotel with Taj view", address: "Fatehabad Road, Tajganj, Agra, Uttar Pradesh 282001", phone: "+915626602000", website: "https://www.seleqtionshotels.com/" },
+      { name: "Courtyard by Marriott Agra", type: "Upscale Business & Leisure Hotel", address: "Fatehabad Road, Taj Nagri Phase 2, Agra, Uttar Pradesh 282001", phone: "+915622457777", website: "https://www.marriott.com/" },
+      { name: "DoubleTree by Hilton Hotel Agra", type: "Luxury Hotel", address: "B/H - 1&2, Taj Nagri Phase 2, Fatehabad Road, Agra, Uttar Pradesh 282001", phone: "+915627102323", website: "https://www.hilton.com/" },
+      { name: "Hotel Clarks Shiraz Agra", type: "Heritage & Business Hotel", address: "54, Taj Road, Agra Cantonment, Agra, Uttar Pradesh 282001", phone: "+915622226121", website: "https://www.hotelclarksshiraz.com/" },
+      { name: "Crystal Sarovar Premiere", type: "Premium Hotel", address: "Fatehabad Road, Tajganj, Agra, Uttar Pradesh 282001", phone: "+915627110711", website: "https://www.sarovarhotels.com/" }
+    ],
+    hospitals: [
+      { name: "Sarojini Naidu Medical College & Hospital (SN Hospital)", type: "Government Apex Teaching Hospital", address: "Moti Katra, Civil Lines, Agra, Uttar Pradesh 282002", phone: "+915622260353", extra: "Emergency Trauma Care 24x7; Helpline: 0562-2260353", website: "https://snmcagra.ac.in/" },
+      { name: "Pushpanjali Hospital & Research Centre", type: "Multi-speciality Hospital", address: "Delhi Gate, Agra, Uttar Pradesh 282002", phone: "+915622851500", extra: "24x7 Emergency & Cardiac Helpline: 0562-2851500", website: "https://pushpanjalihospital.in/" },
+      { name: "District Hospital Agra (Pandit Deen Dayal)", type: "Government District Hospital", address: "Hospital Road, Mantola, Agra, Uttar Pradesh 282003", phone: "+915622464402", extra: "Government Emergency 24x7", website: "https://agra.nic.in/" },
+      { name: "Apollo Spectra Hospitals, Agra", type: "Super Speciality Care", address: "Plot No 4, Fatehabad Road, Agra, Uttar Pradesh 282001", phone: "+915626622222", website: "https://www.apollospectra.com/" }
+    ]
+  },
+  "Lucknow": {
+    hotels: [
+      { name: "Taj Mahal, Lucknow", type: "Five-star Luxury Heritage", address: "Vipin Khand, Gomti Nagar, Lucknow, Uttar Pradesh 226010", phone: "+915226711000", website: "https://www.tajhotels.com/" },
+      { name: "Clarks Avadh Lucknow", type: "Heritage Riverfront Hotel", address: "8, Mahatma Gandhi Marg, Hazratganj, Lucknow, Uttar Pradesh 226001", phone: "+915226201313", website: "https://www.clarksavadh.com/" },
+      { name: "Hyatt Regency Lucknow", type: "Luxury Five-star Hotel", address: "Regency Road, Vibhuti Khand, Gomti Nagar, Lucknow, Uttar Pradesh 226010", phone: "+915224261234", website: "https://www.hyatt.com/" },
+      { name: "Novotel Lucknow Gomti Nagar", type: "Upscale Hotel", address: "Viraj Khand-4, Gomti Nagar, Lucknow, Uttar Pradesh 226010", phone: "+915227157001", website: "https://all.accor.com/" },
+      { name: "The Centrum, Lucknow", type: "Five-star Resort & Convention Centre", address: "Pocket 7, Sector C, Sushant Golf City, Lucknow, Uttar Pradesh 226030", phone: "+915226722222", website: "https://thecentrum.in/" }
+    ],
+    hospitals: [
+      { name: "King George's Medical University (KGMU)", type: "Premier Government Teaching Hospital", address: "Shah Mina Road, Chowk, Lucknow, Uttar Pradesh 226003", phone: "+915222257451", extra: "Emergency: 0522-2258880 • Ambulance: +91 9453004209", website: "https://www.kgmu.org/" },
+      { name: "Sanjay Gandhi Postgraduate Institute (SGPGIMS)", type: "Apex Super-speciality Institute", address: "Raebareli Road, Lucknow, Uttar Pradesh 226014", phone: "+915222494470", extra: "Emergency: 0522-2494470", website: "https://sgpgims.in/" },
+      { name: "Medanta Super Speciality Hospital", type: "Multi Super-speciality Hospital", address: "Sector-A, Pocket-1, Sushant Golf City, Amar Shaheed Path, Lucknow, Uttar Pradesh 226030", phone: "+915224505050", website: "https://www.medanta.org/" },
+      { name: "Apollo Medics Super Speciality Hospital", type: "Private Super-speciality Hospital", address: "Sector B, Bargawan, LDA Colony, Lucknow, Uttar Pradesh 226012", phone: "+915226788888", website: "https://www.apollohospitals.com/" }
+    ]
+  },
+  "Varanasi": {
+    hotels: [
+      { name: "BrijRama Palace, Varanasi", type: "Heritage Palace on Darbhanga Ghat", address: "Darbhanga Ghat, Dashashwamedh, Varanasi, Uttar Pradesh 221001", phone: "+915422402120", website: "https://www.brijhotels.com/" },
+      { name: "Taj Ganges, Varanasi", type: "Five-star Luxury Resort", address: "Nadesar Palace Grounds, Varanasi, Uttar Pradesh 221002", phone: "+915426660001", website: "https://www.tajhotels.com/" },
+      { name: "Radisson Hotel Varanasi", type: "Luxury Hotel", address: "The Mall, Cantonment, Varanasi, Uttar Pradesh 221002", phone: "+915422501515", website: "https://www.radissonhotels.com/" },
+      { name: "Hotel Surya, Kaiser Palace", type: "Heritage Hotel", address: "The Mall, Cantonment, Varanasi, Uttar Pradesh 221002", phone: "+915422508465", website: "https://www.hotelsuryavns.com/" }
+    ],
+    hospitals: [
+      { name: "Sir Sunderlal Hospital (IMS-BHU)", type: "Apex Central University Teaching Hospital", address: "Banaras Hindu University Campus, Varanasi, Uttar Pradesh 221005", phone: "+915422369291", extra: "24x7 Emergency Trauma Centre", website: "https://www.bhu.ac.in/ims/" },
+      { name: "Apex Super Speciality Hospital", type: "Super Speciality Care", address: "DLW Hydel Road, Varanasi, Uttar Pradesh 221004", phone: "+915422317540", website: "https://www.apexhospital.in/" },
+      { name: "Heritage Hospitals, Lanka", type: "Multi Speciality Hospital", address: "Lanka, Varanasi, Uttar Pradesh 221005", phone: "+915422368888", website: "https://www.heritagehospitals.com/" }
+    ]
+  },
+  "Ayodhya": {
+    hotels: [
+      { name: "The Fern Residency, Ayodhya", type: "Upscale Hotel", address: "NH 27, Bypass Road, Ayodhya, Uttar Pradesh 224001", phone: "+915278232000", website: "https://www.fernhotels.com/" },
+      { name: "Park Inn by Radisson Ayodhya", type: "Modern Premium Hotel", address: "Fatehganj Road, Ayodhya, Uttar Pradesh 224001", phone: "+915278298000", website: "https://www.radissonhotels.com/" },
+      { name: "Ramprastha Heritage Hotel", type: "Heritage Riverfront Hotel", address: "Naya Ghat, Ram Katha Park, Ayodhya, Uttar Pradesh 224123", phone: "+915278232222", website: "https://www.ramprastha.com/" },
+      { name: "Cygnett Collection KK Hotel", type: "Comfort Hotel", address: "Fatehganj, Ayodhya, Uttar Pradesh 224001", phone: "+915278232111", website: "https://www.cygnetthotels.com/" }
+    ],
+    hospitals: [
+      { name: "Rajarshi Dashrath Autonomous State Medical College", type: "Government Medical College Hospital", address: "Darshan Nagar, Ayodhya, Uttar Pradesh 224135", phone: "+915278241001", extra: "24x7 Emergency Trauma Unit", website: "https://ayodhyamedicalcollege.edu.in/" },
+      { name: "District Hospital Ayodhya (Sri Ram Hospital)", type: "Government District Hospital", address: "Kanpur Road, Civil Lines, Ayodhya, Uttar Pradesh 224001", phone: "+915278222244", extra: "Emergency: 108 / 05278-222244", website: "https://ayodhya.nic.in/" }
+    ]
+  },
+  "Mathura": {
+    hotels: [
+      { name: "The Radha Ashok Mathura", type: "Boutique Resort", address: "Masani Bypass Road, Mathura, Uttar Pradesh 281003", phone: "+915652530395", website: "https://www.theradhaashok.com/" },
+      { name: "Brijwasi Lands Inn", type: "Premium Hotel", address: "Masani Link Road, Mathura, Uttar Pradesh 281003", phone: "+915652402121", website: "https://www.brijwasi.com/" },
+      { name: "Nidhivan Sarovar Portico (Vrindavan)", type: "Pilgrim Luxury Hotel", address: "Khasra No. 797, Gopalgarh, Vrindavan, Uttar Pradesh 281121", phone: "+915653037000", website: "https://www.sarovarhotels.com/" }
+    ],
+    hospitals: [
+      { name: "District Hospital Mathura", type: "Government Hospital", address: "Civil Lines, Mathura, Uttar Pradesh 281001", phone: "+915652500102", extra: "24x7 Emergency Services", website: "https://mathura.nic.in/" },
+      { name: "Ramakrishna Mission Sevashrama Charitable Hospital", type: "Charitable Hospital", address: "Swami Vivekananda Marg, Vrindavan, Uttar Pradesh 281121", phone: "+915652442310", website: "https://www.rkmsvrindavan.org/" }
+    ]
+  },
+  "Prayagraj": {
+    hotels: [
+      { name: "Hotel Kanha Shyam", type: "Four-star Business & Luxury Hotel", address: "Civil Lines, Prayagraj, Uttar Pradesh 211001", phone: "+915322560123", website: "https://www.hotelkanhashyam.com/" },
+      { name: "The Legend Hotel", type: "Boutique Hotel", address: "Colvin Road, Civil Lines, Prayagraj, Uttar Pradesh 211001", phone: "+915322420000", website: "https://www.thelegendhotel.in/" },
+      { name: "Grand Continental Hotel", type: "Classic Hotel", address: "Sardar Patel Marg, Civil Lines, Prayagraj, Uttar Pradesh 211001", phone: "+915322260600", website: "https://www.grandcontinentalhotel.com/" }
+    ],
+    hospitals: [
+      { name: "Swaroop Rani Nehru Hospital (MLN Medical College)", type: "Government Apex Hospital", address: "MG Marg, Prayagraj, Uttar Pradesh 211001", phone: "+915322256420", extra: "Trauma Emergency 24x7", website: "https://mlnmc.ac.in/" },
+      { name: "Kamla Nehru Memorial Hospital", type: "Speciality Hospital", address: "Hashimpur Road, Prayagraj, Uttar Pradesh 211002", phone: "+915322465431", website: "https://www.knmh.org/" }
+    ]
+  },
+  "Kanpur": {
+    hotels: [
+      { name: "The Landmark Hotel, Kanpur", type: "Five-star Luxury Hotel", address: "10, The Mall, Civil Lines, Kanpur, Uttar Pradesh 208001", phone: "+915122305305", website: "https://www.thelandmarkhotel.in/" },
+      { name: "Regenta Central The Crystal", type: "Upscale Hotel", address: "111/7A, Harsh Nagar, Kanpur, Uttar Pradesh 208012", phone: "+915126713333", website: "https://www.royalorchidhotels.com/" }
+    ],
+    hospitals: [
+      { name: "Lala Lajpat Rai Hospital (LLR / Hallet Hospital)", type: "Government Medical College Hospital", address: "Swaroop Nagar, Kanpur, Uttar Pradesh 208002", phone: "+915122535483", extra: "Emergency Trauma 24x7", website: "https://gsvmmedicalcollege.com/" },
+      { name: "Regency Hospital, Kanpur", type: "Multi Super-speciality Hospital", address: "A-2, Sarvodaya Nagar, Kanpur, Uttar Pradesh 208005", phone: "+915123081111", website: "https://regencyhealthcare.in/" }
+    ]
+  },
+  "Jhansi": {
+    hotels: [
+      { name: "Natraj Sarovar Portico Jhansi", type: "Premium Hotel", address: "Opposite Circuit House, Civil Lines, Jhansi, Uttar Pradesh 284001", phone: "+915102333000", website: "https://www.sarovarhotels.com/" },
+      { name: "Hotel Bundelkhand Riverside (Orchha/Jhansi)", type: "Heritage River Resort", address: "Kanchana Ghat, Orchha, Madhya Pradesh 472246", phone: "+917680252612", website: "https://www.bundelkhandriverside.com/" }
+    ],
+    hospitals: [
+      { name: "Maharani Laxmi Bai Medical College & Hospital", type: "Government Medical College Hospital", address: "Kanpur Road, Jhansi, Uttar Pradesh 284128", phone: "+915102321415", extra: "Emergency 24x7", website: "https://mlbmc.in/" }
+    ]
+  }
+};
+
+// =========================================================
+// FOOD DATABASE PER CITY
+// =========================================================
+const foodData = {
+  "Agra": [
+    ["Authentic Agra Petha","Kesar, Angoori, Paan, and Chocolate Petha made from winter melon; Panchhi Petha is world-famous.","Must Try"],
+    ["Bedai & Dubki Wale Aloo","Crispy puffed lentil puris served with spicy, tangy fenugreek potato gravy and sweet jalebis for breakfast.","Street Food"],
+    ["Mughlai Kebabs & Biryani","Rich Awadhi-Mughlai delicacies, Galawati and Seekh kebabs along Nai Ki Mandi and Fatehabad Road.","Must Try"],
+    ["Agra Dalmoth","Crisp fried spiced lentils, sev, cashews and musk melon seeds, traditional Agra evening snack.","Snack"],
+    ["Dauji Mishthan Bhandar Jalebis","Giant saffron jalebis fried fresh in pure desi ghee.","Sweet"]
+  ],
+  "Varanasi": [
+    ["Kachori-Sabzi at Ram Bhandar","Crispy kachori with piping hot spicy black chickpea and potato curry, available early morning.","Must Try"],
+    ["Tamatar Chaat at Kashi Chaat","Hot mashed tomatoes cooked with hing, roasted spices, topped with khoya, namkeen and sugar syrup.","Street Food"],
+    ["Malaiyo (Winter Special)","Fluffy, fragrant saffron-flavored milk froth topped with chopped pistachios and almonds.","Sweet"],
+    ["Banarasi Paan (Maghai/Patti)","Iconic digestive betel leaf filled with fragrant gulkand, supari, silver vark and kattha.","Local Legend"],
+    ["Pehlwan Ki Thandai & Lassi","Rich saffron milk infused with crushed almonds, fennel, rose water, topped with fresh malai.","Drink"]
+  ],
+  "Lucknow": [
+    ["Tunday Galawati Kebab","Melt-in-mouth minced kebabs crafted with over 160 secret herbs and spices since 1905.","Must Try"],
+    ["Awadhi Dum Biryani","Fragrant long-grain basmati rice cooked on slow charcoal heat with marinated meat or vegetables.","Must Try"],
+    ["Basket Chaat at Royal Cafe","Crispy potato basket filled with mashed tikkis, spiced chickpeas, sweetened curd and chutneys.","Street Food"],
+    ["Malai Makkhan / Nimish","Airy cloud-like saffron milk foam served in earthen cups during winter dawns.","Sweet"],
+    ["Prakash Ki Kulfi","Creamy saffron-pistachio kulfi falooda served in Aminabad bazaar since decades.","Dessert"]
+  ],
+  "Ayodhya": [
+    ["Ayodhya Khurchan Peda","Caramelized rich condensed milk peda with distinctive rustic aroma and soft texture.","Must Try"],
+    ["Chandrakala Sweet","Crispy fried pastry stuffed with sweetened mawa, dry fruits, soaked in aromatic sugar syrup.","Sweet"],
+    ["Bedhai & Hing Aloo Sabzi","Hot puffy puris paired with fiery spiced potato curry and curd.","Breakfast"],
+    ["Satvik Temple Bhog Thali","Pure vegetarian no-onion-garlic nourishing meals served with lentils, rice, and kheer.","Vegetarian"]
+  ],
+  "Mathura": [
+    ["Mathura Peda","Caramelized dark brown mawa pedas rolled in boora sugar, celebrated throughout India.","Must Try"],
+    ["Makhan Mishri Bhog","Fresh hand-churned white butter mixed with crystalline rock sugar, beloved of Bal Gopal.","Sacred Sweet"],
+    ["Dubki Wale Aloo & Bedhai","Spicy thin potato broth with urad-dal stuffed fried puris.","Street Food"],
+    ["Braj Earthen Kulhad Lassi","Thick creamy sweet curd drink garnished with rabri and dry fruit shavings.","Drink"]
+  ]
+};
+
+// Generic food fallback generator for other cities
+cities.forEach(c => {
+  if (!foodData[c.name]) {
+    foodData[c.name] = [
+      ["Local Signature Specialties", c.food || "Regional authentic culinary choices.", "Must Try"],
+      ["Traditional Street Food", "Freshly fried kachoris, samosas, and regional chaat with mint and tamarind chutneys.", "Street Food"],
+      ["Regional Sweets", "Pure desi ghee sweets, milk pedas, and seasonal halwas.", "Sweet"],
+      ["Local Drinks", "Fresh sweet lassi, spiced shikanji, and seasonal sherbets.", "Drink"]
+    ];
+  }
+});
+
+// Shopping mall & bazaar data
+const mallData = {
+  "Agra": [["Ashok Cosmos Mall","Sanjay Place, Civil Lines, Agra"],["Pacific Mall","Fatehabad Road, Tajganj, Agra"],["TDI Mall","Fatehabad Road, Tajganj, Agra"],["Sadar Bazaar (Famous Market)","Cantonment area, Agra — Leather goods & Petha"]],
+  "Lucknow": [["Phoenix Palassio","Amar Shaheed Path, Gomti Nagar, Lucknow"],["Lulu Mall Lucknow","Golf City, Sector B, Ansal API, Lucknow"],["Sahara Ganj Mall","Hazratganj, Lucknow"],["Chowk & Aminabad (Heritage Bazaars)","Old Lucknow — Chikankari, Zardozi, Attar & Street food"]],
+  "Varanasi": [["PDR Mall","Luxa Road, Sidhgiribagh, Varanasi"],["JHV Mall","The Mall Road, Cantonment, Varanasi"],["Godowlia & Vishwanath Gali","Old City Bazaars — Banarasi Silk Sarees, Gulabi Meenakari"]],
+  "Kanpur": [["Z Square Mall","The Mall, Civil Lines, Kanpur"],["South X Mall","Kidwai Nagar, Kanpur"],["Naveen Market & The Mall","Fine leather goods, garments and shoes"]],
+  "Prayagraj": [["Vinayak City Centre","Civil Lines, Prayagraj"],["Civil Lines High Street","Prayagraj's premier shopping and dining strip"]]
+};
+
+// =========================================================
+// RENDER CITIES & DISTRICTS ON HOMEPAGE
+// =========================================================
+function renderCities(){
+  const grid = document.getElementById('cityGrid');
+  if(!grid) return;
+  grid.innerHTML = cities.map((c, i) => `
+    <div class="city" onclick="safeOpenCity('${c.name.replace(/'/g,"\\'")}')" role="button" tabindex="0" aria-label="Explore ${escapeHtml(c.name)}">
+      <img src="${c.img}" alt="${escapeHtml(c.name)}" loading="lazy" onerror="exploreUpImageFallback(this)">
+      <div class="citytext">
+        <h3>${escapeHtml(c.name)}</h3>
+        <small>${escapeHtml(c.tag)}</small>
+      </div>
+      <div class="citymeta">
+        <span class="meta">📍 ${escapeHtml(c.distance)}</span>
+        <span class="meta">₹ ${escapeHtml(c.budget.split('–')[0])}</span>
+        <span class="meta rating">★ ${escapeHtml(c.rating)}</span>
+      </div>
+      <div class="arrow">→</div>
+    </div>
+  `).join('');
+}
+
+function renderDistrictPills(){
+  const container = document.getElementById('districtsPills');
+  if(!container) return;
+  container.innerHTML = cities.map(c => `
+    <div class="district" onclick="safeOpenCity('${c.name.replace(/'/g,"\\'")}')" role="button" tabindex="0">
+      ${escapeHtml(c.name)}
+    </div>
+  `).join('');
+}
+
+// =========================================================
+// CRITICAL: DESTINATION OPEN & CLOSE (FIXED FOR AGRA & ALL)
+// =========================================================
+function safeOpenCity(name){
+  try{
+    const val = String(name||'').trim();
+    if(!val) return false;
+    const c = cities.find(x => x.name.toLowerCase() === val.toLowerCase()) ||
+              cities.find(x => x.name.toLowerCase().includes(val.toLowerCase()) || val.toLowerCase().includes(x.name.toLowerCase()));
+    if(!c){
+      console.warn('Destination not found:', val);
+      return false;
+    }
+    openCity(c.name);
+    return true;
+  }catch(e){
+    console.error('Error opening city:', e);
+    return false;
+  }
+}
+
+function openCity(name, options = {}){
+  const c = cities.find(x => x.name.toLowerCase() === name.toLowerCase());
+  if(!c) return;
+
+  currentExploreCity = c.name;
+  saveRecentDestination(c.name);
+
+  const modal = document.getElementById('modal');
+  if(!modal) return;
+
+  // 1. Show modal and lock background scroll
+  modal.style.display = 'block';
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  modal.scrollTop = 0;
+
+  // 2. Set Header & Hero Content
+  document.getElementById('modalTitle').textContent = c.name;
+  document.getElementById('modalCrumbCity').textContent = c.name;
+  document.getElementById('modalSubtitle').textContent = c.tag;
+  document.getElementById('modalHero').style.backgroundImage = `linear-gradient(180deg, rgba(7,27,53,0.3) 0%, rgba(7,27,53,0.85) 100%), url('${c.img}')`;
+
+  // 3. Set Overview & Details
+  document.getElementById('aboutCityName').textContent = c.name;
+  document.getElementById('dAbout').textContent = c.about;
+  document.getElementById('dPlaces').textContent = c.places;
+  document.getElementById('dFood').textContent = c.food;
+  document.getElementById('dShop').textContent = c.shop;
+  document.getElementById('dTime').textContent = c.time;
+  document.getElementById('dBudget').textContent = c.budget;
+  document.getElementById('dTip').textContent = c.tip;
+  document.getElementById('mDistance').textContent = c.distance;
+  document.getElementById('mFee').textContent = c.fee;
+  document.getElementById('mTime').textContent = c.time;
+  document.getElementById('mRating').textContent = c.rating;
+
+  // 4. Set Knowledge & Suggested Itineraries
+  document.getElementById('districtKnowledge').textContent = `Explore ${c.name}'s living heritage, iconic monuments, nature, and cultural traditions.`;
+  document.getElementById('districtHistory').textContent = `${c.name} holds profound historical significance in Uttar Pradesh. Home to celebrated landmarks including ${c.places}.`;
+  document.getElementById('districtCulture').textContent = `Known for traditional hospitality, arts, crafts such as ${c.shop}, and renowned local food culture.`;
+  document.getElementById('districtNature').textContent = `Located in the historic geography of Uttar Pradesh, with riverfront vistas, green parks, and seasonal charms.`;
+  document.getElementById('districtWhy').textContent = `Visitors choose ${c.name} for its world-class monuments, authentic cuisine (${c.food}), and unforgettable cultural atmosphere.`;
+
+  // 1-Day and 2-Day Plans
+  document.getElementById('plan1DayText').textContent = `Morning: Start early at ${c.places.split(',')[0] || 'the main landmark'}. Enjoy local breakfast of ${c.food.split(',')[0] || 'signature snacks'}. Afternoon: Explore ${c.places.split(',')[1] || 'local museums and gardens'}. Evening: Sunset views and shopping for ${c.shop}.`;
+  document.getElementById('plan2DayText').textContent = `Day 1: Comprehensive tour of ${c.places.split(',').slice(0,2).join(' and ')}, followed by an authentic dinner trail. Day 2: Visit ${c.places.split(',')[2] || 'surrounding heritage spots'}, shop for ${c.shop}, and relax.`;
+
+  // 5. Render Sections
+  renderFood(c.name);
+  renderTransport(c.name);
+  renderContacts(c.name);
+  renderMalls(c.name);
+  renderSuggestions(c.name);
+
+  // 6. Map Link
+  const mapQ = encodeURIComponent(c.name + ', Uttar Pradesh, India');
+  document.getElementById('mapBtn').href = `https://www.google.com/maps/search/?api=1&query=${mapQ}`;
+
+  // 7. Update Page Title & History (Safe without loops)
+  document.title = `${c.name} Tourism Guide | ExploreUP`;
+  try {
+    if (!options.fromHistory) {
+      const newUrl = window.location.pathname + '?city=' + encodeURIComponent(c.name.toLowerCase());
+      history.pushState({ city: c.name }, '', newUrl);
+    }
+  } catch(e) { /* Safe handling for local file:/// */ }
+}
+
+function closeModal(options = {}){
+  const modal = document.getElementById('modal');
+  if(!modal) return;
+
+  // 1. Hide modal & restore scroll
+  modal.style.display = 'none';
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  currentExploreCity = '';
+
+  // 2. Hide floating back button
+  const fb = document.getElementById('modalFloatingBack');
+  if(fb) fb.style.display = 'none';
+
+  // 3. Reset document title
+  document.title = 'ExploreUP — Explore Uttar Pradesh | Cities, Places, Food & Travel';
+
+  // 4. Safe URL cleanup without reloading or pushing endless entries
+  try {
+    if (!options.fromHistory) {
+      const cleanUrl = window.location.pathname;
+      history.pushState({ home: true }, '', cleanUrl);
+    }
+  } catch(e) { /* file:/// safe */ }
+}
+
+function closeModalAndScroll(targetId){
+  closeModal();
+  setTimeout(() => {
+    const el = document.getElementById(targetId);
+    if(el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+}
+
+function closeModalAndPlan(){
+  const city = currentExploreCity || 'Agra';
+  closeModal();
+  setTimeout(() => {
+    openTripPlanner(city);
+  }, 150);
+}
+
+// Scroll smoothly inside modal without changing URL hash
+function scrollModalSection(id){
+  const el = document.getElementById(id);
+  const modal = document.getElementById('modal');
+  if(!el || !modal) return;
+  const topbarHeight = 110;
+  const offset = el.getBoundingClientRect().top + modal.scrollTop - topbarHeight;
+  modal.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
+}
+
+// Show/hide floating return button inside modal on scroll
+const cityModal = document.getElementById('modal');
+if(cityModal){
+  cityModal.addEventListener('scroll', () => {
+    const fb = document.getElementById('modalFloatingBack');
+    if(fb){
+      fb.style.display = cityModal.scrollTop > 350 ? 'inline-flex' : 'none';
+    }
+  });
+}
+
+// Keyboard shortcuts (Escape key closes modal)
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal();
+    closeTripPlanner();
+    closeCategoryModal();
+    closeAdminPanel();
+    const ap = document.getElementById('aryaPanel');
+    if(ap) ap.style.display = 'none';
+  }
+});
+
+// Browser Back Button (popstate) Handler
+window.addEventListener('popstate', e => {
+  const params = new URLSearchParams(window.location.search);
+  const cityParam = params.get('city');
+  if (cityParam) {
+    safeOpenCity(cityParam);
+  } else {
+    closeModal({ fromHistory: true });
+    closeTripPlanner();
+  }
+});
+
+// =========================================================
+// RENDER TRANSPORT (THE MISSING FUNCTION COMPLETED)
+// =========================================================
+function renderTransport(cityName){
+  const t = transportData[cityName] || {
+    railSummary: `${cityName} is well-connected by Indian Railways via its main district junction and adjacent trunk lines.`,
+    railStations: [
+      { name: `${cityName} Railway Station`, type: "District Station", desc: "Regular express and passenger trains connecting to Lucknow, Varanasi, and Delhi." }
+    ],
+    airSummary: `Accessible via nearest major airports in Uttar Pradesh (Lucknow Amausi, Varanasi Babatpur, Agra Kheria, or Ayodhya Dham).`,
+    airports: [
+      { name: "Nearest Regional Airport", type: "Domestic / International", desc: "Connected by express highways." }
+    ],
+    busSummary: `UPSRTC state buses and private coaches operate frequent services connecting ${cityName} to neighboring districts and state highways.`,
+    busSearch: `${cityName} Bus Stand Uttar Pradesh`,
+    localSummary: `Electric e-rickshaws, shared autos, and taxis operate throughout the city.`,
+    localSearch: `${cityName} Uttar Pradesh`
+  };
+
+  // Rail
+  const railSummaryEl = document.getElementById('transportRailSummary');
+  const railListEl = document.getElementById('transportRailList');
+  if(railSummaryEl) railSummaryEl.textContent = t.railSummary;
+  if(railListEl){
+    railListEl.innerHTML = t.railStations.map(s => `
+      <div class="transport-route">
+        <b>🚉 ${escapeHtml(s.name)} <span style="font-weight:normal;color:var(--muted);font-size:11px">(${escapeHtml(s.type)})</span></b>
+        <div>${escapeHtml(s.desc)}</div>
+      </div>
+    `).join('');
+  }
+
+  // Air
+  const airSummaryEl = document.getElementById('transportAirSummary');
+  const airListEl = document.getElementById('transportAirList');
+  if(airSummaryEl) airSummaryEl.textContent = t.airSummary;
+  if(airListEl){
+    airListEl.innerHTML = t.airports.map(a => `
+      <div class="transport-route">
+        <b>🛫 ${escapeHtml(a.name)}</b>
+        <div>${escapeHtml(a.desc)}</div>
+      </div>
+    `).join('');
+  }
+
+  // Bus & Highway
+  const busSummaryEl = document.getElementById('transportBusSummary');
+  const busMapBtn = document.getElementById('transportBusMap');
+  if(busSummaryEl) busSummaryEl.textContent = t.busSummary;
+  if(busMapBtn){
+    const q = encodeURIComponent(t.busSearch || (cityName + ' Bus Stand'));
+    busMapBtn.href = `https://www.google.com/maps/search/?api=1&query=${q}`;
+  }
+
+  // Local Transit
+  const localSummaryEl = document.getElementById('transportLocalSummary');
+  const localMapBtn = document.getElementById('transportLocalMap');
+  if(localSummaryEl) localSummaryEl.textContent = t.localSummary;
+  if(localMapBtn){
+    const q = encodeURIComponent(t.localSearch || (cityName + ' City Centre'));
+    localMapBtn.href = `https://www.google.com/maps/search/?api=1&query=${q}`;
+  }
+}
+
+// =========================================================
+// RENDER CONTACTS (HOTELS & HOSPITALS)
+// =========================================================
+function renderContacts(cityName){
+  const hGrid = document.getElementById('hotelContacts');
+  const pGrid = document.getElementById('hospitalContacts');
+  if(!hGrid || !pGrid) return;
+
+  const data = contactData[cityName] || { hotels: [], hospitals: [] };
+
+  const defaultHotelMap = `https://www.google.com/maps/search/?api=1&query=` + encodeURIComponent(`Hotels in ${cityName}, Uttar Pradesh`);
+  const defaultHospitalMap = `https://www.google.com/maps/search/?api=1&query=` + encodeURIComponent(`Hospitals in ${cityName}, Uttar Pradesh`);
+
+  // Hotels
+  if(data.hotels && data.hotels.length){
+    hGrid.innerHTML = data.hotels.map(h => `
+      <article class="contact-card">
+        <div class="type">${escapeHtml(h.type)}</div>
+        <h3>${escapeHtml(h.name)}</h3>
+        <p>📍 ${escapeHtml(h.address)}</p>
+        <div class="contact-actions">
+          ${h.phone ? `<a href="tel:${h.phone.replace(/[^+\d]/g,'')}">📞 Call</a>` : ''}
+          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.name + ' ' + h.address)}" target="_blank" rel="noopener">🗺️ View on Map</a>
+          ${h.website ? `<a href="${h.website}" target="_blank" rel="noopener">🌐 Website ↗</a>` : ''}
+        </div>
+      </article>
+    `).join('');
+  } else {
+    hGrid.innerHTML = `
+      <article class="contact-card" style="grid-column:1/-1">
+        <div class="type">Accommodation Directory</div>
+        <h3>🏨 Find Hotels & Stays in ${escapeHtml(cityName)}</h3>
+        <p>Explore verified hotels, heritage guest houses, and budget stays in ${escapeHtml(cityName)} with live reviews and tariff checks.</p>
+        <div class="contact-actions">
+          <a href="${defaultHotelMap}" target="_blank" rel="noopener">🗺️ Search All Hotels on Google Maps ↗</a>
+        </div>
+      </article>
+    `;
+  }
+
+  // Hospitals
+  if(data.hospitals && data.hospitals.length){
+    pGrid.innerHTML = data.hospitals.map(p => `
+      <article class="contact-card">
+        <div class="type">${escapeHtml(p.type)}</div>
+        <h3>${escapeHtml(p.name)}</h3>
+        <p>📍 ${escapeHtml(p.address)}</p>
+        ${p.extra ? `<p style="color:var(--blue);font-weight:650">ℹ️ ${escapeHtml(p.extra)}</p>` : ''}
+        <div class="contact-actions">
+          ${p.phone ? `<a href="tel:${p.phone.replace(/[^+\d]/g,'')}" style="background:#fee2e2;color:#991b1b">🚨 Emergency Call</a>` : ''}
+          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + p.address)}" target="_blank" rel="noopener">🗺️ Hospital Directions</a>
+          ${p.website ? `<a href="${p.website}" target="_blank" rel="noopener">🌐 Official Portal</a>` : ''}
+        </div>
+      </article>
+    `).join('');
+  } else {
+    pGrid.innerHTML = `
+      <article class="contact-card" style="grid-column:1/-1">
+        <div class="type">Emergency Healthcare</div>
+        <h3>🏥 District Hospitals in ${escapeHtml(cityName)}</h3>
+        <p>Find government district hospitals, 24/7 emergency trauma centers, and private super-speciality facilities in ${escapeHtml(cityName)}.</p>
+        <div class="contact-actions">
+          <a href="tel:108" style="background:#fee2e2;color:#991b1b">🚑 Call 108 (Ambulance)</a>
+          <a href="${defaultHospitalMap}" target="_blank" rel="noopener">🗺️ Find Nearby Hospitals on Maps</a>
+        </div>
+      </article>
+    `;
+  }
+}
+
+// =========================================================
+// RENDER FOOD & MALLS
+// =========================================================
+function renderFood(cityName){
+  const grid = document.getElementById('foodGrid');
+  const input = document.getElementById('foodSearchInput');
+  if(!grid) return;
+  const items = foodData[cityName] || [];
+
+  const draw = (q = '') => {
+    const filter = q.toLowerCase();
+    const matches = items.filter(x => x.join(' ').toLowerCase().includes(filter));
+    if(matches.length){
+      grid.innerHTML = matches.map(x => `
+        <article class="foodcard">
+          <div class="foodtype">${escapeHtml(x[2])}</div>
+          <h3>${escapeHtml(x[0])}</h3>
+          <p>${escapeHtml(x[1])}</p>
+          <div class="foodchips">
+            <span class="foodchip">📍 ${escapeHtml(cityName)}</span>
+            <span class="foodchip">Authentic Taste</span>
+          </div>
+        </article>
+      `).join('');
+    } else {
+      grid.innerHTML = `<div class="foodcard" style="grid-column:1/-1"><p>No specific food matched "${escapeHtml(q)}". Try searching for "chaat", "mithai", "kebab", or "kachori".</p></div>`;
+    }
+  };
+
+  draw();
+  if(input){
+    input.value = '';
+    input.oninput = () => draw(input.value);
+  }
+}
+
+function renderMalls(cityName){
+  const grid = document.getElementById('mallGrid');
+  if(!grid) return;
+  const list = mallData[cityName] || [];
+  if(!list.length){
+    const q = encodeURIComponent(cityName + ' famous markets shopping Uttar Pradesh');
+    grid.innerHTML = `
+      <div class="mallcard" style="grid-column:1/-1">
+        <b>🛍️ Local Bazaars & Traditional Markets</b>
+        <small>Explore traditional local bazaars in ${escapeHtml(cityName)} for authentic handicrafts, textiles, and sweets.</small>
+        <a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">Explore Local Markets on Google Maps →</a>
+      </div>
+    `;
+    return;
+  }
+  grid.innerHTML = list.map(m => {
+    const q = encodeURIComponent(m[0] + ' ' + m[1]);
+    return `
+      <div class="mallcard">
+        <b>🏬 ${escapeHtml(m[0])}</b>
+        <small>📍 ${escapeHtml(m[1])}</small>
+        <a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">Open in Google Maps →</a>
+      </div>
+    `;
+  }).join('');
+}
+
+// In-District Search
+function clearDistrictSearch(){
+  const i = document.getElementById('districtSearchInput');
+  if(i){
+    i.value = '';
+    i.dispatchEvent(new Event('input'));
+  }
+}
+
+const distSearchInput = document.getElementById('districtSearchInput');
+if(distSearchInput){
+  distSearchInput.addEventListener('input', () => {
+    const q = distSearchInput.value.trim().toLowerCase();
+    const results = document.getElementById('districtSearchResults');
+    const cards = [...document.querySelectorAll('#modal .detail, #modal .foodcard, #modal .contact-card, #modal .knowledge-card')];
+    if(!q){
+      cards.forEach(x => x.style.display = '');
+      results.style.display = 'none';
+      return;
+    }
+    let hits = [];
+    cards.forEach(x => {
+      const match = x.textContent.toLowerCase().includes(q);
+      x.style.display = match ? '' : 'none';
+      if(match) hits.push(x.textContent.trim().replace(/\s+/g,' ').slice(0, 100));
+    });
+    results.innerHTML = hits.length
+      ? hits.slice(0, 8).map(t => `<div class="dsr">🔎 ${escapeHtml(t)}...</div>`).join('')
+      : '<div class="dsr">No matching information found in this city guide.</div>';
+    results.style.display = 'block';
+  });
+}
+
+// =========================================================
+// SEARCH FUNCTIONALITY ON HOMEPAGE
+// =========================================================
+function searchSite(){
+  const input = document.getElementById('searchInput');
+  const q = input.value.trim().toLowerCase();
+  const box = document.getElementById('results');
+  if(!q){
+    box.style.display = 'none';
+    return;
+  }
+  const hits = cities.filter(c => 
+    (c.name + ' ' + c.tag + ' ' + c.places + ' ' + c.food + ' ' + c.shop + ' ' + c.about).toLowerCase().includes(q)
+  );
+
+  box.innerHTML = hits.length
+    ? hits.slice(0, 10).map(c => `
+        <div class="result" onclick="safeOpenCity('${c.name.replace(/'/g,"\\\'")}'); document.getElementById('results').style.display='none';">
+          <b>📍 ${escapeHtml(c.name)}</b> — <small>${escapeHtml(c.tag)}</small>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Must-try: ${escapeHtml(c.food)}</div>
+        </div>
+      `).join('')
+    : '<div class="result">No matching destination found. Try "Agra", "Taj Mahal", "Petha", "Varanasi", or "Biryani".</div>';
+  box.style.display = 'block';
+}
+
+const homeSearchInput = document.getElementById('searchInput');
+if(homeSearchInput){
+  homeSearchInput.addEventListener('keydown', e => {
+    if(e.key === 'Enter') searchSite();
+  });
+  let searchTimeout;
+  homeSearchInput.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      if(homeSearchInput.value.length > 1) searchSite();
+      else document.getElementById('results').style.display = 'none';
+    }, 150);
+  });
+}
+
+// Close search popup if clicked outside
+document.addEventListener('click', e => {
+  if(!e.target.closest('.search')) {
+    const res = document.getElementById('results');
+    if(res) res.style.display = 'none';
+  }
+});
+
+// =========================================================
+// INTERACTIVE TRIP PLANNER
+// =========================================================
+function openTripPlanner(cityName = 'Agra'){
+  const modal = document.getElementById('plannerModal');
+  if(!modal) return;
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  const select = document.getElementById('plannerCitySelect');
+  if(select && cityName){
+    for(let opt of select.options){
+      if(opt.value.toLowerCase() === cityName.toLowerCase()){
+        select.value = opt.value;
+        break;
+      }
+    }
+  }
+  generateTripPlan();
+}
+
+function closeTripPlanner(){
+  const modal = document.getElementById('plannerModal');
+  if(modal){
+    modal.style.display = 'none';
+    if(!document.getElementById('modal') || document.getElementById('modal').style.display !== 'block'){
+      document.body.style.overflow = '';
+    }
+  }
+}
+
+function generateTripPlan(){
+  const city = document.getElementById('plannerCitySelect').value;
+  const days = parseInt(document.getElementById('plannerDaysSelect').value, 10);
+  const style = document.getElementById('plannerStyleSelect').value;
+  const budget = document.getElementById('plannerBudgetSelect').value;
+  const out = document.getElementById('plannerOutput');
+  if(!out) return;
+
+  const budgetText = budget === 'budget' ? '₹1,200/day' : (budget === 'luxury' ? '₹8,500/day' : '₹3,200/day');
+
+  let day1Morning = "Sunrise monument visit & photography";
+  let day1Afternoon = "Main architectural landmarks & authentic regional lunch";
+  let day1Evening = "Sunset viewpoint & heritage night bazaar shopping";
+
+  let day2Morning = "Early morning spiritual walk or riverfront boat ride";
+  let day2Afternoon = "UNESCO excursion or artisan workshops tour";
+  let day2Evening = "Traditional musical performance or fine dining experience";
+
+  let day3Morning = "Hidden gems & tranquil temples or bird sanctuary visit";
+  let day3Afternoon = "Souvenir shopping for authentic GI crafts";
+  let day3Evening = "Leisurely food walk & farewell street snacks";
+
+  if (city === 'Agra') {
+    day1Morning = "06:00 AM — Sunrise at the Taj Mahal (enter through East Gate). Marvel at the changing morning glow on the white Makrana marble.";
+    day1Afternoon = "11:30 AM — Tour Agra Fort (Diwan-i-Aam, Diwan-i-Khas, Jahangiri Mahal). Lunch at Dasaprakash or Pinch of Spice with Mughlai specials.";
+    day1Evening = "05:00 PM — Watch the sunset behind the Taj Mahal from Mehtab Bagh across the Yamuna. Taste Bedai-Jalebi at Deviram & shop for Panchhi Petha.";
+    
+    day2Morning = "08:30 AM — Day excursion to UNESCO World Heritage site Fatehpur Sikri (37 km) — Buland Darwaza, Salim Chishti Tomb, and Panch Mahal.";
+    day2Afternoon = "02:00 PM — Return to Agra and visit the Tomb of I'timad-ud-Daulah ('Baby Taj'), the delicate jewel-box of marble inlay.";
+    day2Evening = "06:30 PM — Shop for authentic marble inlay coasters and leatherware in Sadar Bazaar, followed by rooftop dinner overlooking the illuminated Taj.";
+
+    day3Morning = "08:00 AM — Explore Akbar's grand Tomb at Sikandra, blending red sandstone and white minarets in serene deer-filled parkland.";
+    day3Afternoon = "01:00 PM — Visit the historic Chini Ka Rauza and Dayalbagh Temple; sample local chaat at Sadar Chaat Gali.";
+    day3Evening = "06:00 PM — Relax by the Yamuna banks, enjoy Agra Metro ride, and pick up sealed boxes of Angoori & Kesar Petha for home.";
+  } else if (city === 'Varanasi') {
+    day1Morning = "05:30 AM — Subah-e-Banaras: Dawn wooden boat ride along the 84 ghats from Assi to Manikarnika. Visit Kashi Vishwanath Temple via Corridor.";
+    day1Afternoon = "12:00 PM — Kachori-Sabzi breakfast at Ram Bhandar, followed by exploration of the silk weaving lanes in Chowk & Madanpura.";
+    day1Evening = "06:00 PM — Spectacular evening Ganga Aarti at Dashashwamedh Ghat viewed from river steps or boat. Taste Tamatar Chaat at Kashi Chaat.";
+    
+    day2Morning = "08:30 AM — Excursion to sacred Sarnath (10 km): Dhamek Stupa, Ashoka Lion Capital at Sarnath Museum, and tranquil Thai/Tibetan temples.";
+    day2Afternoon = "02:00 PM — Visit Banaras Hindu University (BHU) campus, New Vishwanath Temple (VT), and Bharat Kala Bhavan art museum.";
+    day2Evening = "06:00 PM — Stroll along Assi Ghat, try refreshing Pehlwan Lassi / Thandai, and enjoy classical music kirtan.";
+
+    day3Morning = "08:00 AM — Heritage walk through narrow galis (alleys), visiting hidden shrines and stepwells; taste hot Malaiyo in winter.";
+    day3Afternoon = "01:00 PM — Cross the Ganga to visit Ramnagar Fort and its vintage royal car & weaponry museum.";
+    day3Evening = "06:00 PM — Sunset at Rajghat, try genuine Banarasi Paan, and shop for authentic handwoven Banarasi silk sarees.";
+  } else if (city === 'Lucknow') {
+    day1Morning = "08:30 AM — Bara Imambara, navigate the labyrinthine Bhool Bhulaiya with an official guide, and admire the majestic Rumi Darwaza.";
+    day1Afternoon = "01:00 PM — Chhota Imambara and Picture Gallery. Savor world-famous melt-in-mouth Galawati Kebabs at Tunday Kababi in Chowk.";
+    day1Evening = "05:30 PM — Stroll Hazratganj ('Ganjing'), taste Basket Chaat at Royal Cafe, and finish with Prakash Ki Kulfi in Aminabad.";
+
+    day2Morning = "09:00 AM — Walk through the historic ruins and peaceful gardens of the British Residency, deeply tied to the 1857 Uprising.";
+    day2Afternoon = "01:30 PM — Lunch on fragrant Awadhi Dum Biryani at Dastarkhwan. Shop for delicate Chikankari kurtas at Sewa Chikan / Janpath.";
+    day2Evening = "06:00 PM — Sunset stroll at Gomti Riverfront Park and Ambedkar Memorial Park with monumental stone architecture.";
+
+    day3Morning = "09:00 AM — Explore State Museum and Lucknow Zoo, or visit the historic Dilkusha Kothi and La Martiniere College architecture.";
+    day3Afternoon = "01:30 PM — Nihari-Kulcha at Rahim's in Akbari Gate. Sample artisanal attar perfumes and silver zardozi crafts in old bazaars.";
+    day3Evening = "06:30 PM — Modern shopping and dining at Phoenix Palassio or Lulu Mall Lucknow.";
+  } else if (city === 'Ayodhya') {
+    day1Morning = "06:30 AM — Holy dip at Sarayu Ghats (Ram Ki Paidi). Darshan at the magnificent Shri Ram Janmabhoomi Mandir.";
+    day1Afternoon = "12:30 PM — Visit Hanuman Garhi fortress temple and the ornate Kanak Bhawan Palace. Enjoy traditional Satvik thali lunch.";
+    day1Evening = "06:30 PM — Magnificent Sarayu River Maha Aarti at Naya Ghat. Stroll down the brightly illuminated Ram Path.";
+    
+    day2Morning = "08:30 AM — Visit Dashrath Mahal, Sita Ki Rasoi, and the ancient Nageshwarnath Temple established by Kusha.";
+    day2Afternoon = "01:00 PM — Explore Ram Katha Museum and park. Sample local Ayodhya Khurchan Peda and Bedhai-Jalebi.";
+    day2Evening = "05:30 PM — Sunset at Guptar Ghat on the Sarayu, where Lord Rama is believed to have concluded his earthly journey.";
+
+    day3Morning = "08:30 AM — Visit Mani Parbat and the peaceful international monasteries; explore Surya Kund heritage complex.";
+    day3Afternoon = "01:30 PM — Shop for holy souvenirs, brass puja idols, and wooden mementos along Bhakti Path.";
+    day3Evening = "06:00 PM — Evening musical fountain show at Ram Ki Paidi.";
+  }
+
+  let html = `
+    <div style="margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <h3 style="margin:0;font-size:20px">🗺️ ${days}-Day ${escapeHtml(city)} Plan (${escapeHtml(style.toUpperCase())})</h3>
+      <span style="font-weight:800;background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:20px;font-size:13px">Est. Budget: ${budgetText}</span>
+    </div>
+
+    <div class="itinerary-day">
+      <h4>☀️ Day 1 — Highlights & Flavors</h4>
+      <div class="itinerary-slot"><b>🌅 Morning:</b> ${escapeHtml(day1Morning)}</div>
+      <div class="itinerary-slot"><b>🍽️ Afternoon:</b> ${escapeHtml(day1Afternoon)}</div>
+      <div class="itinerary-slot"><b>🌆 Evening:</b> ${escapeHtml(day1Evening)}</div>
+    </div>
+  `;
+
+  if (days >= 2) {
+    html += `
+      <div class="itinerary-day">
+        <h4>🏛️ Day 2 — Cultural Deep Dive & Excursions</h4>
+        <div class="itinerary-slot"><b>🌅 Morning:</b> ${escapeHtml(day2Morning)}</div>
+        <div class="itinerary-slot"><b>🍽️ Afternoon:</b> ${escapeHtml(day2Afternoon)}</div>
+        <div class="itinerary-slot"><b>🌆 Evening:</b> ${escapeHtml(day2Evening)}</div>
+      </div>
+    `;
+  }
+
+  if (days >= 3) {
+    html += `
+      <div class="itinerary-day">
+        <h4>🌿 Day 3 — Hidden Gems & Souvenirs</h4>
+        <div class="itinerary-slot"><b>🌅 Morning:</b> ${escapeHtml(day3Morning)}</div>
+        <div class="itinerary-slot"><b>🍽️ Afternoon:</b> ${escapeHtml(day3Afternoon)}</div>
+        <div class="itinerary-slot"><b>🌆 Evening:</b> ${escapeHtml(day3Evening)}</div>
+      </div>
+    `;
+  }
+
+  out.innerHTML = html;
+}
+
+function copyItinerary(){
+  const out = document.getElementById('plannerOutput');
+  if(!out) return;
+  const text = out.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Itinerary copied to clipboard!');
+  }).catch(() => {
+    alert('Please select and copy the text directly.');
+  });
+}
+
+function openCityFromPlanner(){
+  const city = document.getElementById('plannerCitySelect').value;
+  closeTripPlanner();
+  safeOpenCity(city);
+}
+
+// =========================================================
+// CATEGORY SHOWCASE MODAL
+// =========================================================
+function openCategoryShowcase(type){
+  const modal = document.getElementById('categoryModal');
+  const title = document.getElementById('catModalTitle');
+  const body = document.getElementById('catModalBody');
+  if(!modal) return;
+
+  if (type === 'shopping') {
+    title.textContent = "🛍️ Famous Crafts & Shopping in Uttar Pradesh";
+    body.innerHTML = `
+      <div style="line-height:1.7;font-size:14px">
+        <p>Uttar Pradesh boasts one of India's richest legacies of Geographical Indication (GI) tagged handicrafts and cottage crafts:</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+          <div class="transport-route"><b>Banarasi Silk & Brocade</b><div>Varanasi — Handwoven Zari sarees and stoles</div></div>
+          <div class="transport-route"><b>Chikankari & Zardozi</b><div>Lucknow — Delicate shadow-work needle embroidery</div></div>
+          <div class="transport-route"><b>Marble Inlay (Pietra Dura)</b><div>Agra — Semiprecious stone table-tops & replicas</div></div>
+          <div class="transport-route"><b>Brass & Bell Metal Ware</b><div>Moradabad — Engraved lamps, bowls & decor</div></div>
+          <div class="transport-route"><b>Natural Attar & Perfumes</b><div>Kannauj — Hydro-distilled rose & rain scent</div></div>
+          <div class="transport-route"><b>Hand-Knotted Carpets</b><div>Bhadohi & Mirzapur — Persian woollen rugs</div></div>
+          <div class="transport-route"><b>Glass Bangles & Artware</b><div>Firozabad — Suhag Nagri colourful glassware</div></div>
+          <div class="transport-route"><b>Khurja Studio Pottery</b><div>Bulandshahr — Glazed ceramics and tableware</div></div>
+        </div>
+      </div>
+    `;
+  } else if (type === 'transport') {
+    title.textContent = "🚆 State-wide Transport & Expressway Corridors";
+    body.innerHTML = `
+      <div style="line-height:1.7;font-size:14px">
+        <p>Uttar Pradesh is India's expressway and railway capital with world-class connectivity:</p>
+        <ul style="padding-left:20px;color:var(--muted)">
+          <li><b>High-Speed Expressways:</b> Yamuna Expressway (Delhi-Agra 2.5 hrs), Agra-Lucknow Expressway (3.5 hrs), Purvanchal Expressway (Lucknow to Ghazipur), Bundelkhand Expressway, and Ganga Expressway (underway).</li>
+          <li><b>Vande Bharat Express Corridors:</b> Connecting New Delhi to Varanasi, Agra Cantt, Lucknow Charbagh, Ayodhya Dham, and Gorakhpur.</li>
+          <li><b>International & Domestic Airports:</b> Lucknow (LKO), Varanasi (VNS), Ayodhya (AYJ), Agra (AGR), Kanpur (KNU), Prayagraj (IXD), Bareilly (BEK), and upcoming Noida International (Jewar).</li>
+          <li><b>Metro Systems:</b> Operational in Lucknow, Kanpur, Agra, Noida, and Ghaziabad.</li>
+        </ul>
+      </div>
+    `;
+  } else if (type === 'stays') {
+    title.textContent = "🛏️ Where to Stay in Uttar Pradesh";
+    body.innerHTML = `
+      <div style="line-height:1.7;font-size:14px">
+        <p>Explore accommodations catering to all traveler types across UP:</p>
+        <ul style="padding-left:20px;color:var(--muted)">
+          <li><b>Royal & Heritage Palaces:</b> Taj Ganges & BrijRama Palace (Varanasi), The Oberoi Amarvilas & ITC Mughal (Agra), Clarks Avadh (Lucknow).</li>
+          <li><b>Pilgrim Dharamshalas & Teerth Bhawans:</b> Clean, economical stays managed by temple trusts in Ayodhya, Vrindavan, Mathura, and Chitrakoot.</li>
+          <li><b>Eco-Lodges & Treehouses:</b> Chuka Beach (Pilibhit Tiger Reserve), Dudhwa Jungle Cottages (Lakhimpur Kheri).</li>
+          <li><b>Business & Modern Stays:</b> Marriott, Hyatt, Radisson, and Ginger properties near expressway corridors.</li>
+        </ul>
+      </div>
+    `;
+  } else if (type === 'season') {
+    title.textContent = "☀️ Best Season to Travel in Uttar Pradesh";
+    body.innerHTML = `
+      <div style="line-height:1.7;font-size:14px">
+        <div class="transport-route" style="margin-bottom:10px">
+          <b>❄️ Winter (October to March) — PEAK TRAVEL SEASON</b>
+          <div>Pleasant daytime temperatures (15°C–25°C) ideal for exploring monuments, ghats, walking tours, and national parks. Celebrates Dev Deepawali, Taj Mahotsav, and Braj Holi.</div>
+        </div>
+        <div class="transport-route" style="margin-bottom:10px">
+          <b>🌧️ Monsoon (July to September) — WATERFALLS & RIVER CHARM</b>
+          <div>Lush green countryside, roaring waterfalls in Mirzapur and Chandauli, and the sacred Sawan spiritual festivals.</div>
+        </div>
+        <div class="transport-route">
+          <b>☀️ Summer (April to June) — INDOOR HERITAGE & SWEET MANGOES</b>
+          <div>Hotter temperatures (35°C–42°C); ideal for morning temple visits, evening laser shows, and relishing famous Dasheri and Chausa mangoes!</div>
+        </div>
+      </div>
+    `;
+  }
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCategoryModal(){
+  const modal = document.getElementById('categoryModal');
+  if(modal){
+    modal.style.display = 'none';
+    if(!document.getElementById('modal') || document.getElementById('modal').style.display !== 'block'){
+      document.body.style.overflow = '';
+    }
+  }
+}
+
+// =========================================================
+// ARYA AI TRAVEL ASSISTANT (OFFLINE/LOCAL INSTANT BRAIN)
+// =========================================================
+function toggleArya(){
+  const p = document.getElementById('aryaPanel');
+  if(!p) return;
+  p.style.display = p.style.display === 'block' ? 'none' : 'block';
+  if(p.style.display === 'block'){
+    setTimeout(() => document.getElementById('aryaInput')?.focus(), 100);
+  }
+}
+
+function heroAryaQuick(q){
+  toggleArya();
+  setTimeout(() => {
+    const input = document.getElementById('aryaInput');
+    if(input){
+      input.value = q;
+      askArya();
+    }
+  }, 100);
+}
+
+function aryaQuick(q){
+  const input = document.getElementById('aryaInput');
+  if(input){
+    input.value = q;
+    askArya();
+  }
+}
+
+function aryaAdd(text, type = 'bot'){
+  const b = document.getElementById('aryaBody');
+  const d = document.createElement('div');
+  d.className = 'arya-msg ' + type;
+  d.textContent = text;
+  b.appendChild(d);
+  b.scrollTop = b.scrollHeight;
+}
+
+function askArya(){
+  const input = document.getElementById('aryaInput');
+  const q = input.value.trim();
+  if(!q) return;
+  aryaAdd(q, 'user');
+  input.value = '';
+
+  setTimeout(() => {
+    const reply = getAryaLocalReply(q);
+    aryaAdd(reply, 'bot');
+  }, 300);
+}
+
+function getAryaLocalReply(query){
+  const q = query.toLowerCase();
+
+  // Agra questions
+  if (q.includes('agra') || q.includes('taj mahal')) {
+    if (q.includes('ticket') || q.includes('time') || q.includes('timing') || q.includes('friday')) {
+      return "Taj Mahal Opening Hours:
+• Opens 30 minutes before sunrise and closes 30 minutes before sunset.
+• IMPORTANT: The Taj Mahal is strictly CLOSED on FRIDAYS for general visitors!
+• Tickets must be booked online via the ASI official portal (asi.payumoney.com). Night viewing is permitted on full moon nights (except Fridays/Ramadan).";
+    }
+    if (q.includes('food') || q.includes('eat') || q.includes('petha')) {
+      return "Agra Food Guide:
+• Petha: Famous authentic Panchhi Petha (try Kesar, Angoori, and Chocolate petha).
+• Breakfast: Bedai & Dubki Wale Aloo with crispy hot Jalebis at Deviram Sweets.
+• Dinner: Mughlai Kebabs and Chicken Korma along Fatehabad Road and Nai Ki Mandi.";
+    }
+    return "Agra Highlights & Trip Plan:
+• Top Monuments: Taj Mahal, Agra Fort, Mehtab Bagh (sunset view across the Yamuna), and Fatehpur Sikri (37 km away).
+• How to Reach: High-speed Gatimaan Express (100 min from Delhi) or Yamuna Expressway (2.5 hrs drive).
+• Tip: Start at sunrise at the East Gate for the best lighting and fewest crowds!";
+  }
+
+  // Varanasi questions
+  if (q.includes('varanasi') || q.includes('banaras') || q.includes('kashi')) {
+    if (q.includes('food') || q.includes('chaat') || q.includes('paan')) {
+      return "Varanasi Food Guide:
+• Kachori-Sabzi at Ram Bhandar (morning).
+• Tamatar Chaat and Dahi Golgappa at Kashi Chaat Bhandar.
+• Malaiyo (foamy saffron winter dessert) in Chaukhamba.
+• Pehlwan Lassi at Lanka & genuine Banarasi Maghai Paan!";
+    }
+    return "Varanasi Highlights:
+• Ghats: Dashashwamedh (evening Ganga Aarti at 6:30 PM), Assi Ghat (Subah-e-Banaras dawn kirtan), Manikarnika Ghat.
+• Temples: Kashi Vishwanath Corridor, Sankat Mochan, Annapurna Mandir.
+• Sarnath: 10 km away where the Buddha preached his first sermon.";
+  }
+
+  // Lucknow questions
+  if (q.includes('lucknow') || q.includes('kebabs') || q.includes('biryani')) {
+    return "Lucknow Highlights:
+• Heritage: Bara Imambara & Bhool Bhulaiya, Rumi Darwaza, Chhota Imambara, British Residency.
+• Food: Tunday Kababi in Chowk (Galawati kebabs), Dastarkhwan (Awadhi Dum Biryani), Royal Cafe (Basket Chaat), and Prakash Kulfi in Aminabad.
+• Shopping: Fine hand-embroidered Chikankari kurtas at Chowk or Janpath.";
+  }
+
+  // Ayodhya questions
+  if (q.includes('ayodhya') || q.includes('ram mandir')) {
+    return "Ayodhya Travel Guide:
+• Sacred Sites: Shri Ram Janmabhoomi Mandir, Hanuman Garhi, Kanak Bhawan, Ram Ki Paidi, and Sarayu Ghats.
+• Airport: Maharishi Valmiki International Airport (AYJ) connects directly to Delhi, Mumbai, Ahmedabad.
+• Tip: Book Aarti and VIP darshan passes on the official Sri Ram Janmabhoomi Teerth Kshetra portal.";
+  }
+
+  // Mathura / Vrindavan
+  if (q.includes('mathura') || q.includes('vrindavan')) {
+    return "Mathura & Vrindavan Guide:
+• Mathura: Shri Krishna Janmasthan Temple, Dwarkadhish Mandir, Vishram Ghat evening Yamuna Aarti.
+• Vrindavan: Banke Bihari Temple, Prem Mandir (illuminated in evening), ISKCON temple, Nidhivan.
+• Must-Try: Authentic Mathura Peda, Makhan Mishri, and thick earthen kulhad lassi.";
+  }
+
+  // Transport general
+  if (q.includes('train') || q.includes('reach') || q.includes('transport') || q.includes('expressway')) {
+    return "UP Transport Overview:
+• Expressways: Yamuna Expressway (Delhi-Agra 2.5 hrs) & Agra-Lucknow Expressway (3.5 hrs).
+• Trains: Vande Bharat & Gatimaan Express connect Delhi to Agra, Lucknow, Ayodhya, and Varanasi.
+• Buses: UPSRTC runs 24x7 air-conditioned Janrath buses across all 75 districts.";
+  }
+
+  return "I'm here to help you explore Uttar Pradesh! You can ask me for a trip plan for Agra, food recommendations in Varanasi or Lucknow, temple timings in Ayodhya, or transport routes between UP cities.";
+}
+
+document.getElementById('aryaInput')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') askArya();
+});
+
+// =========================================================
+// FAVOURITES & RECENT DESTINATIONS
+// =========================================================
+const favs = JSON.parse(exploreStorage.get('exploreup_favs') || '[]');
+function updateFavs(){
+  const countEl = document.getElementById('favCount');
+  const listEl = document.getElementById('favList');
+  if(countEl) countEl.textContent = favs.length;
+  if(listEl){
+    listEl.innerHTML = favs.length
+      ? favs.map((x, i) => `
+          <div class="favitem">
+            <span onclick="safeOpenCity('${x.replace(/'/g,"\\\'")}');toggleFavPanel()" style="cursor:pointer;font-weight:700">📍 ${escapeHtml(x)}</span>
+            <button onclick="removeFav(${i})" style="float:right;border:0;background:none;cursor:pointer;color:#991b1b;font-weight:800">×</button>
+          </div>
+        `).join('')
+      : '<div class="empty">No favourite destinations saved yet. Click the ♡ button on any card to save!</div>';
+  }
+}
+
+function toggleSave(btn, name){
+  const idx = favs.indexOf(name);
+  if(idx < 0){
+    favs.push(name);
+    btn.classList.add('saved');
+    btn.textContent = '♥';
+  } else {
+    favs.splice(idx, 1);
+    btn.classList.remove('saved');
+    btn.textContent = '♡';
+  }
+  exploreStorage.set('exploreup_favs', JSON.stringify(favs));
+  updateFavs();
+}
+
+function removeFav(i){
+  favs.splice(i, 1);
+  exploreStorage.set('exploreup_favs', JSON.stringify(favs));
+  updateFavs();
+  document.querySelectorAll('.save').forEach(b => {
+    const match = b.getAttribute('onclick')?.match(/'([^']+)'/);
+    if(match && !favs.includes(match[1])){
+      b.classList.remove('saved');
+      b.textContent = '♡';
+    }
+  });
+}
+
+function toggleFavPanel(){
+  const p = document.getElementById('favPanel');
+  if(!p) return;
+  p.style.display = p.style.display === 'block' ? 'none' : 'block';
+  updateFavs();
+}
+
+function shareItem(name){
+  const shareData = {
+    title: `${name} | ExploreUP`,
+    text: `Discover ${name}, Uttar Pradesh on ExploreUP — Every City Has a Story.`,
+    url: window.location.href
+  };
+  if(navigator.share){
+    navigator.share(shareData).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(window.location.href);
+    alert('Share link copied to clipboard!');
+  }
+}
+
+const recentKey = 'exploreup_recent_v2';
+function getRecentDestinations(){
+  try{ return JSON.parse(exploreStorage.get(recentKey, '[]')) || []; }
+  catch(e){ return []; }
+}
+
+function saveRecentDestination(name){
+  let list = getRecentDestinations().filter(x => x !== name);
+  list.unshift(name);
+  list = list.slice(0, 6);
+  exploreStorage.set(recentKey, JSON.stringify(list));
+  renderRecentDestinations();
+}
+
+function renderRecentDestinations(){
+  const wrap = document.getElementById('recentWrap');
+  const strip = document.getElementById('recentStrip');
+  if(!wrap || !strip) return;
+  const list = getRecentDestinations();
+  wrap.style.display = list.length ? 'block' : 'none';
+  strip.innerHTML = list.map(n => {
+    const c = cities.find(x => x.name.toLowerCase() === n.toLowerCase());
+    return c ? `
+      <button class="recent-card" onclick="safeOpenCity('${c.name.replace(/'/g,"\\\'")}');">
+        📍 ${escapeHtml(c.name)}
+        <small>${escapeHtml(c.tag)}</small>
+      </button>
+    ` : '';
+  }).join('');
+}
+
+// Suggestions feedback handler
+function submitSuggestion(e){
+  e.preventDefault();
+  const text = document.getElementById('suggestionText').value.trim();
+  const name = document.getElementById('suggestionName').value.trim();
+  const cat = document.getElementById('suggestionCategory').value;
+  const status = document.getElementById('suggestionStatus');
+  if(text.length < 3) return;
+
+  const key = 'exploreup_sugg_' + (currentExploreCity || 'general').toLowerCase();
+  const items = JSON.parse(exploreStorage.get(key, '[]'));
+  items.push({ name: name || 'Visitor', cat, text, date: new Date().toLocaleDateString() });
+  exploreStorage.set(key, JSON.stringify(items));
+
+  document.getElementById('suggestionForm').reset();
+  status.textContent = '✓ Thank you! Your recommendation has been saved.';
+  status.style.color = '#15803d';
+  renderSuggestions(currentExploreCity);
+  setTimeout(() => { status.textContent = ''; }, 4000);
+}
+
+function renderSuggestions(cityName){
+  const box = document.getElementById('suggestionsList');
+  if(!box) return;
+  const key = 'exploreup_sugg_' + (cityName || 'general').toLowerCase();
+  const items = JSON.parse(exploreStorage.get(key, '[]'));
+  box.innerHTML = items.length
+    ? items.slice().reverse().map(s => `
+        <div class="suggestion-item">
+          <b>${escapeHtml(s.cat)}</b>
+          <div>${escapeHtml(s.text)}</div>
+          <small>Shared by ${escapeHtml(s.name)} • ${escapeHtml(s.date)}</small>
+        </div>
+      `).join('')
+    : '<div class="suggestion-item"><small>No tips submitted yet. Be the first to share a favorite place or eatery in this city!</small></div>';
+}
+
+// Dark Mode Toggle
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  exploreStorage.set('exploreup_dark', document.body.classList.contains('dark') ? '1' : '0');
+}
+if(exploreStorage.get('exploreup_dark') === '1'){
+  document.body.classList.add('dark');
+}
+
+// Language Toggle
+function toggleLanguage(){
+  const btn = document.getElementById('langBtn');
+  const greeting = document.getElementById('heroGreeting');
+  const isHindi = btn.textContent === 'हिंदी';
+  if(isHindi){
+    btn.textContent = 'English';
+    greeting.textContent = 'घूमें • खोजें • अनुभव करें 🙏';
+  } else {
+    btn.textContent = 'हिंदी';
+    greeting.textContent = 'नमस्ते 🙏';
+  }
+}
+
+// Admin Panel Toggle
+function openAdminPanel(){
+  const p = document.getElementById('adminOverlay');
+  if(p) p.style.display = 'flex';
+}
+function closeAdminPanel(){
+  const p = document.getElementById('adminOverlay');
+  if(p) p.style.display = 'none';
+}
+function adminLogin(){
+  const status = document.getElementById('adminStatus');
+  if(status) status.textContent = 'Admin demonstration mode: signed in successfully.';
+  setTimeout(closeAdminPanel, 1200);
+}
+
+// URL Parameter Handling on Initial Load (e.g. ?city=agra)
+function checkInitialUrl(){
+  const params = new URLSearchParams(window.location.search);
+  const cityParam = params.get('city');
+  if(cityParam){
+    safeOpenCity(cityParam);
+  } else if (window.location.hash.startsWith('#city=')){
+    const cityName = decodeURIComponent(window.location.hash.slice(6));
+    safeOpenCity(cityName);
+  }
+}
+
+// Initialization
+document.addEventListener('DOMContentLoaded', () => {
+  renderCities();
+  renderDistrictPills();
+  updateFavs();
+  renderRecentDestinations();
+  checkInitialUrl();
+});
+renderCities();
+renderDistrictPills();
+updateFavs();
+renderRecentDestinations();
+checkInitialUrl();
+</script>
+</body>
+</html>
