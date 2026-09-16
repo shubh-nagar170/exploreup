@@ -1,0 +1,28 @@
+{
+  "name": "explore-up",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubh-nagar170/explore-up.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/shubh-nagar170/explore-up/issues"
+  },
+  "homepage": "https://github.com/shubh-nagar170/explore-up#readme",
+  "dependencies": {
+    "@google/genai": "^2.22.0",
+    "bcryptjs": "^3.0.3",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0"
+  }
+}

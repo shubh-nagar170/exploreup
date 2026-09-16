@@ -101,11 +101,56 @@ a{text-decoration:none;color:inherit}
 body.dark .subnav-pill:hover{background:#172b43;color:var(--gold)}
 
 /* In-District Search Bar */
-.district-search{background:var(--bg);padding:8px 0;margin-bottom:18px}
-.district-searchbox{display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:0 4px 18px rgba(0,0,0,.04)}
-.district-searchbox input{flex:1;border:0;outline:0;background:transparent;font:inherit;font-size:15px;color:inherit}
-.district-search-results{display:none;margin-top:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.dsr{padding:12px 14px;border-bottom:1px solid var(--line);cursor:pointer}.dsr:last-child{border-bottom:0}.dsr:hover{background:rgba(0,0,0,.035)}
+.district-search{background:var(--bg);padding:8px 0;margin-bottom:18px;position:relative}
+.district-searchbox{display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 16px;box-shadow:0 4px 18px rgba(0,0,0,.04);transition:border-color .2s,box-shadow .2s}
+.district-searchbox:focus-within{border-color:var(--gold);box-shadow:0 6px 20px rgba(255,181,27,.25)}
+.district-searchbox input{flex:1;border:0;outline:0;background:transparent;font:inherit;font-size:15px;color:inherit;min-width:0}
+.search-btn{border:0;background:transparent;color:var(--muted);font-size:18px;cursor:pointer;display:grid;place-items:center;padding:0;transition:transform .15s}
+.search-btn:hover{transform:scale(1.15);color:var(--blue)}
+.search-clear-btn{border:0;background:transparent;color:var(--muted);font-size:20px;font-weight:700;cursor:pointer;display:none;place-items:center;padding:0 6px;transition:color .15s}
+.search-clear-btn:hover{color:#b91c1c}
+.district-search-results{display:none;margin-top:8px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 12px 36px rgba(0,27,59,.18);max-height:380px;overflow-y:auto;position:relative;z-index:95}
+.dsr-item{padding:12px 16px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background .15s ease}
+.dsr-item:last-child{border-bottom:0}
+.dsr-item:hover,.dsr-item:focus{background:#f0f6ff}
+body.dark .dsr-item:hover,body.dark .dsr-item:focus{background:#18324f}
+.dsr-main{flex:1;min-width:0}
+.dsr-title{font-weight:750;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dsr-sub{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dsr-badge{font-size:11px;font-weight:800;background:#eef5ff;color:var(--blue);padding:4px 9px;border-radius:12px;white-space:nowrap;border:1px solid #dbe8fa;flex-shrink:0}
+body.dark .dsr-badge{background:#152942;color:#9ec5f5;border-color:#263e5e}
+.dsr-empty{padding:16px;text-align:center;color:var(--muted);font-size:14px;line-height:1.5}
+
+/* Pills & Chips Highlighting */
+.chip{cursor:pointer;transition:all .2s ease}
+.subnav-pill{transition:all .2s ease}
+.chip.matched,.subnav-pill.matched{
+  background:var(--gold) !important;
+  color:#071b35 !important;
+  border-color:#e09f18 !important;
+  font-weight:850 !important;
+  transform:scale(1.06);
+  box-shadow:0 4px 14px rgba(255,181,27,.45) !important;
+}
+.chip.dimmed,.subnav-pill.dimmed{
+  opacity:0.38;
+}
+.search-flash-highlight{
+  animation:searchFlash 2.2s ease forwards;
+}
+@keyframes searchFlash{
+  0%{outline:4px solid var(--gold);box-shadow:0 0 24px rgba(255,181,27,.8);background:#fff9e6}
+  60%{outline:3px solid var(--gold);box-shadow:0 0 14px rgba(255,181,27,.4);background:#fff9e6}
+  100%{outline:transparent;box-shadow:none}
+}
+body.dark .search-flash-highlight{
+  animation:searchFlashDark 2.2s ease forwards;
+}
+@keyframes searchFlashDark{
+  0%{outline:4px solid var(--gold);box-shadow:0 0 24px rgba(255,181,27,.8);background:#243952}
+  60%{outline:3px solid var(--gold);box-shadow:0 0 14px rgba(255,181,27,.4);background:#243952}
+  100%{outline:transparent;box-shadow:none}
+}
 
 /* Tags & Meta Badges */
 .cardmeta{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
@@ -238,7 +283,7 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
     <div class="breadcrumb">
       <a href="index.html">Home</a>
       <span>›</span>
-      <a href="index.html#districts">Districts</a>
+      <a href="index.html#cities">Explore All Cities</a>
       <span>›</span>
       <span id="crumbDistrict" class="active-crumb">District</span>
     </div>
@@ -264,22 +309,22 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
 
   <!-- Sub-Navigation Pills -->
   <div class="district-subnav" aria-label="District sections">
-    <a href="#districtOverview" class="subnav-pill">🏛️ Overview</a>
-    <a href="#districtFood" class="subnav-pill">🍴 Food & Cuisine</a>
-    <a href="#districtTransport" class="subnav-pill">🚆 Transport</a>
-    <a href="#districtStay" class="subnav-pill">🏨 Hotels & Stays</a>
-    <a href="#districtHospitals" class="subnav-pill">🏥 Hospitals</a>
-    <a href="#districtKnowledge" class="subnav-pill">📖 Knowledge</a>
-    <a href="#districtPlanner" class="subnav-pill">🗓️ Trip Planner</a>
-    <a href="#districtShopping" class="subnav-pill">🛍️ Shopping</a>
+    <a href="#districtOverview" class="subnav-pill" data-section="districtOverview" data-keywords="overview famous places attractions monuments heritage about info sights">🏛️ Overview</a>
+    <a href="#districtFood" class="subnav-pill" data-section="districtFood" data-keywords="food cuisine restaurants dishes sweets mithai snacks street food kebabs biryani chaat dinner lunch breakfast">🍴 Food & Cuisine</a>
+    <a href="#districtTransport" class="subnav-pill" data-section="districtTransport" data-keywords="transport trains railway airport flights bus buses roadways expressways transit travel metro">🚆 Transport</a>
+    <a href="#districtStay" class="subnav-pill" data-section="districtStay" data-keywords="hotels stays accommodation rooms guest house resorts lodges stay booking">🏨 Hotels & Stays</a>
+    <a href="#districtHospitals" class="subnav-pill" data-section="districtHospitals" data-keywords="hospitals emergency healthcare medical doctors clinic ambulance trauma health 108 112">🏥 Hospitals</a>
+    <a href="#districtKnowledge" class="subnav-pill" data-section="districtKnowledge" data-keywords="knowledge history culture living heritage nature riverfront geography why visit traditions">📖 Knowledge</a>
+    <a href="#districtPlanner" class="subnav-pill" data-section="districtPlanner" data-keywords="trip planner itinerary plan 1-day 2-day days schedule tour visit guide">🗓️ Trip Planner</a>
+    <a href="#districtShopping" class="subnav-pill" data-section="districtShopping" data-keywords="shopping crafts bazaars markets malls stores handloom sarees souvenirs petha gifts">🛍️ Shopping</a>
   </div>
 
   <!-- In-District Search Bar -->
   <div class="district-search">
     <div class="district-searchbox">
-      <span>🔎</span>
-      <input id="districtSearchInput" placeholder="Search this district: places, food, hotels, hospitals, shopping..." autocomplete="off">
-      <button onclick="clearDistrictSearch()" style="border:0;background:none;cursor:pointer;font-size:18px;color:var(--muted)">×</button>
+      <button class="search-btn" id="districtSearchBtn" onclick="executeDistrictSearch()" aria-label="Search" title="Search this district">🔎</button>
+      <input id="district-search" placeholder="Search this district: places, food, hotels, hospitals, shopping..." autocomplete="off">
+      <button class="search-clear-btn" id="clearSearchBtn" onclick="clearDistrictSearch()" aria-label="Clear search" title="Clear search">×</button>
     </div>
     <div id="districtSearchResults" class="district-search-results"></div>
   </div>
@@ -294,17 +339,17 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
 
   <!-- Feature Chips -->
   <div class="chips">
-    <span class="chip">Famous Places</span>
-    <span class="chip">Food & Cuisine</span>
-    <span class="chip">Shopping</span>
-    <span class="chip">Culture & History</span>
-    <span class="chip">Festivals</span>
-    <span class="chip">Hotels & Stays</span>
-    <span class="chip">Hospitals</span>
-    <span class="chip">Transport</span>
-    <span class="chip">Emergency Services</span>
-    <span class="chip">Maps</span>
-    <span class="chip">Useful Online Services</span>
+    <span class="chip" data-section="districtOverview" data-keywords="famous places monuments heritage attractions">Famous Places</span>
+    <span class="chip" data-section="districtFood" data-keywords="food cuisine dishes sweets street food">Food & Cuisine</span>
+    <span class="chip" data-section="districtShopping" data-keywords="shopping crafts bazaars markets malls">Shopping</span>
+    <span class="chip" data-section="districtKnowledge" data-keywords="culture history heritage traditions">Culture & History</span>
+    <span class="chip" data-section="districtOverview" data-keywords="festivals events mela celebrations">Festivals</span>
+    <span class="chip" data-section="districtStay" data-keywords="hotels stays accommodations resorts guest houses">Hotels & Stays</span>
+    <span class="chip" data-section="districtHospitals" data-keywords="hospitals medical healthcare doctors">Hospitals</span>
+    <span class="chip" data-section="districtTransport" data-keywords="transport train bus flight connectivity airport">Transport</span>
+    <span class="chip" data-section="districtHospitals" data-keywords="emergency services ambulance 108 trauma 112">Emergency Services</span>
+    <span class="chip" data-section="districtOverview" data-keywords="maps google maps directions location">Maps</span>
+    <span class="chip" data-section="districtOverview" data-keywords="useful online services tickets booking irctc upsrtc asi">Useful Online Services</span>
   </div>
 
   <!-- App & Service Buttons -->
@@ -432,7 +477,7 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
     <p>Discover other historic cities, spiritual centres, wildlife reserves, and culinary trails across UP.</p>
     <div class="nav-footer-buttons">
       <a href="index.html" class="btn-back-home">← Back to Home Screen</a>
-      <a href="index.html#districts" class="btn-all-cities">📍 Explore Other Districts</a>
+      <a href="index.html#cities" class="btn-all-cities">📍 Explore All Cities</a>
     </div>
   </div>
 
@@ -912,36 +957,316 @@ function loadDistrictFromUrl(){
     });
 }
 
-// In-District Search
+// HTML Sanitizer
+function escapeHtml(str){
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// In-District Search & Real-Time Filtering
 function clearDistrictSearch(){
-  const i = document.getElementById('districtSearchInput');
-  if(i){
-    i.value = '';
-    i.dispatchEvent(new Event('input'));
+  const input = document.getElementById('district-search') || document.getElementById('districtSearchInput');
+  const clearBtn = document.getElementById('clearSearchBtn');
+  if(input){
+    input.value = '';
+    input.focus();
+  }
+  if(clearBtn) clearBtn.style.display = 'none';
+  filterDistrictContent('');
+}
+
+function filterDistrictContent(rawQuery){
+  const q = String(rawQuery || '').trim().toLowerCase();
+  const clearBtn = document.getElementById('clearSearchBtn');
+  const resultsBox = document.getElementById('districtSearchResults');
+  
+  if(clearBtn){
+    clearBtn.style.display = q.length > 0 ? 'grid' : 'none';
+  }
+
+  const pillsAndChips = document.querySelectorAll('.subnav-pill, .chip');
+
+  if(!q){
+    pillsAndChips.forEach(p => {
+      p.classList.remove('matched', 'dimmed');
+    });
+    if(resultsBox){
+      resultsBox.style.display = 'none';
+      resultsBox.innerHTML = '';
+    }
+    return;
+  }
+
+  // 1. Filter and Highlight matching category pills & chips
+  pillsAndChips.forEach(p => {
+    const text = p.textContent.toLowerCase();
+    const kw = (p.getAttribute('data-keywords') || '').toLowerCase();
+    if(text.includes(q) || kw.includes(q)){
+      p.classList.add('matched');
+      p.classList.remove('dimmed');
+    } else {
+      p.classList.remove('matched');
+      p.classList.add('dimmed');
+    }
+  });
+
+  // 2. Scan content items for matching results across all sections
+  const items = [];
+
+  // Match Subnav Category Sections
+  document.querySelectorAll('.district-subnav .subnav-pill').forEach(pill => {
+    const text = pill.textContent.trim();
+    const kw = (pill.getAttribute('data-keywords') || '').toLowerCase();
+    const secId = pill.getAttribute('data-section') || (pill.getAttribute('href') || '').replace('#','');
+    const targetEl = document.getElementById(secId);
+    if(targetEl && (text.toLowerCase().includes(q) || kw.includes(q))){
+      items.push({
+        title: text,
+        sub: `Jump to ${text} section in this district`,
+        badge: 'Category',
+        element: targetEl
+      });
+    }
+  });
+
+  // Match Detail Cards in Overview
+  document.querySelectorAll('#districtOverview, .detailgrid .detail').forEach(d => {
+    const text = d.textContent.trim();
+    if(text.toLowerCase().includes(q)){
+      const title = d.querySelector('b') ? d.querySelector('b').textContent.trim() : 'Overview Detail';
+      const desc = d.querySelector('small') ? d.querySelector('small').textContent.trim() : text;
+      items.push({
+        title: title,
+        sub: desc.slice(0, 95) + (desc.length > 95 ? '…' : ''),
+        badge: 'Places & Info',
+        element: d
+      });
+    }
+  });
+
+  // Match Food Specialties
+  document.querySelectorAll('#foodGrid .foodcard').forEach(fc => {
+    const text = fc.textContent.trim();
+    if(text.toLowerCase().includes(q)){
+      const title = fc.querySelector('h3') ? fc.querySelector('h3').textContent.trim() : 'Food Specialty';
+      const desc = fc.querySelector('p') ? fc.querySelector('p').textContent.trim() : text;
+      items.push({
+        title: '🍴 ' + title,
+        sub: desc.slice(0, 95) + (desc.length > 95 ? '…' : ''),
+        badge: 'Food & Cuisine',
+        element: fc
+      });
+    }
+  });
+
+  // Match Transport Cards
+  document.querySelectorAll('#districtTransport .transport-card').forEach(tc => {
+    const text = tc.textContent.trim();
+    if(text.toLowerCase().includes(q)){
+      const title = tc.querySelector('h3') ? tc.querySelector('h3').textContent.trim() : 'Transport Option';
+      const desc = tc.querySelector('p') ? tc.querySelector('p').textContent.trim() : text;
+      items.push({
+        title: title,
+        sub: desc.slice(0, 95) + (desc.length > 95 ? '…' : ''),
+        badge: 'Transport',
+        element: tc
+      });
+    }
+  });
+
+  // Match Hotels & Stays
+  document.querySelectorAll('#hotelContacts .contact-card').forEach(hc => {
+    const text = hc.textContent.trim();
+    if(text.toLowerCase().includes(q)){
+      const title = hc.querySelector('h3') ? hc.querySelector('h3').textContent.trim() : 'Hotel / Stay';
+      const desc = hc.querySelector('p') ? hc.querySelector('p').textContent.trim() : text;
+      items.push({
+        title: '🏨 ' + title,
+        sub: desc.slice(0, 95) + (desc.length > 95 ? '…' : ''),
+        badge: 'Hotels & Stays',
+        element: hc
+      });
+    }
+  });
+
+  // Match Hospitals & Medical Centers
+  document.querySelectorAll('#hospitalContacts .contact-card').forEach(hc => {
+    const text = hc.textContent.trim();
+    if(text.toLowerCase().includes(q)){
+      const title = hc.querySelector('h3') ? hc.querySelector('h3').textContent.trim() : 'Hospital';
+      const desc = hc.querySelector('p') ? hc.querySelector('p').textContent.trim() : text;
+      items.push({
+        title: '🏥 ' + title,
+        sub: desc.slice(0, 95) + (desc.length > 95 ? '…' : ''),
+        badge: 'Healthcare',
+        element: hc
+      });
+    }
+  });
+
+  // Match Knowledge & Heritage
+  document.querySelectorAll('#districtKnowledge .knowledge-card').forEach(kc => {
+    const text = kc.textContent.trim();
+    if(text.toLowerCase().includes(q)){
+      const title = kc.querySelector('h3') ? kc.querySelector('h3').textContent.trim() : 'Knowledge';
+      const desc = kc.querySelector('p') ? kc.querySelector('p').textContent.trim() : text;
+      items.push({
+        title: '📖 ' + title,
+        sub: desc.slice(0, 95) + (desc.length > 95 ? '…' : ''),
+        badge: 'Knowledge',
+        element: kc
+      });
+    }
+  });
+
+  // Match Malls & Bazaars
+  document.querySelectorAll('#mallGrid .mallcard').forEach(mc => {
+    const text = mc.textContent.trim();
+    if(text.toLowerCase().includes(q)){
+      const title = mc.querySelector('b') ? mc.querySelector('b').textContent.trim() : 'Bazaar / Mall';
+      const desc = mc.querySelector('small') ? mc.querySelector('small').textContent.trim() : text;
+      items.push({
+        title: '🛍️ ' + title,
+        sub: desc.slice(0, 95) + (desc.length > 95 ? '…' : ''),
+        badge: 'Shopping',
+        element: mc
+      });
+    }
+  });
+
+  // 3. Render dropdown list of matching items
+  if(!resultsBox) return;
+
+  if(items.length > 0){
+    const seen = new Set();
+    const uniqueItems = [];
+    for(const itm of items){
+      if(!seen.has(itm.title)){
+        seen.add(itm.title);
+        uniqueItems.push(itm);
+        if(uniqueItems.length >= 8) break;
+      }
+    }
+
+    resultsBox.innerHTML = uniqueItems.map((itm, idx) => `
+      <div class="dsr-item" data-index="${idx}" role="button" tabindex="0">
+        <div class="dsr-main">
+          <div class="dsr-title">${escapeHtml(itm.title)}</div>
+          <div class="dsr-sub">${escapeHtml(itm.sub)}</div>
+        </div>
+        <span class="dsr-badge">${escapeHtml(itm.badge)}</span>
+      </div>
+    `).join('');
+
+    resultsBox.querySelectorAll('.dsr-item').forEach((el, idx) => {
+      const itm = uniqueItems[idx];
+      const trigger = () => {
+        resultsBox.style.display = 'none';
+        if(itm && itm.element){
+          itm.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          itm.element.classList.add('search-flash-highlight');
+          setTimeout(() => itm.element.classList.remove('search-flash-highlight'), 2200);
+        }
+      };
+      el.addEventListener('click', trigger);
+      el.addEventListener('keydown', e => { if(e.key === 'Enter') trigger(); });
+    });
+
+    resultsBox.style.display = 'block';
+  } else {
+    resultsBox.innerHTML = `
+      <div class="dsr-empty">
+        No matching results found for "<b>${escapeHtml(q)}</b>".<br>
+        <span style="font-size:12px;color:var(--muted)">Try searching for "places", "food", "kebabs", "hotel", "train", or "hospital".</span>
+      </div>
+    `;
+    resultsBox.style.display = 'block';
   }
 }
 
-const distSearchInput = document.getElementById('districtSearchInput');
-if(distSearchInput){
-  distSearchInput.addEventListener('input', () => {
-    const q = distSearchInput.value.trim().toLowerCase();
-    const results = document.getElementById('districtSearchResults');
-    const cards = [...document.querySelectorAll('.detail, .foodcard, .contact-card, .knowledge-card')];
-    if(!q){
-      cards.forEach(x => x.style.display = '');
-      results.style.display = 'none';
+// Execute search on Enter key or clicking Search button
+function executeDistrictSearch(){
+  const input = document.getElementById('district-search') || document.getElementById('districtSearchInput');
+  if(!input) return;
+  const q = input.value.trim().toLowerCase();
+  if(!q) return;
+
+  const resultsBox = document.getElementById('districtSearchResults');
+  const firstDsr = resultsBox ? resultsBox.querySelector('.dsr-item') : null;
+  if(firstDsr){
+    firstDsr.click();
+    return;
+  }
+
+  // If a category pill is matched, scroll to its section
+  const matchedPill = document.querySelector('.subnav-pill.matched, .chip.matched');
+  if(matchedPill){
+    const secId = matchedPill.getAttribute('data-section') || (matchedPill.getAttribute('href') || '').replace('#','');
+    const targetEl = document.getElementById(secId);
+    if(targetEl){
+      if(resultsBox) resultsBox.style.display = 'none';
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      targetEl.classList.add('search-flash-highlight');
+      setTimeout(() => targetEl.classList.remove('search-flash-highlight'), 2200);
       return;
     }
-    let hits = [];
-    cards.forEach(x => {
-      const match = x.textContent.toLowerCase().includes(q);
-      x.style.display = match ? '' : 'none';
-      if(match) hits.push(x.textContent.trim().replace(/\s+/g,' ').slice(0, 100));
+  }
+
+  // Fallback: look for any card matching the query
+  const matchingCard = document.querySelector('.detail, .foodcard, .contact-card, .knowledge-card, .transport-card, .mallcard');
+  if(matchingCard){
+    if(resultsBox) resultsBox.style.display = 'none';
+    matchingCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    matchingCard.classList.add('search-flash-highlight');
+    setTimeout(() => matchingCard.classList.remove('search-flash-highlight'), 2200);
+  }
+}
+
+// Attach Search Listeners
+function initDistrictSearch(){
+  const searchInput = document.getElementById('district-search') || document.getElementById('districtSearchInput');
+  if(searchInput){
+    // Input event listener for real-time typing
+    searchInput.addEventListener('input', e => {
+      filterDistrictContent(e.target.value);
     });
-    results.innerHTML = hits.length
-      ? hits.slice(0, 8).map(t => `<div class="dsr">🔎 ${escapeHtml(t)}...</div>`).join('')
-      : '<div class="dsr">No matching information found in this district.</div>';
-    results.style.display = 'block';
+
+    // Enter & Escape key handling
+    searchInput.addEventListener('keydown', e => {
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        executeDistrictSearch();
+      } else if(e.key === 'Escape'){
+        clearDistrictSearch();
+      }
+    });
+  }
+
+  // Close dropdown on clicking outside
+  document.addEventListener('click', e => {
+    if(!e.target.closest('.district-search')){
+      const resultsBox = document.getElementById('districtSearchResults');
+      if(resultsBox) resultsBox.style.display = 'none';
+    }
+  });
+
+  // Make feature chips clickable to jump to sections
+  document.querySelectorAll('.chips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const secId = chip.getAttribute('data-section');
+      if(secId){
+        const el = document.getElementById(secId);
+        if(el){
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          el.classList.add('search-flash-highlight');
+          setTimeout(() => el.classList.remove('search-flash-highlight'), 2200);
+        }
+      }
+    });
   });
 }
 
@@ -972,8 +1297,12 @@ function toggleDark(){
 try{ if(localStorage.getItem('exploreup_dark') === '1') document.body.classList.add('dark'); }catch(e){}
 
 // Initialize
-window.addEventListener('DOMContentLoaded', loadDistrictFromUrl);
+window.addEventListener('DOMContentLoaded', () => {
+  loadDistrictFromUrl();
+  initDistrictSearch();
+});
 loadDistrictFromUrl();
+initDistrictSearch();
 </script>
 </body>
 </html>
