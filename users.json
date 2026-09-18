@@ -1,0 +1,23 @@
+[
+  {
+    "id": "user_1789539298562_okxec",
+    "username": "Shubham Nagar",
+    "email": "sn4596572@gmail.com",
+    "passwordHash": "$2b$10$9OQPq5Cte.3LKgHw7FXAq.aSe1W9qnXAsPS4SsUh.O08Mi/sbtXf2",
+    "createdAt": "2026-09-16T06:14:58.562Z"
+  },
+  {
+    "id": "user_1789741292904_dc727",
+    "username": "PriyaSharma",
+    "email": "traveler_1789485129842@example.com",
+    "passwordHash": "$2b$10$1E1T5HNvE7leJlktGOjdKuEgU750EAxf3Icr3e9M9szAGQvxE1oyi",
+    "createdAt": "2026-09-18T14:21:32.904Z"
+  },
+  {
+    "id": "user_1789741337564_jb7vr",
+    "username": "MeeraPatel_7465",
+    "email": "meera_1789741337465@example.com",
+    "passwordHash": "$2b$10$tgNF3x6B3zSeSqgL6RMiyeZvhYgOu635Xjr6JZGiYbINV6AlUMVQG",
+    "createdAt": "2026-09-18T14:22:17.564Z"
+  }
+]

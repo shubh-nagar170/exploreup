@@ -46,6 +46,8 @@ a{text-decoration:none;color:inherit}
 .nav-auth{display:flex;align-items:center;gap:8px}
 .auth-btn{border:1px solid var(--gold);background:var(--gold);color:#071b35;border-radius:999px;padding:7px 15px;font-weight:800;font-size:13px;cursor:pointer;transition:all .2s ease;display:inline-flex;align-items:center;gap:6px}
 .auth-btn:hover{background:#ffc342;transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,181,27,.3)}
+.auth-btn.secondary{background:transparent;border:1px solid #52708f;color:#fff}
+.auth-btn.secondary:hover{background:rgba(255,255,255,.15);border-color:var(--gold);color:var(--gold)}
 .auth-user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 6px 4px 12px;color:#fff;font-size:13px;font-weight:700}
 .auth-user-avatar{background:var(--gold);color:#071b35;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:900}
 .auth-username{max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -702,6 +704,7 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   <div class="actions">
     <div id="navAuthContainer" class="nav-auth">
       <button id="navLoginBtn" class="auth-btn" onclick="openAuthModal('login')">🔑 Log In</button>
+      <button id="navRegisterBtn" class="auth-btn secondary" onclick="openAuthModal('register')">Create Account</button>
       <div id="navUserBadge" class="auth-user-badge" style="display:none">
         <span class="auth-user-avatar" id="navUserAvatar">👤</span>
         <span class="auth-username" id="navUserName">User</span>
@@ -2902,14 +2905,17 @@ async function checkAuthState() {
 
 function updateAuthUI() {
   const loginBtn = document.getElementById('navLoginBtn');
+  const registerBtn = document.getElementById('navRegisterBtn');
   const userBadge = document.getElementById('navUserBadge');
   const userNameEl = document.getElementById('navUserName');
   if (currentAppUser) {
     if (loginBtn) loginBtn.style.display = 'none';
+    if (registerBtn) registerBtn.style.display = 'none';
     if (userBadge) userBadge.style.display = 'flex';
     if (userNameEl) userNameEl.textContent = currentAppUser.username;
   } else {
     if (loginBtn) loginBtn.style.display = 'inline-flex';
+    if (registerBtn) registerBtn.style.display = 'inline-flex';
     if (userBadge) userBadge.style.display = 'none';
   }
 }
@@ -3123,7 +3129,7 @@ async function askArya(){
   aryaAdd(q, 'user');
   if (input) input.value = '';
 
-  // Call protected /api/chat route
+  // Call /api/chat route
   try {
     const res = await fetch('/api/chat', {
       method: 'POST',
@@ -3132,20 +3138,8 @@ async function askArya(){
       body: JSON.stringify({ query: q })
     });
 
-    if (res.status === 401) {
-      // Prompt user to log in and open login modal
-      const b = document.getElementById('aryaBody');
-      const d = document.createElement('div');
-      d.className = 'arya-msg bot';
-      d.innerHTML = '🔒 <b>Sign In Required</b><br>Please log in or create an account to chat with Arya AI.<br><button onclick="openAuthModal(\'login\')" style="margin-top:8px;border:0;background:var(--gold);color:#071b35;border-radius:18px;padding:6px 14px;font-weight:800;cursor:pointer;font-size:12px">🔑 Log In / Sign Up</button>';
-      b.appendChild(d);
-      b.scrollTop = b.scrollHeight;
-      openAuthModal('login');
-      return;
-    }
-
     const data = await res.json();
-    if (res.ok && data.reply) {
+    if (res.ok && data && data.reply) {
       aryaAdd(data.reply, 'bot');
     } else {
       const reply = getAryaLocalReply(q);
@@ -3159,6 +3153,13 @@ async function askArya(){
 
 function getAryaLocalReply(query){
   const q = query.toLowerCase();
+
+  // Personal booking details check for guests
+  if (/(booking|bookings|reservation|reservations|itinerary|my bus|my train|my flight|my hotel|my cab|my trip|when is my|where is my|show my|mera booking|meri booking|mera ticket|meri ticket|meri bus|meri train)/i.test(q)) {
+    if (!currentAppUser) {
+      return "Namaste! Welcome to ExploreUP. 👋\n\nTo view your personal travel details, bookings, or bus/train schedules, please log in or create an account using the 'Log In' or 'Create Account' button in the top navigation bar.";
+    }
+  }
 
   // Agra questions
   if (q.includes('agra') || q.includes('taj mahal')) {

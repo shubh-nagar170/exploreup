@@ -131,7 +131,7 @@ function getDistrictsData() {
   return [];
 }
 
-// Authentication Middleware
+// Authentication Middleware for routes that strictly require authentication
 function isAuthenticated(req, res, next) {
   if (req.session && (req.session.userName || req.session.user)) {
     if (!req.session.userName && req.session.user) {
@@ -140,7 +140,7 @@ function isAuthenticated(req, res, next) {
     return next();
   }
   return res.status(401).json({
-    error: 'Unauthorized. Please log in to chat with Arya AI.',
+    error: 'Unauthorized. Please log in.',
     authenticated: false
   });
 }
@@ -309,39 +309,82 @@ app.get('/api/me', (req, res) => {
 });
 
 // =========================================================
-// PROTECTED RAG ROUTE (Personalized & Conversational Arya AI)
+// CHAT ROUTE (Optional Authentication: Guests & Logged-In Users)
 // =========================================================
-app.post('/api/chat', isAuthenticated, async (req, res) => {
+app.post('/api/chat', async (req, res) => {
   try {
     const query = (req.body.query || req.body.message || req.body.prompt || '').trim();
     if (!query) {
       return res.status(400).json({ error: 'Query prompt is required.' });
     }
 
-    const userName = req.session.userName || (req.session.user && req.session.user.username) || 'Traveler';
-    const userBookings = getUserBookings(userName, req.session.user);
+    const isGuest = !(req.session && (req.session.userName || req.session.user));
+    const userName = isGuest
+      ? null
+      : (req.session.userName || (req.session.user && req.session.user.username) || 'Traveler');
+    const userBookings = isGuest ? [] : getUserBookings(userName, req.session.user);
     const districts = getDistrictsData();
+
+    const qLower = query.toLowerCase();
+
+    // Detect language: Hindi, Hinglish, or English
+    const isDevanagari = /[\u0900-\u097F]/.test(query);
+    const isHinglish =
+      !isDevanagari &&
+      /\b(kya|kaha|kaise|batao|chahiye|khana|ghumne|mera|meri|hai|hain|karo|bataiye|aap|kijiye|ticket|mandir|jagah|kab)\b/i.test(
+        query
+      );
+
+    // Personal details / booking queries detection (e.g., 'When is my bus?', 'Show my booking')
+    const isPersonalQuery = /\b(booking|bookings|reservation|reservations|ticket|tickets|itinerary|when is my|where is my|show my|my bus|my train|my flight|my hotel|my cab|my trip|mera booking|meri booking|mera ticket|meri ticket|meri bus|meri train|book kiya)\b/i.test(
+      query
+    );
+
+    // Personal Data Fallback for Guests
+    if (isGuest && isPersonalQuery) {
+      let guestPersonalReply = '';
+      if (isDevanagari) {
+        guestPersonalReply = `नमस्ते! ExploreUP में आपका स्वागत है। 🙏\n\nव्यक्तिगत यात्रा विवरण, बस/ट्रेन समय सारणी या होटल बुकिंग देखने के लिए, कृपया शीर्ष नेविगेशन बार में **'Log In'** या **'Create Account'** बटन पर क्लिक करके अपने खाते में लॉग इन करें।`;
+      } else if (isHinglish) {
+        guestPersonalReply = `Namaste! ExploreUP me aapka swagat hai. 🙏\n\nApni personal booking details, bus/train schedules ya tickets dekhne ke liye, please top navigation bar me **'Log In'** ya **'Create Account'** button par click karke login ya signup karein.`;
+      } else {
+        guestPersonalReply = `Namaste! Welcome to ExploreUP. 👋\n\nTo view your personal travel details, bookings, or bus/train schedules, please log in or create an account using the **'Log In'** or **'Create Account'** button in the top navigation bar.`;
+      }
+      return res.status(200).json({
+        reply: guestPersonalReply,
+        user: 'Guest',
+        authenticated: false,
+        source: 'local-rag',
+        timestamp: new Date().toISOString()
+      });
+    }
 
     // 1. Try Gemini API if available
     if (genAIClient) {
       try {
-        const systemPrompt = `You are Arya AI, an expert, warm, and highly personalized conversational travel assistant for Uttar Pradesh (UP), India.
+        const userStatusDesc = isGuest
+          ? "The user is an unauthenticated GUEST. They do not have access to personal bookings until they log in via the top navigation bar."
+          : `The user is LOGGED IN as: ${userName}.\nPersonal Bookings from bookings.json:\n${JSON.stringify(userBookings, null, 2)}`;
 
-USER IDENTITY & PROFILE:
-- User's Name: ${userName}
-- User's Personal Bookings (from bookings.json):
-${JSON.stringify(userBookings, null, 2)}
+        const systemPrompt = `You are Arya AI, an expert, warm, and highly conversational travel assistant for Uttar Pradesh (UP), India.
+
+USER IDENTITY & STATUS:
+${userStatusDesc}
 
 OFFICIAL DISTRICTS KNOWLEDGE BASE (from districts.json):
 ${JSON.stringify(districts.slice(0, 15), null, 2)}
 
 CORE INSTRUCTIONS:
-1. Greet the user by their name (${userName}) at the start of your reply in a warm, welcoming tone.
-2. Reply fluently in ANY language used in the query (Hindi in Devanagari script, English, or conversational Hinglish). Mirror the user's language accurately.
-3. Provide detailed, rich, multi-paragraph answers for local travel queries (such as famous street food, places to visit, history, monuments, hidden gems, and timings) combining both districts.json and broad general knowledge. Format with clear headings, bullet points, and practical insider tips.
-4. Accurately pull personal booking info from the provided bookings.json when requested:
-   - If the user asks about their bookings, tickets, or hotel stays, present their specific details (Booking ID, Destination, Hotel, Transport, Dates, Time, and Status).
-   - If no bookings exist for ${userName}, kindly inform them by name that they have no current bookings and suggest popular UP trips.`;
+1. Greeting:
+   ${isGuest ? '- Greet the user warmly as a welcome to ExploreUP (e.g. "Namaste! Welcome to ExploreUP. 👋").' : `- Greet the user by their name (${userName}) at the start of your reply in a warm, welcoming tone (e.g. "Namaste ${userName}!").`}
+2. Language Fluency:
+   - Reply fluently in ANY language used in the query (Hindi in Devanagari script, English, or conversational Hinglish). Mirror the user's language accurately.
+3. Rich Local Travel Knowledge:
+   - Provide detailed, rich, multi-paragraph answers for local travel queries (such as famous street food, places to visit, history, monuments, hidden gems, and timings) combining both districts.json and broad general knowledge.
+4. Personal Bookings & Details Handling:
+   - If the user is a GUEST and asks for personal travel details (e.g. "When is my bus?", "Show my tickets", "Where is my hotel?"):
+     Politely reply asking them to log in or create an account using the 'Log In' or 'Create Account' button in the top navigation bar to view their personal bookings.
+   - If the user is LOGGED IN and asks about their bookings or tickets, accurately pull and present their specific details from the provided bookings.json.`;
 
         const geminiResponse = await genAIClient.models.generateContent({
           model: 'gemini-2.5-flash',
@@ -355,7 +398,8 @@ CORE INSTRUCTIONS:
         if (geminiResponse && geminiResponse.text) {
           return res.status(200).json({
             reply: geminiResponse.text,
-            user: userName,
+            user: isGuest ? 'Guest' : userName,
+            authenticated: !isGuest,
             source: 'gemini',
             timestamp: new Date().toISOString()
           });
@@ -366,32 +410,24 @@ CORE INSTRUCTIONS:
     }
 
     // 2. Intelligent, Conversational Local Engine (Multi-Lingual, Personal & Bookings-Aware)
-    const qLower = query.toLowerCase();
-
-    // Detect language: Hindi, Hinglish, or English
-    const isDevanagari = /[\u0900-\u097F]/.test(query);
-    const isHinglish =
-      !isDevanagari &&
-      /\b(kya|kaha|kaise|batao|chahiye|khana|ghumne|mera|meri|hai|hain|karo|bataiye|aap|kijiye|ticket|mandir|jagah|kab)\b/i.test(
-        query
-      );
-
-    // Personal Greeting
+    // Greeting
     let greeting = '';
     if (isDevanagari) {
-      greeting = `नमस्ते ${userName} जी! 🙏\n\n`;
+      greeting = isGuest
+        ? 'नमस्ते! ExploreUP में आपका स्वागत है। 🙏\n\n'
+        : `नमस्ते ${userName} जी! 🙏\n\n`;
     } else if (isHinglish) {
-      greeting = `Namaste ${userName}! Kaise hain aap? 🙏\n\n`;
+      greeting = isGuest
+        ? 'Namaste! ExploreUP me aapka swagat hai. Kaise hain aap? 🙏\n\n'
+        : `Namaste ${userName}! Kaise hain aap? 🙏\n\n`;
     } else {
-      greeting = `Namaste ${userName}! Welcome back to ExploreUP. 👋\n\n`;
+      greeting = isGuest
+        ? 'Namaste! Welcome to ExploreUP. 👋\n\n'
+        : `Namaste ${userName}! Welcome back to ExploreUP. 👋\n\n`;
     }
 
-    // Check for Personal Booking Queries
-    const isBookingQuery = /\b(booking|bookings|reservation|reservations|ticket|tickets|itinerary|mera booking|meri booking|book kiya|hotel booking)\b/i.test(
-      query
-    );
-
-    if (isBookingQuery) {
+    // Handle Personal Booking Queries for Logged-In Users
+    if (!isGuest && isPersonalQuery) {
       let bookingReply = '';
       if (userBookings.length > 0) {
         if (isDevanagari) {
@@ -443,6 +479,7 @@ CORE INSTRUCTIONS:
       return res.status(200).json({
         reply: bookingReply,
         user: userName,
+        authenticated: true,
         source: 'local-rag',
         timestamp: new Date().toISOString()
       });
@@ -496,17 +533,18 @@ CORE INSTRUCTIONS:
     } else {
       // General UP tourism response
       if (isDevanagari) {
-        detailedReply = `${greeting}उत्तर प्रदेश के 75 जिलों की अनूठी संस्कृति, शाही स्थापत्य और प्रसिद्ध व्यंजनों के बारे में आप मुझसे कुछ भी पूछ सकते हैं।\n\n• **ताज महल व मुग़लिया विरासत:** आगरा, फतेहपुर सीकरी\n• **आध्यात्मिक व पावन घाट:** वाराणसी, अयोध्या, मथुरा-वृंदावन, प्रयागराज\n• **नवाबी तहज़ीब व जायका:** लखनऊ के कबाब, बिरयानी और चिकनकारी\n• **प्राकृतिक अभयारण्य:** दुधवा नेशनल पार्क, पीलीभीत टाइगर रिज़र्व\n\nआप अपनी व्यक्तिगत बुकिंग्स भी कभी भी चेक कर सकते हैं। बताइए आपकी यात्रा में मैं कैसे मदद करूँ?`;
+        detailedReply = `${greeting}उत्तर प्रदेश के 75 जिलों की अनूठी संस्कृति, शाही स्थापत्य और प्रसिद्ध व्यंजनों के बारे में आप मुझसे कुछ भी पूछ सकते हैं।\n\n• **ताज महल व मुग़लिया विरासत:** आगरा, फतेहपुर सीकरी\n• **आध्यात्मिक व पावन घाट:** वाराणसी, अयोध्या, मथुरा-वृंदावन, प्रयागराज\n• **नवाबी तहज़ीब व जायका:** लखनऊ के कबाब, बिरयानी और चिकनकारी\n• **प्राकृतिक अभयारण्य:** दुधवा नेशनल पार्क, पीलीभीत टाइगर रिज़र्व\n\nबताइए आपकी यात्रा में मैं कैसे मदद करूँ?`;
       } else if (isHinglish) {
-        detailedReply = `${greeting}Uttar Pradesh ke 75 districts me se aap kisi bhi destination ke baare me pooch sakte hain!\n\n• **Heritage & Monuments:** Agra (Taj Mahal & Agra Fort), Fatehpur Sikri\n• **Spiritual Hubs:** Varanasi Ghats, Ayodhya Ram Mandir, Mathura-Vrindavan\n• **Food Trails:** Lucknow ke world-famous Tunday Kebabs aur Awadhi Biryani\n• **Wildlife & Nature:** Dudhwa Tiger Reserve aur Katarniaghat\n\nAap kisi bhi waqt apni personal bookings bhi check kar sakte hain. Bataiye, kis jagah ke baare me plan karein?`;
+        detailedReply = `${greeting}Uttar Pradesh ke 75 districts me se aap kisi bhi destination ke baare me pooch sakte hain!\n\n• **Heritage & Monuments:** Agra (Taj Mahal & Agra Fort), Fatehpur Sikri\n• **Spiritual Hubs:** Varanasi Ghats, Ayodhya Ram Mandir, Mathura-Vrindavan\n• **Food Trails:** Lucknow ke world-famous Tunday Kebabs aur Awadhi Biryani\n• **Wildlife & Nature:** Dudhwa Tiger Reserve aur Katarniaghat\n\nBataiye, kis jagah ke baare me plan karein?`;
       } else {
-        detailedReply = `${greeting}I am your dedicated Uttar Pradesh travel companion. With in-depth knowledge across all 75 districts, I can assist you with:\n\n• **Heritage & History:** Taj Mahal, Agra Fort, Bara Imambara, and Jhansi Fort.\n• **Spiritual Pilgrimages:** Kashi Vishwanath Ganga Aarti, Ayodhya Ram Mandir, and Mathura-Vrindavan.\n• **Iconic Food Trails:** Tunday Kebabs in Lucknow, Panchhi Petha in Agra, Tamatar Chaat in Varanasi.\n• **Personal Bookings:** Inquire about your confirmed hotel, train, and monument reservations at any time.\n\nWhich destination or experience would you like to explore today?`;
+        detailedReply = `${greeting}I am your dedicated Uttar Pradesh travel companion. With in-depth knowledge across all 75 districts, I can assist you with:\n\n• **Heritage & History:** Taj Mahal, Agra Fort, Bara Imambara, and Jhansi Fort.\n• **Spiritual Pilgrimages:** Kashi Vishwanath Ganga Aarti, Ayodhya Ram Mandir, and Mathura-Vrindavan.\n• **Iconic Food Trails:** Tunday Kebabs in Lucknow, Panchhi Petha in Agra, Tamatar Chaat in Varanasi.\n• **Local Insights:** Best seasons, budget estimates, and transport routes.\n\nWhich destination or experience would you like to explore today?`;
       }
     }
 
     return res.status(200).json({
       reply: detailedReply,
-      user: userName,
+      user: isGuest ? 'Guest' : userName,
+      authenticated: !isGuest,
       source: 'local-rag',
       timestamp: new Date().toISOString()
     });
