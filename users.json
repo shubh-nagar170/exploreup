@@ -19,5 +19,12 @@
     "email": "meera_1789741337465@example.com",
     "passwordHash": "$2b$10$tgNF3x6B3zSeSqgL6RMiyeZvhYgOu635Xjr6JZGiYbINV6AlUMVQG",
     "createdAt": "2026-09-18T14:22:17.564Z"
+  },
+  {
+    "id": "user_1789824342809_bxq1h",
+    "username": "Traveler_2720",
+    "email": "user_1789824342720@example.com",
+    "passwordHash": "$2b$10$b30wI9gV7nhSZD6PIWrIQeP6nQEAs2GWbUBPW.U43dC/tMWO7kSz2",
+    "createdAt": "2026-09-19T13:25:42.809Z"
   }
 ]

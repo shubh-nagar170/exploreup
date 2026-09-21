@@ -600,22 +600,62 @@ body.dark .contact-actions a{background:#172943;color:#8ec0ff}
 .planner-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
 .planner-action-btn{padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:750;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 
-/* Arya Floating AI Assistant */
-.arya-fab{position:fixed;right:20px;bottom:20px;z-index:80;border:0;border-radius:999px;padding:13px 20px;background:var(--gold);color:#071b35;font-weight:900;box-shadow:0 12px 30px rgba(0,0,0,.22);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
-.arya-panel{display:none;position:fixed;right:20px;bottom:78px;width:min(400px,calc(100vw - 28px));height:min(580px,calc(100vh - 110px));z-index:81;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
-.arya-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(135deg,#071b35,#123d68);color:#fff}
-.arya-head b{font-size:18px}.arya-head small{display:block;opacity:.8;margin-top:2px}
-.arya-close{border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:20px}
-.arya-body{height:calc(100% - 126px);overflow:auto;padding:14px;background:var(--bg)}
-.arya-msg{max-width:88%;padding:11px 14px;border-radius:14px;margin:8px 0;line-height:1.5;font-size:13px;white-space:pre-line}
-.arya-msg.bot{background:var(--card);border:1px solid var(--line);margin-right:auto}
-.arya-msg.user{background:#e9f3ff;color:#12385d;margin-left:auto}
-body.dark .arya-msg.user{background:#18314d;color:#fff}
-.arya-suggest{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
-.arya-suggest button{border:1px solid var(--line);background:var(--card);color:inherit;border-radius:999px;padding:6px 10px;cursor:pointer;font-size:11px;font-weight:700}
-.arya-input{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);background:var(--card)}
-.arya-input input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:11px 14px;background:var(--bg);color:inherit;outline:0}
-.arya-input button{border:0;border-radius:12px;padding:0 18px;background:var(--gold);color:#071b35;font-weight:900;cursor:pointer}
+/* Arya Floating AI Assistant - Modern Travel Theme & Video Stage */
+.arya-fab{position:fixed;right:20px;bottom:20px;z-index:80;border:0;border-radius:999px;padding:13px 22px;background:linear-gradient(135deg,#ffc543,#e59e14);color:#071b35;font-weight:900;box-shadow:0 12px 32px rgba(229,158,20,.35),0 4px 12px rgba(7,27,53,.2);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .2s ease}
+.arya-fab:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(229,158,20,.45)}
+.arya-panel{display:none;position:fixed;right:20px;bottom:78px;width:min(420px,calc(100vw - 28px));height:min(620px,calc(100vh - 96px));z-index:99;background:var(--card);border:1px solid rgba(255,184,46,.35);border-radius:24px;box-shadow:0 24px 70px rgba(7,27,53,.32),0 0 0 1px rgba(255,255,255,.1);overflow:hidden;flex-direction:column}
+.arya-panel.open{display:flex;animation:aryaPanelEnter .3s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes aryaPanelEnter{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.arya-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(135deg,#071b35 0%,#0e3560 60%,#174d82 100%);color:#fff;border-bottom:2px solid rgba(255,184,46,.4);position:relative;z-index:20}
+.arya-head-title{display:flex;align-items:center;gap:10px}
+.arya-head-title b{font-size:16px;letter-spacing:-.2px;display:flex;align-items:center;gap:6px}
+.arya-head-title small{display:flex;align-items:center;gap:6px;font-size:11.5px;opacity:.9;margin-top:2px;color:rgba(255,255,255,.85)}
+.arya-pulse-dot{width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;animation:aryaPulseGreen 2s infinite}
+@keyframes aryaPulseGreen{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:.6}}
+.arya-head-actions{display:flex;align-items:center;gap:6px}
+.arya-head-btn{border:0;background:rgba(255,255,255,.15);color:#fff;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:14px;display:grid;place-items:center;transition:background .15s,transform .15s}
+.arya-head-btn:hover{background:rgba(255,255,255,.3);transform:scale(1.05)}
+.arya-close{border:0;background:rgba(255,255,255,.15);color:#fff;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:16px;display:grid;place-items:center;transition:background .15s,transform .15s}
+.arya-close:hover{background:rgba(239,68,68,.85);transform:scale(1.05)}
+
+/* Video Welcome / Intro Stage */
+.arya-intro-stage{position:absolute;top:64px;left:0;right:0;bottom:0;z-index:15;background:#071b35;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .45s cubic-bezier(.16,1,.3,1),transform .45s cubic-bezier(.16,1,.3,1)}
+.arya-intro-stage.fade-out{opacity:0;transform:scale(.95);pointer-events:none}
+.arya-intro-video{width:100%;height:100%;object-fit:cover;background:#000;display:block}
+.arya-intro-overlay{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:16px;background:linear-gradient(to bottom,rgba(7,27,53,.6) 0%,transparent 30%,transparent 60%,rgba(7,27,53,.85) 100%)}
+.arya-intro-top-badge{align-self:flex-start;background:rgba(7,27,53,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,184,46,.4);color:#ffc543;font-size:11px;font-weight:800;padding:5px 12px;border-radius:999px;letter-spacing:.3px}
+.arya-intro-bottom-bar{pointer-events:auto;display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px}
+.arya-intro-welcome-text{color:#fff;font-size:13px;font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.arya-skip-btn{border:0;background:linear-gradient(135deg,#ffc543,#e59e14);color:#071b35;font-weight:800;font-size:12px;padding:8px 16px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(0,0,0,.4);transition:transform .15s,box-shadow .15s}
+.arya-skip-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(229,158,20,.6)}
+
+/* Chat Interface Stage */
+.arya-chat-stage{display:flex;flex-direction:column;flex:1;min-height:0;height:calc(100% - 64px);opacity:1;transition:opacity .35s ease}
+.arya-chat-stage.hidden{opacity:0;pointer-events:none}
+.arya-body{flex:1;min-height:0;overflow-y:auto;padding:16px;background:var(--bg);scroll-behavior:smooth}
+.arya-msg{max-width:86%;padding:12px 16px;border-radius:18px;margin:10px 0;line-height:1.55;font-size:13px;white-space:pre-line;word-break:break-word}
+.arya-msg.bot{background:var(--card);color:var(--text);border:1px solid var(--line);border-left:3.5px solid var(--gold);border-bottom-left-radius:4px;box-shadow:0 4px 14px rgba(7,27,53,.04);margin-right:auto}
+.arya-msg.bot a{color:var(--blue);font-weight:700;text-decoration:none;word-break:break-all}
+.arya-msg.bot a:hover{text-decoration:underline;color:var(--gold)}
+.arya-msg.user{background:linear-gradient(135deg,#134475 0%,#071b35 100%);color:#fff;border-bottom-right-radius:4px;box-shadow:0 4px 14px rgba(7,27,53,.15);margin-left:auto}
+body.dark .arya-msg.user{background:linear-gradient(135deg,#1b5592 0%,#0f2e54 100%);color:#fff}
+.arya-msg.typing-indicator{display:inline-flex;align-items:center;gap:4px;color:var(--muted);font-style:italic;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 14px}
+.arya-msg.typing-indicator span{animation:aryaBlinkDot 1.4s infinite both;font-weight:900;font-size:15px;color:var(--gold)}
+.arya-msg.typing-indicator span:nth-child(2){animation-delay:.2s}
+.arya-msg.typing-indicator span:nth-child(3){animation-delay:.4s}
+@keyframes aryaBlinkDot{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.arya-suggest{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 6px}
+.arya-suggest button{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:7px 12px;cursor:pointer;font-size:11.5px;font-weight:700;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 8px rgba(7,27,53,.04);transition:all .15s ease}
+.arya-suggest button:hover{background:#eef6ff;border-color:var(--gold);color:#071b35;transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,184,46,.2)}
+body.dark .arya-suggest button:hover{background:#112a4a;color:#fff}
+.arya-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line);background:var(--card);position:relative;z-index:20}
+.arya-input input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:14px;padding:11px 16px;background:var(--bg);color:inherit;outline:0;font-size:13.5px;transition:border-color .2s,box-shadow .2s}
+.arya-input input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,184,46,.2)}
+.arya-input input:disabled{opacity:.7;cursor:not-allowed}
+.arya-input button{border:0;border-radius:14px;padding:0 20px;background:linear-gradient(135deg,#ffc543,#e59e14);color:#071b35;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.arya-input button:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 16px rgba(229,158,20,.35)}
+.arya-input button:disabled{opacity:.6;cursor:not-allowed}
+@media(max-width:480px){.arya-panel{right:12px;bottom:74px;width:calc(100vw - 24px);height:calc(100vh - 90px);border-radius:20px}}
 
 /* Floating Favourites & Recent */
 .favbar{position:fixed;right:16px;bottom:74px;background:var(--navy);color:#fff;padding:10px 18px;border-radius:30px;z-index:94;box-shadow:0 8px 25px rgba(0,27,59,.4);cursor:pointer;font-weight:800;font-size:13px;border:1px solid rgba(255,255,255,.15);display:inline-flex;align-items:center;gap:6px;transition:all .2s ease}
@@ -1296,22 +1336,51 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 <!-- ARYA AI FLOATING ASSISTANT                                -->
 <!-- ========================================================= -->
 <div class="arya-panel" id="aryaPanel" role="dialog" aria-label="Arya AI Assistant">
+  <!-- Redesigned Travel Header -->
   <div class="arya-head">
-    <div><b>✨ Arya AI Travel Assistant</b><small>Trained on Uttar Pradesh Tourism</small></div>
-    <button class="arya-close" onclick="toggleArya()" aria-label="Close Arya">✕</button>
-  </div>
-  <div class="arya-body" id="aryaBody">
-    <div class="arya-msg bot">Namaste! I am Arya, your ExploreUP assistant. Ask me anything about Taj Mahal timings, Varanasi ghats, Lucknow kebabs, Ayodhya hotels, or train routes!</div>
-    <div class="arya-suggest">
-      <button onclick="aryaQuick('Agra Taj Mahal timing and trip plan')">Agra 1-Day Plan</button>
-      <button onclick="aryaQuick('Varanasi street food guide')">Varanasi Food</button>
-      <button onclick="aryaQuick('Ayodhya Ram Mandir travel guide')">Ayodhya Guide</button>
-      <button onclick="aryaQuick('How to reach Lucknow from Agra')">Agra to Lucknow</button>
+    <div class="arya-head-title">
+      <div>
+        <b><span>✨</span> Arya AI Concierge</b>
+        <small><span class="arya-pulse-dot"></span> Explore Uttar Pradesh • Gemini AI</small>
+      </div>
+    </div>
+    <div class="arya-head-actions">
+      <button class="arya-head-btn" id="aryaReplayBtn" onclick="replayAryaIntro()" title="Replay Welcome Video" aria-label="Replay Welcome Video">↺</button>
+      <button class="arya-head-btn" id="aryaSoundBtn" onclick="toggleAryaSound()" title="Toggle Video Sound" aria-label="Toggle Sound">🔇</button>
+      <button class="arya-close" onclick="toggleArya()" aria-label="Close Arya">✕</button>
     </div>
   </div>
-  <div class="arya-input">
-    <input id="aryaInput" placeholder="Ask Arya anything about UP..." autocomplete="off">
-    <button onclick="askArya()">Send</button>
+
+  <!-- Intro / Welcome Video Stage (assets/arya-intro.mp4) -->
+  <div class="arya-intro-stage" id="aryaIntroStage">
+    <video id="aryaIntroVideo" class="arya-intro-video" src="assets/arya-intro.mp4" playsinline muted preload="auto"></video>
+    <div class="arya-intro-overlay">
+      <div class="arya-intro-top-badge">🌟 EXPLORE UTTAR PRADESH</div>
+      <div class="arya-intro-bottom-bar">
+        <div class="arya-intro-welcome-text">Namaste! Welcome to ExploreUP 🙏</div>
+        <button class="arya-skip-btn" onclick="skipAryaIntro()" aria-label="Skip to Chat">Skip to Chat ➔</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Normal Chat Interface Stage (Revealed after intro video ends) -->
+  <div class="arya-chat-stage hidden" id="aryaChatStage">
+    <div class="arya-body" id="aryaBody">
+      <div class="arya-msg bot">Namaste! I am Arya, your AI travel concierge for Uttar Pradesh.
+
+Ask me anything about customized trip itineraries, Taj Mahal timings, Varanasi ghats, authentic Awadhi kebabs, Ayodhya hotels, or travel routes across UP!</div>
+      <div class="arya-suggest">
+        <button onclick="aryaQuick('Agra Taj Mahal timing and trip plan')">🕌 Agra 1-Day Plan</button>
+        <button onclick="aryaQuick('Varanasi street food guide')">🍲 Varanasi Food</button>
+        <button onclick="aryaQuick('Ayodhya Ram Mandir travel guide')">🚩 Ayodhya Guide</button>
+        <button onclick="aryaQuick('Lucknow famous kebabs and places')">🍢 Lucknow Food</button>
+        <button onclick="aryaQuick('Calculate 3-day budget for Varanasi for 2 people')">💰 Budget Calculation</button>
+      </div>
+    </div>
+    <div class="arya-input">
+      <input id="aryaInput" placeholder="Ask Arya anything about Uttar Pradesh..." autocomplete="off">
+      <button id="aryaSendBtn" onclick="askArya()" aria-label="Send Message">Send ➔</button>
+    </div>
   </div>
 </div>
 
@@ -2042,7 +2111,9 @@ document.addEventListener('keydown', e => {
     closeCategoryModal();
     closeAdminPanel();
     const ap = document.getElementById('aryaPanel');
-    if(ap) ap.style.display = 'none';
+    if(ap && (ap.style.display === 'flex' || ap.classList.contains('open'))) {
+      toggleArya();
+    }
   }
 });
 
@@ -2995,7 +3066,7 @@ async function handleLoginSubmit(e) {
       updateAuthUI();
       closeAuthModal();
       const aryaPanel = document.getElementById('aryaPanel');
-      if (aryaPanel && aryaPanel.style.display === 'block') {
+      if (aryaPanel && (aryaPanel.style.display === 'flex' || aryaPanel.classList.contains('open'))) {
         aryaAdd('Welcome back, ' + data.user.username + '! You can now ask me any question about Uttar Pradesh.', 'bot');
       }
     } else {
@@ -3051,7 +3122,7 @@ async function handleRegisterSubmit(e) {
       updateAuthUI();
       closeAuthModal();
       const aryaPanel = document.getElementById('aryaPanel');
-      if (aryaPanel && aryaPanel.style.display === 'block') {
+      if (aryaPanel && (aryaPanel.style.display === 'flex' || aryaPanel.classList.contains('open'))) {
         aryaAdd('Welcome to ExploreUP, ' + data.user.username + '! Your account is active. How may I assist your travel today?', 'bot');
       }
     } else {
@@ -3088,24 +3159,122 @@ async function handleLogout() {
 function toggleArya(){
   const p = document.getElementById('aryaPanel');
   if(!p) return;
-  p.style.display = p.style.display === 'block' ? 'none' : 'block';
-  if(p.style.display === 'block'){
-    setTimeout(() => document.getElementById('aryaInput')?.focus(), 100);
+  const isCurrentlyOpen = p.style.display === 'flex' || p.classList.contains('open');
+
+  if(!isCurrentlyOpen){
+    // Open panel
+    p.style.display = 'flex';
+    p.classList.add('open');
+
+    // Reset view to intro video stage
+    const intro = document.getElementById('aryaIntroStage');
+    const chat = document.getElementById('aryaChatStage');
+    if(intro) intro.classList.remove('fade-out');
+    if(chat) chat.classList.add('hidden');
+
+    // Reset and play welcome video automatically once
+    const video = document.getElementById('aryaIntroVideo');
+    if(video){
+      video.currentTime = 0;
+      const playPromise = video.play();
+      if(playPromise !== undefined){
+        playPromise.catch(function(){
+          // Autoplay policy fallback: mute and play
+          video.muted = true;
+          const sBtn = document.getElementById('aryaSoundBtn');
+          if(sBtn) sBtn.innerHTML = '🔇';
+          video.play().catch(function(){});
+        });
+      }
+    }
+  } else {
+    // Close panel
+    p.style.display = 'none';
+    p.classList.remove('open');
+
+    // Reset video so it stops playing and resets to beginning
+    const video = document.getElementById('aryaIntroVideo');
+    if(video){
+      video.pause();
+      video.currentTime = 0;
+    }
+
+    // Reset stages for next reopen
+    const intro = document.getElementById('aryaIntroStage');
+    const chat = document.getElementById('aryaChatStage');
+    if(intro) intro.classList.remove('fade-out');
+    if(chat) chat.classList.add('hidden');
+  }
+}
+
+// Transition from intro video to chat interface when video fires 'ended'
+function onAryaVideoEnded(){
+  const intro = document.getElementById('aryaIntroStage');
+  const chat = document.getElementById('aryaChatStage');
+  if(intro) intro.classList.add('fade-out');
+  if(chat) chat.classList.remove('hidden');
+  setTimeout(() => {
+    document.getElementById('aryaInput')?.focus();
+  }, 350);
+}
+
+// Wire up ended event listener to video
+(function initAryaVideoListener(){
+  const video = document.getElementById('aryaIntroVideo');
+  if(video){
+    video.addEventListener('ended', onAryaVideoEnded);
+  }
+})();
+
+// Skip intro immediately to chat
+function skipAryaIntro(){
+  const video = document.getElementById('aryaIntroVideo');
+  if(video) video.pause();
+  onAryaVideoEnded();
+}
+
+// Replay intro video on demand
+function replayAryaIntro(){
+  const intro = document.getElementById('aryaIntroStage');
+  const chat = document.getElementById('aryaChatStage');
+  const video = document.getElementById('aryaIntroVideo');
+  if(chat) chat.classList.add('hidden');
+  if(intro) intro.classList.remove('fade-out');
+  if(video){
+    video.currentTime = 0;
+    video.play().catch(function(){});
+  }
+}
+
+// Sound toggle for intro video
+function toggleAryaSound(){
+  const video = document.getElementById('aryaIntroVideo');
+  const btn = document.getElementById('aryaSoundBtn');
+  if(!video) return;
+  video.muted = !video.muted;
+  if(btn){
+    btn.innerHTML = video.muted ? '🔇' : '🔊';
+    btn.title = video.muted ? 'Unmute video' : 'Mute video';
   }
 }
 
 function heroAryaQuick(q){
-  toggleArya();
+  const p = document.getElementById('aryaPanel');
+  if(p && (p.style.display !== 'flex' && !p.classList.contains('open'))){
+    toggleArya();
+  }
+  skipAryaIntro();
   setTimeout(() => {
     const input = document.getElementById('aryaInput');
     if(input){
       input.value = q;
       askArya();
     }
-  }, 100);
+  }, 150);
 }
 
 function aryaQuick(q){
+  skipAryaIntro();
   const input = document.getElementById('aryaInput');
   if(input){
     input.value = q;
@@ -3124,10 +3293,27 @@ function aryaAdd(text, type = 'bot'){
 
 async function askArya(){
   const input = document.getElementById('aryaInput');
+  const sendBtn = document.getElementById('aryaSendBtn') || document.querySelector('.arya-input button');
   const q = (input?.value || '').trim();
   if(!q) return;
+
   aryaAdd(q, 'user');
   if (input) input.value = '';
+
+  // Show typing indicator
+  const body = document.getElementById('aryaBody');
+  const typingEl = document.createElement('div');
+  typingEl.id = 'aryaTyping';
+  typingEl.className = 'arya-msg bot typing-indicator';
+  typingEl.innerHTML = 'Arya is thinking<span>.</span><span>.</span><span>.</span>';
+  if (body) {
+    body.appendChild(typingEl);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  // Temporarily disable input & send button while waiting
+  if (input) input.disabled = true;
+  if (sendBtn) sendBtn.disabled = true;
 
   // Call /api/chat route
   try {
@@ -3148,6 +3334,13 @@ async function askArya(){
   } catch (err) {
     const reply = getAryaLocalReply(q);
     aryaAdd(reply, 'bot');
+  } finally {
+    document.getElementById('aryaTyping')?.remove();
+    if (input) {
+      input.disabled = false;
+      input.focus();
+    }
+    if (sendBtn) sendBtn.disabled = false;
   }
 }
 
