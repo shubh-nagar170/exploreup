@@ -1412,10 +1412,31 @@ app.use(express.static(__dirname));
 // Fallback for SPA navigation
 app.use((req, res) => {
   const filePath = path.join(__dirname, req.path === '/' ? 'index.html' : req.path);
-  if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-    return res.sendFile(filePath);
-  }
-  return res.sendFile(path.join(__dirname, 'index.html'));
+  try {
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      return res.sendFile(filePath, err => {
+        if (err && !res.headersSent) res.status(404).end();
+      });
+    }
+  } catch (e) {}
+  return res.sendFile(path.join(__dirname, 'index.html'), err => {
+    if (err && !res.headersSent) res.status(404).end();
+  });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  if (res.headersSent) return;
+  console.error('Server error:', err.message);
+  res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
+});
+
+// Process-level guards
+process.on('uncaughtException', err => {
+  console.error('Uncaught Exception:', err.message);
+});
+process.on('unhandledRejection', reason => {
+  console.error('Unhandled Rejection:', reason);
 });
 
 // Start Server
