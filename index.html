@@ -686,6 +686,7 @@ body.dark .arya-suggest button:hover{background:#112a4a;color:#fff}
   transition:transform .32s cubic-bezier(0.16,1,0.3,1),opacity .28s ease;
   transform:translateY(0);
   opacity:1;
+  pointer-events:none;
 }
 .bottom-sticky-bar.hidden-bar{
   transform:translateY(115%);
@@ -697,7 +698,7 @@ body.dark .bottom-sticky-bar{
   border-top-color:rgba(255,255,255,0.08);
   box-shadow:0 -4px 16px rgba(0,0,0,.25);
 }
-.sticky-bar-inner{width:100%;max-width:540px;background:var(--gold);border-radius:28px;padding:4px;display:flex;align-items:center;gap:4px;box-shadow:0 4px 15px rgba(255,181,27,.35)}
+.sticky-bar-inner{width:100%;max-width:540px;background:var(--gold);border-radius:28px;padding:4px;display:flex;align-items:center;gap:4px;box-shadow:0 4px 15px rgba(255,181,27,.35);pointer-events:auto}
 .sticky-btn-plan,.sticky-btn-arya{flex:1;border:0;border-radius:24px;padding:10px 14px;font-weight:850;font-size:15px;color:#071b35;background:transparent;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;transition:all .18s ease;font-family:inherit}
 .sticky-btn-plan:hover{background:rgba(255,255,255,.22)}
 .sticky-btn-arya{background:rgba(255,255,255,.32);box-shadow:0 2px 8px rgba(0,0,0,.08)}
@@ -733,8 +734,8 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 <header class="nav">
   <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})"><div class="pin"><b>●</b></div><div>Explore<span>UP</span><small class="tag">HAR SHEHAR KI KAHANI</small></div></div>
   <nav class="navlinks">
-    <a href="#top">Home</a>
-    <a href="#cities">Explore All Cities</a>
+    <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'})">Home</a>
+    <a href="#cities" onclick="openAllCitiesSection()">Explore All Cities</a>
     <a href="javascript:void(0)" onclick="openTripPlanner()">Trip Planner</a>
     <a href="#food">Food Trails</a>
     <a href="#festivals">Festivals</a>
@@ -809,7 +810,7 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   <div class="breadcrumb" id="breadcrumb">Home <span>›</span> <b>Explore Uttar Pradesh</b></div>
   
   <div class="categories">
-    <div class="cat" onclick="document.getElementById('cities').scrollIntoView({behavior:'smooth'})"><div class="ico">🏛️</div>Famous Places</div>
+    <div class="cat" onclick="openAllCitiesSection()"><div class="ico">🏛️</div>Famous Places</div>
     <div class="cat" onclick="document.getElementById('food').scrollIntoView({behavior:'smooth'})"><div class="ico">🍛</div>Food & Cuisine</div>
     <div class="cat" onclick="openCategoryShowcase('shopping')"><div class="ico">🛍️</div>Shopping & Crafts</div>
     <div class="cat" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})"><div class="ico">🏺</div>Culture & History</div>
@@ -849,7 +850,7 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
         <h2 id="featuredTitle">Agra — City of the Taj</h2>
         <p id="featuredDesc">Home to the Taj Mahal, Agra Fort, and Fatehpur Sikri. Experience world-class expressways, high-speed Gatimaan & Vande Bharat trains, Mughlai flavours, and famous Agra Petha.</p>
         <div style="margin-top:14px">
-          <a id="featuredBannerBtn" href="district.html?id=agra" onclick="safeOpenCity('Agra')" class="feature-cta-btn">Explore Agra Guide →</a>
+          <a id="featuredBannerBtn" href="district.html?id=agra" class="feature-cta-btn">Explore Agra Guide →</a>
         </div>
       </div>
     </div>
@@ -896,42 +897,42 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
      </div>
    </div>
    <div class="districts" id="districtsPills">
-    <a href="district.html?id=lucknow" class="district" onclick="safeOpenCity('Lucknow')">Lucknow</a>
-    <a href="district.html?id=ayodhya" class="district" onclick="safeOpenCity('Ayodhya')">Ayodhya</a>
-    <a href="district.html?id=varanasi" class="district" onclick="safeOpenCity('Varanasi')">Varanasi</a>
-    <a href="district.html?id=agra" class="district" onclick="safeOpenCity('Agra')">Agra</a>
-    <a href="district.html?id=mathura" class="district" onclick="safeOpenCity('Mathura')">Mathura</a>
-    <a href="district.html?id=vrindavan" class="district" onclick="safeOpenCity('Vrindavan')">Vrindavan</a>
-    <a href="district.html?id=prayagraj" class="district" onclick="safeOpenCity('Prayagraj')">Prayagraj</a>
-    <a href="district.html?id=kanpur" class="district" onclick="safeOpenCity('Kanpur')">Kanpur</a>
-    <a href="district.html?id=jhansi" class="district" onclick="safeOpenCity('Jhansi')">Jhansi</a>
-    <a href="district.html?id=chitrakoot" class="district" onclick="safeOpenCity('Chitrakoot')">Chitrakoot</a>
-    <a href="district.html?id=meerut" class="district" onclick="safeOpenCity('Meerut')">Meerut</a>
-    <a href="district.html?id=moradabad" class="district" onclick="safeOpenCity('Moradabad')">Moradabad</a>
-    <a href="district.html?id=rampur" class="district" onclick="safeOpenCity('Rampur')">Rampur</a>
-    <a href="district.html?id=bareilly" class="district" onclick="safeOpenCity('Bareilly')">Bareilly</a>
-    <a href="district.html?id=saharanpur" class="district" onclick="safeOpenCity('Saharanpur')">Saharanpur</a>
-    <a href="district.html?id=firozabad" class="district" onclick="safeOpenCity('Firozabad')">Firozabad</a>
-    <a href="district.html?id=kannauj" class="district" onclick="safeOpenCity('Kannauj')">Kannauj</a>
-    <a href="district.html?id=mirzapur" class="district" onclick="safeOpenCity('Mirzapur')">Mirzapur</a>
-    <a href="district.html?id=jaunpur" class="district" onclick="safeOpenCity('Jaunpur')">Jaunpur</a>
-    <a href="district.html?id=gorakhpur" class="district" onclick="safeOpenCity('Gorakhpur')">Gorakhpur</a>
-    <a href="district.html?id=kushinagar" class="district" onclick="safeOpenCity('Kushinagar')">Kushinagar</a>
-    <a href="district.html?id=lakhimpur-kheri" class="district" onclick="safeOpenCity('Lakhimpur Kheri')">Lakhimpur Kheri</a>
-    <a href="district.html?id=sonbhadra" class="district" onclick="safeOpenCity('Sonbhadra')">Sonbhadra</a>
-    <a href="district.html?id=bhadohi" class="district" onclick="safeOpenCity('Bhadohi')">Bhadohi</a>
-    <a href="district.html?id=pratapgarh" class="district" onclick="safeOpenCity('Pratapgarh')">Pratapgarh</a>
-    <a href="district.html?id=etawah" class="district" onclick="safeOpenCity('Etawah')">Etawah</a>
-    <a href="district.html?id=aligarh" class="district" onclick="safeOpenCity('Aligarh')">Aligarh</a>
-    <a href="district.html?id=bulandshahr" class="district" onclick="safeOpenCity('Bulandshahr')">Bulandshahr</a>
-    <a href="district.html?id=hapur" class="district" onclick="safeOpenCity('Hapur')">Hapur</a>
-    <a href="district.html?id=muzaffarnagar" class="district" onclick="safeOpenCity('Muzaffarnagar')">Muzaffarnagar</a>
-    <a href="district.html?id=pilibhit" class="district" onclick="safeOpenCity('Pilibhit')">Pilibhit</a>
-    <a href="district.html?id=amroha" class="district" onclick="safeOpenCity('Amroha')">Amroha</a>
-    <a href="district.html?id=budaun" class="district" onclick="safeOpenCity('Budaun')">Budaun</a>
-    <a href="district.html?id=chandauli" class="district" onclick="safeOpenCity('Chandauli')">Chandauli</a>
-    <a href="district.html?id=sultanpur" class="district" onclick="safeOpenCity('Sultanpur')">Sultanpur</a>
-    <a href="district.html?id=unnao" class="district" onclick="safeOpenCity('Unnao')">Unnao</a>
+    <a href="district.html?id=lucknow" class="district">Lucknow</a>
+    <a href="district.html?id=ayodhya" class="district">Ayodhya</a>
+    <a href="district.html?id=varanasi" class="district">Varanasi</a>
+    <a href="district.html?id=agra" class="district">Agra</a>
+    <a href="district.html?id=mathura" class="district">Mathura</a>
+    <a href="district.html?id=vrindavan" class="district">Vrindavan</a>
+    <a href="district.html?id=prayagraj" class="district">Prayagraj</a>
+    <a href="district.html?id=kanpur" class="district">Kanpur</a>
+    <a href="district.html?id=jhansi" class="district">Jhansi</a>
+    <a href="district.html?id=chitrakoot" class="district">Chitrakoot</a>
+    <a href="district.html?id=meerut" class="district">Meerut</a>
+    <a href="district.html?id=moradabad" class="district">Moradabad</a>
+    <a href="district.html?id=rampur" class="district">Rampur</a>
+    <a href="district.html?id=bareilly" class="district">Bareilly</a>
+    <a href="district.html?id=saharanpur" class="district">Saharanpur</a>
+    <a href="district.html?id=firozabad" class="district">Firozabad</a>
+    <a href="district.html?id=kannauj" class="district">Kannauj</a>
+    <a href="district.html?id=mirzapur" class="district">Mirzapur</a>
+    <a href="district.html?id=jaunpur" class="district">Jaunpur</a>
+    <a href="district.html?id=gorakhpur" class="district">Gorakhpur</a>
+    <a href="district.html?id=kushinagar" class="district">Kushinagar</a>
+    <a href="district.html?id=lakhimpur-kheri" class="district">Lakhimpur Kheri</a>
+    <a href="district.html?id=sonbhadra" class="district">Sonbhadra</a>
+    <a href="district.html?id=bhadohi" class="district">Bhadohi</a>
+    <a href="district.html?id=pratapgarh" class="district">Pratapgarh</a>
+    <a href="district.html?id=etawah" class="district">Etawah</a>
+    <a href="district.html?id=aligarh" class="district">Aligarh</a>
+    <a href="district.html?id=bulandshahr" class="district">Bulandshahr</a>
+    <a href="district.html?id=hapur" class="district">Hapur</a>
+    <a href="district.html?id=muzaffarnagar" class="district">Muzaffarnagar</a>
+    <a href="district.html?id=pilibhit" class="district">Pilibhit</a>
+    <a href="district.html?id=amroha" class="district">Amroha</a>
+    <a href="district.html?id=budaun" class="district">Budaun</a>
+    <a href="district.html?id=chandauli" class="district">Chandauli</a>
+    <a href="district.html?id=sultanpur" class="district">Sultanpur</a>
+    <a href="district.html?id=unnao" class="district">Unnao</a>
    </div>
   </section>
 
@@ -1015,7 +1016,7 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 
 <footer class="footer">
   <div><strong>📍 Explore<span>UP</span></strong><div style="font-size:11px;letter-spacing:1px">HAR SHEHAR KI KAHANI • UTTAR PRADESH</div></div>
-  <div><a href="#top">Home</a> &nbsp;•&nbsp; <a href="#cities">Explore All Cities</a> &nbsp;•&nbsp; <a href="javascript:void(0)" onclick="openTripPlanner()">Trip Planner</a> &nbsp;•&nbsp; <a href="#emergency">Emergency</a></div>
+  <div><a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'})">Home</a> &nbsp;•&nbsp; <a href="#cities" onclick="openAllCitiesSection()">Explore All Cities</a> &nbsp;•&nbsp; <a href="javascript:void(0)" onclick="openTripPlanner()">Trip Planner</a> &nbsp;•&nbsp; <a href="#emergency">Emergency</a></div>
   <div>Explore • Discover • Experience ♥</div>
 </footer>
 
@@ -1878,7 +1879,7 @@ function renderCities(){
     const budget = districtInfo.budget || c.budget;
     const distance = districtInfo.distance || c.distance;
 
-    return '<a href="district.html?id=' + encodeURIComponent(slug) + '" class="city" data-city-name="' + escapeHtml(c.name) + '" onclick="safeOpenCity(\'' + c.name.replace(/'/g, "\\'") + '\')" aria-label="Explore ' + escapeHtml(c.name) + '">' +
+    return '<a href="district.html?id=' + encodeURIComponent(slug) + '" class="city" data-city-name="' + escapeHtml(c.name) + '" aria-label="Explore ' + escapeHtml(c.name) + '">' +
       '<img src="' + img + '" alt="' + escapeHtml(c.name) + '" loading="lazy" onerror="exploreUpImageFallback(this)">' +
       '<div class="citytext">' +
         '<h3>' + escapeHtml(c.name) + '</h3>' +
@@ -1949,7 +1950,7 @@ function renderDistrictPills(){
   container.innerHTML = cities.map(c => {
     const slug = c.name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     return `
-      <a href="district.html?id=${encodeURIComponent(slug)}" class="district" data-district-name="${escapeHtml(c.name)}" onclick="safeOpenCity('${c.name.replace(/'/g,"\\'")}')">
+      <a href="district.html?id=${encodeURIComponent(slug)}" class="district" data-district-name="${escapeHtml(c.name)}">
         ${escapeHtml(c.name)}
       </a>
     `;
@@ -1959,8 +1960,11 @@ function renderDistrictPills(){
 // =========================================================
 // CRITICAL: DESTINATION OPEN (OPENS DISTRICT PAGE)
 // =========================================================
-function safeOpenCity(name){
+function safeOpenCity(name, event){
   try{
+    if(event && typeof event.preventDefault === 'function'){
+      event.preventDefault();
+    }
     const val = String(name||'').trim();
     if(!val) return false;
     const slug = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -3657,7 +3661,7 @@ function applyFeaturedSlideData(item, bg, title, desc, btn){
   if(btn){
     btn.textContent = item.btnText;
     btn.href = 'district.html?id=' + encodeURIComponent(item.id);
-    btn.setAttribute('onclick', "safeOpenCity('" + item.name.replace(/'/g, "\'") + "')");
+    btn.removeAttribute('onclick');
   }
 }
 
