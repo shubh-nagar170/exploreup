@@ -1055,6 +1055,9 @@ app.post('/api/chat', async (req, res) => {
     let lastAiError = null;
 
     // Maintain conversation history in session (preserved during current chat session)
+    if (!req.session) {
+      req.session = {};
+    }
     if (!Array.isArray(req.session.chatHistory)) {
       req.session.chatHistory = [];
     }
@@ -1110,10 +1113,9 @@ ${userStatusDesc}
       try {
         const candidateModels = [
           GEMINI_MODEL,
-          'gemini-3.5-flash',
-          'gemini-2.5-flash',
-          'gemini-2.0-flash',
-          'gemini-1.5-flash'
+          'gemini-3.6-flash',
+          'gemini-3.5-flash-lite',
+          'gemini-3.5-flash'
         ].filter(Boolean);
         const uniqueModels = [...new Set(candidateModels)];
 
@@ -1153,7 +1155,17 @@ ${userStatusDesc}
                 tools: geminiTools
               }
             });
-            chatResponse = await chat.sendMessage({ message: query });
+            try {
+              chatResponse = await chat.sendMessage({ message: query });
+            } catch (sendErr) {
+              if (sendErr.message && (sendErr.message.includes('503') || sendErr.message.includes('UNAVAILABLE') || sendErr.message.includes('429'))) {
+                console.warn(`Transient ${sendErr.message.slice(0, 50)} on model ${m}, waiting 1s and retrying...`);
+                await new Promise((r) => setTimeout(r, 1000));
+                chatResponse = await chat.sendMessage({ message: query });
+              } else {
+                throw sendErr;
+              }
+            }
 
             let loopCount = 0;
             while (chatResponse && chatResponse.functionCalls && chatResponse.functionCalls.length > 0 && loopCount < 3) {
