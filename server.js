@@ -835,15 +835,26 @@ const geminiTools = [
 
 // Initialize Primary Gemini Client
 let geminiClient = null;
+let lastGeminiKey = null;
+
 function getGeminiClient() {
-  const key = (process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || '').trim();
+  const rawKey = (
+    process.env.GEMINI_API_KEY ||
+    process.env.GOOGLE_API_KEY ||
+    process.env.GOOGLE_GENAI_API_KEY ||
+    process.env.GEMINI_KEY ||
+    ''
+  ).trim();
+  const key = rawKey.replace(/^["']|["']$/g, '');
+
   if (key && key !== 'your_gemini_api_key_here') {
-    if (!geminiClient) {
+    if (!geminiClient || lastGeminiKey !== key) {
       try {
         geminiClient = new GoogleGenAI({ apiKey: key });
-        console.log(`GoogleGenAI client ready (Primary AI Backend with model: ${process.env.GEMINI_MODEL || 'gemini-3.5-flash'})`);
+        lastGeminiKey = key;
+        console.log(`GoogleGenAI client initialized (Primary AI Backend with model: ${process.env.GEMINI_MODEL || 'gemini-3.5-flash'})`);
       } catch (err) {
-        console.warn('GoogleGenAI initialization error:', err.message);
+        console.error('[ExploreUP] GoogleGenAI initialization error:', err.message);
         return null;
       }
     }
@@ -1039,7 +1050,9 @@ app.post('/api/chat', async (req, res) => {
       : (req.session.userName || (req.session.user && req.session.user.username) || 'Traveler');
     const userBookings = isGuest ? [] : getUserBookings(userName, req.session.user);
     const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
-    const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
+    const rawGeminiModel = (process.env.GEMINI_MODEL || 'gemini-3.5-flash').trim().replace(/^["']|["']$/g, '');
+    const GEMINI_MODEL = rawGeminiModel || 'gemini-3.5-flash';
+    let lastAiError = null;
 
     // Maintain conversation history in session (preserved during current chat session)
     if (!Array.isArray(req.session.chatHistory)) {
@@ -1088,15 +1101,19 @@ ${userStatusDesc}
 
     // 1. PRIMARY AI BACKEND: Gemini with Web-Search Grounding & Tool Support
     const gemini = getGeminiClient();
+    if (!gemini) {
+      console.warn('[ExploreUP AI Warning] Gemini client not initialized. GEMINI_API_KEY environment variable is missing or empty.');
+      lastAiError = 'GEMINI_API_KEY is not configured in server environment variables.';
+    }
+
     if (gemini) {
       try {
         const candidateModels = [
           GEMINI_MODEL,
           'gemini-3.5-flash',
-          'gemini-3.6-flash',
-          'gemini-3.7-flash',
-          'gemini-3.5-flash-lite',
-          'gemini-flash-latest'
+          'gemini-2.5-flash',
+          'gemini-2.0-flash',
+          'gemini-1.5-flash'
         ].filter(Boolean);
         const uniqueModels = [...new Set(candidateModels)];
 
@@ -1239,7 +1256,8 @@ ${userStatusDesc}
           });
         }
       } catch (geminiErr) {
-        console.warn('Gemini execution encountered error, checking fallback:', geminiErr.message);
+        lastAiError = `Gemini error: ${geminiErr.message}`;
+        console.error('[ExploreUP AI Error] Gemini execution encountered error, checking fallback:', geminiErr.message);
       }
     }
 
@@ -1329,7 +1347,8 @@ ${userStatusDesc}
           });
         }
       } catch (openAiErr) {
-        console.warn('OpenAI fallback call error:', openAiErr.message);
+        lastAiError = `OpenAI error: ${openAiErr.message}`;
+        console.error('[ExploreUP AI Error] OpenAI fallback call error:', openAiErr.message);
       }
     }
 
@@ -1414,6 +1433,7 @@ ${userStatusDesc}
       user: isGuest ? 'Guest' : userName,
       authenticated: !isGuest,
       source: 'offline-engine',
+      debug_error: lastAiError || undefined,
       timestamp: new Date().toISOString()
     });
   } catch (err) {
