@@ -1571,11 +1571,13 @@ ${userStatusDesc}
 // =========================================================
 // Explicit route for homepage
 app.get('/', (req, res) => {
+  res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'index.html'), { dotfiles: 'allow' });
 });
 
 // Explicit route for district tourism guide (serves actual district.html, preserving query params)
 app.get(['/district.html', '/district'], (req, res) => {
+  res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'district.html'), { dotfiles: 'allow' });
 });
 
