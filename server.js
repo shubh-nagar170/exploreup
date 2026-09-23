@@ -647,56 +647,117 @@ const toolRegistry = {
   }
 };
 
-// Live Web Search Retriever
+// Live Real-Time Weather Retriever (wttr.in)
+function fetchLiveWeather(city) {
+  return new Promise((resolve) => {
+    const cleanCity = encodeURIComponent((city || 'Lucknow').replace(/[^a-zA-Z\s]/g, '').trim());
+    const url = `https://wttr.in/${cleanCity}?format=j1`;
+    const req = https.get(url, { headers: { 'User-Agent': 'ExploreUP-Weather/1.0' } }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try {
+          const json = JSON.parse(data);
+          const current = json.current_condition?.[0];
+          const today = json.weather?.[0];
+          if (current) {
+            resolve({
+              city,
+              temp: current.temp_C,
+              feelsLike: current.FeelsLikeC,
+              desc: current.weatherDesc?.[0]?.value || 'Clear',
+              humidity: current.humidity,
+              wind: current.windspeedKmph,
+              maxTemp: today?.maxtempC || current.temp_C,
+              minTemp: today?.mintempC || current.temp_C,
+              source: `https://wttr.in/${cleanCity}`
+            });
+            return;
+          }
+        } catch (e) {}
+        resolve(null);
+      });
+    });
+    req.on('error', () => resolve(null));
+    req.setTimeout(2500, () => { req.destroy(); resolve(null); });
+  });
+}
+
+// Live Web Search Retriever via secure POST
 function liveWebSearch(query) {
   return new Promise((resolve) => {
     if (!query || typeof query !== 'string') return resolve([]);
     const cleanQuery = query.replace(/["']/g, '').trim();
-    const url = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(cleanQuery)}`;
-    const req = https.get(
-      url,
-      {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'text/html,application/xhtml+xml',
-          'Accept-Language': 'en-US,en;q=0.9'
-        }
-      },
-      (res) => {
-        let html = '';
-        res.on('data', (c) => (html += c));
-        res.on('end', () => {
-          const results = [];
-          const regex = /<a[^>]*class="result__a"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?(?:<a class="result__snippet"[^>]*>([\s\S]*?)<\/a>)?/gi;
-          let m;
-          while ((m = regex.exec(html)) !== null && results.length < 5) {
-            let href = m[1];
-            if (href.includes('uddg=')) {
-              try {
-                const p = new URL(href.startsWith('//') ? 'https:' + href : href);
-                const a = p.searchParams.get('uddg');
-                if (a) href = a;
-              } catch (e) {}
-            }
-            const title = m[2].replace(/<[^>]+>/g, '').trim();
-            const snippet = m[3] ? m[3].replace(/<[^>]+>/g, '').trim() : '';
-            if (title && href.startsWith('http')) {
-              results.push({ title, url: href, snippet });
-            }
-          }
-          resolve(results);
-        });
+    const postData = 'q=' + encodeURIComponent(cleanQuery);
+    const req = https.request('https://html.duckduckgo.com/html/', {
+      method: 'POST',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(postData)
       }
-    );
+    }, (res) => {
+      let html = '';
+      res.on('data', c => html += c);
+      res.on('end', () => {
+        const results = [];
+        const regex = /<a[^>]*class="result__a"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?(?:<a class="result__snippet"[^>]*>([\s\S]*?)<\/a>)?/gi;
+        let m;
+        while ((m = regex.exec(html)) !== null && results.length < 4) {
+          let href = m[1];
+          if (href.includes('uddg=')) {
+            try {
+              const p = new URL(href.startsWith('//') ? 'https:' + href : href);
+              const a = p.searchParams.get('uddg');
+              if (a) href = a;
+            } catch (e) {}
+          }
+          const title = m[2].replace(/<[^>]+>/g, '').trim();
+          const snippet = m[3] ? m[3].replace(/<[^>]+>/g, '').trim() : '';
+          if (title && href.startsWith('http')) {
+            results.push({ title, url: href, snippet });
+          }
+        }
+        resolve(results);
+      });
+    });
     req.on('error', (e) => {
       console.warn('Web search request error:', e.message);
       resolve([]);
     });
-    req.setTimeout(5000, () => {
+    req.setTimeout(3500, () => {
       req.destroy();
       resolve([]);
     });
+    req.write(postData);
+    req.end();
   });
+}
+
+// Intelligent Query Classifier for Live/Real-time Web Grounding
+function requiresLiveWebSearch(query) {
+  if (!query || typeof query !== 'string') return false;
+  const q = query.trim().toLowerCase();
+
+  // 1. Never search web for greetings or simple conversational messages
+  if (/^(hi|hello|hey|namaste|good morning|good afternoon|good evening|who are you|what can you do|help me|tell me a joke|thanks|thank you)\b/i.test(q) && q.length < 60) {
+    return false;
+  }
+
+  // 2. Never search web for pure mathematical calculations
+  if (/^(calculate|compute|divide|split|\d+\s*[\+\-\*\/]\s*\d+|\d+%\s*of)\b/i.test(q)) {
+    return false;
+  }
+
+  // 3. Check for genuine live/current information queries
+  const hasWeather = /\b(weather|temperature|forecast|rain today|climate today)\b/i.test(q);
+  const hasLivePrice = /\b(current price|prices? today|hotel rates? today|train status|live status|running status)\b/i.test(q);
+  const hasLiveEvents = /\b(events? this week|festivals? today|festivals? this month|news today)\b/i.test(q);
+  const hasExplicitSearch = /\b(search the web|search online|search google|check online|look up online|live news)\b/i.test(q);
+  const hasCurrentCondition = /\b(today|tonight|right now|currently|current|live|latest|this week)\b/i.test(q) &&
+                             /\b(open|timings?|rates?|prices?|schedule|events?|flights?|trains?|buses?|hotels?|weather)\b/i.test(q);
+
+  return hasWeather || hasLivePrice || hasLiveEvents || hasExplicitSearch || hasCurrentCondition;
 }
 
 // Gemini Function Declarations for @google/genai SDK
@@ -1044,14 +1105,15 @@ app.post('/api/chat', async (req, res) => {
       return res.status(400).json({ error: 'Query prompt is required.' });
     }
 
+    const isStream = Boolean(req.body.stream || req.headers.accept?.includes('text/event-stream'));
     const isGuest = !(req.session && (req.session.userName || req.session.user));
     const userName = isGuest
       ? null
       : (req.session.userName || (req.session.user && req.session.user.username) || 'Traveler');
     const userBookings = isGuest ? [] : getUserBookings(userName, req.session.user);
     const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
-    const rawGeminiModel = (process.env.GEMINI_MODEL || 'gemini-3.5-flash').trim().replace(/^["']|["']$/g, '');
-    const GEMINI_MODEL = rawGeminiModel || 'gemini-3.5-flash';
+    const rawGeminiModel = (process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite').trim().replace(/^["']|["']$/g, '');
+    const GEMINI_MODEL = rawGeminiModel || 'gemini-3.5-flash-lite';
     let lastAiError = null;
 
     // Maintain conversation history in session (preserved during current chat session)
@@ -1067,42 +1129,52 @@ app.post('/api/chat', async (req, res) => {
       ? "User Status: GUEST (not logged in). If they ask to view or check their personal bookings/tickets on ExploreUP, politely guide them to log in or create an account via the top navigation bar. For general travel planning, answering questions, or general conversations, assist them fully."
       : `User Status: LOGGED IN as "${userName}".${userBookings.length > 0 ? `\nVerified Bookings on ExploreUP:\n${JSON.stringify(userBookings, null, 2)}` : '\nNo active travel bookings on file.'}`;
 
-    // System instruction: General-purpose AI with Uttar Pradesh tourism expertise and Grounding rules
+    // Intelligent Live Web Grounding Decision (only search when query actually requires live/current data)
+    const needsLive = requiresLiveWebSearch(query);
+    let liveGroundingContext = '';
+    const citations = [];
+
+    if (needsLive) {
+      if (/\b(weather|temperature|forecast|rain today|climate today)\b/i.test(query)) {
+        const cityMatch = query.match(/\b(lucknow|agra|varanasi|ayodhya|prayagraj|mathura|jhansi|kanpur|aligarh|gorakhpur|meerut|bareilly|ghaziabad|noida|vrindavan|sarnath)\b/i);
+        const city = cityMatch ? cityMatch[1] : 'Lucknow';
+        const w = await fetchLiveWeather(city);
+        if (w) {
+          liveGroundingContext = `\n\n[VERIFIED REAL-TIME METEOROLOGICAL OBSERVATION: Current weather in ${w.city}, UP right now is ${w.desc}, temperature is ${w.temp}°C (feels like ${w.feelsLike}°C), humidity is ${w.humidity}%, wind is ${w.wind} km/h, today's high is ${w.maxTemp}°C and low is ${w.minTemp}°C. Synthesize this live data accurately for the traveler.]`;
+          citations.push({ title: `Live Weather for ${w.city} (wttr.in)`, url: w.source });
+        }
+      } else {
+        const searchResults = await liveWebSearch(query);
+        if (searchResults && searchResults.length > 0) {
+          liveGroundingContext = `\n\n[VERIFIED LIVE WEB SEARCH RESULTS FOR "${query}":\n` +
+            searchResults.map((r, i) => `${i + 1}. ${r.title} - ${r.snippet}`).join('\n') +
+            `\nSynthesize these real-time web results clearly for the traveler.]`;
+          searchResults.forEach((r) => citations.push({ title: r.title, url: r.url }));
+        }
+      }
+    }
+
+    // System instruction: General-purpose AI with Uttar Pradesh tourism expertise
     const systemPrompt = `You are Arya, the AI travel assistant for ExploreUP.
 
 You are a general-purpose conversational AI assistant with specialized expertise in Uttar Pradesh tourism.
 
 Understand the user's actual request before responding.
 
-You can have normal conversations, answer general questions, perform calculations using tools, create travel plans, help with budgets, recommend destinations, and answer Uttar Pradesh tourism questions.
+You can have normal conversations, answer general questions, perform calculations, create travel plans, help with budgets, recommend destinations, and answer Uttar Pradesh tourism questions.
 
 Do not force unrelated questions into tourism answers.
 
-For travel planning, ask only for information that is genuinely necessary. If enough information is available, make a useful plan immediately.
+For travel planning, ask only for information that is genuinely necessary. If enough information is available, make a useful, practical plan immediately.
 
 Remember the current conversation and understand follow-up questions.
 
-Be natural, helpful, concise when appropriate, and detailed when the user asks for detail.
-
-GROUNDING & CURRENT INFORMATION RULES:
-1. When the user asks for current, live, or real-time information (e.g. "What's happening in Varanasi this week?", "Are these places open today?", "Find current information about hotels in Agra", "What are the latest travel options from Lucknow to Varanasi?", "Find current information about a tourist attraction", "Search the web for current tourism information"), call the 'search_web' tool ONCE with a focused query.
-2. Once you receive search results, synthesize a helpful, comprehensive response directly for the traveler.
-3. Rely on official tourism, government, or verified business information.
-4. Do NOT invent or hallucinate current hotel prices, opening hours, train schedules, weather, events, or live availability.
-5. Clearly distinguish current web information from general historical knowledge.
-6. For normal conversation (e.g. "Hi", "Hello Arya", "Tell me a joke") or general knowledge (e.g. "What is artificial intelligence?"), do NOT search the web unnecessarily.
-7. For trip planning, synthesize: (a) user's requirements, (b) ExploreUP knowledge, and (c) current web information when needed.
-
-TOOL USAGE GUIDELINES:
-- 'search_web': Use whenever current live internet data, weekly events, opening hours, or recent travel options are requested.
-- 'calculate': Use for math calculations, budget division, percentages, and bill splitting (e.g. "Calculate 12500 / 5", "15% of ₹12000", "Divide ₹10000 between 3 people").
-- 'plan_trip': Use to generate practical day-by-day itineraries and budget breakdowns for UP destinations.
-- 'search_up_tourism': Use to query official ExploreUP verified facts, monuments, food, and insider tips.
+Be natural, helpful, concise when appropriate, and detailed when the user asks for detail.${liveGroundingContext}
 
 ${userStatusDesc}
 `;
 
-    // 1. PRIMARY AI BACKEND: Gemini with Web-Search Grounding & Tool Support
+    // 1. PRIMARY AI BACKEND: Ultra-Fast Gemini with Optional Real-Time Grounding
     const gemini = getGeminiClient();
     if (!gemini) {
       console.warn('[ExploreUP AI Warning] Gemini client not initialized. GEMINI_API_KEY environment variable is missing or empty.');
@@ -1113,22 +1185,23 @@ ${userStatusDesc}
       try {
         const candidateModels = [
           GEMINI_MODEL,
-          'gemini-3.6-flash',
           'gemini-3.5-flash-lite',
+          'gemini-3.6-flash',
           'gemini-3.5-flash'
         ].filter(Boolean);
         const uniqueModels = [...new Set(candidateModels)];
 
-        // Map session chat history to Gemini alternating format
+        // Compact history (last 6 turns, truncating past long assistant responses to keep prompt lean)
         const geminiHistory = [];
-        const recentHistory = req.session.chatHistory.slice(-10);
+        const recentHistory = req.session.chatHistory.slice(-6);
         let expectedRole = 'user';
         for (const msg of recentHistory) {
           const gRole = msg.role === 'user' ? 'user' : 'model';
           if (gRole === expectedRole && msg.content) {
+            const text = msg.content.length > 600 ? msg.content.slice(0, 600) + '...' : msg.content;
             geminiHistory.push({
               role: gRole,
-              parts: [{ text: msg.content }]
+              parts: [{ text }]
             });
             expectedRole = expectedRole === 'user' ? 'model' : 'user';
           }
@@ -1137,139 +1210,135 @@ ${userStatusDesc}
           geminiHistory.pop();
         }
 
-        let chat = null;
-        let chatResponse = null;
         let usedModel = uniqueModels[0];
         let finalReply = '';
-        const citations = [];
 
-        for (const m of uniqueModels) {
-          try {
-            usedModel = m;
-            citations.length = 0; // reset citations for clean attempt
-            chat = gemini.chats.create({
-              model: m,
-              history: geminiHistory,
-              config: {
-                systemInstruction: systemPrompt,
-                tools: geminiTools
-              }
-            });
-            try {
-              chatResponse = await chat.sendMessage({ message: query });
-            } catch (sendErr) {
-              if (sendErr.message && (sendErr.message.includes('503') || sendErr.message.includes('UNAVAILABLE') || sendErr.message.includes('429'))) {
-                console.warn(`Transient ${sendErr.message.slice(0, 50)} on model ${m}, waiting 1s and retrying...`);
-                await new Promise((r) => setTimeout(r, 1000));
-                chatResponse = await chat.sendMessage({ message: query });
-              } else {
-                throw sendErr;
-              }
-            }
-
-            let loopCount = 0;
-            while (chatResponse && chatResponse.functionCalls && chatResponse.functionCalls.length > 0 && loopCount < 3) {
-              loopCount++;
-              const call = chatResponse.functionCalls[0];
-              const toolName = call.name;
-              const toolArgs = call.args || {};
-              let toolResult;
-
-              if (toolName === 'search_web') {
-                const cleanQuery = (toolArgs.query || query).replace(/["']/g, '');
-                const searchResults = await liveWebSearch(cleanQuery);
-                searchResults.forEach((r) => citations.push({ title: r.title, url: r.url }));
-                toolResult = {
-                  status: 'success',
-                  query: cleanQuery,
-                  count: searchResults.length,
-                  results: searchResults
-                };
-              } else if (toolName === 'calculate') {
-                toolResult = safeCalculate(toolArgs.expression);
-              } else if (toolName === 'plan_trip') {
-                toolResult = planTrip(toolArgs);
-              } else if (toolName === 'search_up_tourism') {
-                toolResult = searchUpTourism(toolArgs);
-              } else if (toolRegistry[toolName]) {
-                toolResult = await toolRegistry[toolName].execute(toolArgs);
-              } else {
-                toolResult = { message: `Tool ${toolName} acknowledged.` };
-              }
-
-              chatResponse = await chat.sendMessage({
-                message: [
-                  {
-                    functionResponse: {
-                      name: toolName,
-                      response: toolResult
-                    }
-                  }
-                ]
-              });
-            }
-
-            finalReply = (chatResponse && chatResponse.text) ? chatResponse.text.trim() : '';
-
-            // Native Google Search grounding metadata if present
-            const gMeta = chatResponse?.candidates?.[0]?.groundingMetadata;
-            if (gMeta && Array.isArray(gMeta.groundingChunks)) {
-              for (const chunk of gMeta.groundingChunks) {
-                if (chunk.web && chunk.web.uri) {
-                  citations.push({
-                    title: chunk.web.title || chunk.web.uri,
-                    url: chunk.web.uri
-                  });
-                }
-              }
-            }
-
-            // Format citations if web search was used
-            if (citations.length > 0 && !finalReply.includes('http')) {
-              const uniqueUrls = new Set();
-              const uniqueCitations = [];
-              for (const c of citations) {
-                if (c.url && !uniqueUrls.has(c.url)) {
-                  uniqueUrls.add(c.url);
-                  uniqueCitations.push(c);
-                }
-              }
-              if (uniqueCitations.length > 0) {
-                finalReply += '\n\n🌐 **Sources & Current Information:**\n' +
-                  uniqueCitations.slice(0, 4).map((c) => `• [${c.title}](${c.url})`).join('\n');
-              }
-            }
-
-            if (finalReply) {
-              break; // Successfully got response from model m
-            }
-          } catch (mErr) {
-            console.warn(`Gemini model ${m} attempt failed:`, mErr.message);
-            if (m === uniqueModels[uniqueModels.length - 1]) {
-              throw mErr;
-            }
-          }
-        }
-
-        if (finalReply) {
-          req.session.chatHistory.push({ role: 'user', content: query });
-          req.session.chatHistory.push({ role: 'assistant', content: finalReply });
-          if (req.session.chatHistory.length > 20) {
-            req.session.chatHistory = req.session.chatHistory.slice(-20);
-          }
-
-          return res.status(200).json({
-            reply: finalReply,
-            user: isGuest ? 'Guest' : userName,
-            authenticated: !isGuest,
-            source: 'gemini',
-            model: usedModel,
-            timestamp: new Date().toISOString()
+        if (isStream) {
+          res.writeHead(200, {
+            'Content-Type': 'text/event-stream; charset=utf-8',
+            'Cache-Control': 'no-cache, no-transform',
+            'Connection': 'keep-alive',
+            'X-Accel-Buffering': 'no'
           });
+
+          let streamSuccess = false;
+          for (const m of uniqueModels) {
+            try {
+              usedModel = m;
+              const chat = gemini.chats.create({
+                model: m,
+                history: geminiHistory,
+                config: { systemInstruction: systemPrompt }
+              });
+
+              let stream = null;
+              try {
+                stream = await chat.sendMessageStream({ message: query });
+              } catch (sendErr) {
+                if (sendErr.message && (sendErr.message.includes('503') || sendErr.message.includes('UNAVAILABLE') || sendErr.message.includes('429'))) {
+                  console.warn(`Transient ${sendErr.message.slice(0, 50)} on model ${m}, waiting 1s and retrying...`);
+                  await new Promise((r) => setTimeout(r, 1000));
+                  stream = await chat.sendMessageStream({ message: query });
+                } else {
+                  throw sendErr;
+                }
+              }
+
+              for await (const chunk of stream) {
+                if (chunk.text) {
+                  finalReply += chunk.text;
+                  res.write(`data: ${JSON.stringify({ chunk: chunk.text })}\n\n`);
+                }
+              }
+
+              if (citations.length > 0 && !finalReply.includes('http')) {
+                const citationText = '\n\n🌐 **Sources & Current Information:**\n' +
+                  citations.slice(0, 4).map((c) => `• [${c.title}](${c.url})`).join('\n');
+                finalReply += citationText;
+                res.write(`data: ${JSON.stringify({ chunk: citationText })}\n\n`);
+              }
+
+              res.write(`data: ${JSON.stringify({ done: true, source: 'gemini', model: usedModel })}\n\n`);
+              res.write('data: [DONE]\n\n');
+              res.end();
+              streamSuccess = true;
+              break;
+            } catch (streamErr) {
+              console.warn(`Stream attempt with model ${m} failed:`, streamErr.message);
+              if (m === uniqueModels[uniqueModels.length - 1]) {
+                throw streamErr;
+              }
+            }
+          }
+
+          if (streamSuccess) {
+            req.session.chatHistory.push({ role: 'user', content: query });
+            req.session.chatHistory.push({ role: 'assistant', content: finalReply });
+            if (req.session.chatHistory.length > 20) {
+              req.session.chatHistory = req.session.chatHistory.slice(-20);
+            }
+            return;
+          }
+        } else {
+          // Standard JSON response
+          for (const m of uniqueModels) {
+            try {
+              usedModel = m;
+              const chat = gemini.chats.create({
+                model: m,
+                history: geminiHistory,
+                config: { systemInstruction: systemPrompt }
+              });
+
+              let chatResponse = null;
+              try {
+                chatResponse = await chat.sendMessage({ message: query });
+              } catch (sendErr) {
+                if (sendErr.message && (sendErr.message.includes('503') || sendErr.message.includes('UNAVAILABLE') || sendErr.message.includes('429'))) {
+                  console.warn(`Transient ${sendErr.message.slice(0, 50)} on model ${m}, waiting 1s and retrying...`);
+                  await new Promise((r) => setTimeout(r, 1000));
+                  chatResponse = await chat.sendMessage({ message: query });
+                } else {
+                  throw sendErr;
+                }
+              }
+
+              finalReply = (chatResponse && chatResponse.text) ? chatResponse.text.trim() : '';
+
+              if (citations.length > 0 && !finalReply.includes('http')) {
+                finalReply += '\n\n🌐 **Sources & Current Information:**\n' +
+                  citations.slice(0, 4).map((c) => `• [${c.title}](${c.url})`).join('\n');
+              }
+
+              if (finalReply) break;
+            } catch (mErr) {
+              console.warn(`Gemini non-stream model ${m} failed:`, mErr.message);
+              if (m === uniqueModels[uniqueModels.length - 1]) {
+                throw mErr;
+              }
+            }
+          }
+
+          if (finalReply) {
+            req.session.chatHistory.push({ role: 'user', content: query });
+            req.session.chatHistory.push({ role: 'assistant', content: finalReply });
+            if (req.session.chatHistory.length > 20) {
+              req.session.chatHistory = req.session.chatHistory.slice(-20);
+            }
+
+            return res.status(200).json({
+              reply: finalReply,
+              user: isGuest ? 'Guest' : userName,
+              authenticated: !isGuest,
+              source: 'gemini',
+              model: usedModel,
+              timestamp: new Date().toISOString()
+            });
+          }
         }
       } catch (geminiErr) {
         lastAiError = `Gemini error: ${geminiErr.message}`;
-        console.error('[ExploreUP AI Error] Gemini execution encountered error, checking fallback:', geminiErr.message);
+        console.error('[ExploreUP AI Error] Gemini execution error:', geminiErr.message);
       }
     }
 
@@ -1347,6 +1416,21 @@ ${userStatusDesc}
           req.session.chatHistory.push({ role: 'assistant', content: finalReply });
           if (req.session.chatHistory.length > 20) {
             req.session.chatHistory = req.session.chatHistory.slice(-20);
+          }
+
+          if (isStream) {
+            if (!res.headersSent) {
+              res.writeHead(200, {
+                'Content-Type': 'text/event-stream; charset=utf-8',
+                'Cache-Control': 'no-cache, no-transform',
+                'Connection': 'keep-alive',
+                'X-Accel-Buffering': 'no'
+              });
+            }
+            res.write(`data: ${JSON.stringify({ chunk: finalReply })}\n\n`);
+            res.write(`data: ${JSON.stringify({ done: true, source: 'openai', model: OPENAI_MODEL })}\n\n`);
+            res.write('data: [DONE]\n\n');
+            return res.end();
           }
 
           return res.status(200).json({
@@ -1438,6 +1522,26 @@ ${userStatusDesc}
     req.session.chatHistory.push({ role: 'assistant', content: handledReply });
     if (req.session.chatHistory.length > 20) {
       req.session.chatHistory = req.session.chatHistory.slice(-20);
+    }
+
+    if (res.headersSent) {
+      res.write(`data: ${JSON.stringify({ chunk: '\n\n' + handledReply })}\n\n`);
+      res.write(`data: ${JSON.stringify({ done: true, source: 'offline-engine' })}\n\n`);
+      res.write('data: [DONE]\n\n');
+      return res.end();
+    }
+
+    if (isStream) {
+      res.writeHead(200, {
+        'Content-Type': 'text/event-stream; charset=utf-8',
+        'Cache-Control': 'no-cache, no-transform',
+        'Connection': 'keep-alive',
+        'X-Accel-Buffering': 'no'
+      });
+      res.write(`data: ${JSON.stringify({ chunk: handledReply })}\n\n`);
+      res.write(`data: ${JSON.stringify({ done: true, source: 'offline-engine' })}\n\n`);
+      res.write('data: [DONE]\n\n');
+      return res.end();
     }
 
     return res.status(200).json({

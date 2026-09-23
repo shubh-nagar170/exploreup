@@ -3320,21 +3320,77 @@ async function askArya(){
   if (input) input.disabled = true;
   if (sendBtn) sendBtn.disabled = true;
 
-  // Call /api/chat route
+  // Call /api/chat route with streaming support
   try {
     const res = await fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'text/event-stream, application/json'
+      },
       credentials: 'include',
-      body: JSON.stringify({ query: q })
+      body: JSON.stringify({ query: q, stream: true })
     });
 
-    const data = await res.json();
-    if (res.ok && data && data.reply) {
-      aryaAdd(data.reply, 'bot');
+    const contentType = res.headers.get('content-type') || '';
+    if (res.ok && contentType.includes('text/event-stream') && res.body) {
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let botEl = null;
+      let fullText = '';
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop(); // keep trailing partial line
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed.startsWith('data:')) continue;
+          const rawData = trimmed.replace(/^data:\s*/, '');
+          if (rawData === '[DONE]') continue;
+          try {
+            const parsed = JSON.parse(rawData);
+            if (parsed.chunk) {
+              if (!botEl) {
+                document.getElementById('aryaTyping')?.remove();
+                botEl = document.createElement('div');
+                botEl.className = 'arya-msg bot';
+                body.appendChild(botEl);
+              }
+              fullText += parsed.chunk;
+              botEl.textContent = fullText;
+              body.scrollTop = body.scrollHeight;
+            } else if (parsed.reply && !fullText) {
+              fullText = parsed.reply;
+              if (!botEl) {
+                document.getElementById('aryaTyping')?.remove();
+                botEl = document.createElement('div');
+                botEl.className = 'arya-msg bot';
+                body.appendChild(botEl);
+              }
+              botEl.textContent = fullText;
+              body.scrollTop = body.scrollHeight;
+            }
+          } catch (e) {}
+        }
+      }
+
+      if (!fullText) {
+        const reply = getAryaLocalReply(q);
+        aryaAdd(reply, 'bot');
+      }
     } else {
-      const reply = getAryaLocalReply(q);
-      aryaAdd(reply, 'bot');
+      const data = await res.json();
+      if (res.ok && data && data.reply) {
+        aryaAdd(data.reply, 'bot');
+      } else {
+        const reply = getAryaLocalReply(q);
+        aryaAdd(reply, 'bot');
+      }
     }
   } catch (err) {
     const reply = getAryaLocalReply(q);
