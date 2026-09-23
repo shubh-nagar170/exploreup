@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "cleanUrls": false,
+  "trailingSlash": false,
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -7,10 +9,6 @@
     },
     {
       "source": "/district",
-      "destination": "/district.html"
-    },
-    {
-      "source": "/district/(.*)",
       "destination": "/district.html"
     }
   ]

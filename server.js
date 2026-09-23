@@ -1423,23 +1423,24 @@ ${userStatusDesc}
 });
 
 // =========================================================
-// STATIC ASSETS & FALLBACK
+// MULTI-PAGE HTML ROUTES & STATIC ASSETS
 // =========================================================
-app.use(express.static(__dirname));
+// Explicit route for homepage
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'), { dotfiles: 'allow' });
+});
 
-// Fallback for SPA navigation
+// Explicit route for district tourism guide (serves actual district.html, preserving query params)
+app.get(['/district.html', '/district'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'district.html'), { dotfiles: 'allow' });
+});
+
+// Static assets (CSS, JS, images, media, districts.json)
+app.use(express.static(__dirname, { dotfiles: 'allow' }));
+
+// 404 handler for unknown routes (MULTI-PAGE SITE: do NOT redirect unknown routes to index.html)
 app.use((req, res) => {
-  const filePath = path.join(__dirname, req.path === '/' ? 'index.html' : req.path);
-  try {
-    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-      return res.sendFile(filePath, err => {
-        if (err && !res.headersSent) res.status(404).end();
-      });
-    }
-  } catch (e) {}
-  return res.sendFile(path.join(__dirname, 'index.html'), err => {
-    if (err && !res.headersSent) res.status(404).end();
-  });
+  res.status(404).send('Page Not Found');
 });
 
 // Error handling middleware

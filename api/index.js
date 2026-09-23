@@ -2,9 +2,13 @@
 const app = require('../server.js');
 
 module.exports = (req, res) => {
-  // Normalize req.url to ensure /api prefix is present when routed by Vercel rewrites
-  if (req.url && !req.url.startsWith('/api')) {
-    req.url = '/api' + (req.url.startsWith('/') ? req.url : '/' + req.url);
+  // If rewrite stripped the /api prefix for known API routes, restore it
+  const knownApiRoutes = ['/chat', '/login', '/logout', '/me', '/register'];
+  const pathname = (req.url || '').split('?')[0];
+
+  if (knownApiRoutes.some(route => pathname === route || pathname.startsWith(route + '/'))) {
+    req.url = '/api' + req.url;
   }
+
   return app(req, res);
 };
