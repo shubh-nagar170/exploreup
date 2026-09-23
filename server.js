@@ -1095,6 +1095,14 @@ app.get('/api/me', (req, res) => {
   return res.status(200).json({ user: null, userName: null, authenticated: false });
 });
 
+// POST /api/chat/reset & /api/reset
+app.post(['/api/chat/reset', '/api/reset'], (req, res) => {
+  if (req.session) {
+    req.session.chatHistory = [];
+  }
+  return res.status(200).json({ success: true, message: 'Conversation memory reset successfully.' });
+});
+
 // =========================================================
 // CHAT ROUTE (General-Purpose Conversational AI & UP Travel Specialist)
 // =========================================================

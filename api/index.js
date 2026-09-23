@@ -3,7 +3,7 @@ const app = require('../server.js');
 
 module.exports = (req, res) => {
   // If rewrite stripped the /api prefix for known API routes, restore it
-  const knownApiRoutes = ['/chat', '/login', '/logout', '/me', '/register'];
+  const knownApiRoutes = ['/chat', '/login', '/logout', '/me', '/register', '/reset'];
   const pathname = (req.url || '').split('?')[0];
 
   if (knownApiRoutes.some(route => pathname === route || pathname.startsWith(route + '/'))) {

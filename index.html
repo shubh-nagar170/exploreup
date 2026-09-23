@@ -600,26 +600,29 @@ body.dark .contact-actions a{background:#172943;color:#8ec0ff}
 .planner-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
 .planner-action-btn{padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:750;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 
-/* Arya Floating AI Assistant - Modern Travel Theme & Video Stage */
+/* Arya Floating AI Assistant - Stitch Concierge Design & Video Stage */
 .arya-fab{position:fixed;right:20px;bottom:20px;z-index:80;border:0;border-radius:999px;padding:13px 22px;background:linear-gradient(135deg,#ffc543,#e59e14);color:#071b35;font-weight:900;box-shadow:0 12px 32px rgba(229,158,20,.35),0 4px 12px rgba(7,27,53,.2);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .2s ease}
 .arya-fab:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(229,158,20,.45)}
-.arya-panel{display:none;position:fixed;right:20px;bottom:78px;width:min(420px,calc(100vw - 28px));height:min(620px,calc(100vh - 96px));z-index:99;background:var(--card);border:1px solid rgba(255,184,46,.35);border-radius:24px;box-shadow:0 24px 70px rgba(7,27,53,.32),0 0 0 1px rgba(255,255,255,.1);overflow:hidden;flex-direction:column}
+.arya-panel{display:none;position:fixed;right:20px;bottom:78px;width:min(450px,calc(100vw - 24px));height:min(660px,calc(100vh - 96px));z-index:99;background:#ffffff;border:1px solid rgba(11,36,71,.25);border-radius:24px;box-shadow:0 24px 70px rgba(5,24,51,.4),0 0 0 1px rgba(255,255,255,.1);overflow:hidden;flex-direction:column;pointer-events:auto;font-family:var(--font-body,Inter,system-ui,sans-serif)}
 .arya-panel.open{display:flex;animation:aryaPanelEnter .3s cubic-bezier(.16,1,.3,1) forwards}
 @keyframes aryaPanelEnter{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
-.arya-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(135deg,#071b35 0%,#0e3560 60%,#174d82 100%);color:#fff;border-bottom:2px solid rgba(255,184,46,.4);position:relative;z-index:20}
-.arya-head-title{display:flex;align-items:center;gap:10px}
-.arya-head-title b{font-size:16px;letter-spacing:-.2px;display:flex;align-items:center;gap:6px}
-.arya-head-title small{display:flex;align-items:center;gap:6px;font-size:11.5px;opacity:.9;margin-top:2px;color:rgba(255,255,255,.85)}
-.arya-pulse-dot{width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;animation:aryaPulseGreen 2s infinite}
-@keyframes aryaPulseGreen{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:.6}}
+
+/* Header */
+.arya-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:#0b2447;color:#fff;border-bottom:1px solid rgba(255,184,46,.3);position:relative;z-index:20;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.arya-head-title{display:flex;align-items:center;gap:12px}
+.arya-logo-badge{position:relative;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ea580c,#fcd34d);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 2px rgba(255,255,255,.4),0 2px 6px rgba(245,158,11,.3);flex-shrink:0}
+.arya-logo-badge svg{width:18px;height:18px;color:#071b35}
+.arya-pulse-badge{position:absolute;top:-1px;right:-1px;width:9px;height:9px;border-radius:50%;background:#10b981;border:2px solid #0b2447;animation:pulse-glow 2s infinite ease-in-out}
+@keyframes pulse-glow{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.2)}}
+.arya-head-title b{font-size:15px;font-weight:700;color:#fff;display:block;letter-spacing:-.2px}
+.arya-head-title small{display:flex;align-items:center;gap:5px;font-size:11px;color:#cbd5e1;margin-top:1px}
 .arya-head-actions{display:flex;align-items:center;gap:6px}
-.arya-head-btn{border:0;background:rgba(255,255,255,.15);color:#fff;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:14px;display:grid;place-items:center;transition:background .15s,transform .15s}
-.arya-head-btn:hover{background:rgba(255,255,255,.3);transform:scale(1.05)}
-.arya-close{border:0;background:rgba(255,255,255,.15);color:#fff;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:16px;display:grid;place-items:center;transition:background .15s,transform .15s}
-.arya-close:hover{background:rgba(239,68,68,.85);transform:scale(1.05)}
+.arya-head-btn,.arya-close{border:0;background:rgba(255,255,255,.12);color:#e2e8f0;border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s ease}
+.arya-head-btn:hover{background:rgba(255,255,255,.25);color:#fff;transform:scale(1.05)}
+.arya-close:hover{background:rgba(239,68,68,.85);color:#fff;transform:scale(1.05)}
 
 /* Video Welcome / Intro Stage */
-.arya-intro-stage{position:absolute;top:64px;left:0;right:0;bottom:0;z-index:15;background:#071b35;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .45s cubic-bezier(.16,1,.3,1),transform .45s cubic-bezier(.16,1,.3,1)}
+.arya-intro-stage{position:absolute;top:58px;left:0;right:0;bottom:0;z-index:15;background:#071b35;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .45s cubic-bezier(.16,1,.3,1),transform .45s cubic-bezier(.16,1,.3,1)}
 .arya-intro-stage.fade-out{opacity:0;transform:scale(.95);pointer-events:none}
 .arya-intro-video{width:100%;height:100%;object-fit:cover;background:#000;display:block}
 .arya-intro-overlay{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:16px;background:linear-gradient(to bottom,rgba(7,27,53,.6) 0%,transparent 30%,transparent 60%,rgba(7,27,53,.85) 100%)}
@@ -629,33 +632,61 @@ body.dark .contact-actions a{background:#172943;color:#8ec0ff}
 .arya-skip-btn{border:0;background:linear-gradient(135deg,#ffc543,#e59e14);color:#071b35;font-weight:800;font-size:12px;padding:8px 16px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(0,0,0,.4);transition:transform .15s,box-shadow .15s}
 .arya-skip-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(229,158,20,.6)}
 
-/* Chat Interface Stage */
-.arya-chat-stage{display:flex;flex-direction:column;flex:1;min-height:0;height:calc(100% - 64px);opacity:1;transition:opacity .35s ease}
+/* Chat Stage */
+.arya-chat-stage{display:flex;flex-direction:column;flex:1;min-height:0;height:calc(100% - 58px);background:#f8fafc;opacity:1;transition:opacity .35s ease}
 .arya-chat-stage.hidden{opacity:0;pointer-events:none}
-.arya-body{flex:1;min-height:0;overflow-y:auto;padding:16px;background:var(--bg);scroll-behavior:smooth}
-.arya-msg{max-width:86%;padding:12px 16px;border-radius:18px;margin:10px 0;line-height:1.55;font-size:13px;white-space:pre-line;word-break:break-word}
-.arya-msg.bot{background:var(--card);color:var(--text);border:1px solid var(--line);border-left:3.5px solid var(--gold);border-bottom-left-radius:4px;box-shadow:0 4px 14px rgba(7,27,53,.04);margin-right:auto}
-.arya-msg.bot a{color:var(--blue);font-weight:700;text-decoration:none;word-break:break-all}
-.arya-msg.bot a:hover{text-decoration:underline;color:var(--gold)}
-.arya-msg.user{background:linear-gradient(135deg,#134475 0%,#071b35 100%);color:#fff;border-bottom-right-radius:4px;box-shadow:0 4px 14px rgba(7,27,53,.15);margin-left:auto}
-body.dark .arya-msg.user{background:linear-gradient(135deg,#1b5592 0%,#0f2e54 100%);color:#fff}
-.arya-msg.typing-indicator{display:inline-flex;align-items:center;gap:4px;color:var(--muted);font-style:italic;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 14px}
-.arya-msg.typing-indicator span{animation:aryaBlinkDot 1.4s infinite both;font-weight:900;font-size:15px;color:var(--gold)}
+.arya-body{flex:1;min-height:0;overflow-y:auto;padding:14px 16px;background:linear-gradient(180deg,#f8fafc 0%,#f1f5f9 100%);scroll-behavior:smooth}
+.custom-scrollbar::-webkit-scrollbar{width:6px}
+.custom-scrollbar::-webkit-scrollbar-track{background:#f1f5f9;border-radius:9999px}
+.custom-scrollbar::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:9999px}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover{background:#94a3b8}
+
+/* Stitch Animated Doodle Banner */
+.arya-doodle-card{position:relative;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:18px;border:1px solid rgba(254,215,170,.9);padding:6px;box-shadow:0 2px 10px rgba(245,158,11,.08);margin-bottom:12px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+
+/* Stitch Welcome Card */
+.arya-welcome-card{position:relative;background:#ffffff;border-radius:16px;border:1px solid #e2e8f0;border-left:5px solid #f59e0b;padding:14px 16px;box-shadow:0 2px 8px rgba(7,27,53,.04);margin-bottom:12px}
+.arya-welcome-card p:first-child{font-weight:700;color:#0f172a;margin-bottom:5px;font-size:13.5px;line-height:1.45}
+.arya-welcome-card p:nth-child(2){color:#475569;font-size:12.5px;line-height:1.5;margin-bottom:10px}
+.arya-card-meta{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f1f5f9;padding-top:8px;font-size:11px;color:#94a3b8}
+.arya-card-badge{display:inline-flex;align-items:center;gap:4px;color:#d97706;font-weight:600}
+
+/* Stitch Suggestion Chips */
+.arya-stitch-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.arya-stitch-chip{display:inline-flex;align-items:center;gap:5px;background:#ffffff;color:#334155;border:1px solid #e2e8f0;border-radius:9999px;padding:6px 12px;font-size:11.5px;font-weight:600;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.03);transition:all .15s ease}
+.arya-stitch-chip:hover{background:#fffbeb;color:#92400e;border-color:#f59e0b;transform:translateY(-1px);box-shadow:0 3px 8px rgba(245,158,11,.2)}
+.arya-stitch-chip:active{transform:translateY(0)}
+
+/* Chat Messages */
+.arya-msg{max-width:88%;padding:11px 15px;border-radius:18px;margin:8px 0;line-height:1.55;font-size:13px;white-space:pre-line;word-break:break-word}
+.arya-msg.bot{background:#ffffff;color:#1e293b;border:1px solid #e2e8f0;border-left:4px solid #f59e0b;border-bottom-left-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,.03);margin-right:auto}
+.arya-msg.bot a{color:#0284c7;font-weight:700;text-decoration:none;word-break:break-all}
+.arya-msg.bot a:hover{text-decoration:underline;color:#d97706}
+.arya-msg.user{background:linear-gradient(135deg,#0b2447 0%,#1e3a8a 100%);color:#fff;border-bottom-right-radius:4px;box-shadow:0 4px 12px rgba(11,36,71,.18);margin-left:auto}
+.arya-msg.typing-indicator{display:inline-flex;align-items:center;gap:4px;color:#64748b;font-style:italic;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;padding:9px 14px}
+.arya-msg.typing-indicator span{animation:aryaBlinkDot 1.4s infinite both;font-weight:900;font-size:15px;color:#f59e0b}
 .arya-msg.typing-indicator span:nth-child(2){animation-delay:.2s}
 .arya-msg.typing-indicator span:nth-child(3){animation-delay:.4s}
 @keyframes aryaBlinkDot{0%,80%,100%{opacity:.2}40%{opacity:1}}
-.arya-suggest{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 6px}
-.arya-suggest button{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:7px 12px;cursor:pointer;font-size:11.5px;font-weight:700;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 8px rgba(7,27,53,.04);transition:all .15s ease}
-.arya-suggest button:hover{background:#eef6ff;border-color:var(--gold);color:#071b35;transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,184,46,.2)}
-body.dark .arya-suggest button:hover{background:#112a4a;color:#fff}
-.arya-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line);background:var(--card);position:relative;z-index:20}
-.arya-input input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:14px;padding:11px 16px;background:var(--bg);color:inherit;outline:0;font-size:13.5px;transition:border-color .2s,box-shadow .2s}
-.arya-input input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,184,46,.2)}
-.arya-input input:disabled{opacity:.7;cursor:not-allowed}
-.arya-input button{border:0;border-radius:14px;padding:0 20px;background:linear-gradient(135deg,#ffc543,#e59e14);color:#071b35;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
-.arya-input button:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 16px rgba(229,158,20,.35)}
-.arya-input button:disabled{opacity:.6;cursor:not-allowed}
-@media(max-width:480px){.arya-panel{right:12px;bottom:74px;width:calc(100vw - 24px);height:calc(100vh - 90px);border-radius:20px}}
+
+/* Stitch Input Toolbar */
+.arya-stitch-input-wrap{background:#ffffff;border-top:1px solid #e2e8f0;padding:10px 14px 8px;position:relative;z-index:20}
+.arya-stitch-form{display:flex;align-items:center;gap:8px}
+.arya-stitch-field{flex:1;display:flex;align-items:center;background:#ffffff;border:2px solid rgba(245,158,11,.8);border-radius:16px;padding:3px 10px;transition:all .2s ease;box-shadow:inset 0 1px 2px rgba(0,0,0,.03)}
+.arya-stitch-field:focus-within{border-color:#d97706;box-shadow:0 0 0 3px rgba(245,158,11,.25)}
+.arya-stitch-field input{width:100%;border:0;outline:0;background:transparent;color:#1e293b;font-size:13px;padding:6px 4px}
+.arya-stitch-field input:disabled{opacity:.7;cursor:not-allowed}
+.arya-stitch-icon-btn{border:0;background:transparent;color:#94a3b8;cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;transition:color .15s}
+.arya-stitch-icon-btn:hover{color:#d97706}
+.arya-stitch-send-btn{height:42px;padding:0 18px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#071b35;border:0;border-radius:16px;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,.35);transition:all .15s ease;flex-shrink:0}
+.arya-stitch-send-btn:hover:not(:disabled){background:linear-gradient(135deg,#f59e0b,#ea580c);color:#ffffff;transform:translateY(-1px);box-shadow:0 6px 16px rgba(234,88,12,.4)}
+.arya-stitch-send-btn:active{transform:scale(.96)}
+.arya-stitch-send-btn:disabled{opacity:.6;cursor:not-allowed}
+.arya-stitch-tagline{margin-top:5px;text-align:center;font-size:10px;color:#94a3b8}
+
+@media(max-width:480px){
+  .arya-panel{right:10px;bottom:72px;width:calc(100vw - 20px);height:calc(100vh - 84px);max-height:88vh;border-radius:20px}
+}
 
 /* Floating Favourites & Recent */
 .favbar{position:fixed;right:16px;bottom:74px;background:var(--navy);color:#fff;padding:10px 18px;border-radius:30px;z-index:94;box-shadow:0 8px 25px rgba(0,27,59,.4);cursor:pointer;font-weight:800;font-size:13px;border:1px solid rgba(255,255,255,.15);display:inline-flex;align-items:center;gap:6px;transition:all .2s ease}
@@ -1337,18 +1368,42 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 <!-- ARYA AI FLOATING ASSISTANT                                -->
 <!-- ========================================================= -->
 <div class="arya-panel" id="aryaPanel" role="dialog" aria-label="Arya AI Assistant">
-  <!-- Redesigned Travel Header -->
+  <!-- Stitch Redesigned Travel Header: Dark Navy with Gemini AI branding -->
   <div class="arya-head">
     <div class="arya-head-title">
+      <div class="arya-logo-badge">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L13.8 8.2L20 10L13.8 11.8L12 18L10.2 11.8L4 10L10.2 8.2L12 2Z"></path>
+        </svg>
+        <span class="arya-pulse-badge"></span>
+      </div>
       <div>
-        <b><span>✨</span> Arya AI Concierge</b>
-        <small><span class="arya-pulse-dot"></span> Explore Uttar Pradesh • Gemini AI</small>
+        <b>Arya AI Concierge</b>
+        <small><span class="arya-pulse-dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10b981;margin-right:2px"></span> Explore Uttar Pradesh • Gemini AI</small>
       </div>
     </div>
     <div class="arya-head-actions">
-      <button class="arya-head-btn" id="aryaReplayBtn" onclick="replayAryaIntro()" title="Replay Welcome Video" aria-label="Replay Welcome Video">↺</button>
-      <button class="arya-head-btn" id="aryaSoundBtn" onclick="toggleAryaSound()" title="Toggle Video Sound" aria-label="Toggle Sound">🔇</button>
-      <button class="arya-close" onclick="toggleArya()" aria-label="Close Arya">✕</button>
+      <button class="arya-head-btn" id="aryaResetBtn" onclick="resetAryaChat()" title="Reset Conversation" aria-label="Reset Conversation">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+      </button>
+      <button class="arya-head-btn" id="aryaReplayBtn" onclick="replayAryaIntro()" title="Replay Welcome Video" aria-label="Replay Welcome Video">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+      </button>
+      <button class="arya-head-btn" id="aryaSoundBtn" onclick="toggleAryaSound()" title="Toggle Video Sound" aria-label="Toggle Sound">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+          <path d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
+        </svg>
+      </button>
+      <button class="arya-close" onclick="toggleArya()" title="Minimize Concierge" aria-label="Close Arya">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -1364,23 +1419,301 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
     </div>
   </div>
 
-  <!-- Normal Chat Interface Stage (Revealed after intro video ends) -->
+  <!-- Stitch Chat Interface Stage (Revealed after intro video ends) -->
   <div class="arya-chat-stage hidden" id="aryaChatStage">
-    <div class="arya-body" id="aryaBody">
-      <div class="arya-msg bot">Namaste! I am Arya, your AI travel concierge for Uttar Pradesh.
-
-Ask me anything about customized trip itineraries, Taj Mahal timings, Varanasi ghats, authentic Awadhi kebabs, Ayodhya hotels, or travel routes across UP!</div>
-      <div class="arya-suggest">
-        <button onclick="aryaQuick('Agra Taj Mahal timing and trip plan')">🕌 Agra 1-Day Plan</button>
-        <button onclick="aryaQuick('Varanasi street food guide')">🍲 Varanasi Food</button>
-        <button onclick="aryaQuick('Ayodhya Ram Mandir travel guide')">🚩 Ayodhya Guide</button>
-        <button onclick="aryaQuick('Lucknow famous kebabs and places')">🍢 Lucknow Food</button>
-        <button onclick="aryaQuick('Calculate 3-day budget for Varanasi for 2 people')">💰 Budget Calculation</button>
+    <div class="arya-body custom-scrollbar" id="aryaBody">
+      <!-- Stitch Google-Style Animated Doodle Greeting Banner -->
+      <div class="arya-doodle-card">
+        <svg style="width:100%;height:auto;max-height:185px;display:block;background:transparent;font-family:'Outfit','Inter',system-ui,-apple-system,sans-serif;" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="skinGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+              <stop offset="0%" stop-color="#FFE0B2"></stop>
+              <stop offset="100%" stop-color="#F5CBA7"></stop>
+            </linearGradient>
+            <linearGradient id="hairGrad" x1="0%" x2="0%" y1="0%" y2="100%">
+              <stop offset="0%" stop-color="#2D1B16"></stop>
+              <stop offset="100%" stop-color="#150E0C"></stop>
+            </linearGradient>
+            <linearGradient id="kurtiGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+              <stop offset="0%" stop-color="#FF9933"></stop>
+              <stop offset="100%" stop-color="#E65100"></stop>
+            </linearGradient>
+            <linearGradient id="dupattaGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+              <stop offset="0%" stop-color="#1B5E20"></stop>
+              <stop offset="100%" stop-color="#004D40"></stop>
+            </linearGradient>
+            <linearGradient id="goldZariGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+              <stop offset="0%" stop-color="#FFD700"></stop>
+              <stop offset="40%" stop-color="#FF9933"></stop>
+              <stop offset="100%" stop-color="#C2185B"></stop>
+            </linearGradient>
+            <linearGradient id="royalMaroonGrad" x1="0%" x2="100%" y1="0%" y2="0%">
+              <stop offset="0%" stop-color="#991B1B"></stop>
+              <stop offset="100%" stop-color="#DC2626"></stop>
+            </linearGradient>
+            <filter height="140%" id="softGlow" width="140%" x="-20%" y="-20%">
+              <feDropShadow dx="0" dy="4" flood-color="#FF9933" flood-opacity="0.22" stdDeviation="6"></feDropShadow>
+            </filter>
+            <filter height="130%" id="bubbleShadow" width="130%" x="-10%" y="-10%">
+              <feDropShadow dx="0" dy="4" flood-color="#78350F" flood-opacity="0.10" stdDeviation="8"></feDropShadow>
+            </filter>
+          </defs>
+          <style>
+            @keyframes wavingHand {
+              0%, 100% { transform: rotate(0deg); }
+              20% { transform: rotate(18deg); }
+              40% { transform: rotate(-10deg); }
+              60% { transform: rotate(16deg); }
+              80% { transform: rotate(-4deg); }
+            }
+            .wave-arm {
+              transform-origin: 122px 142px;
+              animation: wavingHand 2.2s ease-in-out infinite;
+            }
+            @keyframes gentleBob {
+              0%, 100% { transform: translateY(0px) rotate(0deg); }
+              50% { transform: translateY(-3px) rotate(0.8deg); }
+            }
+            .bob-character {
+              transform-origin: 90px 180px;
+              animation: gentleBob 3s ease-in-out infinite;
+            }
+            @keyframes eyeBlink {
+              0%, 94%, 98%, 100% { transform: scaleY(1); }
+              96% { transform: scaleY(0.1); }
+            }
+            .girl-eyes {
+              transform-origin: 90px 104px;
+              animation: eyeBlink 3.8s ease-in-out infinite;
+            }
+            @keyframes bubbleFloat {
+              0%, 100% { transform: translateY(0px); }
+              50% { transform: translateY(-4px); }
+            }
+            .speech-bubble {
+              animation: bubbleFloat 2.8s ease-in-out infinite;
+              transform-origin: 320px 100px;
+            }
+            @keyframes twinklePulse {
+              0%, 100% { transform: scale(0.8) rotate(0deg); opacity: 0.6; }
+              50% { transform: scale(1.18) rotate(45deg); opacity: 1; }
+            }
+            .sparkle-1 {
+              transform-origin: 40px 60px;
+              animation: twinklePulse 2.2s ease-in-out infinite;
+            }
+            .sparkle-2 {
+              transform-origin: 470px 48px;
+              animation: twinklePulse 2.5s ease-in-out infinite 0.5s;
+            }
+            .sparkle-3 {
+              transform-origin: 180px 32px;
+              animation: twinklePulse 1.9s ease-in-out infinite 1s;
+            }
+            @keyframes flameFlicker {
+              0%, 100% { transform: scale(1) skewX(0deg); }
+              25% { transform: scale(1.12, 0.95) skewX(2deg); }
+              50% { transform: scale(0.92, 1.08) skewX(-2deg); }
+              75% { transform: scale(1.08, 1.02) skewX(1deg); }
+            }
+            .diya-flame {
+              transform-origin: 14px 12px;
+              animation: flameFlicker 1.4s ease-in-out infinite alternate;
+            }
+          </style>
+          <g class="sparkle-1" fill="#FF9933">
+            <path d="M40 50 Q40 60 30 60 Q40 60 40 70 Q40 60 50 60 Q40 60 40 50 Z"></path>
+          </g>
+          <g class="sparkle-2" fill="#D97706">
+            <path d="M470 38 Q470 48 460 48 Q470 48 470 58 Q470 48 480 48 Q470 48 470 38 Z"></path>
+          </g>
+          <g class="sparkle-3" fill="#059669">
+            <path d="M180 24 Q180 32 172 32 Q180 32 180 40 Q180 32 188 32 Q180 32 180 24 Z"></path>
+          </g>
+          <g class="bob-character">
+            <path d="M52 100 C45 130 52 175 65 195 C62 165 60 120 70 95 Z" fill="#1E1410"></path>
+            <path d="M118 100 C125 130 118 175 105 195 C108 165 110 120 100 95 Z" fill="#1E1410"></path>
+            <circle cx="90" cy="54" fill="url(#hairGrad)" r="23"></circle>
+            <circle cx="72" cy="62" fill="#FFFBEB" r="3.5" stroke="#FDE68A" stroke-width="0.7"></circle>
+            <circle cx="79" cy="56" fill="#FFF9C4" r="3.8" stroke="#F59E0B" stroke-width="0.7"></circle>
+            <circle cx="88" cy="52" fill="#FF9933" r="4"></circle>
+            <circle cx="97" cy="54" fill="#FFF9C4" r="3.8" stroke="#F59E0B" stroke-width="0.7"></circle>
+            <circle cx="106" cy="60" fill="#FFFBEB" r="3.5" stroke="#FDE68A" stroke-width="0.7"></circle>
+            <circle cx="90" cy="74" fill="#F59E0B" r="2.8"></circle>
+            <circle cx="90" cy="74" fill="#DC2626" r="1.3"></circle>
+            <path d="M83 126 L83 148 Q90 152 97 148 L97 126 Z" fill="url(#skinGrad)"></path>
+            <path d="M68 152 Q90 148 112 152 L124 215 L56 215 Z" fill="url(#kurtiGrad)"></path>
+            <path d="M78 152 Q90 170 102 152" fill="none" stroke="#FBBF24" stroke-linecap="round" stroke-width="3"></path>
+            <path d="M80 152 Q90 166 100 152" fill="none" stroke="#991B1B" stroke-linecap="round" stroke-width="1.2"></path>
+            <path d="M66 154 Q82 175 88 215 L62 215 Q58 185 66 154 Z" fill="url(#dupattaGrad)" opacity="0.95"></path>
+            <path d="M66 154 Q82 175 88 215" fill="none" stroke="#FCD34D" stroke-dasharray="4 2" stroke-width="2"></path>
+            <path d="M68 155 Q56 175 58 200" fill="none" stroke="url(#skinGrad)" stroke-linecap="round" stroke-width="12"></path>
+            <ellipse cx="58" cy="190" fill="#DC2626" rx="6" ry="2"></ellipse>
+            <ellipse cx="58" cy="186" fill="#F59E0B" rx="6" ry="2"></ellipse>
+            <ellipse cx="90" cy="98" fill="url(#skinGrad)" rx="27" ry="30"></ellipse>
+            <ellipse cx="63" cy="100" fill="#F5CBA7" rx="4.5" ry="6"></ellipse>
+            <ellipse cx="117" cy="100" fill="#F5CBA7" rx="4.5" ry="6"></ellipse>
+            <circle cx="62" cy="110" fill="#F59E0B" r="3.2"></circle>
+            <path d="M58 113 Q62 119 66 113 Z" fill="#D97706"></path>
+            <circle cx="62" cy="120" fill="#FFF" r="1.3"></circle>
+            <circle cx="118" cy="110" fill="#F59E0B" r="3.2"></circle>
+            <path d="M114 113 Q118 119 122 113 Z" fill="#D97706"></path>
+            <circle cx="118" cy="120" fill="#FFF" r="1.3"></circle>
+            <path d="M64 92 C68 70 82 65 90 65 C98 65 112 70 116 92 C112 80 102 75 90 76 C78 75 68 80 64 92 Z" fill="url(#hairGrad)"></path>
+            <path d="M64 92 C66 106 72 114 74 116 C71 106 70 94 72 88 Z" fill="url(#hairGrad)"></path>
+            <path d="M116 92 C114 106 108 114 106 116 C109 106 110 94 108 88 Z" fill="url(#hairGrad)"></path>
+            <circle cx="90" cy="86" fill="#B91C1C" r="2.8"></circle>
+            <circle cx="90" cy="86" fill="#F59E0B" r="1.2"></circle>
+            <g class="girl-eyes">
+              <ellipse cx="80" cy="98" fill="#1E293B" rx="4" ry="4.6"></ellipse>
+              <circle cx="81.2" cy="96.5" fill="#FFFFFF" r="1.4"></circle>
+              <ellipse cx="100" cy="98" fill="#1E293B" rx="4" ry="4.6"></ellipse>
+              <circle cx="101.2" cy="96.5" fill="#FFFFFF" r="1.4"></circle>
+              <path d="M74 91 Q80 88 86 91" fill="none" stroke="#1F1512" stroke-linecap="round" stroke-width="1.9"></path>
+              <path d="M94 91 Q100 88 106 91" fill="none" stroke="#1F1512" stroke-linecap="round" stroke-width="1.9"></path>
+            </g>
+            <ellipse cx="73" cy="106" fill="#FF8A80" opacity="0.6" rx="5" ry="3"></ellipse>
+            <ellipse cx="107" cy="106" fill="#FF8A80" opacity="0.6" rx="5" ry="3"></ellipse>
+            <path d="M84 109 Q90 117 96 109" fill="none" stroke="#B91C1C" stroke-linecap="round" stroke-width="2.5"></path>
+            <path d="M86 110 Q90 114 94 110" fill="#E11D48" opacity="0.3"></path>
+            <g class="wave-arm">
+              <path d="M112 152 Q128 146 136 126 Q142 108 140 92" fill="none" stroke="url(#skinGrad)" stroke-linecap="round" stroke-width="10"></path>
+              <ellipse cx="139" cy="106" fill="#B91C1C" rx="6.5" ry="2.2" transform="rotate(-15 139 106)"></ellipse>
+              <ellipse cx="138" cy="102" fill="#F59E0B" rx="6.5" ry="2.2" transform="rotate(-15 138 102)"></ellipse>
+              <ellipse cx="137" cy="98" fill="#047857" rx="6.5" ry="2.2" transform="rotate(-15 137 98)"></ellipse>
+              <ellipse cx="136" cy="94" fill="#D97706" rx="6.5" ry="2.2" transform="rotate(-15 136 94)"></ellipse>
+              <g transform="translate(136, 74)">
+                <path d="M-1 16 L2 4 C3 1 7 1 8 4 L8 14" fill="url(#skinGrad)"></path>
+                <circle cx="1" cy="4" fill="url(#skinGrad)" r="2.8"></circle>
+                <circle cx="1" cy="3" fill="#EF4444" opacity="0.6" r="1.5"></circle>
+                <circle cx="5" cy="1" fill="url(#skinGrad)" r="2.8"></circle>
+                <circle cx="5" cy="0.5" fill="#EF4444" opacity="0.6" r="1.5"></circle>
+                <circle cx="9" cy="3" fill="url(#skinGrad)" r="2.8"></circle>
+                <circle cx="9" cy="2" fill="#EF4444" opacity="0.6" r="1.5"></circle>
+                <circle cx="12" cy="7" fill="url(#skinGrad)" r="2.5"></circle>
+                <circle cx="12" cy="6" fill="#EF4444" opacity="0.6" r="1.4"></circle>
+                <path d="M-4 10 Q-7 8 -5 5 Q-3 3 -1 6 Z" fill="url(#skinGrad)"></path>
+              </g>
+              <path d="M152 70 Q156 75 152 80" fill="none" opacity="0.85" stroke="#EA580C" stroke-linecap="round" stroke-width="1.8"></path>
+              <path d="M157 66 Q162 73 157 82" fill="none" opacity="0.75" stroke="#D97706" stroke-linecap="round" stroke-width="1.8"></path>
+            </g>
+          </g>
+          <g class="speech-bubble" filter="url(#bubbleShadow)">
+            <rect fill="#FFFDF9" height="122" rx="24" stroke="#FED7AA" stroke-width="1.8" width="316" x="178" y="44"></rect>
+            <path d="M180 92 L162 100 L180 108 Z" fill="#FFFDF9"></path>
+            <path d="M180 92 L162 100 L180 108" fill="none" stroke="#FED7AA" stroke-width="1.8"></path>
+            <circle cx="474" cy="60" fill="#EA580C" r="3.5"></circle>
+            <circle cx="482" cy="60" fill="#F59E0B" r="2"></circle>
+            <circle cx="196" cy="60" fill="#047857" r="3.5"></circle>
+            <circle cx="204" cy="60" fill="#F59E0B" r="2"></circle>
+            <g transform="translate(192, 58)">
+              <g transform="translate(6, 18) scale(0.75)">
+                <polygon fill="#F59E0B" points="12,0 15,9 24,12 15,15 12,24 9,15 0,12 9,9"></polygon>
+                <circle cx="12" cy="12" fill="#DC2626" r="3"></circle>
+              </g>
+              <text fill="#DC2626" font-family="'Outfit', 'Patrick Hand', 'Trebuchet MS', system-ui, sans-serif" font-size="30" font-weight="900" letter-spacing="0.5" x="32" y="34">
+                Hi<tspan fill="#B91C1C">,</tspan>
+              </text>
+              <text fill="#D97706" font-family="'Outfit', 'Patrick Hand', 'Trebuchet MS', system-ui, sans-serif" font-size="30" font-weight="900" x="94" y="34">
+                I<tspan fill="#047857">'m</tspan>
+              </text>
+              <text fill="#EA580C" font-family="'Outfit', 'Patrick Hand', 'Trebuchet MS', system-ui, sans-serif" font-size="34" font-weight="900" letter-spacing="0.5" x="156" y="34">
+                Arya<tspan fill="#DC2626">!</tspan>
+              </text>
+              <path d="M154 44 Q178 51 202 44 T250 44" fill="none" stroke="#047857" stroke-linecap="round" stroke-width="3.5"></path>
+              <circle cx="178" cy="50" fill="#F59E0B" r="2.2"></circle>
+              <circle cx="226" cy="50" fill="#F59E0B" r="2.2"></circle>
+              <circle cx="202" cy="44" fill="#DC2626" r="2.2"></circle>
+              <g transform="translate(254, 15) scale(0.72)">
+                <ellipse cx="15" cy="20" fill="#B45309" rx="15" ry="7.5"></ellipse>
+                <ellipse cx="15" cy="18" fill="#D97706" rx="13" ry="5.5"></ellipse>
+                <path d="M3 19 Q15 26 27 19 L25 24 Q15 30 5 24 Z" fill="#92400E"></path>
+                <g class="diya-flame">
+                  <path d="M15 1 Q21 9 15 15 Q9 9 15 1 Z" fill="#FDE047" opacity="0.95"></path>
+                  <path d="M15 4 Q19 10 15 14 Q11 10 15 4 Z" fill="#F97316"></path>
+                  <circle cx="15" cy="12" fill="#DC2626" r="2.5"></circle>
+                </g>
+              </g>
+              <g transform="translate(10, 60)">
+                <rect fill="#FFF7ED" height="24" rx="12" stroke="#FDBA74" stroke-width="1.2" width="268" x="0" y="0"></rect>
+                <circle cx="12" cy="12" fill="#EA580C" r="3.5"></circle>
+                <circle cx="20" cy="12" fill="#047857" r="2"></circle>
+                <text fill="#7C2D12" font-size="9" font-weight="800" letter-spacing="0.7" x="28" y="15.5">YOUR AI TOUR GUIDE FOR UTTAR PRADESH</text>
+              </g>
+            </g>
+          </g>
+        </svg>
       </div>
+
+      <!-- Stitch Bot Welcome Card -->
+      <div class="arya-welcome-card">
+        <p>Namaste! I am Arya, your AI travel concierge for Uttar Pradesh.</p>
+        <p>Ask me anything about customized trip itineraries, Taj Mahal timings, Varanasi ghats, authentic Awadhi kebabs, Ayodhya hotels, or travel routes across UP!</p>
+        <div class="arya-card-meta">
+          <span class="arya-card-badge">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+            </svg>
+            Instant verified recommendations
+          </span>
+          <span>Just now</span>
+        </div>
+      </div>
+
+      <!-- Stitch Suggestion Chips Grid -->
+      <div class="arya-stitch-chips">
+        <button class="arya-stitch-chip" onclick="aryaQuick('Agra Taj Mahal timing and 1-day trip plan')">
+          <span>🏰</span> <span>Agra 1-Day Plan</span>
+        </button>
+        <button class="arya-stitch-chip" onclick="aryaQuick('What are the must-try street foods in Varanasi?')">
+          <span>🍲</span> <span>Varanasi Food</span>
+        </button>
+        <button class="arya-stitch-chip" onclick="aryaQuick('Ayodhya Ram Mandir visit guide and tips')">
+          <span>🚩</span> <span>Ayodhya Guide</span>
+        </button>
+        <button class="arya-stitch-chip" onclick="aryaQuick('Lucknow famous kebabs and Awadhi food guide')">
+          <span>🍢</span> <span>Lucknow Food</span>
+        </button>
+        <button class="arya-stitch-chip" onclick="aryaQuick('Calculate 3-day budget for a trip across Uttar Pradesh')">
+          <span>💰</span> <span>Budget Calculation</span>
+        </button>
+        <button class="arya-stitch-chip" onclick="aryaQuick('Best heritage walks and monuments in Uttar Pradesh')">
+          <span>🏛️</span> <span>Heritage Walks</span>
+        </button>
+      </div>
+
+      <!-- Dynamic Messages Container -->
+      <div id="aryaChatMessages"></div>
     </div>
-    <div class="arya-input">
-      <input id="aryaInput" placeholder="Ask Arya anything about Uttar Pradesh..." autocomplete="off">
-      <button id="aryaSendBtn" onclick="askArya()" aria-label="Send Message">Send ➔</button>
+
+    <!-- Stitch Signature Mustard-Amber Input Toolbar -->
+    <div class="arya-stitch-input-wrap">
+      <form class="arya-stitch-form" onsubmit="event.preventDefault(); askArya();">
+        <div class="arya-stitch-field">
+          <!-- Voice Input Icon -->
+          <button class="arya-stitch-icon-btn" type="button" title="Speak to Arya" onclick="toggleVoiceInput(event)">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </button>
+          <input id="aryaInput" placeholder="Ask Arya anything about Uttar Pradesh..." autocomplete="off">
+          <!-- AI Suggestion Trigger -->
+          <button class="arya-stitch-icon-btn" type="button" title="AI Suggestion" onclick="aryaQuick('Suggest top hidden gems and cultural secrets in Uttar Pradesh')" style="color:#f59e0b">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M7.5 5.6L10 0l2.5 5.6L18 8l-5.5 2.4L10 16l-2.5-5.6L2 8l5.5-2.4zm12 9.4l1.5 3.5L24 20l-3 1.5L19.5 25l-1.5-3.5L15 20l3-1.5L19.5 15z"></path>
+            </svg>
+          </button>
+        </div>
+        <button id="aryaSendBtn" class="arya-stitch-send-btn" type="submit" aria-label="Send Message">
+          <span>Send</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </form>
+      <div class="arya-stitch-tagline">
+        Powered by Gemini AI • Continuously verified with UP Tourism Guidelines
+      </div>
     </div>
   </div>
 </div>
@@ -3287,18 +3620,85 @@ function aryaQuick(q){
   }
 }
 
+function resetAryaChat(){
+  const container = document.getElementById('aryaChatMessages');
+  if(container) container.innerHTML = '';
+  const input = document.getElementById('aryaInput');
+  if(input){
+    input.value = '';
+    input.disabled = false;
+    input.focus();
+  }
+  const sendBtn = document.getElementById('aryaSendBtn');
+  if(sendBtn) sendBtn.disabled = false;
+  fetch('/api/chat/reset', { method: 'POST', credentials: 'include' }).catch(() => {});
+}
+
+function toggleVoiceInput(event){
+  if(event) event.preventDefault();
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition){
+    alert('Voice input is not supported in this browser. Please type your query.');
+    return;
+  }
+  const input = document.getElementById('aryaInput');
+  try{
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-IN';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.onstart = function(){
+      if(input) input.placeholder = 'Listening... Speak now 🎙️';
+    };
+    recognition.onresult = function(e){
+      const transcript = e.results[0][0].transcript;
+      if(input){
+        input.value = transcript;
+        input.placeholder = 'Ask Arya anything about Uttar Pradesh...';
+        askArya();
+      }
+    };
+    recognition.onerror = function(){
+      if(input) input.placeholder = 'Ask Arya anything about Uttar Pradesh...';
+    };
+    recognition.onend = function(){
+      if(input) input.placeholder = 'Ask Arya anything about Uttar Pradesh...';
+    };
+    recognition.start();
+  } catch(err){
+    console.warn('Voice recognition error:', err);
+  }
+}
+
+function formatAryaText(text){
+  if(!text) return '';
+  let s = escapeHtml(text);
+  // Bold **text**
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  // Markdown links [title](url)
+  s = s.replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/)[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  // Plain URLs
+  s = s.replace(/(^|[^"'])((https?:\/\/)[^\s<]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
+  return s;
+}
+
 function aryaAdd(text, type = 'bot'){
-  const b = document.getElementById('aryaBody');
+  const container = document.getElementById('aryaChatMessages') || document.getElementById('aryaBody');
+  const scrollTarget = document.getElementById('aryaBody') || container;
   const d = document.createElement('div');
   d.className = 'arya-msg ' + type;
-  d.textContent = text;
-  b.appendChild(d);
-  b.scrollTop = b.scrollHeight;
+  if(type === 'bot'){
+    d.innerHTML = formatAryaText(text);
+  } else {
+    d.textContent = text;
+  }
+  if(container) container.appendChild(d);
+  if(scrollTarget) scrollTarget.scrollTop = scrollTarget.scrollHeight;
 }
 
 async function askArya(){
   const input = document.getElementById('aryaInput');
-  const sendBtn = document.getElementById('aryaSendBtn') || document.querySelector('.arya-input button');
+  const sendBtn = document.getElementById('aryaSendBtn') || document.querySelector('.arya-stitch-send-btn');
   const q = (input?.value || '').trim();
   if(!q) return;
 
@@ -3306,14 +3706,15 @@ async function askArya(){
   if (input) input.value = '';
 
   // Show typing indicator
-  const body = document.getElementById('aryaBody');
+  const container = document.getElementById('aryaChatMessages') || document.getElementById('aryaBody');
+  const scrollTarget = document.getElementById('aryaBody') || container;
   const typingEl = document.createElement('div');
   typingEl.id = 'aryaTyping';
   typingEl.className = 'arya-msg bot typing-indicator';
   typingEl.innerHTML = 'Arya is thinking<span>.</span><span>.</span><span>.</span>';
-  if (body) {
-    body.appendChild(typingEl);
-    body.scrollTop = body.scrollHeight;
+  if (container) {
+    container.appendChild(typingEl);
+    if (scrollTarget) scrollTarget.scrollTop = scrollTarget.scrollHeight;
   }
 
   // Temporarily disable input & send button while waiting
@@ -3359,21 +3760,21 @@ async function askArya(){
                 document.getElementById('aryaTyping')?.remove();
                 botEl = document.createElement('div');
                 botEl.className = 'arya-msg bot';
-                body.appendChild(botEl);
+                if (container) container.appendChild(botEl);
               }
               fullText += parsed.chunk;
-              botEl.textContent = fullText;
-              body.scrollTop = body.scrollHeight;
+              botEl.innerHTML = formatAryaText(fullText);
+              if (scrollTarget) scrollTarget.scrollTop = scrollTarget.scrollHeight;
             } else if (parsed.reply && !fullText) {
               fullText = parsed.reply;
               if (!botEl) {
                 document.getElementById('aryaTyping')?.remove();
                 botEl = document.createElement('div');
                 botEl.className = 'arya-msg bot';
-                body.appendChild(botEl);
+                if (container) container.appendChild(botEl);
               }
-              botEl.textContent = fullText;
-              body.scrollTop = body.scrollHeight;
+              botEl.innerHTML = formatAryaText(fullText);
+              if (scrollTarget) scrollTarget.scrollTop = scrollTarget.scrollHeight;
             }
           } catch (e) {}
         }
@@ -3458,7 +3859,10 @@ function getAryaLocalReply(query){
 }
 
 document.getElementById('aryaInput')?.addEventListener('keydown', e => {
-  if (e.key === 'Enter') askArya();
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    askArya();
+  }
 });
 
 // =========================================================
