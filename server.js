@@ -14,9 +14,27 @@ const USERS_FILE = path.join(__dirname, 'users.json');
 const BOOKINGS_FILE = path.join(__dirname, 'bookings.json');
 const DISTRICTS_FILE = path.join(__dirname, 'districts.json');
 
+// Enable trust proxy for secure cookies and IP forwarding behind Vercel/proxies
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// CORS middleware for Vercel cross-origin/serverless routing
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
 
 // Session configuration
 app.use(
@@ -1439,7 +1457,11 @@ process.on('unhandledRejection', reason => {
   console.error('Unhandled Rejection:', reason);
 });
 
-// Start Server
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`ExploreUP Express server running at http://localhost:${PORT}/`);
-});
+// Start Server only when executed directly (allows Vercel Serverless Function importing)
+if (require.main === module) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`ExploreUP Express server running at http://localhost:${PORT}/`);
+  });
+}
+
+module.exports = app;

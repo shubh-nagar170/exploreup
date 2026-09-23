@@ -273,17 +273,17 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
 <!-- Sticky Top Navigation Bar -->
 <header class="nav">
   <div class="nav-left">
-    <a href="index.html" class="back-home-link" aria-label="Back to Home Screen">
+    <a href="/" class="back-home-link" aria-label="Back to Home Screen">
       <span style="font-size:16px">←</span> <b>Home</b>
     </a>
-    <a href="index.html" class="logo" title="ExploreUP Home">
+    <a href="/" class="logo" title="ExploreUP Home">
       <div class="pin"><b>●</b></div>
       <span>Explore<b>UP</b></span>
     </a>
     <div class="breadcrumb">
-      <a href="index.html">Home</a>
+      <a href="/">Home</a>
       <span>›</span>
-      <a href="index.html#cities">Explore All Cities</a>
+      <a href="/#cities">Explore All Cities</a>
       <span>›</span>
       <span id="crumbDistrict" class="active-crumb">District</span>
     </div>
@@ -295,7 +295,7 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
 
 <!-- Blue Top Hero Banner -->
 <section class="district-hero" id="districtHero">
-  <a href="index.html" class="hero-back-tag" aria-label="Back to Home Screen">
+  <a href="/" class="hero-back-tag" aria-label="Back to Home Screen">
     <span>←</span> <b>Back to Home Screen</b>
   </a>
   <div class="hero-content">
@@ -476,15 +476,15 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
     <h3>Ready to Explore More of Uttar Pradesh?</h3>
     <p>Discover other historic cities, spiritual centres, wildlife reserves, and culinary trails across UP.</p>
     <div class="nav-footer-buttons">
-      <a href="index.html" class="btn-back-home">← Back to Home Screen</a>
-      <a href="index.html#cities" class="btn-all-cities">📍 Explore All Cities</a>
+      <a href="/" class="btn-back-home">← Back to Home Screen</a>
+      <a href="/#cities" class="btn-all-cities">📍 Explore All Cities</a>
     </div>
   </div>
 
 </main>
 
 <!-- Floating Return to Home Button -->
-<a href="index.html" class="floating-back-btn" id="floatingBackBtn" aria-label="Back to Home Screen">
+<a href="/" class="floating-back-btn" id="floatingBackBtn" aria-label="Back to Home Screen">
   ← Back to Home
 </a>
 
@@ -933,15 +933,34 @@ function getGenericDistrict(nameOrId){
   };
 }
 
-// Read district name from web address: district.html?id=[district-name]
+// Read district name from web address: /district.html?id=[district-name] or /district?id=[district-name]
 function loadDistrictFromUrl(){
-  const urlParams = new URLSearchParams(window.location.search);
-  // Default to lucknow if no ?id= is given
-  const rawId = urlParams.get('id') || urlParams.get('city') || 'lucknow';
+  let rawId = '';
+  // 1. Check standard query params (?id=lucknow or ?city=lucknow)
+  if (window.location.search) {
+    const urlParams = new URLSearchParams(window.location.search);
+    rawId = urlParams.get('id') || urlParams.get('city') || urlParams.get('district') || urlParams.get('name') || '';
+  }
+  // 2. Check hash for query or slug fallback (#lucknow, #id=lucknow, #?id=lucknow)
+  if (!rawId && window.location.hash) {
+    const cleanHash = window.location.hash.replace(/^#\/?/, '');
+    if (cleanHash.includes('=')) {
+      const hashParams = new URLSearchParams(cleanHash.includes('?') ? cleanHash.split('?')[1] : cleanHash);
+      rawId = hashParams.get('id') || hashParams.get('city') || hashParams.get('district') || hashParams.get('name') || '';
+    } else if (cleanHash && !cleanHash.startsWith('!')) {
+      rawId = cleanHash;
+    }
+  }
+  // 3. Fallback to default
+  if (!rawId) {
+    rawId = 'lucknow';
+  }
+
   const districtId = rawId.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-  // Try fetching from districts.json, fall back to embedded dictionary if offline/file:///
-  fetch('districts.json')
+  // Fetch from root-relative /districts.json, fallback to local relative if opened via file:/// protocol
+  const jsonPath = window.location.protocol === 'file:' ? 'districts.json' : '/districts.json';
+  fetch(jsonPath)
     .then(res => {
       if(!res.ok) throw new Error('HTTP error ' + res.status);
       return res.json();
