@@ -9,16 +9,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shubh-nagar170/explore-up.git"
+    "url": "git+https://github.com/shubh-nagar170/exploreup.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/shubh-nagar170/explore-up/issues"
+    "url": "https://github.com/shubh-nagar170/exploreup/issues"
   },
-  "homepage": "https://github.com/shubh-nagar170/explore-up#readme",
+  "homepage": "https://github.com/shubh-nagar170/exploreup#readme",
   "dependencies": {
     "@google/genai": "^2.23.0",
     "bcryptjs": "^3.0.3",
