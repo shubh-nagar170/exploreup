@@ -480,6 +480,31 @@ body.dark .search-autocomplete-action{color:#60a5fa}
   border-color:var(--gold);
 }
 
+#modalHeroContent{
+  transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), visibility 0.8s cubic-bezier(0.16,1,0.3,1);
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+#modalHeroContent.overlay-hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.modalhero.varanasi-cinematic-hero{
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.modalhero.varanasi-cinematic-hero #modalHeroContent{
+  cursor:default;
+}
+.modalhero.varanasi-cinematic-hero #modalHeroSoundBtn,
+.modalhero.varanasi-cinematic-hero .hero-back-tag,
+.modalhero.varanasi-cinematic-hero .close,
+.modalhero.varanasi-cinematic-hero .hero-scroll-btn{
+  cursor:pointer;
+}
+
 .modalcontent{max-width:1200px;margin:0 auto;padding:24px max(5vw,20px) 70px}
 
 /* Sticky Sub-navigation Pills */
@@ -1309,7 +1334,7 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
       <button class="close" onclick="closeModal()" aria-label="Close city view" title="Back to Home (Esc)">
         ✕
       </button>
-      <div style="position:relative;z-index:3">
+      <div style="position:relative;z-index:3" id="modalHeroContent">
         <div class="eyebrow" id="modalState">WELCOME TO</div>
         <h1 id="modalTitle" style="font-size:44px;margin:6px 0;text-shadow:0 3px 15px rgba(0,0,0,.6)">City</h1>
         <div id="modalSubtitle" style="font-size:17px;opacity:.95"></div>
@@ -2563,12 +2588,20 @@ function openCity(name, options = {}){
       modalHeroEl.style.backgroundColor = '#071525';
     }
     initModalHeroVideo(videoConfig.storageKey);
+    isModalHeroCinematicActive = true;
+    setupModalHeroOverlayInteraction();
+    showModalHeroOverlay();
   } else {
+    isModalHeroCinematicActive = false;
+    clearTimeout(modalHeroOverlayTimer);
+    const mContent = document.getElementById('modalHeroContent');
+    if (mContent) mContent.classList.remove('overlay-hidden');
     if (modalVideo) modalVideo.pause();
     if (modalVideoWrap) modalVideoWrap.style.display = 'none';
     if (modalSoundBtn) modalSoundBtn.style.display = 'none';
     if (modalHeroActions) modalHeroActions.style.display = 'none';
     if (modalHeroEl) {
+      modalHeroEl.classList.remove('varanasi-cinematic-hero');
       modalHeroEl.style.backgroundImage = `linear-gradient(180deg, rgba(7,27,53,0.3) 0%, rgba(7,27,53,0.85) 100%), url('${c.img}')`;
     }
   }
@@ -2629,7 +2662,11 @@ function closeModal(options = {}){
   document.body.style.overflow = '';
   currentExploreCity = '';
 
-  // Pause video if running
+  // Pause video if running and clear overlay timer
+  isModalHeroCinematicActive = false;
+  clearTimeout(modalHeroOverlayTimer);
+  const mContent = document.getElementById('modalHeroContent');
+  if (mContent) mContent.classList.remove('overlay-hidden');
   const modalVideo = document.getElementById('modalVaranasiHeroVideo');
   if(modalVideo) modalVideo.pause();
 
@@ -2733,6 +2770,56 @@ function updateModalHeroSoundUI(isMuted) {
     if (icon) icon.textContent = '🔊';
     if (text) text.textContent = 'Sound On';
   }
+}
+
+// Modal Cinematic Hero Video Overlay Auto-Hide (5s) & Tap-to-Show
+let modalHeroOverlayTimer = null;
+let isModalHeroCinematicActive = false;
+
+function resetModalHeroOverlayTimer() {
+  clearTimeout(modalHeroOverlayTimer);
+  if (!isModalHeroCinematicActive) return;
+  modalHeroOverlayTimer = setTimeout(() => {
+    hideModalHeroOverlay();
+  }, 5000);
+}
+
+function showModalHeroOverlay() {
+  const content = document.getElementById('modalHeroContent');
+  if (content) {
+    content.classList.remove('overlay-hidden');
+  }
+  resetModalHeroOverlayTimer();
+}
+
+function hideModalHeroOverlay() {
+  if (!isModalHeroCinematicActive) return;
+  const content = document.getElementById('modalHeroContent');
+  if (content) {
+    content.classList.add('overlay-hidden');
+  }
+}
+
+function setupModalHeroOverlayInteraction() {
+  const modalHero = document.getElementById('modalHero');
+  if (!modalHero || modalHero.getAttribute('data-overlay-init')) return;
+  modalHero.setAttribute('data-overlay-init', 'true');
+
+  modalHero.addEventListener('click', (e) => {
+    if (!isModalHeroCinematicActive) return;
+
+    // Do NOT trigger or interfere when clicking Sound button
+    if (e.target.closest('#modalHeroSoundBtn')) {
+      return;
+    }
+    // Do NOT alter overlay when clicking Back button, Close button, or Scroll button
+    if (e.target.closest('.hero-back-tag') || e.target.closest('.close') || e.target.closest('.hero-scroll-btn') || e.target.closest('#modalHeroActions')) {
+      return;
+    }
+
+    // Visitor clicked/tapped anywhere on the modal hero video area: immediately show overlay and restart 5s timer
+    showModalHeroOverlay();
+  });
 }
 
 function closeModalAndScroll(targetId){

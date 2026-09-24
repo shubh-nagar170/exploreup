@@ -132,7 +132,33 @@ a{text-decoration:none;color:inherit}
   line-height:1;
 }
 
-.hero-content{position:relative;z-index:3;max-width:900px}
+.hero-content{
+  position:relative;
+  z-index:3;
+  max-width:900px;
+  transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), visibility 0.8s cubic-bezier(0.16,1,0.3,1);
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+.hero-content.overlay-hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.district-hero.varanasi-cinematic-hero{
+  background:#071525;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.district-hero.varanasi-cinematic-hero .hero-content{
+  cursor:default;
+}
+.district-hero.varanasi-cinematic-hero .hero-sound-btn,
+.district-hero.varanasi-cinematic-hero .hero-back-tag,
+.district-hero.varanasi-cinematic-hero .hero-scroll-btn{
+  cursor:pointer;
+}
 .eyebrow{letter-spacing:2.5px;font-size:12px;font-weight:800;color:var(--gold);text-transform:uppercase}
 .district-hero h1{font-size:clamp(36px,5vw,56px);margin:6px 0;letter-spacing:-1px;text-shadow:0 3px 18px rgba(0,0,0,.75)}
 .district-hero p{font-size:18px;margin:0;opacity:.95;color:#eaf2fc;line-height:1.45;text-shadow:0 2px 10px rgba(0,0,0,.6)}
@@ -428,7 +454,7 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
     <span class="sound-text" id="heroSoundText">Sound Off</span>
   </button>
 
-  <div class="hero-content">
+  <div class="hero-content" id="heroContent">
     <div class="eyebrow" id="districtEyebrow">WELCOME TO</div>
     <h1 id="districtTitle">Loading District…</h1>
     <p id="districtSubtitle"></p>
@@ -1014,6 +1040,56 @@ function scrollToDistrictContent(e) {
   }
 }
 
+// Cinematic Hero Video Overlay Auto-Hide (5s) & Tap-to-Show
+let heroOverlayTimer = null;
+let isHeroCinematicActive = false;
+
+function resetHeroOverlayTimer() {
+  clearTimeout(heroOverlayTimer);
+  if (!isHeroCinematicActive) return;
+  heroOverlayTimer = setTimeout(() => {
+    hideHeroOverlay();
+  }, 5000);
+}
+
+function showHeroOverlay() {
+  const content = document.getElementById('heroContent') || document.querySelector('.hero-content');
+  if (content) {
+    content.classList.remove('overlay-hidden');
+  }
+  resetHeroOverlayTimer();
+}
+
+function hideHeroOverlay() {
+  if (!isHeroCinematicActive) return;
+  const content = document.getElementById('heroContent') || document.querySelector('.hero-content');
+  if (content) {
+    content.classList.add('overlay-hidden');
+  }
+}
+
+function setupHeroOverlayInteraction() {
+  const hero = document.getElementById('districtHero');
+  if (!hero || hero.getAttribute('data-overlay-init')) return;
+  hero.setAttribute('data-overlay-init', 'true');
+
+  hero.addEventListener('click', (e) => {
+    if (!isHeroCinematicActive) return;
+
+    // Do NOT trigger or interfere when clicking Sound button
+    if (e.target.closest('#heroSoundBtn')) {
+      return;
+    }
+    // Do NOT alter overlay when clicking Back button or Scroll button
+    if (e.target.closest('.hero-back-tag') || e.target.closest('#heroScrollBtn')) {
+      return;
+    }
+
+    // Visitor clicked/tapped anywhere on the hero video area: immediately show overlay and restart 5s timer
+    showHeroOverlay();
+  });
+}
+
 // Helper to render district data into HTML elements
 function renderDistrictData(d){
   if(!d) return;
@@ -1052,7 +1128,14 @@ function renderDistrictData(d){
       heroEl.style.backgroundColor = '#071525';
     }
     initHeroVideo(videoConfig.storageKey);
+    isHeroCinematicActive = true;
+    setupHeroOverlayInteraction();
+    showHeroOverlay();
   } else {
+    isHeroCinematicActive = false;
+    clearTimeout(heroOverlayTimer);
+    const heroContent = document.getElementById('heroContent') || document.querySelector('.hero-content');
+    if (heroContent) heroContent.classList.remove('overlay-hidden');
     if (video) video.pause();
     if (videoWrap) videoWrap.style.display = 'none';
     if (soundBtn) soundBtn.style.display = 'none';
