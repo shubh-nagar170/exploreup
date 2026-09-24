@@ -829,23 +829,7 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
     <a href="javascript:void(0)" onclick="openTripPlanner()">Trip Planner</a>
     <a href="#food">Food Trails</a>
     <a href="#festivals">Festivals</a>
-    <a href="#emergency">Helplines</a>
-    <a href="#about">About</a>
   </nav>
-  <div class="actions">
-    <div id="navAuthContainer" class="nav-auth">
-      <button id="navLoginBtn" class="auth-btn" onclick="openAuthModal('login')">🔑 Log In</button>
-      <button id="navRegisterBtn" class="auth-btn secondary" onclick="openAuthModal('register')">Create Account</button>
-      <div id="navUserBadge" class="auth-user-badge" style="display:none">
-        <span class="auth-user-avatar" id="navUserAvatar">👤</span>
-        <span class="auth-username" id="navUserName">User</span>
-        <button class="auth-logout-btn" onclick="handleLogout()" title="Log Out">Log Out</button>
-      </div>
-    </div>
-    <button class="lang" onclick="toggleLanguage()" id="langBtn">हिंदी</button>
-    <button class="circle" onclick="toggleDark()" aria-label="Toggle dark mode">☾</button>
-    <button class="adminbtn" onclick="openAdminPanel()">Admin</button>
-  </div>
 </header>
 
 <!-- Left-Side Navigation Drawer Backdrop -->
@@ -4191,28 +4175,24 @@ if(exploreStorage.get('exploreup_dark') === '1'){
 }
 syncDarkUI();
 
-// Language Toggle & UI Sync
+// Language Toggle & UI Sync (Stored in exploreStorage)
+let currentAppLanguage = (exploreStorage.get('exploreup_lang') === 'hi') ? 'hi' : 'en';
+
 function syncDrawerLangUI() {
-  const btn = document.getElementById('langBtn');
   const badge = document.getElementById('drawerLangBadge');
   const sub = document.getElementById('drawerLangSubtitle');
-  if (!btn) return;
-  const isHindiActive = btn.textContent === 'English';
-  if (badge) badge.textContent = isHindiActive ? 'हिन्दी (Active)' : 'English (Active)';
-  if (sub) sub.textContent = isHindiActive ? 'वर्तमान भाषा: हिन्दी' : 'Current Language: English';
+  const greeting = document.getElementById('heroGreeting');
+  const isHindi = currentAppLanguage === 'hi';
+  if (badge) badge.textContent = isHindi ? 'हिन्दी (Active)' : 'English (Active)';
+  if (sub) sub.textContent = isHindi ? 'वर्तमान भाषा: हिन्दी • Tap to switch' : 'Active: English • Tap to switch';
+  if (greeting) {
+    greeting.textContent = isHindi ? 'घूमें • खोजें • अनुभव करें 🙏' : 'नमस्ते 🙏';
+  }
 }
 
 function toggleLanguage(){
-  const btn = document.getElementById('langBtn');
-  const greeting = document.getElementById('heroGreeting');
-  const isHindi = btn.textContent === 'हिंदी';
-  if(isHindi){
-    btn.textContent = 'English';
-    greeting.textContent = 'घूमें • खोजें • अनुभव करें 🙏';
-  } else {
-    btn.textContent = 'हिंदी';
-    greeting.textContent = 'नमस्ते 🙏';
-  }
+  currentAppLanguage = (currentAppLanguage === 'en') ? 'hi' : 'en';
+  exploreStorage.set('exploreup_lang', currentAppLanguage);
   syncDrawerLangUI();
 }
 syncDrawerLangUI();
