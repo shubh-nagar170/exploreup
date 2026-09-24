@@ -2540,7 +2540,8 @@ function openCity(name, options = {}){
   const cityKey = (c.name || '').toLowerCase().trim();
   const videoConfig = (typeof CINEMATIC_VIDEOS !== 'undefined' ? CINEMATIC_VIDEOS[cityKey] : null) ||
     (cityKey.includes('varanasi') ? { videoSrc: 'assets/varanasi/varanasi.mp4', storageKey: 'exploreup_varanasi_sound' } :
-    (cityKey.includes('agra') ? { videoSrc: 'assets/agra/agra.mp4', storageKey: 'exploreup_agra_sound' } : null));
+    (cityKey.includes('agra') ? { videoSrc: 'assets/agra/agra.mp4', storageKey: 'exploreup_agra_sound' } :
+    (cityKey.includes('lucknow') ? { videoSrc: 'assets/lucknow/lucknow.mp4', storageKey: 'exploreup_lucknow_sound' } : null)));
 
   if (videoConfig) {
     if (modalVideo) {
@@ -2646,7 +2647,7 @@ function closeModal(options = {}){
   } catch(e) { /* file:/// safe */ }
 }
 
-// Cinematic Hero Video & Sound Control (Modal: Varanasi & Agra)
+// Cinematic Hero Video & Sound Control (Modal: Varanasi, Agra & Lucknow)
 const CINEMATIC_VIDEOS = {
   'varanasi': {
     videoSrc: 'assets/varanasi/varanasi.mp4',
@@ -2655,6 +2656,10 @@ const CINEMATIC_VIDEOS = {
   'agra': {
     videoSrc: 'assets/agra/agra.mp4',
     storageKey: 'exploreup_agra_sound'
+  },
+  'lucknow': {
+    videoSrc: 'assets/lucknow/lucknow.mp4',
+    storageKey: 'exploreup_lucknow_sound'
   }
 };
 
