@@ -1583,6 +1583,7 @@ app.get(['/district.html', '/district'], (req, res) => {
 
 // Static assets (CSS, JS, images, media, districts.json)
 app.use(express.static(__dirname, { dotfiles: 'allow' }));
+app.use(express.static(path.join(__dirname, 'public'), { dotfiles: 'allow' }));
 
 // 404 handler for unknown routes (MULTI-PAGE SITE: do NOT redirect unknown routes to index.html)
 app.use((req, res) => {
