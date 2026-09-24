@@ -2542,7 +2542,8 @@ function openCity(name, options = {}){
     (cityKey.includes('varanasi') ? { videoSrc: 'assets/varanasi/varanasi.mp4', storageKey: 'exploreup_varanasi_sound' } :
     (cityKey.includes('agra') ? { videoSrc: 'assets/agra/agra.mp4', storageKey: 'exploreup_agra_sound' } :
     (cityKey.includes('lucknow') ? { videoSrc: 'assets/lucknow/lucknow.mp4', storageKey: 'exploreup_lucknow_sound' } :
-    (cityKey.includes('mathura') ? { videoSrc: 'assets/mathura/mathura.mp4', storageKey: 'exploreup_mathura_sound' } : null))));
+    (cityKey.includes('mathura') ? { videoSrc: 'assets/mathura/mathura.mp4', storageKey: 'exploreup_mathura_sound' } :
+    (cityKey.includes('ayodhya') ? { videoSrc: 'assets/ayodhya/ayodhya.mp4', storageKey: 'exploreup_ayodhya_sound' } : null)))));
 
   if (videoConfig) {
     if (modalVideo) {
@@ -2648,7 +2649,7 @@ function closeModal(options = {}){
   } catch(e) { /* file:/// safe */ }
 }
 
-// Cinematic Hero Video & Sound Control (Modal: Varanasi, Agra, Lucknow & Mathura)
+// Cinematic Hero Video & Sound Control (Modal: Varanasi, Agra, Lucknow, Mathura & Ayodhya)
 const CINEMATIC_VIDEOS = {
   'varanasi': {
     videoSrc: 'assets/varanasi/varanasi.mp4',
@@ -2665,6 +2666,10 @@ const CINEMATIC_VIDEOS = {
   'mathura': {
     videoSrc: 'assets/mathura/mathura.mp4',
     storageKey: 'exploreup_mathura_sound'
+  },
+  'ayodhya': {
+    videoSrc: 'assets/ayodhya/ayodhya.mp4',
+    storageKey: 'exploreup_ayodhya_sound'
   }
 };
 

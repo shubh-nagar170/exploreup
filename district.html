@@ -910,7 +910,7 @@ const fallbackDistricts = {
 }
 ;
 
-// Cinematic Hero Video & Sound Control (Varanasi, Agra, Lucknow & Mathura)
+// Cinematic Hero Video & Sound Control (Varanasi, Agra, Lucknow, Mathura & Ayodhya)
 const CINEMATIC_VIDEOS = {
   'varanasi': {
     videoSrc: 'assets/varanasi/varanasi.mp4',
@@ -927,6 +927,10 @@ const CINEMATIC_VIDEOS = {
   'mathura': {
     videoSrc: 'assets/mathura/mathura.mp4',
     storageKey: 'exploreup_mathura_sound'
+  },
+  'ayodhya': {
+    videoSrc: 'assets/ayodhya/ayodhya.mp4',
+    storageKey: 'exploreup_ayodhya_sound'
   }
 };
 
@@ -1027,7 +1031,8 @@ function renderDistrictData(d){
     (districtKey.includes('varanasi') ? CINEMATIC_VIDEOS['varanasi'] :
     (districtKey.includes('agra') ? CINEMATIC_VIDEOS['agra'] :
     (districtKey.includes('lucknow') ? CINEMATIC_VIDEOS['lucknow'] :
-    (districtKey.includes('mathura') ? CINEMATIC_VIDEOS['mathura'] : null))));
+    (districtKey.includes('mathura') ? CINEMATIC_VIDEOS['mathura'] :
+    (districtKey.includes('ayodhya') ? CINEMATIC_VIDEOS['ayodhya'] : null)))));
 
   if (videoConfig) {
     if (video) {
