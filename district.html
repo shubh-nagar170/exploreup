@@ -29,27 +29,55 @@ a{text-decoration:none;color:inherit}
 .circle-btn{width:36px;height:36px;border:1px solid rgba(255,255,255,.25);border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;transition:all .2s}
 .circle-btn:hover{background:var(--gold);color:#071b35;border-color:var(--gold)}
 
-/* Blue Hero Banner */
+/* Blue Hero Banner & Varanasi Cinematic Video Hero */
 .district-hero{
-  min-height:380px;
+  min-height:480px;
   background:linear-gradient(180deg,rgba(7,27,53,0.35) 0%,rgba(7,27,53,0.9) 100%),url('https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=85') center/cover;
   display:flex;
   align-items:flex-end;
-  padding:45px max(5vw,22px) 38px;
+  padding:45px max(5vw,22px) 44px;
   position:relative;
   color:#fff;
-  box-shadow:inset 0 -80px 100px rgba(0,0,0,0.65);
+  overflow:hidden;
+  box-shadow:inset 0 -90px 120px rgba(0,0,0,0.75);
+}
+.district-hero.varanasi-cinematic-hero{
+  background:#071525;
+}
+.district-hero-video-wrap{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  z-index:1;
+}
+.hero-video-bg{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  position:absolute;
+  top:0;
+  left:0;
+  pointer-events:none;
+}
+.hero-video-gradient{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(7,27,53,0.42) 0%,rgba(4,15,30,0.68) 55%,rgba(7,21,37,0.95) 100%);
+  pointer-events:none;
+  z-index:2;
 }
 .hero-back-tag{
   position:absolute;
   top:22px;
   left:max(5vw, 22px);
-  z-index:3;
+  z-index:4;
   display:inline-flex;
   align-items:center;
   gap:8px;
   background:rgba(7,27,53,0.85);
   backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
   border:1px solid rgba(255,255,255,0.25);
   color:#fff;
   border-radius:20px;
@@ -60,10 +88,95 @@ a{text-decoration:none;color:inherit}
   transition:all .2s ease;
 }
 .hero-back-tag:hover{background:var(--gold);color:#071b35;border-color:var(--gold)}
-.hero-content{position:relative;z-index:2;max-width:900px}
+
+.hero-sound-btn{
+  position:absolute;
+  top:22px;
+  right:max(5vw,22px);
+  z-index:4;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(7,27,53,0.85);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.25);
+  color:#fff;
+  border-radius:999px;
+  padding:8px 16px;
+  font-size:13px;
+  font-weight:750;
+  cursor:pointer;
+  transition:all .22s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 4px 16px rgba(0,0,0,0.35);
+  min-height:40px;
+  user-select:none;
+}
+.hero-sound-btn:hover{
+  background:rgba(11,103,209,0.9);
+  border-color:var(--gold);
+  color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.45);
+}
+.hero-sound-btn:active{
+  transform:scale(.96);
+}
+.hero-sound-btn.sound-active{
+  background:rgba(255,181,27,0.22);
+  border-color:var(--gold);
+  color:var(--gold);
+}
+.hero-sound-btn .sound-icon{
+  font-size:16px;
+  line-height:1;
+}
+
+.hero-content{position:relative;z-index:3;max-width:900px}
 .eyebrow{letter-spacing:2.5px;font-size:12px;font-weight:800;color:var(--gold);text-transform:uppercase}
-.district-hero h1{font-size:clamp(36px,5vw,56px);margin:6px 0;letter-spacing:-1px;text-shadow:0 3px 15px rgba(0,0,0,.6)}
-.district-hero p{font-size:18px;margin:0;opacity:.95;color:#eaf2fc;line-height:1.45}
+.district-hero h1{font-size:clamp(36px,5vw,56px);margin:6px 0;letter-spacing:-1px;text-shadow:0 3px 18px rgba(0,0,0,.75)}
+.district-hero p{font-size:18px;margin:0;opacity:.95;color:#eaf2fc;line-height:1.45;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+
+.hero-actions{
+  margin-top:20px;
+}
+.hero-scroll-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,0.14);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.3);
+  color:#fff;
+  padding:10px 22px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:750;
+  cursor:pointer;
+  transition:all .25s cubic-bezier(.16,1,.3,1);
+  text-decoration:none;
+  box-shadow:0 4px 18px rgba(0,0,0,0.3);
+}
+.hero-scroll-btn:hover{
+  background:var(--gold);
+  color:#071b35;
+  border-color:var(--gold);
+  transform:translateY(-2px);
+  box-shadow:0 6px 22px rgba(255,181,27,0.45);
+}
+.hero-scroll-btn:active{
+  transform:scale(.97);
+}
+.hero-scroll-btn .scroll-arrow{
+  display:inline-block;
+  font-size:16px;
+  animation:bounceArrow 2s infinite ease-in-out;
+}
+@keyframes bounceArrow{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(4px)}
+}
 
 /* Container & Layout */
 .wrap{max-width:1200px;margin:0 auto;padding:24px max(5vw,20px) 70px}
@@ -263,8 +376,10 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
   .nav{padding:0 4%}
   .breadcrumb{display:none}
   .detailgrid,.transport-grid,.foodgrid,.contact-grid,.knowledge-grid,.mallgrid{grid-template-columns:1fr}
-  .district-hero{min-height:300px;padding:24px 16px 28px}
+  .district-hero{min-height:430px;padding:75px 18px 32px}
   .district-hero h1{font-size:34px}
+  .hero-sound-btn{top:18px;right:14px;padding:7px 13px;font-size:12px;min-height:38px}
+  .hero-scroll-btn{padding:9px 18px;font-size:13px}
 }
 </style>
 </head>
@@ -295,13 +410,34 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
 
 <!-- Blue Top Hero Banner -->
 <section class="district-hero" id="districtHero">
+  <!-- Cinematic Background Video for Varanasi -->
+  <div class="district-hero-video-wrap" id="heroVideoWrap" style="display:none">
+    <video id="varanasiHeroVideo" class="hero-video-bg" autoplay muted loop playsinline preload="auto">
+      <source src="assets/varanasi-hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-gradient"></div>
+  </div>
+
   <a href="/" class="hero-back-tag" aria-label="Back to Home Screen">
     <span>←</span> <b>Back to Home Screen</b>
   </a>
+
+  <!-- Sound Control Button (Varanasi Cinematic Video) -->
+  <button id="heroSoundBtn" class="hero-sound-btn" onclick="toggleHeroSound()" aria-label="Turn sound on" title="Turn sound on" style="display:none">
+    <span class="sound-icon" id="heroSoundIcon">🔇</span>
+    <span class="sound-text" id="heroSoundText">Sound Off</span>
+  </button>
+
   <div class="hero-content">
     <div class="eyebrow" id="districtEyebrow">WELCOME TO</div>
     <h1 id="districtTitle">Loading District…</h1>
     <p id="districtSubtitle"></p>
+    <div class="hero-actions">
+      <a href="#districtOverview" id="heroScrollBtn" class="hero-scroll-btn" onclick="scrollToDistrictContent(event)" aria-label="Scroll to Explore">
+        <span>Scroll to Explore</span>
+        <span class="scroll-arrow">↓</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -727,6 +863,86 @@ const fallbackDistricts = {
 }
 ;
 
+// Varanasi Hero Cinematic Video & Sound Control
+const SOUND_STORAGE_KEY = 'exploreup_varanasi_sound';
+
+function initHeroVideo() {
+  const video = document.getElementById('varanasiHeroVideo');
+  if (!video) return;
+
+  // Video must always start muted to comply with browser autoplay restrictions
+  video.muted = true;
+  updateHeroSoundUI(true);
+
+  // Restore saved preference if previously unmuted upon user gesture
+  const savedPref = localStorage.getItem(SOUND_STORAGE_KEY);
+  if (savedPref === 'unmuted') {
+    const restoreSound = () => {
+      if (localStorage.getItem(SOUND_STORAGE_KEY) === 'unmuted' && video) {
+        video.muted = false;
+        updateHeroSoundUI(false);
+      }
+      window.removeEventListener('click', restoreSound);
+      window.removeEventListener('keydown', restoreSound);
+      window.removeEventListener('touchstart', restoreSound);
+    };
+    window.addEventListener('click', restoreSound, { once: true });
+    window.addEventListener('keydown', restoreSound, { once: true });
+    window.addEventListener('touchstart', restoreSound, { once: true });
+  }
+
+  const playPromise = video.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(e => console.log('Autoplay policy note:', e));
+  }
+}
+
+function toggleHeroSound() {
+  const video = document.getElementById('varanasiHeroVideo');
+  if (!video) return;
+
+  // Toggle mute state directly without pausing or restarting playback
+  const willBeMuted = !video.muted;
+  video.muted = willBeMuted;
+
+  try {
+    localStorage.setItem(SOUND_STORAGE_KEY, willBeMuted ? 'muted' : 'unmuted');
+  } catch (e) {
+    console.warn('Could not store audio preference:', e);
+  }
+
+  updateHeroSoundUI(willBeMuted);
+}
+
+function updateHeroSoundUI(isMuted) {
+  const btn = document.getElementById('heroSoundBtn');
+  const icon = document.getElementById('heroSoundIcon');
+  const text = document.getElementById('heroSoundText');
+  if (!btn) return;
+
+  if (isMuted) {
+    btn.setAttribute('aria-label', 'Turn sound on');
+    btn.title = 'Turn sound on';
+    btn.classList.remove('sound-active');
+    if (icon) icon.textContent = '🔇';
+    if (text) text.textContent = 'Sound Off';
+  } else {
+    btn.setAttribute('aria-label', 'Turn sound off');
+    btn.title = 'Turn sound off';
+    btn.classList.add('sound-active');
+    if (icon) icon.textContent = '🔊';
+    if (text) text.textContent = 'Sound On';
+  }
+}
+
+function scrollToDistrictContent(e) {
+  if (e) e.preventDefault();
+  const target = document.querySelector('.district-subnav') || document.getElementById('districtOverview');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
 // Helper to render district data into HTML elements
 function renderDistrictData(d){
   if(!d) return;
@@ -734,8 +950,28 @@ function renderDistrictData(d){
   // Title, Subtitle, Eyebrow & Hero Background
   document.title = `${d.name} Tourism Guide | ExploreUP`;
   const heroEl = document.getElementById('districtHero');
-  if(heroEl && d.image){
-    heroEl.style.backgroundImage = `linear-gradient(180deg, rgba(7,27,53,0.35) 0%, rgba(7,27,53,0.9) 100%), url('${d.image}')`;
+  const videoWrap = document.getElementById('heroVideoWrap');
+  const soundBtn = document.getElementById('heroSoundBtn');
+  const isVaranasi = (d.id && d.id.toLowerCase() === 'varanasi') || (d.name && d.name.toLowerCase().includes('varanasi'));
+
+  if (isVaranasi) {
+    if (videoWrap) videoWrap.style.display = 'block';
+    if (soundBtn) soundBtn.style.display = 'inline-flex';
+    if (heroEl) {
+      heroEl.classList.add('varanasi-cinematic-hero');
+      heroEl.style.backgroundImage = 'none';
+      heroEl.style.backgroundColor = '#071525';
+    }
+    initHeroVideo();
+  } else {
+    if (videoWrap) videoWrap.style.display = 'none';
+    if (soundBtn) soundBtn.style.display = 'none';
+    if (heroEl) {
+      heroEl.classList.remove('varanasi-cinematic-hero');
+      if (d.image) {
+        heroEl.style.backgroundImage = `linear-gradient(180deg, rgba(7,27,53,0.35) 0%, rgba(7,27,53,0.9) 100%), url('${d.image}')`;
+      }
+    }
   }
   document.getElementById('districtTitle').textContent = d.name;
   document.getElementById('crumbDistrict').textContent = d.name;

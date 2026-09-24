@@ -418,6 +418,19 @@ body.dark .search-autocomplete-action{color:#60a5fa}
 }
 .modalhero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,27,53,0.3) 0%,rgba(7,27,53,0.85) 100%)}
 .modalhero>*{position:relative;z-index:2;color:#fff}
+.district-hero-video-wrap{position:absolute;inset:0;overflow:hidden;z-index:1}
+.hero-video-bg{width:100%;height:100%;object-fit:cover;object-position:center;position:absolute;top:0;left:0;pointer-events:none}
+.hero-video-gradient{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,27,53,0.42) 0%,rgba(4,15,30,0.68) 55%,rgba(7,21,37,0.95) 100%);pointer-events:none;z-index:2}
+.hero-sound-btn{position:absolute;top:22px;right:calc(max(5vw,22px) + 54px);z-index:4;display:inline-flex;align-items:center;gap:8px;background:rgba(7,27,53,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:750;cursor:pointer;transition:all .22s cubic-bezier(.16,1,.3,1);box-shadow:0 4px 16px rgba(0,0,0,0.35);min-height:40px;user-select:none}
+.hero-sound-btn:hover{background:rgba(11,103,209,0.9);border-color:var(--gold);color:#fff;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.45)}
+.hero-sound-btn:active{transform:scale(.96)}
+.hero-sound-btn.sound-active{background:rgba(255,181,27,0.22);border-color:var(--gold);color:var(--gold)}
+.hero-sound-btn .sound-icon{font-size:16px;line-height:1}
+.hero-scroll-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:10px 22px;border-radius:999px;font-size:14px;font-weight:750;cursor:pointer;transition:all .25s cubic-bezier(.16,1,.3,1);text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,0.3)}
+.hero-scroll-btn:hover{background:var(--gold);color:#071b35;border-color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 22px rgba(255,181,27,0.45)}
+.hero-scroll-btn:active{transform:scale(.97)}
+.hero-scroll-btn .scroll-arrow{display:inline-block;font-size:16px;animation:bounceArrow 2s infinite ease-in-out}
+@keyframes bounceArrow{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 .modalhero .close{
   position:absolute;
   right:max(5vw, 22px);
@@ -1275,16 +1288,37 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 
     <!-- Modal Hero -->
     <div class="modalhero" id="modalHero">
+      <!-- Varanasi Cinematic Video Wrap -->
+      <div class="district-hero-video-wrap" id="modalHeroVideoWrap" style="display:none">
+        <video id="modalVaranasiHeroVideo" class="hero-video-bg" autoplay muted loop playsinline preload="auto">
+          <source src="assets/varanasi-hero.mp4" type="video/mp4">
+        </video>
+        <div class="hero-video-gradient"></div>
+      </div>
+
       <button class="hero-back-tag" onclick="closeModal()" aria-label="Back to Home Screen">
         <span>←</span> <b>Back to Home Screen</b>
       </button>
+
+      <!-- Sound Control Button (Varanasi Cinematic Video) -->
+      <button id="modalHeroSoundBtn" class="hero-sound-btn" onclick="toggleModalHeroSound()" aria-label="Turn sound on" title="Turn sound on" style="display:none">
+        <span class="sound-icon" id="modalHeroSoundIcon">🔇</span>
+        <span class="sound-text" id="modalHeroSoundText">Sound Off</span>
+      </button>
+
       <button class="close" onclick="closeModal()" aria-label="Close city view" title="Back to Home (Esc)">
         ✕
       </button>
-      <div>
+      <div style="position:relative;z-index:3">
         <div class="eyebrow" id="modalState">WELCOME TO</div>
         <h1 id="modalTitle" style="font-size:44px;margin:6px 0;text-shadow:0 3px 15px rgba(0,0,0,.6)">City</h1>
         <div id="modalSubtitle" style="font-size:17px;opacity:.95"></div>
+        <div class="hero-actions" id="modalHeroActions" style="display:none;margin-top:16px">
+          <a href="javascript:void(0)" class="hero-scroll-btn" onclick="scrollModalSection('districtOverview')" aria-label="Scroll to Explore">
+            <span>Scroll to Explore</span>
+            <span class="scroll-arrow">↓</span>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -2496,7 +2530,29 @@ function openCity(name, options = {}){
   document.getElementById('modalTitle').textContent = c.name;
   document.getElementById('modalCrumbCity').textContent = c.name;
   document.getElementById('modalSubtitle').textContent = c.tag;
-  document.getElementById('modalHero').style.backgroundImage = `linear-gradient(180deg, rgba(7,27,53,0.3) 0%, rgba(7,27,53,0.85) 100%), url('${c.img}')`;
+  const modalHeroEl = document.getElementById('modalHero');
+  const modalVideoWrap = document.getElementById('modalHeroVideoWrap');
+  const modalSoundBtn = document.getElementById('modalHeroSoundBtn');
+  const modalHeroActions = document.getElementById('modalHeroActions');
+  const isVaranasi = c.name.toLowerCase() === 'varanasi';
+
+  if (isVaranasi) {
+    if (modalVideoWrap) modalVideoWrap.style.display = 'block';
+    if (modalSoundBtn) modalSoundBtn.style.display = 'inline-flex';
+    if (modalHeroActions) modalHeroActions.style.display = 'block';
+    if (modalHeroEl) {
+      modalHeroEl.style.backgroundImage = 'none';
+      modalHeroEl.style.backgroundColor = '#071525';
+    }
+    initModalHeroVideo();
+  } else {
+    if (modalVideoWrap) modalVideoWrap.style.display = 'none';
+    if (modalSoundBtn) modalSoundBtn.style.display = 'none';
+    if (modalHeroActions) modalHeroActions.style.display = 'none';
+    if (modalHeroEl) {
+      modalHeroEl.style.backgroundImage = `linear-gradient(180deg, rgba(7,27,53,0.3) 0%, rgba(7,27,53,0.85) 100%), url('${c.img}')`;
+    }
+  }
 
   // 3. Set Overview & Details
   document.getElementById('aboutCityName').textContent = c.name;
@@ -2554,6 +2610,10 @@ function closeModal(options = {}){
   document.body.style.overflow = '';
   currentExploreCity = '';
 
+  // Pause video if running
+  const modalVideo = document.getElementById('modalVaranasiHeroVideo');
+  if(modalVideo) modalVideo.pause();
+
   // 2. Hide floating back button
   const fb = document.getElementById('modalFloatingBack');
   if(fb) fb.style.display = 'none';
@@ -2568,6 +2628,68 @@ function closeModal(options = {}){
       history.pushState({ home: true }, '', cleanUrl);
     }
   } catch(e) { /* file:/// safe */ }
+}
+
+// Varanasi Hero Cinematic Video & Sound Control (Modal)
+const VARANASI_SOUND_KEY = 'exploreup_varanasi_sound';
+
+function initModalHeroVideo() {
+  const video = document.getElementById('modalVaranasiHeroVideo');
+  if (!video) return;
+  video.muted = true;
+  updateModalHeroSoundUI(true);
+
+  const savedPref = localStorage.getItem(VARANASI_SOUND_KEY);
+  if (savedPref === 'unmuted') {
+    const restoreSound = () => {
+      if (localStorage.getItem(VARANASI_SOUND_KEY) === 'unmuted' && video) {
+        video.muted = false;
+        updateModalHeroSoundUI(false);
+      }
+      window.removeEventListener('click', restoreSound);
+      window.removeEventListener('keydown', restoreSound);
+      window.removeEventListener('touchstart', restoreSound);
+    };
+    window.addEventListener('click', restoreSound, { once: true });
+    window.addEventListener('keydown', restoreSound, { once: true });
+    window.addEventListener('touchstart', restoreSound, { once: true });
+  }
+
+  const p = video.play();
+  if (p !== undefined) p.catch(e => console.log('Autoplay muted note:', e));
+}
+
+function toggleModalHeroSound() {
+  const video = document.getElementById('modalVaranasiHeroVideo');
+  if (!video) return;
+  const willBeMuted = !video.muted;
+  video.muted = willBeMuted;
+  try {
+    localStorage.setItem(VARANASI_SOUND_KEY, willBeMuted ? 'muted' : 'unmuted');
+  } catch (e) {
+    console.warn('Could not store audio preference:', e);
+  }
+  updateModalHeroSoundUI(willBeMuted);
+}
+
+function updateModalHeroSoundUI(isMuted) {
+  const btn = document.getElementById('modalHeroSoundBtn');
+  const icon = document.getElementById('modalHeroSoundIcon');
+  const text = document.getElementById('modalHeroSoundText');
+  if (!btn) return;
+  if (isMuted) {
+    btn.setAttribute('aria-label', 'Turn sound on');
+    btn.title = 'Turn sound on';
+    btn.classList.remove('sound-active');
+    if (icon) icon.textContent = '🔇';
+    if (text) text.textContent = 'Sound Off';
+  } else {
+    btn.setAttribute('aria-label', 'Turn sound off');
+    btn.title = 'Turn sound off';
+    btn.classList.add('sound-active');
+    if (icon) icon.textContent = '🔊';
+    if (text) text.textContent = 'Sound On';
+  }
 }
 
 function closeModalAndScroll(targetId){
