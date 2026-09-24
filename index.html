@@ -1288,10 +1288,10 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 
     <!-- Modal Hero -->
     <div class="modalhero" id="modalHero">
-      <!-- Varanasi Cinematic Video Wrap -->
+      <!-- Varanasi & Agra Cinematic Video Wrap -->
       <div class="district-hero-video-wrap" id="modalHeroVideoWrap" style="display:none">
         <video id="modalVaranasiHeroVideo" class="hero-video-bg" autoplay muted loop playsinline preload="auto">
-          <source src="assets/varanasi/varanasi.mp4" type="video/mp4">
+          <source id="modalHeroVideoSource" src="assets/varanasi/varanasi.mp4" type="video/mp4">
         </video>
         <div class="hero-video-gradient"></div>
       </div>
@@ -2534,9 +2534,24 @@ function openCity(name, options = {}){
   const modalVideoWrap = document.getElementById('modalHeroVideoWrap');
   const modalSoundBtn = document.getElementById('modalHeroSoundBtn');
   const modalHeroActions = document.getElementById('modalHeroActions');
-  const isVaranasi = c.name.toLowerCase() === 'varanasi';
+  const modalVideo = document.getElementById('modalVaranasiHeroVideo');
+  const modalVideoSrcEl = document.getElementById('modalHeroVideoSource');
 
-  if (isVaranasi) {
+  const cityKey = (c.name || '').toLowerCase().trim();
+  const videoConfig = (typeof CINEMATIC_VIDEOS !== 'undefined' ? CINEMATIC_VIDEOS[cityKey] : null) ||
+    (cityKey.includes('varanasi') ? { videoSrc: 'assets/varanasi/varanasi.mp4', storageKey: 'exploreup_varanasi_sound' } :
+    (cityKey.includes('agra') ? { videoSrc: 'assets/agra/agra.mp4', storageKey: 'exploreup_agra_sound' } : null));
+
+  if (videoConfig) {
+    if (modalVideo) {
+      const currentSrc = modalVideo.getAttribute('data-loaded-src') || '';
+      if (currentSrc !== videoConfig.videoSrc) {
+        modalVideo.src = videoConfig.videoSrc;
+        if (modalVideoSrcEl) modalVideoSrcEl.src = videoConfig.videoSrc;
+        modalVideo.setAttribute('data-loaded-src', videoConfig.videoSrc);
+        modalVideo.load();
+      }
+    }
     if (modalVideoWrap) modalVideoWrap.style.display = 'block';
     if (modalSoundBtn) modalSoundBtn.style.display = 'inline-flex';
     if (modalHeroActions) modalHeroActions.style.display = 'block';
@@ -2544,8 +2559,9 @@ function openCity(name, options = {}){
       modalHeroEl.style.backgroundImage = 'none';
       modalHeroEl.style.backgroundColor = '#071525';
     }
-    initModalHeroVideo();
+    initModalHeroVideo(videoConfig.storageKey);
   } else {
+    if (modalVideo) modalVideo.pause();
     if (modalVideoWrap) modalVideoWrap.style.display = 'none';
     if (modalSoundBtn) modalSoundBtn.style.display = 'none';
     if (modalHeroActions) modalHeroActions.style.display = 'none';
@@ -2630,19 +2646,31 @@ function closeModal(options = {}){
   } catch(e) { /* file:/// safe */ }
 }
 
-// Varanasi Hero Cinematic Video & Sound Control (Modal)
-const VARANASI_SOUND_KEY = 'exploreup_varanasi_sound';
+// Cinematic Hero Video & Sound Control (Modal: Varanasi & Agra)
+const CINEMATIC_VIDEOS = {
+  'varanasi': {
+    videoSrc: 'assets/varanasi/varanasi.mp4',
+    storageKey: 'exploreup_varanasi_sound'
+  },
+  'agra': {
+    videoSrc: 'assets/agra/agra.mp4',
+    storageKey: 'exploreup_agra_sound'
+  }
+};
 
-function initModalHeroVideo() {
+let currentModalSoundKey = 'exploreup_varanasi_sound';
+
+function initModalHeroVideo(storageKey) {
+  if (storageKey) currentModalSoundKey = storageKey;
   const video = document.getElementById('modalVaranasiHeroVideo');
   if (!video) return;
   video.muted = true;
   updateModalHeroSoundUI(true);
 
-  const savedPref = localStorage.getItem(VARANASI_SOUND_KEY);
+  const savedPref = localStorage.getItem(currentModalSoundKey);
   if (savedPref === 'unmuted') {
     const restoreSound = () => {
-      if (localStorage.getItem(VARANASI_SOUND_KEY) === 'unmuted' && video) {
+      if (localStorage.getItem(currentModalSoundKey) === 'unmuted' && video) {
         video.muted = false;
         updateModalHeroSoundUI(false);
       }
@@ -2665,7 +2693,7 @@ function toggleModalHeroSound() {
   const willBeMuted = !video.muted;
   video.muted = willBeMuted;
   try {
-    localStorage.setItem(VARANASI_SOUND_KEY, willBeMuted ? 'muted' : 'unmuted');
+    localStorage.setItem(currentModalSoundKey, willBeMuted ? 'muted' : 'unmuted');
   } catch (e) {
     console.warn('Could not store audio preference:', e);
   }

@@ -410,10 +410,10 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
 
 <!-- Blue Top Hero Banner -->
 <section class="district-hero" id="districtHero">
-  <!-- Cinematic Background Video for Varanasi -->
+  <!-- Cinematic Background Video for Varanasi & Agra -->
   <div class="district-hero-video-wrap" id="heroVideoWrap" style="display:none">
     <video id="varanasiHeroVideo" class="hero-video-bg" autoplay muted loop playsinline preload="auto">
-      <source src="assets/varanasi/varanasi.mp4" type="video/mp4">
+      <source id="heroVideoSource" src="assets/varanasi/varanasi.mp4" type="video/mp4">
     </video>
     <div class="hero-video-gradient"></div>
   </div>
@@ -422,7 +422,7 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
     <span>←</span> <b>Back to Home Screen</b>
   </a>
 
-  <!-- Sound Control Button (Varanasi Cinematic Video) -->
+  <!-- Sound Control Button (Cinematic Video) -->
   <button id="heroSoundBtn" class="hero-sound-btn" onclick="toggleHeroSound()" aria-label="Turn sound on" title="Turn sound on" style="display:none">
     <span class="sound-icon" id="heroSoundIcon">🔇</span>
     <span class="sound-text" id="heroSoundText">Sound Off</span>
@@ -863,10 +863,22 @@ const fallbackDistricts = {
 }
 ;
 
-// Varanasi Hero Cinematic Video & Sound Control
-const SOUND_STORAGE_KEY = 'exploreup_varanasi_sound';
+// Cinematic Hero Video & Sound Control (Varanasi & Agra)
+const CINEMATIC_VIDEOS = {
+  'varanasi': {
+    videoSrc: 'assets/varanasi/varanasi.mp4',
+    storageKey: 'exploreup_varanasi_sound'
+  },
+  'agra': {
+    videoSrc: 'assets/agra/agra.mp4',
+    storageKey: 'exploreup_agra_sound'
+  }
+};
 
-function initHeroVideo() {
+let currentHeroStorageKey = 'exploreup_varanasi_sound';
+
+function initHeroVideo(storageKey) {
+  if (storageKey) currentHeroStorageKey = storageKey;
   const video = document.getElementById('varanasiHeroVideo');
   if (!video) return;
 
@@ -875,10 +887,10 @@ function initHeroVideo() {
   updateHeroSoundUI(true);
 
   // Restore saved preference if previously unmuted upon user gesture
-  const savedPref = localStorage.getItem(SOUND_STORAGE_KEY);
+  const savedPref = localStorage.getItem(currentHeroStorageKey);
   if (savedPref === 'unmuted') {
     const restoreSound = () => {
-      if (localStorage.getItem(SOUND_STORAGE_KEY) === 'unmuted' && video) {
+      if (localStorage.getItem(currentHeroStorageKey) === 'unmuted' && video) {
         video.muted = false;
         updateHeroSoundUI(false);
       }
@@ -906,7 +918,7 @@ function toggleHeroSound() {
   video.muted = willBeMuted;
 
   try {
-    localStorage.setItem(SOUND_STORAGE_KEY, willBeMuted ? 'muted' : 'unmuted');
+    localStorage.setItem(currentHeroStorageKey, willBeMuted ? 'muted' : 'unmuted');
   } catch (e) {
     console.warn('Could not store audio preference:', e);
   }
@@ -952,9 +964,24 @@ function renderDistrictData(d){
   const heroEl = document.getElementById('districtHero');
   const videoWrap = document.getElementById('heroVideoWrap');
   const soundBtn = document.getElementById('heroSoundBtn');
-  const isVaranasi = (d.id && d.id.toLowerCase() === 'varanasi') || (d.name && d.name.toLowerCase().includes('varanasi'));
+  const video = document.getElementById('varanasiHeroVideo');
+  const videoSrcEl = document.getElementById('heroVideoSource');
 
-  if (isVaranasi) {
+  const districtKey = (d.id || d.name || '').toLowerCase().trim();
+  const videoConfig = CINEMATIC_VIDEOS[districtKey] ||
+    (districtKey.includes('varanasi') ? CINEMATIC_VIDEOS['varanasi'] :
+    (districtKey.includes('agra') ? CINEMATIC_VIDEOS['agra'] : null));
+
+  if (videoConfig) {
+    if (video) {
+      const currentSrc = video.getAttribute('data-loaded-src') || '';
+      if (currentSrc !== videoConfig.videoSrc) {
+        video.src = videoConfig.videoSrc;
+        if (videoSrcEl) videoSrcEl.src = videoConfig.videoSrc;
+        video.setAttribute('data-loaded-src', videoConfig.videoSrc);
+        video.load();
+      }
+    }
     if (videoWrap) videoWrap.style.display = 'block';
     if (soundBtn) soundBtn.style.display = 'inline-flex';
     if (heroEl) {
@@ -962,8 +989,9 @@ function renderDistrictData(d){
       heroEl.style.backgroundImage = 'none';
       heroEl.style.backgroundColor = '#071525';
     }
-    initHeroVideo();
+    initHeroVideo(videoConfig.storageKey);
   } else {
+    if (video) video.pause();
     if (videoWrap) videoWrap.style.display = 'none';
     if (soundBtn) soundBtn.style.display = 'none';
     if (heroEl) {
