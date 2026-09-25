@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
@@ -10,9 +12,10 @@ const { GoogleGenAI } = require('@google/genai');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const USERS_FILE = path.join(__dirname, 'users.json');
 const BOOKINGS_FILE = path.join(__dirname, 'bookings.json');
 const DISTRICTS_FILE = path.join(__dirname, 'districts.json');
+const SESSION_SECRET = process.env.SESSION_SECRET || 'exploreup-super-secret-key-2026';
+const AUTH_COOKIE_NAME = 'exploreup_session';
 
 // Enable trust proxy for secure cookies and IP forwarding behind Vercel/proxies
 app.set('trust proxy', 1);
@@ -36,44 +39,188 @@ app.use((req, res, next) => {
   next();
 });
 
-// Session configuration
+// Session configuration (HttpOnly cookie, secure in production HTTPS)
+const isProductionEnv = process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'exploreup-super-secret-key-2026',
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: false, // Set to true in production if HTTPS is active
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      secure: isProductionEnv,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       sameSite: 'lax'
     }
   })
 );
 
-// Helper functions for user storage
-function getUsers() {
-  try {
-    if (!fs.existsSync(USERS_FILE)) {
-      fs.writeFileSync(USERS_FILE, JSON.stringify([], null, 2), 'utf-8');
-      return [];
+// =========================================================
+// MONGODB CONNECTION & USER MODEL (users collection)
+// =========================================================
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      index: true
+    },
+    passwordHash: {
+      type: String,
+      required: true
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
     }
-    const data = fs.readFileSync(USERS_FILE, 'utf-8');
-    return JSON.parse(data || '[]');
-  } catch (err) {
-    console.error('Error reading users.json:', err);
-    return [];
+  },
+  {
+    collection: 'users',
+    versionKey: false
+  }
+);
+
+userSchema.index({ email: 1 }, { unique: true });
+
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+
+let mongoConnectionPromise = null;
+async function connectMongoDB() {
+  const uri = (process.env.MONGODB_URI || process.env.MONGO_URI || '').trim();
+  if (!uri) {
+    throw new Error('MONGODB_URI environment variable is not configured.');
+  }
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
+  if (!mongoConnectionPromise) {
+    mongoConnectionPromise = mongoose
+      .connect(uri, {
+        serverSelectionTimeoutMS: 6000
+      })
+      .then(async (conn) => {
+        try {
+          await User.init(); // Ensure unique email index is built
+        } catch (idxErr) {
+          console.warn('[MongoDB] Index initialization note:', idxErr.message);
+        }
+        console.log('[ExploreUP] Connected to MongoDB (users collection ready).');
+        return conn;
+      })
+      .catch((err) => {
+        mongoConnectionPromise = null;
+        throw err;
+      });
+  }
+  return mongoConnectionPromise;
+}
+
+// Initiate MongoDB connection on startup if MONGODB_URI is present
+if ((process.env.MONGODB_URI || process.env.MONGO_URI || '').trim()) {
+  connectMongoDB().catch((err) => {
+    console.warn('[ExploreUP MongoDB Startup Warning]:', err.message);
+  });
+}
+
+// Signed HttpOnly Session Cookie Helpers (ensures session persistence across refreshes & serverless instances)
+function signSessionPayload(payloadObj) {
+  const data = Buffer.from(JSON.stringify(payloadObj), 'utf8').toString('base64url');
+  const sig = crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
+  return `${data}.${sig}`;
+}
+
+function verifySessionCookie(tokenStr) {
+  if (!tokenStr || typeof tokenStr !== 'string' || !tokenStr.includes('.')) return null;
+  const [data, sig] = tokenStr.split('.');
+  if (!data || !sig) return null;
+  const expectedSig = crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
+  if (sig.length !== expectedSig.length) return null;
+  if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expectedSig))) return null;
+  try {
+    const parsed = JSON.parse(Buffer.from(data, 'base64url').toString('utf8'));
+    if (!parsed || !parsed.email || !parsed.name) return null;
+    if (parsed.exp && Date.now() > parsed.exp) return null;
+    return { name: parsed.name, email: parsed.email };
+  } catch (e) {
+    return null;
   }
 }
 
-function saveUsers(users) {
-  try {
-    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf-8');
-    return true;
-  } catch (err) {
-    console.error('Error writing users.json:', err);
-    return false;
+function parseCookies(req) {
+  const list = {};
+  const cookieHeader = req.headers?.cookie;
+  if (!cookieHeader) return list;
+  cookieHeader.split(';').forEach((cookie) => {
+    const parts = cookie.split('=');
+    const key = parts.shift()?.trim();
+    if (key) {
+      list[key] = decodeURIComponent(parts.join('=').trim());
+    }
+  });
+  return list;
+}
+
+function setAuthenticatedSession(req, res, safeUser) {
+  const cleanUser = {
+    name: String(safeUser.name || '').trim(),
+    email: String(safeUser.email || '').trim().toLowerCase()
+  };
+  if (req.session) {
+    req.session.userName = cleanUser.name;
+    req.session.user = cleanUser;
   }
+  const token = signSessionPayload({
+    name: cleanUser.name,
+    email: cleanUser.email,
+    exp: Date.now() + 7 * 24 * 60 * 60 * 1000
+  });
+  const isSecure = isProductionEnv || req.secure || req.headers['x-forwarded-proto'] === 'https';
+  res.cookie(AUTH_COOKIE_NAME, token, {
+    httpOnly: true,
+    secure: Boolean(isSecure),
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  });
+  return cleanUser;
+}
+
+function getAuthenticatedUser(req) {
+  if (req.session && req.session.user && req.session.user.email) {
+    return {
+      name: req.session.user.name || req.session.user.username || req.session.userName,
+      email: req.session.user.email
+    };
+  }
+  const cookies = parseCookies(req);
+  const verified = verifySessionCookie(cookies[AUTH_COOKIE_NAME]);
+  if (verified) {
+    if (req.session) {
+      req.session.userName = verified.name;
+      req.session.user = verified;
+    }
+    return verified;
+  }
+  return null;
+}
+
+function clearAuthenticatedSession(req, res) {
+  const isSecure = isProductionEnv || req.secure || req.headers['x-forwarded-proto'] === 'https';
+  res.clearCookie(AUTH_COOKIE_NAME, {
+    httpOnly: true,
+    secure: Boolean(isSecure),
+    sameSite: 'lax',
+    path: '/'
+  });
+  res.clearCookie('connect.sid', { path: '/' });
 }
 
 // Helper functions for bookings
@@ -946,153 +1093,193 @@ function getOpenAIClient() {
 getOpenAIClient();
 
 // =========================================================
-// AUTHENTICATION ROUTES
+// AUTHENTICATION ROUTES (MongoDB users collection)
 // =========================================================
 
-// POST /api/register
+const EMAIL_FORMAT_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// POST /api/register (Create Account)
 app.post('/api/register', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const rawName = req.body.name !== undefined ? req.body.name : req.body.username;
+    const rawEmail = req.body.email;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+    const termsAccepted = req.body.termsAccepted;
 
-    if (!username || !email || !password) {
-      return res.status(400).json({ error: 'Username, email, and password are required.' });
+    const name = String(rawName || '').trim();
+    const email = String(rawEmail || '').trim().toLowerCase();
+
+    if (!name) {
+      return res.status(400).json({ error: 'Please enter your name.' });
+    }
+    if (name.length < 2) {
+      return res.status(400).json({ error: 'Name must be at least 2 characters long.' });
+    }
+    if (!email || !EMAIL_FORMAT_REGEX.test(email)) {
+      return res.status(400).json({ error: 'Please enter a valid email address.' });
+    }
+    if (!password) {
+      return res.status(400).json({ error: 'Please enter a password.' });
+    }
+    if (String(password).length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
+    }
+    if (confirmPassword !== undefined && password !== confirmPassword) {
+      return res.status(400).json({ error: 'Passwords do not match.' });
+    }
+    if (termsAccepted !== true && termsAccepted !== 'true') {
+      return res.status(400).json({ error: 'Please agree to the Terms & Conditions.' });
     }
 
-    const trimmedUsername = username.trim();
-    const trimmedEmail = email.trim().toLowerCase();
+    await connectMongoDB();
 
-    if (trimmedUsername.length < 2) {
-      return res.status(400).json({ error: 'Username must be at least 2 characters long.' });
-    }
-
-    if (password.length < 4) {
-      return res.status(400).json({ error: 'Password must be at least 4 characters long.' });
-    }
-
-    const users = getUsers();
-
-    // Check if user already exists
-    const existingUser = users.find(
-      (u) =>
-        u.email.toLowerCase() === trimmedEmail ||
-        u.username.toLowerCase() === trimmedUsername.toLowerCase()
-    );
-
+    // Check if email already exists in MongoDB users collection
+    const existingUser = await User.findOne({ email }).lean();
     if (existingUser) {
-      return res.status(409).json({
-        error:
-          existingUser.email.toLowerCase() === trimmedEmail
-            ? 'An account with this email already exists.'
-            : 'This username is already taken.'
-      });
+      return res.status(409).json({ error: 'This email is already registered.' });
     }
 
-    // Hash password with bcryptjs
-    const passwordHash = await bcrypt.hash(password, 10);
+    // Hash password securely using bcryptjs (never store plain-text password)
+    const passwordHash = await bcrypt.hash(String(password), 12);
 
-    const newUser = {
-      id: 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
-      username: trimmedUsername,
-      email: trimmedEmail,
+    const createdUser = await User.create({
+      name,
+      email,
       passwordHash,
-      createdAt: new Date().toISOString()
-    };
+      createdAt: new Date()
+    });
 
-    users.push(newUser);
-    saveUsers(users);
-
-    // User Identity: Attach user's name (req.session.userName) to session
-    req.session.userName = newUser.username;
-    req.session.user = {
-      id: newUser.id,
-      username: newUser.username,
-      email: newUser.email
-    };
+    const safeUser = setAuthenticatedSession(req, res, {
+      name: createdUser.name,
+      email: createdUser.email
+    });
 
     return res.status(201).json({
       success: true,
       message: 'Account created successfully.',
-      userName: req.session.userName,
-      user: req.session.user
+      userName: safeUser.name,
+      user: {
+        name: safeUser.name,
+        email: safeUser.email
+      }
     });
   } catch (err) {
-    console.error('Registration error:', err);
-    return res.status(500).json({ error: 'Internal server error during registration.' });
+    if (err && err.code === 11000) {
+      return res.status(409).json({ error: 'This email is already registered.' });
+    }
+    console.error('Registration error:', err.message);
+    return res.status(500).json({
+      error: err.message && err.message.includes('MONGODB_URI')
+        ? 'Database connection is not configured on the server.'
+        : 'Unable to create account right now. Please try again.'
+    });
   }
 });
 
 // POST /api/login
 app.post('/api/login', async (req, res) => {
   try {
-    const { usernameOrEmail, email, username, password } = req.body;
-    const identifier = (usernameOrEmail || email || username || '').trim().toLowerCase();
+    const rawEmail = req.body.email || req.body.usernameOrEmail || req.body.username || '';
+    const password = req.body.password || '';
+    const email = String(rawEmail).trim().toLowerCase();
 
-    if (!identifier || !password) {
-      return res.status(400).json({ error: 'Username/Email and password are required.' });
+    if (!email || !EMAIL_FORMAT_REGEX.test(email)) {
+      return res.status(400).json({ error: 'Please enter a valid email address.' });
+    }
+    if (!password) {
+      return res.status(400).json({ error: 'Please enter your password.' });
     }
 
-    const users = getUsers();
-    const user = users.find(
-      (u) =>
-        u.email.toLowerCase() === identifier ||
-        u.username.toLowerCase() === identifier
-    );
+    await connectMongoDB();
 
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid email/username or password.' });
+    const user = await User.findOne({ email }).lean();
+    if (!user || !user.passwordHash) {
+      return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
-    const isMatch = await bcrypt.compare(password, user.passwordHash);
+    const isMatch = await bcrypt.compare(String(password), user.passwordHash);
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid email/username or password.' });
+      return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
-    // User Identity: Attach user's name (req.session.userName) to session on login
-    req.session.userName = user.username;
-    req.session.user = {
-      id: user.id,
-      username: user.username,
+    const safeUser = setAuthenticatedSession(req, res, {
+      name: user.name,
       email: user.email
-    };
+    });
 
     return res.status(200).json({
       success: true,
       message: 'Logged in successfully.',
-      userName: req.session.userName,
-      user: req.session.user
+      userName: safeUser.name,
+      user: {
+        name: safeUser.name,
+        email: safeUser.email
+      }
     });
   } catch (err) {
-    console.error('Login error:', err);
-    return res.status(500).json({ error: 'Internal server error during login.' });
+    console.error('Login error:', err.message);
+    return res.status(500).json({
+      error: err.message && err.message.includes('MONGODB_URI')
+        ? 'Database connection is not configured on the server.'
+        : 'Unable to log in right now. Please try again.'
+    });
   }
 });
 
 // POST /api/logout
 app.post('/api/logout', (req, res) => {
+  clearAuthenticatedSession(req, res);
   if (req.session) {
     req.session.destroy((err) => {
       if (err) {
         return res.status(500).json({ error: 'Could not log out. Please try again.' });
       }
-      res.clearCookie('connect.sid');
       return res.status(200).json({ success: true, message: 'Logged out successfully.' });
     });
   } else {
-    return res.status(200).json({ success: true, message: 'Already logged out.' });
+    return res.status(200).json({ success: true, message: 'Logged out successfully.' });
   }
 });
 
 // GET /api/me
-app.get('/api/me', (req, res) => {
-  if (req.session && (req.session.userName || req.session.user)) {
-    const userName = req.session.userName || (req.session.user ? req.session.user.username : 'Traveler');
-    return res.status(200).json({
-      userName,
-      user: req.session.user || { username: userName },
-      authenticated: true
-    });
+app.get('/api/me', async (req, res) => {
+  try {
+    const sessionUser = getAuthenticatedUser(req);
+    if (!sessionUser || !sessionUser.email) {
+      return res.status(200).json({ user: null, userName: null, authenticated: false });
+    }
+
+    // Verify account still exists in MongoDB if connected
+    try {
+      await connectMongoDB();
+      const dbUser = await User.findOne({ email: sessionUser.email }).select('name email -_id').lean();
+      if (!dbUser) {
+        clearAuthenticatedSession(req, res);
+        return res.status(200).json({ user: null, userName: null, authenticated: false });
+      }
+      return res.status(200).json({
+        authenticated: true,
+        userName: dbUser.name,
+        user: {
+          name: dbUser.name,
+          email: dbUser.email
+        }
+      });
+    } catch (dbCheckErr) {
+      // If transient DB check fails, fall back to verified HMAC-signed session user
+      return res.status(200).json({
+        authenticated: true,
+        userName: sessionUser.name,
+        user: {
+          name: sessionUser.name,
+          email: sessionUser.email
+        }
+      });
+    }
+  } catch (err) {
+    return res.status(200).json({ user: null, userName: null, authenticated: false });
   }
-  return res.status(200).json({ user: null, userName: null, authenticated: false });
 });
 
 // POST /api/chat/reset & /api/reset
@@ -1114,11 +1301,10 @@ app.post('/api/chat', async (req, res) => {
     }
 
     const isStream = Boolean(req.body.stream || req.headers.accept?.includes('text/event-stream'));
-    const isGuest = !(req.session && (req.session.userName || req.session.user));
-    const userName = isGuest
-      ? null
-      : (req.session.userName || (req.session.user && req.session.user.username) || 'Traveler');
-    const userBookings = isGuest ? [] : getUserBookings(userName, req.session.user);
+    const authUser = getAuthenticatedUser(req);
+    const isGuest = !authUser;
+    const userName = isGuest ? null : (authUser.name || 'Traveler');
+    const userBookings = isGuest ? [] : getUserBookings(userName, authUser);
     const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
     const rawGeminiModel = (process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite').trim().replace(/^["']|["']$/g, '');
     const GEMINI_MODEL = rawGeminiModel || 'gemini-3.5-flash-lite';

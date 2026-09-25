@@ -115,29 +115,58 @@ body.dark .drawer-switch .drawer-switch-handle{transform:translateX(18px)}
 .auth-username{max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .auth-logout-btn{border:0;background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:4px 10px;font-size:11px;font-weight:800;cursor:pointer;transition:all .15s ease}
 .auth-logout-btn:hover{background:#ff4d4f;color:#fff}
-.auth-modal{display:none;position:fixed;inset:0;background:rgba(2,10,22,.65);backdrop-filter:blur(6px);z-index:999;align-items:center;justify-content:center;padding:16px}
+.auth-modal{display:none;position:fixed;inset:0;background:rgba(2,10,22,.68);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:10000;align-items:center;justify-content:center;padding:12px;overflow-y:auto}
 .auth-modal.active{display:flex}
-.auth-box{background:var(--card);color:var(--text);width:100%;max-width:420px;border-radius:24px;border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.35);overflow:hidden;animation:authPopIn .22s ease-out}
-@keyframes authPopIn{from{opacity:0;transform:scale(.95) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.auth-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;background:linear-gradient(135deg,#071b35,#123d68);color:#fff}
-.auth-header h3{margin:0;font-size:18px;display:flex;align-items:center;gap:8px}
-.auth-header-close{border:0;background:rgba(255,255,255,.18);color:#fff;border-radius:50%;width:32px;height:32px;display:grid;place-items:center;cursor:pointer;font-size:17px;transition:background .15s}
+.auth-box{background:var(--card);color:var(--text);width:100%;max-width:430px;max-height:calc(100dvh - 24px);overflow-y:auto;border-radius:22px;border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.38);animation:authPopIn .22s ease-out}
+@keyframes authPopIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.auth-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;background:linear-gradient(135deg,#071b35,#123d68);color:#fff;position:sticky;top:0;z-index:2}
+.auth-header h3{margin:0;font-size:18px;font-weight:850;color:#fff;display:flex;align-items:center;gap:8px}
+.auth-header-close{border:0;background:rgba(255,255,255,.18);color:#fff;border-radius:50%;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;font-size:16px;transition:background .15s;flex-shrink:0}
 .auth-header-close:hover{background:rgba(255,255,255,.3)}
-.auth-body{padding:22px}
-.auth-tabs{display:flex;gap:6px;background:var(--bg);padding:4px;border-radius:14px;border:1px solid var(--line);margin-bottom:18px}
-.auth-tab{flex:1;border:0;background:transparent;color:var(--muted);border-radius:10px;padding:9px;font-size:14px;font-weight:750;cursor:pointer;transition:all .18s;font-family:inherit}
-.auth-tab.active{background:var(--card);color:var(--text);box-shadow:0 3px 10px rgba(0,0,0,.07)}
-.auth-form{display:flex;flex-direction:column;gap:14px}
-.auth-form label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:750;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-.auth-form input{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:12px;padding:12px 14px;font-size:14px;outline:0;transition:border-color .18s;font-family:inherit}
-.auth-form input:focus{border-color:var(--blue);background:var(--card)}
-.auth-submit-btn{margin-top:6px;border:0;border-radius:14px;padding:13px;background:var(--gold);color:#071b35;font-weight:900;font-size:15px;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit}
-.auth-submit-btn:hover{background:#ffc342;transform:translateY(-1px);box-shadow:0 6px 18px rgba(255,181,27,.35)}
-.auth-alert{display:none;padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.4;margin-bottom:12px}
+.auth-body{padding:20px 22px 22px}
+.auth-tabs{display:flex;gap:6px;background:var(--bg);padding:4px;border-radius:14px;border:1px solid var(--line);margin-bottom:16px}
+.auth-tab{flex:1;border:0;background:transparent;color:var(--muted);border-radius:10px;padding:9px 8px;font-size:13.5px;font-weight:800;cursor:pointer;transition:all .18s;font-family:inherit}
+.auth-tab.active{background:var(--card);color:var(--text);box-shadow:0 3px 10px rgba(0,0,0,.08)}
+.auth-form-heading{margin:0 0 4px;font-size:20px;font-weight:850;color:var(--text);letter-spacing:-.3px}
+.auth-form-sub{margin:0 0 12px;font-size:13px;color:var(--muted)}
+.auth-form{display:flex;flex-direction:column;gap:13px}
+.auth-form label.auth-field-label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:800;color:var(--text);letter-spacing:.3px}
+.auth-form input[type="text"],.auth-form input[type="email"],.auth-form input[type="password"]{width:100%;border:1.5px solid var(--line);background:var(--bg);color:var(--text);border-radius:12px;padding:12px 14px;font-size:14.5px;outline:0;transition:border-color .18s,background .18s;font-family:inherit;min-height:46px}
+.auth-form input:focus{border-color:var(--gold);background:var(--card)}
+.auth-pw-wrap{position:relative;display:flex;align-items:center;width:100%}
+.auth-pw-wrap input{padding-right:44px !important}
+.auth-pw-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);width:32px;height:32px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background .15s,color .15s}
+.auth-pw-toggle:hover{background:rgba(11,36,71,.06);color:var(--text)}
+body.dark .auth-pw-toggle:hover{background:rgba(255,255,255,.1);color:#fff}
+.auth-terms-label{display:flex !important;flex-direction:row !important;align-items:center;gap:10px;font-size:13px !important;font-weight:600 !important;color:var(--text) !important;cursor:pointer;padding:4px 0;user-select:none}
+.auth-terms-label input[type="checkbox"]{width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;margin:0}
+.auth-submit-btn{margin-top:4px;border:0;border-radius:14px;padding:13px 16px;min-height:48px;background:linear-gradient(135deg,#ffd04d 0%,#f59e0b 100%);color:#071b35;font-weight:900;font-size:15px;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;box-shadow:0 6px 18px rgba(245,158,11,.28)}
+.auth-submit-btn:hover{filter:brightness(1.04);transform:translateY(-1px);box-shadow:0 8px 22px rgba(245,158,11,.38)}
+.auth-submit-btn:disabled{opacity:.65;cursor:not-allowed;transform:none}
+.auth-switch-prompt{margin-top:4px;text-align:center;font-size:13.5px;color:var(--muted);padding-top:10px;border-top:1px solid var(--line)}
+.auth-switch-prompt a{color:var(--blue);font-weight:800;text-decoration:none;margin-left:4px;cursor:pointer}
+.auth-switch-prompt a:hover{text-decoration:underline}
+body.dark .auth-box{background:#0d2138;border-color:#223a59;color:#f1f5f9}
+body.dark .auth-tabs{background:#071525;border-color:#1e3552}
+body.dark .auth-tab.active{background:#152c4a;color:#fff}
+body.dark .auth-form-heading,body.dark .auth-form label.auth-field-label,body.dark .auth-terms-label{color:#f1f5f9 !important}
+body.dark .auth-form-sub,body.dark .auth-switch-prompt{color:#94a3b8}
+body.dark .auth-switch-prompt a{color:#fbbf24}
+body.dark .auth-form input[type="text"],body.dark .auth-form input[type="email"],body.dark .auth-form input[type="password"]{background:#071525;border-color:#223a59;color:#f8fafc}
+body.dark .auth-form input:focus{border-color:#fbbf24;background:#0a1c30}
+.auth-alert{display:none;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;line-height:1.4;margin-bottom:4px}
 .auth-alert.error{display:block;background:#fff1f0;color:#cf1322;border:1px solid #ffa39e}
 .auth-alert.success{display:block;background:#f6ffed;color:#389e0d;border:1px solid #b7eb8f}
 body.dark .auth-alert.error{background:#2c1417;color:#ff7875;border-color:#5c2223}
 body.dark .auth-alert.success{background:#132a13;color:#95de64;border-color:#1e4620}
+@media(max-width:480px){
+  .auth-modal{padding:8px}
+  .auth-box{border-radius:18px;max-height:calc(100dvh - 16px)}
+  .auth-header{padding:14px 16px}
+  .auth-header h3{font-size:16px}
+  .auth-body{padding:16px}
+  .auth-form-heading{font-size:18px}
+}
 
 /* Hero Section */
 .hero{min-height:560px;padding:65px 7%;display:flex;align-items:center;gap:40px;color:#fff;background-image:linear-gradient(90deg,rgba(3,20,41,.92) 0%,rgba(3,20,41,.75) 50%,rgba(3,20,41,.3) 100%),url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1800&q=80');background-position:center;background-size:cover;position:relative}
@@ -1066,8 +1095,8 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
       <div class="drawer-user-info">
         <div class="drawer-avatar" id="drawerUserAvatar">👤</div>
         <div class="drawer-user-meta">
-          <div class="drawer-user-name" id="drawerUserName">User</div>
-          <div class="drawer-user-sub">✨ Verified UP Explorer</div>
+          <div class="drawer-user-name" id="drawerUserName">Account</div>
+          <div class="drawer-user-sub" id="drawerUserEmail">✨ Verified UP Explorer</div>
         </div>
       </div>
     </div>
@@ -1075,31 +1104,41 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
     <!-- SECTION 1: ACCOUNT & AUTHENTICATION -->
     <div class="drawer-section-title">Account</div>
     <div class="drawer-menu-list">
-      <!-- 1. Login -->
+      <!-- 1. Login (visible when logged out) -->
       <button class="drawer-item" id="drawerLoginItem" onclick="drawerAction(function(){ openAuthModal('login'); })">
         <div class="drawer-item-icon">🔑</div>
         <div class="drawer-item-content">
-          <div class="drawer-item-title">Log In</div>
-          <div class="drawer-item-sub">Access your account & saved trips</div>
+          <div class="drawer-item-title">Login</div>
+          <div class="drawer-item-sub">Sign in to your ExploreUP account</div>
         </div>
         <span class="drawer-badge">Sign In</span>
       </button>
 
-      <!-- 2. Create Account -->
+      <!-- 2. Create Account (visible when logged out) -->
       <button class="drawer-item" id="drawerRegisterItem" onclick="drawerAction(function(){ openAuthModal('register'); })">
         <div class="drawer-item-icon">✨</div>
         <div class="drawer-item-content">
           <div class="drawer-item-title">Create Account</div>
-          <div class="drawer-item-sub">Join ExploreUP for free</div>
+          <div class="drawer-item-sub">Register a new customer account</div>
         </div>
         <span class="drawer-badge">Free</span>
       </button>
 
-      <!-- 3. Logout (visible only when logged in) -->
+      <!-- 3. Account / User Name (visible when logged in) -->
+      <div class="drawer-item" id="drawerAccountInfoItem" style="display:none;cursor:default">
+        <div class="drawer-item-icon">👤</div>
+        <div class="drawer-item-content">
+          <div class="drawer-item-title" id="drawerAccountNameText">Traveler</div>
+          <div class="drawer-item-sub" id="drawerAccountEmailText">Logged in</div>
+        </div>
+        <span class="drawer-badge" style="background:rgba(16,185,129,.15);color:#10b981">Active</span>
+      </div>
+
+      <!-- 4. Logout (visible only when logged in) -->
       <button class="drawer-item logout-item" id="drawerLogoutItem" style="display:none" onclick="drawerAction(handleLogout)">
         <div class="drawer-item-icon">🚪</div>
         <div class="drawer-item-content">
-          <div class="drawer-item-title">Log Out</div>
+          <div class="drawer-item-title">Logout</div>
           <div class="drawer-item-sub">Safely sign out of your account</div>
         </div>
       </button>
@@ -2302,57 +2341,97 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   </div>
 </div>
 
-<!-- Auth Modal (Login & Signup) -->
-<div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-label="User Authentication" onclick="handleAuthModalBackdrop(event)">
+<!-- Auth Modal (Login & Create Account) -->
+<div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-label="Customer Authentication" onclick="handleAuthModalBackdrop(event)">
   <div class="auth-box" onclick="event.stopPropagation()">
     <div class="auth-header">
-      <h3><span>✨</span> Welcome to ExploreUP</h3>
-      <button class="auth-header-close" onclick="closeAuthModal()" aria-label="Close modal">✕</button>
+      <h3 id="authModalHeaderTitle"><span>✨</span> Welcome Back</h3>
+      <button type="button" class="auth-header-close" onclick="closeAuthModal()" aria-label="Close modal">✕</button>
     </div>
     <div class="auth-body">
       <div class="auth-tabs">
-        <button type="button" class="auth-tab active" id="tabBtnLogin" onclick="switchAuthTab('login')">Log In</button>
+        <button type="button" class="auth-tab active" id="tabBtnLogin" onclick="switchAuthTab('login')">Login</button>
         <button type="button" class="auth-tab" id="tabBtnRegister" onclick="switchAuthTab('register')">Create Account</button>
       </div>
 
       <!-- Login Form -->
-      <form id="authLoginForm" class="auth-form" onsubmit="handleLoginSubmit(event)">
-        <div id="loginAlert" class="auth-alert"></div>
-        <label>
-          Email or Username
-          <input type="text" id="loginIdentifier" placeholder="e.g. traveler@example.com or user123" required autocomplete="username">
+      <form id="authLoginForm" class="auth-form" onsubmit="handleLoginSubmit(event)" novalidate>
+        <div>
+          <h4 class="auth-form-heading">Welcome Back</h4>
+          <p class="auth-form-sub">Sign in with your registered email and password</p>
+        </div>
+        <div id="loginAlert" class="auth-alert" role="alert"></div>
+
+        <label class="auth-field-label" for="loginIdentifier">
+          <span>Email</span>
+          <input type="email" id="loginIdentifier" placeholder="Enter your email address" required autocomplete="email">
         </label>
-        <label>
-          Password
-          <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+
+        <label class="auth-field-label" for="loginPassword">
+          <span>Password</span>
+          <div class="auth-pw-wrap">
+            <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+            <button type="button" class="auth-pw-toggle" onclick="toggleAuthPassword('loginPassword', this)" aria-label="Show password" title="Show/Hide Password">👁</button>
+          </div>
         </label>
+
         <button type="submit" class="auth-submit-btn" id="loginSubmitBtn">
-          <span>Log In</span> ➔
+          <span>Login</span>
         </button>
+
+        <div class="auth-switch-prompt">
+          Don't have an account?
+          <a href="javascript:void(0)" onclick="switchAuthTab('register')">Create Account</a>
+        </div>
       </form>
 
-      <!-- Register Form -->
-      <form id="authRegisterForm" class="auth-form" style="display:none" onsubmit="handleRegisterSubmit(event)">
-        <div id="registerAlert" class="auth-alert"></div>
-        <label>
-          Username
-          <input type="text" id="regUsername" placeholder="Choose a username (min 2 chars)" required autocomplete="username">
+      <!-- Create Account Form -->
+      <form id="authRegisterForm" class="auth-form" style="display:none" onsubmit="handleRegisterSubmit(event)" novalidate>
+        <div>
+          <h4 class="auth-form-heading">Create Your Account</h4>
+          <p class="auth-form-sub">Join ExploreUP to start your Uttar Pradesh journey</p>
+        </div>
+        <div id="registerAlert" class="auth-alert" role="alert"></div>
+
+        <label class="auth-field-label" for="regUsername">
+          <span>Full Name</span>
+          <input type="text" id="regUsername" placeholder="Enter your full name" required autocomplete="name">
         </label>
-        <label>
-          Email Address
+
+        <label class="auth-field-label" for="regEmail">
+          <span>Email Address</span>
           <input type="email" id="regEmail" placeholder="you@example.com" required autocomplete="email">
         </label>
-        <label>
-          Password
-          <input type="password" id="regPassword" placeholder="Create a password (min 4 chars)" required autocomplete="new-password">
+
+        <label class="auth-field-label" for="regPassword">
+          <span>Password</span>
+          <div class="auth-pw-wrap">
+            <input type="password" id="regPassword" placeholder="Create a password (min 6 characters)" required autocomplete="new-password">
+            <button type="button" class="auth-pw-toggle" onclick="toggleAuthPassword('regPassword', this)" aria-label="Show password" title="Show/Hide Password">👁</button>
+          </div>
         </label>
-        <label>
-          Confirm Password
-          <input type="password" id="regConfirmPassword" placeholder="Confirm your password" required autocomplete="new-password">
+
+        <label class="auth-field-label" for="regConfirmPassword">
+          <span>Confirm Password</span>
+          <div class="auth-pw-wrap">
+            <input type="password" id="regConfirmPassword" placeholder="Re-enter your password" required autocomplete="new-password">
+            <button type="button" class="auth-pw-toggle" onclick="toggleAuthPassword('regConfirmPassword', this)" aria-label="Show password" title="Show/Hide Password">👁</button>
+          </div>
         </label>
+
+        <label class="auth-terms-label" for="regTerms">
+          <input type="checkbox" id="regTerms" required>
+          <span>I agree to the Terms &amp; Conditions</span>
+        </label>
+
         <button type="submit" class="auth-submit-btn" id="regSubmitBtn">
-          <span>Create Account</span> ➔
+          <span>Create Account</span>
         </button>
+
+        <div class="auth-switch-prompt">
+          Already have an account?
+          <a href="javascript:void(0)" onclick="switchAuthTab('login')">Login</a>
+        </div>
       </form>
     </div>
   </div>
@@ -5422,16 +5501,43 @@ function closeCategoryModal(){
 }
 
 // =========================================================
-// USER AUTHENTICATION & SESSION MANAGEMENT
+// USER AUTHENTICATION & SESSION MANAGEMENT (MongoDB + HttpOnly Session)
 // =========================================================
 let currentAppUser = null;
+
+function toggleAuthPassword(inputId, btnEl) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (btnEl) {
+      btnEl.textContent = '🙈';
+      btnEl.setAttribute('aria-label', 'Hide password');
+      btnEl.setAttribute('title', 'Hide Password');
+    }
+  } else {
+    input.type = 'password';
+    if (btnEl) {
+      btnEl.textContent = '👁';
+      btnEl.setAttribute('aria-label', 'Show password');
+      btnEl.setAttribute('title', 'Show Password');
+    }
+  }
+}
 
 async function checkAuthState() {
   try {
     const res = await fetch('/api/me', { credentials: 'include' });
     if (res.ok) {
       const data = await res.json();
-      currentAppUser = data.user || null;
+      if (data && data.authenticated && data.user) {
+        currentAppUser = {
+          name: data.user.name || data.user.username || data.userName || 'Traveler',
+          email: data.user.email || ''
+        };
+      } else {
+        currentAppUser = null;
+      }
       updateAuthUI();
     }
   } catch (e) {
@@ -5447,23 +5553,34 @@ function updateAuthUI() {
 
   const drawerLogin = document.getElementById('drawerLoginItem');
   const drawerRegister = document.getElementById('drawerRegisterItem');
+  const drawerAccountInfo = document.getElementById('drawerAccountInfoItem');
+  const drawerAccountNameText = document.getElementById('drawerAccountNameText');
+  const drawerAccountEmailText = document.getElementById('drawerAccountEmailText');
   const drawerLogout = document.getElementById('drawerLogoutItem');
   const drawerGuest = document.getElementById('drawerGuestBox');
   const drawerBadge = document.getElementById('drawerUserBadge');
   const drawerUserName = document.getElementById('drawerUserName');
+  const drawerUserEmail = document.getElementById('drawerUserEmail');
 
-  if (currentAppUser) {
+  if (currentAppUser && currentAppUser.name) {
+    const displayName = currentAppUser.name;
+    const displayEmail = currentAppUser.email || '✨ Verified UP Explorer';
+
     if (loginBtn) loginBtn.style.display = 'none';
     if (registerBtn) registerBtn.style.display = 'none';
     if (userBadge) userBadge.style.display = 'flex';
-    if (userNameEl) userNameEl.textContent = currentAppUser.username;
+    if (userNameEl) userNameEl.textContent = displayName;
 
     if (drawerLogin) drawerLogin.style.display = 'none';
     if (drawerRegister) drawerRegister.style.display = 'none';
+    if (drawerAccountInfo) drawerAccountInfo.style.display = 'flex';
+    if (drawerAccountNameText) drawerAccountNameText.textContent = displayName;
+    if (drawerAccountEmailText) drawerAccountEmailText.textContent = displayEmail;
     if (drawerLogout) drawerLogout.style.display = 'flex';
     if (drawerGuest) drawerGuest.style.display = 'none';
     if (drawerBadge) drawerBadge.style.display = 'flex';
-    if (drawerUserName) drawerUserName.textContent = currentAppUser.username;
+    if (drawerUserName) drawerUserName.textContent = displayName;
+    if (drawerUserEmail) drawerUserEmail.textContent = displayEmail;
   } else {
     if (loginBtn) loginBtn.style.display = 'inline-flex';
     if (registerBtn) registerBtn.style.display = 'inline-flex';
@@ -5471,6 +5588,7 @@ function updateAuthUI() {
 
     if (drawerLogin) drawerLogin.style.display = 'flex';
     if (drawerRegister) drawerRegister.style.display = 'flex';
+    if (drawerAccountInfo) drawerAccountInfo.style.display = 'none';
     if (drawerLogout) drawerLogout.style.display = 'none';
     if (drawerGuest) drawerGuest.style.display = 'block';
     if (drawerBadge) drawerBadge.style.display = 'none';
@@ -5502,11 +5620,13 @@ function switchAuthTab(tab) {
   const tabReg = document.getElementById('tabBtnRegister');
   const loginAlert = document.getElementById('loginAlert');
   const regAlert = document.getElementById('registerAlert');
+  const headerTitle = document.getElementById('authModalHeaderTitle');
 
   if (loginAlert) { loginAlert.style.display = 'none'; loginAlert.textContent = ''; }
   if (regAlert) { regAlert.style.display = 'none'; regAlert.textContent = ''; }
 
   if (tab === 'login') {
+    if (headerTitle) headerTitle.innerHTML = '<span>✨</span> Welcome Back';
     if (tabLogin) tabLogin.classList.add('active');
     if (tabReg) tabReg.classList.remove('active');
     if (loginForm) loginForm.style.display = 'flex';
@@ -5516,6 +5636,7 @@ function switchAuthTab(tab) {
       if (el) el.focus();
     }, 50);
   } else {
+    if (headerTitle) headerTitle.innerHTML = '<span>✨</span> Create Your Account';
     if (tabLogin) tabLogin.classList.remove('active');
     if (tabReg) tabReg.classList.add('active');
     if (loginForm) loginForm.style.display = 'none';
@@ -5527,49 +5648,57 @@ function switchAuthTab(tab) {
   }
 }
 
+function showAuthFormError(alertEl, msg) {
+  if (!alertEl) return;
+  alertEl.textContent = msg;
+  alertEl.className = 'auth-alert error';
+  alertEl.style.display = 'block';
+}
+
 async function handleLoginSubmit(e) {
   if (e && typeof e.preventDefault === 'function') e.preventDefault();
   const alertEl = document.getElementById('loginAlert');
   const btn = document.getElementById('loginSubmitBtn');
-  const identifier = (document.getElementById('loginIdentifier')?.value || '').trim();
+  const email = (document.getElementById('loginIdentifier')?.value || '').trim().toLowerCase();
   const password = document.getElementById('loginPassword')?.value || '';
 
-  if (!identifier || !password) return;
+  if (alertEl) { alertEl.style.display = 'none'; alertEl.className = 'auth-alert'; }
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showAuthFormError(alertEl, 'Please enter a valid email address.');
+    return;
+  }
+  if (!password) {
+    showAuthFormError(alertEl, 'Please enter your password.');
+    return;
+  }
 
   if (btn) { btn.disabled = true; btn.textContent = 'Logging in...'; }
-  if (alertEl) { alertEl.style.display = 'none'; alertEl.className = 'auth-alert'; }
 
   try {
     const res = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ usernameOrEmail: identifier, password: password })
+      body: JSON.stringify({ email: email, password: password })
     });
     const data = await res.json();
-    if (res.ok && data.success) {
-      currentAppUser = data.user;
+    if (res.ok && data.success && data.user) {
+      currentAppUser = {
+        name: data.user.name || data.userName || 'Traveler',
+        email: data.user.email || email
+      };
       updateAuthUI();
+      const loginForm = document.getElementById('authLoginForm');
+      if (loginForm) loginForm.reset();
       closeAuthModal();
-      const aryaPanel = document.getElementById('aryaPanel');
-      if (aryaPanel && (aryaPanel.style.display === 'flex' || aryaPanel.classList.contains('open'))) {
-        aryaAdd('Welcome back, ' + data.user.username + '! You can now ask me any question about Uttar Pradesh.', 'bot');
-      }
     } else {
-      if (alertEl) {
-        alertEl.textContent = data.error || 'Login failed. Please verify your credentials.';
-        alertEl.className = 'auth-alert error';
-        alertEl.style.display = 'block';
-      }
+      showAuthFormError(alertEl, data.error || 'Invalid email or password.');
     }
   } catch (err) {
-    if (alertEl) {
-      alertEl.textContent = 'Unable to connect to server. Please try again.';
-      alertEl.className = 'auth-alert error';
-      alertEl.style.display = 'block';
-    }
+    showAuthFormError(alertEl, 'Unable to connect to server. Please try again.');
   } finally {
-    if (btn) { btn.disabled = false; btn.innerHTML = '<span>Log In</span> ➔'; }
+    if (btn) { btn.disabled = false; btn.innerHTML = '<span>Login</span>'; }
   }
 }
 
@@ -5577,19 +5706,40 @@ async function handleRegisterSubmit(e) {
   if (e && typeof e.preventDefault === 'function') e.preventDefault();
   const alertEl = document.getElementById('registerAlert');
   const btn = document.getElementById('regSubmitBtn');
-  const username = (document.getElementById('regUsername')?.value || '').trim();
-  const email = (document.getElementById('regEmail')?.value || '').trim();
+  const name = (document.getElementById('regUsername')?.value || '').trim();
+  const email = (document.getElementById('regEmail')?.value || '').trim().toLowerCase();
   const password = document.getElementById('regPassword')?.value || '';
-  const confirm = document.getElementById('regConfirmPassword')?.value || '';
+  const confirmPassword = document.getElementById('regConfirmPassword')?.value || '';
+  const termsAccepted = Boolean(document.getElementById('regTerms')?.checked);
 
   if (alertEl) { alertEl.style.display = 'none'; alertEl.className = 'auth-alert'; }
 
-  if (password !== confirm) {
-    if (alertEl) {
-      alertEl.textContent = 'Passwords do not match.';
-      alertEl.className = 'auth-alert error';
-      alertEl.style.display = 'block';
-    }
+  if (!name) {
+    showAuthFormError(alertEl, 'Please enter your name.');
+    return;
+  }
+  if (name.length < 2) {
+    showAuthFormError(alertEl, 'Name must be at least 2 characters long.');
+    return;
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showAuthFormError(alertEl, 'Please enter a valid email address.');
+    return;
+  }
+  if (!password) {
+    showAuthFormError(alertEl, 'Please enter a password.');
+    return;
+  }
+  if (password.length < 6) {
+    showAuthFormError(alertEl, 'Password must be at least 6 characters long.');
+    return;
+  }
+  if (password !== confirmPassword) {
+    showAuthFormError(alertEl, 'Passwords do not match.');
+    return;
+  }
+  if (!termsAccepted) {
+    showAuthFormError(alertEl, 'Please agree to the Terms & Conditions.');
     return;
   }
 
@@ -5600,32 +5750,31 @@ async function handleRegisterSubmit(e) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ username: username, email: email, password: password })
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        termsAccepted: termsAccepted
+      })
     });
     const data = await res.json();
-    if (res.ok && data.success) {
-      currentAppUser = data.user;
+    if (res.ok && data.success && data.user) {
+      currentAppUser = {
+        name: data.user.name || data.userName || name,
+        email: data.user.email || email
+      };
       updateAuthUI();
+      const regForm = document.getElementById('authRegisterForm');
+      if (regForm) regForm.reset();
       closeAuthModal();
-      const aryaPanel = document.getElementById('aryaPanel');
-      if (aryaPanel && (aryaPanel.style.display === 'flex' || aryaPanel.classList.contains('open'))) {
-        aryaAdd('Welcome to ExploreUP, ' + data.user.username + '! Your account is active. How may I assist your travel today?', 'bot');
-      }
     } else {
-      if (alertEl) {
-        alertEl.textContent = data.error || 'Registration failed. Please check your details.';
-        alertEl.className = 'auth-alert error';
-        alertEl.style.display = 'block';
-      }
+      showAuthFormError(alertEl, data.error || 'Registration failed. Please check your details.');
     }
   } catch (err) {
-    if (alertEl) {
-      alertEl.textContent = 'Unable to connect to server. Please try again.';
-      alertEl.className = 'auth-alert error';
-      alertEl.style.display = 'block';
-    }
+    showAuthFormError(alertEl, 'Unable to connect to server. Please try again.');
   } finally {
-    if (btn) { btn.disabled = false; btn.innerHTML = '<span>Create Account</span> ➔'; }
+    if (btn) { btn.disabled = false; btn.innerHTML = '<span>Create Account</span>'; }
   }
 }
 
