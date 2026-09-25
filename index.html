@@ -678,28 +678,164 @@ body.dark .contact-actions a{background:#172943;color:#8ec0ff}
 .suggestion-item small{display:block;color:var(--muted);margin-top:5px}
 
 /* ========================================================= */
-/* INTERACTIVE TRIP PLANNER MODAL                            */
+/* INTERACTIVE TRIP PLANNER MODAL — ARYA TRIP PLAN MAKER     */
 /* ========================================================= */
-.planner-modal{display:none;position:fixed;inset:0;background:rgba(6,22,45,.8);z-index:99999;backdrop-filter:blur(10px);padding:20px;align-items:center;justify-content:center;overflow-y:auto}
-.planner-box{width:min(920px,100%);background:var(--card);border-radius:24px;border:1px solid var(--line);box-shadow:0 25px 80px rgba(0,0,0,.45);overflow:hidden;max-height:92vh;display:flex;flex-direction:column}
-.planner-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:linear-gradient(135deg,#071b35,#103763);color:#fff}
-.planner-head h2{margin:0;font-size:22px}.planner-head small{display:block;opacity:.8;margin-top:2px}
-.planner-close{border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:20px;display:grid;place-items:center;transition:all .18s}
-.planner-close:hover{background:var(--gold);color:#071b35}
-.planner-body{padding:24px;overflow-y:auto}
-.planner-form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.planner-field label{display:block;font-size:12px;font-weight:800;text-transform:uppercase;color:var(--muted);margin-bottom:6px;letter-spacing:.5px}
-.planner-field select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:inherit;font:inherit;font-weight:600}
-.planner-btn{width:100%;background:var(--gold);color:#071b35;border:0;border-radius:14px;padding:14px;font-weight:900;font-size:15px;cursor:pointer;transition:all .18s;box-shadow:0 6px 20px rgba(255,181,27,.35)}
-.planner-btn:hover{background:#ffc444;transform:translateY(-1px)}
-.planner-output{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
-.itinerary-day{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
-.itinerary-day h4{margin:0 0 10px;font-size:17px;color:var(--blue);display:flex;align-items:center;gap:8px}
-.itinerary-slot{padding:8px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5}
-.itinerary-slot:last-child{border:0}
-.itinerary-slot b{color:var(--navy);display:inline-block;width:95px}body.dark .itinerary-slot b{color:var(--gold)}
-.planner-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-.planner-action-btn{padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:750;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.planner-modal{display:none;position:fixed;inset:0;background:rgba(4,15,32,.82);z-index:99999;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:16px;align-items:center;justify-content:center;overflow-y:auto}
+.planner-box{width:min(920px,100%);background:var(--card);color:var(--text);border-radius:24px;border:1px solid var(--line);box-shadow:0 25px 80px rgba(0,0,0,.48);overflow:hidden;max-height:93vh;display:flex;flex-direction:column}
+#plannerModal .planner-box{width:min(1080px,100%);max-height:94vh}
+.planner-head{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:linear-gradient(135deg,#071b35 0%,#0f3460 100%);color:#fff;border-bottom:1px solid rgba(255,181,27,.25);flex-shrink:0;gap:12px}
+.planner-head h2{margin:0;font-size:21px;font-weight:800;display:flex;align-items:center;gap:10px;letter-spacing:-.3px;color:#fff}
+.planner-head small{display:block;color:#cbd5e1;margin-top:3px;font-size:12.5px;font-weight:500}
+.planner-head-icon{width:40px;height:40px;border-radius:12px;background:rgba(255,181,27,.18);border:1px solid rgba(255,181,27,.45);display:grid;place-items:center;font-size:20px;flex-shrink:0;color:var(--gold)}
+.planner-head-right{display:flex;align-items:center;gap:10px}
+.atp-saved-trigger{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);color:#fff;border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .18s}
+.atp-saved-trigger:hover{background:var(--gold);color:#071b35;border-color:var(--gold)}
+.planner-close{border:0;background:rgba(255,255,255,.16);color:#fff;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:18px;display:grid;place-items:center;transition:all .18s;flex-shrink:0}
+.planner-close:hover{background:var(--gold);color:#071b35;transform:rotate(90deg)}
+.planner-body{padding:22px 24px;overflow-y:auto;flex:1}
+
+/* Mode Selector Cards */
+.atp-mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.atp-mode-card{position:relative;display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:16px;border:2px solid var(--line);background:var(--surface);cursor:pointer;transition:all .18s ease;user-select:none}
+.atp-mode-card:hover{border-color:rgba(255,181,27,.6)}
+.atp-mode-card.active{border-color:var(--gold);background:rgba(255,181,27,.1);box-shadow:0 4px 16px rgba(255,181,27,.14)}
+body.dark .atp-mode-card.active{background:rgba(255,181,27,.12);border-color:var(--gold)}
+.atp-mode-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);display:grid;place-items:center;margin-top:2px;flex-shrink:0;transition:all .18s}
+.atp-mode-card.active .atp-mode-radio{border-color:var(--gold);background:var(--gold)}
+.atp-mode-card.active .atp-mode-radio::after{content:"";width:8px;height:8px;border-radius:50%;background:#071b35}
+.atp-mode-title{font-size:15px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px}
+.atp-mode-badge{font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--navy);color:var(--gold);text-transform:uppercase;letter-spacing:.5px}
+body.dark .atp-mode-badge{background:rgba(255,181,27,.2);color:var(--gold)}
+.atp-mode-desc{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+
+/* Form Layout & Controls */
+.atp-section-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-bottom:14px}
+.atp-section-header{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+body.dark .atp-section-header{color:var(--gold)}
+.planner-form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.atp-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.atp-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.planner-field{display:flex;flex-direction:column;gap:5px}
+.planner-field label{display:flex;align-items:center;justify-content:space-between;font-size:11.5px;font-weight:800;text-transform:uppercase;color:var(--muted);letter-spacing:.4px}
+.planner-field input,.planner-field select,.planner-field textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);font:inherit;font-size:13.5px;font-weight:600;outline:none;transition:border-color .18s,box-shadow .18s}
+.planner-field input:focus,.planner-field select:focus,.planner-field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,181,27,.18)}
+body.dark .planner-field input,body.dark .planner-field select,body.dark .planner-field textarea{background:#09192c;color:#f1f5f9;border-color:#263e5e}
+
+/* Quick City Chips */
+.atp-quick-cities{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.atp-city-pill{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer;transition:all .15s}
+.atp-city-pill:hover,.atp-city-pill.active{background:var(--gold);color:#071b35;border-color:var(--gold)}
+
+/* Stepper for Travelers */
+.atp-stepper-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.atp-stepper{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 10px}
+body.dark .atp-stepper{background:#09192c;border-color:#263e5e}
+.atp-stepper-label{font-size:11.5px;font-weight:700;color:var(--text)}
+.atp-stepper-label small{display:block;font-size:10px;color:var(--muted);font-weight:500}
+.atp-stepper-controls{display:flex;align-items:center;gap:6px}
+.atp-step-btn{width:26px;height:26px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-weight:800;cursor:pointer;display:grid;place-items:center;padding:0;font-size:14px}
+.atp-step-btn:hover{background:var(--gold);color:#071b35;border-color:var(--gold)}
+.atp-step-val{min-width:20px;text-align:center;font-weight:800;font-size:13.5px;color:var(--text)}
+
+/* Budget Tier & Style Pills */
+.atp-tier-group{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.atp-style-group{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.atp-choice-pill{padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);text-align:center;cursor:pointer;transition:all .16s;font-size:12.5px;font-weight:750}
+body.dark .atp-choice-pill{background:#09192c;border-color:#263e5e}
+.atp-choice-pill small{display:block;font-size:10.5px;color:var(--muted);font-weight:500;margin-top:2px}
+.atp-choice-pill.active{border-color:var(--gold);background:rgba(255,181,27,.16);color:var(--navy);box-shadow:0 2px 10px rgba(255,181,27,.15)}
+body.dark .atp-choice-pill.active{background:rgba(255,181,27,.2);color:#fff;border-color:var(--gold)}
+
+/* Interest Chips */
+.atp-interests-grid{display:flex;flex-wrap:wrap;gap:8px}
+.atp-interest-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .15s;user-select:none}
+body.dark .atp-interest-chip{background:#09192c;border-color:#263e5e}
+.atp-interest-chip:hover{border-color:var(--gold)}
+.atp-interest-chip.active{background:var(--navy);color:var(--gold);border-color:var(--navy)}
+body.dark .atp-interest-chip.active{background:var(--gold);color:#071b35;border-color:var(--gold)}
+
+/* Alerts & Validation */
+.atp-alert{display:none;padding:11px 14px;border-radius:12px;font-size:13px;font-weight:650;margin-bottom:12px;line-height:1.45;align-items:center;gap:8px}
+.atp-alert.show{display:flex}
+.atp-alert.error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+.atp-alert.warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.atp-alert.success{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+body.dark .atp-alert.error{background:#351317;color:#fca5a5;border-color:#7f1d1d}
+body.dark .atp-alert.warn{background:#33240b;color:#fcd34d;border-color:#78350f}
+body.dark .atp-alert.success{background:#0f2e1c;color:#86efac;border-color:#14532d}
+
+/* Action Bar */
+.atp-main-actions{display:grid;grid-template-columns:2fr 1fr auto;gap:10px;margin-top:14px}
+.planner-btn{width:100%;background:linear-gradient(135deg,#ffb51b,#f59e0b);color:#071b35;border:0;border-radius:14px;padding:13px 18px;font-weight:900;font-size:15px;cursor:pointer;transition:all .18s;box-shadow:0 6px 20px rgba(255,181,27,.35);display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.planner-btn:hover{background:linear-gradient(135deg,#ffc444,#fbbf24);transform:translateY(-1px)}
+.planner-btn.secondary{background:var(--navy);color:#fff;box-shadow:0 4px 14px rgba(7,27,53,.2)}
+body.dark .planner-btn.secondary{background:#1e3a5f;color:var(--gold);border:1px solid rgba(255,181,27,.35)}
+.planner-btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line);box-shadow:none;padding:13px 16px;font-weight:750}
+.planner-btn.ghost:hover{border-color:#ef4444;color:#ef4444}
+
+/* Live Budget Mini Bar */
+.atp-budget-strip{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:10px}
+body.dark .atp-budget-strip{background:#09192c;border-color:#263e5e}
+.atp-budget-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:13px;font-weight:700}
+.atp-progress-track{height:8px;border-radius:999px;background:var(--line);overflow:hidden;margin:8px 0}
+.atp-progress-fill{height:100%;background:linear-gradient(90deg,#0b67d1,#ffb51b);border-radius:999px;transition:width .3s ease}
+.atp-budget-pills{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px}
+.atp-b-item{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 8px;font-size:11px}
+.atp-b-item small{display:block;color:var(--muted);font-size:10px}
+.atp-b-item b{color:var(--text);font-size:12px}
+
+/* Output Tabs & Itinerary Result Cards */
+.planner-output{margin-top:20px;padding-top:18px;border-top:2px solid var(--line)}
+.atp-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.atp-tab-btn{padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:13px;font-weight:800;cursor:pointer;transition:all .16s;display:inline-flex;align-items:center;gap:6px}
+.atp-tab-btn.active{background:var(--navy);color:var(--gold);border-color:var(--navy)}
+body.dark .atp-tab-btn.active{background:var(--gold);color:#071b35;border-color:var(--gold)}
+
+.atp-summary-banner{background:linear-gradient(135deg,#071b35,#12355b);color:#fff;border-radius:18px;padding:18px 20px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;border:1px solid rgba(255,181,27,.3)}
+.atp-summary-banner h3{margin:4px 0;font-size:22px;color:#fff}
+.atp-summary-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.atp-summary-meta span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:4px 10px;border-radius:999px;font-size:11.5px;font-weight:700;color:#f8fafc}
+.atp-summary-budget-box{background:rgba(255,181,27,.16);border:1px solid rgba(255,181,27,.45);border-radius:14px;padding:12px 16px;text-align:right;min-width:170px}
+.atp-summary-budget-box small{display:block;font-size:11px;color:#fde68a;text-transform:uppercase;font-weight:800}
+.atp-summary-budget-box strong{font-size:24px;color:var(--gold);display:block}
+
+.itinerary-day{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+.itinerary-day-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.itinerary-day h4{margin:0;font-size:17px;color:var(--blue);display:flex;align-items:center;gap:8px}
+body.dark .itinerary-day h4{color:var(--gold)}
+.atp-slot-grid{display:grid;gap:10px}
+.atp-place-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s}
+.atp-place-card:hover{border-color:var(--gold)}
+.atp-place-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.atp-slot-badge{font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;background:rgba(11,103,209,.1);color:var(--blue)}
+body.dark .atp-slot-badge{background:rgba(255,181,27,.15);color:var(--gold)}
+.atp-cat-badge{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted)}
+.atp-place-title{font-size:15.5px;font-weight:800;color:var(--text);margin:2px 0}
+.atp-place-desc{font-size:13px;color:var(--muted);line-height:1.5;margin:0}
+.atp-place-meta{display:flex;flex-wrap:wrap;gap:10px;font-size:11.5px;font-weight:700;color:var(--text);margin-top:4px}
+.atp-place-tip{font-size:12px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:9px;padding:6px 10px;margin-top:4px}
+body.dark .atp-place-tip{background:#2b2110;color:#fcd34d;border-color:#78350f}
+
+.atp-rec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.atp-rec-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px}
+.atp-rec-card h4{margin:0 0 8px;font-size:15px;color:var(--text);display:flex;align-items:center;gap:6px}
+.atp-rec-list{margin:0;padding-left:18px;font-size:13px;color:var(--muted);line-height:1.65}
+.atp-rec-list li b{color:var(--text)}
+
+.planner-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.planner-action-btn{padding:10px 15px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:750;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.planner-action-btn:hover{border-color:var(--gold);background:var(--surface);transform:translateY(-1px)}
+.planner-action-btn.primary{background:var(--gold);color:#071b35;border-color:var(--gold);font-weight:850}
+
+@media(max-width:900px){
+  .atp-mode-grid,.planner-form-grid,.atp-grid-3,.atp-tier-group,.atp-budget-pills,.atp-rec-grid,.atp-main-actions{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .planner-modal{padding:8px}
+  .planner-head{padding:14px 16px}
+  .planner-body{padding:14px 16px}
+  .atp-mode-grid,.planner-form-grid,.atp-grid-3,.atp-grid-2,.atp-tier-group,.atp-style-group,.atp-budget-pills,.atp-rec-grid,.atp-main-actions,.atp-stepper-row{grid-template-columns:1fr}
+}
 
 /* Arya Floating AI Assistant - Stitch Concierge Design & Video Stage */
 .arya-fab{position:fixed;right:20px;bottom:20px;z-index:80;border:0;border-radius:999px;padding:13px 22px;background:linear-gradient(135deg,#ffc543,#e59e14);color:#071b35;font-weight:900;box-shadow:0 12px 32px rgba(229,158,20,.35),0 4px 12px rgba(7,27,53,.2);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .2s ease}
@@ -1551,65 +1687,244 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 <!-- ========================================================= -->
 <!-- INTERACTIVE TRIP PLANNER MODAL                            -->
 <!-- ========================================================= -->
-<div class="planner-modal" id="plannerModal" role="dialog" aria-modal="true" aria-label="Interactive Trip Planner">
+<div class="planner-modal" id="plannerModal" role="dialog" aria-modal="true" aria-label="Arya Trip Plan Maker">
   <div class="planner-box">
+    <!-- 1. Dark Navy Header -->
     <div class="planner-head">
-      <div>
-        <h2>🧳 ExploreUP Smart Trip Planner</h2>
-        <small>Instant customized day-by-day itineraries across Uttar Pradesh</small>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="planner-head-icon">🧭</div>
+        <div>
+          <h2>Arya Trip Plan Maker</h2>
+          <small>Plan your perfect Uttar Pradesh trip</small>
+        </div>
       </div>
-      <button class="planner-close" onclick="closeTripPlanner()">✕</button>
+      <div class="planner-head-right">
+        <button type="button" class="atp-saved-trigger" onclick="switchPlannerTab('saved')" title="View Saved Trips">
+          💾 My Saved Trips (<span id="atpSavedCount">0</span>)
+        </button>
+        <button type="button" class="planner-close" onclick="closeTripPlanner()" aria-label="Close Planner">✕</button>
+      </div>
     </div>
-    <div class="planner-body">
-      <div class="planner-form-grid">
-        <div class="planner-field">
-          <label for="plannerCitySelect">Destination City</label>
-          <select id="plannerCitySelect" onchange="generateTripPlan()">
-            <option value="Agra">Agra (Taj & Mughal Heritage)</option>
-            <option value="Varanasi">Varanasi / Banaras (Ghats & Spirituality)</option>
-            <option value="Lucknow">Lucknow (Awadh Culture & Food)</option>
-            <option value="Ayodhya">Ayodhya (Ram Mandir & Heritage)</option>
-            <option value="Mathura">Mathura & Vrindavan (Braj Bhumi)</option>
-            <option value="Prayagraj">Prayagraj (Sangam & History)</option>
-            <option value="Kanpur">Kanpur (Heritage & Cuisine)</option>
-            <option value="Jhansi">Jhansi (Bundelkhand & Forts)</option>
-          </select>
+
+    <div class="planner-body" id="atpModalBody">
+      <!-- Legacy hidden select kept synced for backward compatibility -->
+      <select id="plannerCitySelect" style="display:none"><option value="Varanasi">Varanasi</option></select>
+
+      <!-- Validation / Transport Warning Banner -->
+      <div id="atpAlertBanner" class="atp-alert" role="alert"></div>
+      <div id="atpTransportWarn" class="atp-alert warn" role="status"></div>
+
+      <!-- 2. Planning Mode Selector -->
+      <div class="atp-mode-grid" role="radiogroup" aria-label="Planning Mode">
+        <div class="atp-mode-card active" id="atpModeQuick" onclick="setPlannerMode('quick')" role="radio" aria-checked="true" tabindex="0">
+          <div class="atp-mode-radio"></div>
+          <div>
+            <div class="atp-mode-title">⚡ Quick Plan <span class="atp-mode-badge">Offline Instant</span></div>
+            <div class="atp-mode-desc">Create a plan instantly using ExploreUP's built-in UP travel data.</div>
+          </div>
         </div>
-        <div class="planner-field">
-          <label for="plannerDaysSelect">Trip Duration</label>
-          <select id="plannerDaysSelect" onchange="generateTripPlan()">
-            <option value="1">1 Day (Quick Highlights)</option>
-            <option value="2" selected>2 Days (Classic Itinerary)</option>
-            <option value="3">3 Days (Deep Dive)</option>
-          </select>
-        </div>
-        <div class="planner-field">
-          <label for="plannerStyleSelect">Travel Style</label>
-          <select id="plannerStyleSelect" onchange="generateTripPlan()">
-            <option value="heritage" selected>Heritage & Architecture</option>
-            <option value="food">Food & Street Cuisine</option>
-            <option value="spiritual">Spiritual & Temple Trail</option>
-            <option value="family">Family & Leisure</option>
-          </select>
-        </div>
-        <div class="planner-field">
-          <label for="plannerBudgetSelect">Daily Budget Tier</label>
-          <select id="plannerBudgetSelect" onchange="generateTripPlan()">
-            <option value="budget">Budget (₹1,000–₹1,500/day)</option>
-            <option value="mid" selected>Comfortable (₹2,500–₹4,000/day)</option>
-            <option value="luxury">Luxury (₹8,000+/day)</option>
-          </select>
+        <div class="atp-mode-card" id="atpModeSmart" onclick="setPlannerMode('smart')" role="radio" aria-checked="false" tabindex="0">
+          <div class="atp-mode-radio"></div>
+          <div>
+            <div class="atp-mode-title">✨ Smart Plan <span class="atp-mode-badge">Arya AI</span></div>
+            <div class="atp-mode-desc">Use Arya AI to create a personalized itinerary.</div>
+          </div>
         </div>
       </div>
 
-      <button class="planner-btn" onclick="generateTripPlan()">⚡ Refresh Custom Itinerary</button>
+      <!-- 3. Basic Trip Details -->
+      <div class="atp-section-card">
+        <div class="atp-section-header">
+          <span>📍 1. Destination, Duration, Dates & Travelers</span>
+          <span id="atpNightsBadge" style="font-size:11.5px;color:var(--text);background:var(--card);padding:3px 10px;border-radius:999px;border:1px solid var(--line)">3 Days • 2 Nights</span>
+        </div>
 
+        <div class="planner-form-grid">
+          <div class="planner-field" style="grid-column:span 2">
+            <label for="atpDestination">Destination / District <span style="color:#ef4444">*</span></label>
+            <input type="text" id="atpDestination" list="atpDestinationList" value="Varanasi" placeholder="Destination / district (e.g. Varanasi)" oninput="onAtpDestinationInput(this.value)" autocomplete="off">
+            <datalist id="atpDestinationList"></datalist>
+            <div class="atp-quick-cities" id="atpQuickCities">
+              <button type="button" class="atp-city-pill active" onclick="selectAtpQuickCity('Varanasi')">Varanasi</button>
+              <button type="button" class="atp-city-pill" onclick="selectAtpQuickCity('Agra')">Agra</button>
+              <button type="button" class="atp-city-pill" onclick="selectAtpQuickCity('Lucknow')">Lucknow</button>
+              <button type="button" class="atp-city-pill" onclick="selectAtpQuickCity('Ayodhya')">Ayodhya</button>
+              <button type="button" class="atp-city-pill" onclick="selectAtpQuickCity('Mathura')">Mathura</button>
+              <button type="button" class="atp-city-pill" onclick="selectAtpQuickCity('Prayagraj')">Prayagraj</button>
+              <button type="button" class="atp-city-pill" onclick="selectAtpQuickCity('Kanpur')">Kanpur</button>
+              <button type="button" class="atp-city-pill" onclick="selectAtpQuickCity('Gorakhpur')">Gorakhpur</button>
+            </div>
+          </div>
+
+          <div class="planner-field">
+            <label for="plannerDaysSelect">Trip Duration</label>
+            <div style="display:flex;gap:6px">
+              <select id="plannerDaysSelect" onchange="onAtpDurationChange()">
+                <option value="1">1 day</option>
+                <option value="2">2 days</option>
+                <option value="3" selected>3 days</option>
+                <option value="4">4 days</option>
+                <option value="5">5 days</option>
+                <option value="7">7 days</option>
+                <option value="10">10 days</option>
+                <option value="custom">Custom duration</option>
+              </select>
+              <input type="number" id="atpCustomDays" min="1" max="21" value="3" style="display:none;width:78px" oninput="onAtpCustomDaysInput()" title="Custom number of days">
+            </div>
+          </div>
+
+          <div class="planner-field">
+            <label>Travelers (Min 1 Adult)</label>
+            <div class="atp-stepper-row">
+              <div class="atp-stepper">
+                <div class="atp-stepper-label">Adults<small>Age 12+</small></div>
+                <div class="atp-stepper-controls">
+                  <button type="button" class="atp-step-btn" onclick="adjustAtpTravelers('adults', -1)" aria-label="Decrease Adults">−</button>
+                  <span class="atp-step-val" id="atpAdultsVal">2</span>
+                  <button type="button" class="atp-step-btn" onclick="adjustAtpTravelers('adults', 1)" aria-label="Increase Adults">+</button>
+                </div>
+              </div>
+              <div class="atp-stepper">
+                <div class="atp-stepper-label">Children<small>Under 12</small></div>
+                <div class="atp-stepper-controls">
+                  <button type="button" class="atp-step-btn" onclick="adjustAtpTravelers('children', -1)" aria-label="Decrease Children">−</button>
+                  <span class="atp-step-val" id="atpChildrenVal">0</span>
+                  <button type="button" class="atp-step-btn" onclick="adjustAtpTravelers('children', 1)" aria-label="Increase Children">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="atp-grid-2">
+          <div class="planner-field">
+            <label for="atpStartDate">Start Date <small style="font-weight:500;text-transform:none">(optional — auto-syncs days)</small></label>
+            <input type="date" id="atpStartDate" onchange="onAtpDatesChange('start')">
+          </div>
+          <div class="planner-field">
+            <label for="atpEndDate">End Date <small style="font-weight:500;text-transform:none">(auto-calculates duration)</small></label>
+            <input type="date" id="atpEndDate" onchange="onAtpDatesChange('end')">
+          </div>
+        </div>
+      </div>
+
+      <!-- 4, 5, 6, 7. Budget, Transport, Stay & Travel Style -->
+      <div class="atp-section-card">
+        <div class="atp-section-header">
+          <span>💰 2. Budget, Transport, Stay & Travel Pace</span>
+          <span id="atpLiveEstimateLabel" style="font-size:12px;color:var(--text);font-weight:800">Estimated Total: ₹12,500</span>
+        </div>
+
+        <div class="atp-grid-2" style="margin-bottom:12px">
+          <div class="planner-field">
+            <label>Budget Tier</label>
+            <div class="atp-tier-group" id="atpBudgetTierGroup">
+              <div class="atp-choice-pill" data-tier="Budget" onclick="selectAtpBudgetTier('Budget')">Budget<small>Economy</small></div>
+              <div class="atp-choice-pill active" data-tier="Standard" onclick="selectAtpBudgetTier('Standard')">Standard<small>Balanced</small></div>
+              <div class="atp-choice-pill" data-tier="Premium" onclick="selectAtpBudgetTier('Premium')">Premium<small>Comfort+</small></div>
+              <div class="atp-choice-pill" data-tier="Luxury" onclick="selectAtpBudgetTier('Luxury')">Luxury<small>5-Star / Royal</small></div>
+            </div>
+            <select id="plannerBudgetSelect" style="display:none">
+              <option value="budget">Budget</option>
+              <option value="mid" selected>Standard</option>
+              <option value="luxury">Luxury</option>
+            </select>
+          </div>
+
+          <div class="planner-field">
+            <label for="atpCustomBudget">Approx. Custom Total Budget (₹) <small style="font-weight:500;text-transform:none">(optional)</small></label>
+            <input type="number" id="atpCustomBudget" min="500" step="500" placeholder="Enter custom total budget in ₹ (e.g. 18000)" oninput="updateAtpLiveBudget()">
+          </div>
+        </div>
+
+        <div class="atp-grid-3">
+          <div class="planner-field">
+            <label for="atpTransport">Transport Mode</label>
+            <select id="atpTransport" onchange="onAtpTransportOrStayChange()">
+              <option value="Private Car">🚗 Private Car</option>
+              <option value="Train">🚆 Train</option>
+              <option value="Bus">🚌 Bus</option>
+              <option value="Flight">✈️ Flight</option>
+              <option value="Mixed Transport" selected>🚖 Mixed Transport</option>
+            </select>
+          </div>
+
+          <div class="planner-field">
+            <label for="atpStayType">Stay Type</label>
+            <select id="atpStayType" onchange="onAtpTransportOrStayChange()">
+              <option value="Hostel">🛏️ Hostel / Dharamshala</option>
+              <option value="Budget Hotel">🏨 Budget Hotel</option>
+              <option value="Standard Hotel" selected>🏢 Standard Hotel</option>
+              <option value="Premium Hotel">✨ Premium Hotel</option>
+              <option value="Luxury Hotel">👑 Luxury / Heritage Hotel</option>
+            </select>
+          </div>
+
+          <div class="planner-field">
+            <label>Travel Style (Pace)</label>
+            <div class="atp-style-group" id="atpTravelStyleGroup">
+              <div class="atp-choice-pill" data-style="Relaxed" onclick="selectAtpTravelStyle('Relaxed')">Relaxed<small>Leisurely</small></div>
+              <div class="atp-choice-pill active" data-style="Balanced" onclick="selectAtpTravelStyle('Balanced')">Balanced<small>Classic</small></div>
+              <div class="atp-choice-pill" data-style="Fast-paced" onclick="selectAtpTravelStyle('Fast-paced')">Fast-paced<small>Max sights</small></div>
+            </div>
+            <select id="plannerStyleSelect" style="display:none"><option value="heritage" selected>Balanced</option></select>
+          </div>
+        </div>
+
+        <!-- Live Automatic Estimated Breakdown Strip -->
+        <div class="atp-budget-strip" id="atpLiveBudgetStrip">
+          <div class="atp-budget-top">
+            <span>📊 Automatic Cost Estimate (<span id="atpBreakSubtitle">Varanasi • 3 Days • 2 Travelers</span>)</span>
+            <span>Estimated Total: <strong id="atpEstTotalText" style="color:var(--blue)">₹12,500</strong> &nbsp;|&nbsp; <span id="atpRemBudgetWrap">Remaining Budget: <strong id="atpRemBudgetText" style="color:#15803d">Within Tier Estimate</strong></span></span>
+          </div>
+          <div class="atp-progress-track"><div class="atp-progress-fill" id="atpBudgetProgressFill" style="width:65%"></div></div>
+          <div class="atp-budget-pills" id="atpMiniBreakdownPills"></div>
+        </div>
+      </div>
+
+      <!-- 8 & 9. Interests & Special Requirements -->
+      <div class="atp-section-card">
+        <div class="atp-section-header">
+          <span>🎯 3. Interests & Special Requirements</span>
+          <small style="text-transform:none;font-weight:600;color:var(--muted)">Select multiple to tailor your itinerary & recommendations</small>
+        </div>
+
+        <div class="atp-interests-grid" id="atpInterestsGrid">
+          <span class="atp-interest-chip active" data-interest="History" onclick="toggleAtpInterest(this)">🏛️ History</span>
+          <span class="atp-interest-chip" data-interest="Religion" onclick="toggleAtpInterest(this)">🛕 Religion</span>
+          <span class="atp-interest-chip" data-interest="Nature" onclick="toggleAtpInterest(this)">🌿 Nature</span>
+          <span class="atp-interest-chip active" data-interest="Food" onclick="toggleAtpInterest(this)">🍛 Food</span>
+          <span class="atp-interest-chip" data-interest="Shopping" onclick="toggleAtpInterest(this)">🛍️ Shopping</span>
+          <span class="atp-interest-chip active" data-interest="Photography" onclick="toggleAtpInterest(this)">📸 Photography</span>
+          <span class="atp-interest-chip" data-interest="Family" onclick="toggleAtpInterest(this)">👨‍👩‍👧‍👦 Family</span>
+          <span class="atp-interest-chip" data-interest="Architecture" onclick="toggleAtpInterest(this)">🕌 Architecture</span>
+          <span class="atp-interest-chip" data-interest="Adventure" onclick="toggleAtpInterest(this)">🚣 Adventure</span>
+          <span class="atp-interest-chip" data-interest="Culture" onclick="toggleAtpInterest(this)">🎭 Culture</span>
+          <span class="atp-interest-chip" data-interest="Nightlife" onclick="toggleAtpInterest(this)">🌃 Nightlife</span>
+          <span class="atp-interest-chip" data-interest="Spirituality" onclick="toggleAtpInterest(this)">🪔 Spirituality</span>
+        </div>
+
+        <div class="planner-field" style="margin-top:12px">
+          <label for="atpSpecialReq">Anything else you want? <small style="font-weight:500;text-transform:none">(optional special requirements)</small></label>
+          <input type="text" id="atpSpecialReq" placeholder="Vegetarian food, less walking, sunrise photography, family-friendly places...">
+        </div>
+      </div>
+
+      <!-- 10 & 13 & 16. Main Action Buttons -->
+      <div class="atp-main-actions">
+        <button type="button" class="planner-btn" id="atpMakePlanBtn" onclick="makeMyTripPlan()">
+          ✨ Make My Plan
+        </button>
+        <button type="button" class="planner-btn secondary" id="atpCalcBudgetBtn" onclick="showDedicatedBudgetCalculation()">
+          💰 Calculate Budget
+        </button>
+        <button type="button" class="planner-btn ghost" onclick="resetTripPlanner(true)">
+          🔄 Reset Plan
+        </button>
+      </div>
+
+      <!-- 11, 12, 14, 15. Output & Tabs Area -->
       <div class="planner-output" id="plannerOutput"></div>
-
-      <div class="planner-actions">
-        <button class="planner-action-btn" onclick="copyItinerary()">📋 Copy Itinerary</button>
-        <button class="planner-action-btn" onclick="openCityFromPlanner()">📍 Open Complete City Guide</button>
-      </div>
     </div>
   </div>
 </div>
@@ -3472,160 +3787,1252 @@ document.addEventListener('keydown', e => {
 });
 
 // =========================================================
-// INTERACTIVE TRIP PLANNER
+// ARYA TRIP PLAN MAKER — COMPLETE ENGINE
 // =========================================================
-function openTripPlanner(cityName = 'Agra'){
+const UP_75_DISTRICTS = [
+  "Agra","Aligarh","Ambedkar Nagar","Amethi","Amroha","Auraiya","Ayodhya","Azamgarh","Baghpat","Bahraich","Ballia","Balrampur","Banda","Barabanki","Bareilly","Basti","Bhadohi","Bijnor","Budaun","Bulandshahr","Chandauli","Chitrakoot","Deoria","Etah","Etawah","Farrukhabad","Fatehpur","Firozabad","Gautam Buddha Nagar","Ghaziabad","Ghazipur","Gonda","Gorakhpur","Hamirpur","Hapur","Hardoi","Hathras","Jalaun","Jaunpur","Jhansi","Kannauj","Kanpur","Kanpur Dehat","Kanpur Nagar","Kasganj","Kaushambi","Kushinagar","Lakhimpur Kheri","Lalitpur","Lucknow","Maharajganj","Mahoba","Mainpuri","Mathura","Mau","Meerut","Mirzapur","Moradabad","Muzaffarnagar","Pilibhit","Pratapgarh","Prayagraj","Raebareli","Rampur","Saharanpur","Sambhal","Sant Kabir Nagar","Shahjahanpur","Shamli","Shravasti","Siddharthnagar","Sitapur","Sonbhadra","Sultanpur","Unnao","Varanasi","Vrindavan"
+];
+
+const UP_CITY_ALIASES = {
+  "banaras": "Varanasi",
+  "kashi": "Varanasi",
+  "benares": "Varanasi",
+  "allahabad": "Prayagraj",
+  "prayag": "Prayagraj",
+  "faizabad": "Ayodhya",
+  "kanpur nagar": "Kanpur",
+  "braj": "Mathura",
+  "noida": "Gautam Buddha Nagar",
+  "greater noida": "Gautam Buddha Nagar",
+  "kheri": "Lakhimpur Kheri",
+  "dudhwa": "Lakhimpur Kheri",
+  "sant ravidas nagar": "Bhadohi",
+  "jyotiba phule nagar": "Amroha"
+};
+
+const UP_AIRPORT_CITIES = new Set([
+  "lucknow","varanasi","ayodhya","agra","prayagraj","gorakhpur","kanpur","bareilly","kushinagar","ghaziabad","gautam buddha nagar","aligarh","azamgarh","moradabad","shravasti","chitrakoot"
+]);
+
+const ATP_STORAGE_KEY = 'exploreup_saved_itineraries_v1';
+
+const atpState = {
+  mode: 'quick',
+  destination: 'Varanasi',
+  days: 3,
+  adults: 2,
+  children: 0,
+  startDate: '',
+  endDate: '',
+  budgetTier: 'Standard',
+  customBudget: null,
+  transport: 'Mixed Transport',
+  stayType: 'Standard Hotel',
+  travelStyle: 'Balanced',
+  interests: ['History', 'Food', 'Photography'],
+  specialReq: '',
+  activeTab: 'itinerary',
+  lastGeneratedPlan: null
+};
+window.atpState = atpState;
+
+const ATP_CURATED_SPOTS = {
+  "Varanasi": [
+    { name: "Assi Ghat & Subah-e-Banaras", desc: "Sacred southern riverfront ghat famous for dawn Vedic chanting, classical music, morning yoga, and wooden boat rides along the Ganga.", duration: "1.5 hours", bestTime: "05:30 AM – 07:30 AM (Sunrise)", cost: "Free (Boat: ₹150–₹300/person)", category: "Spirituality", tip: "Arrive 20 minutes before sunrise for front-row seating at the morning havan. Check current timings before visiting.", slot: "Morning" },
+    { name: "Shri Kashi Vishwanath Dham Corridor", desc: "One of the twelve Jyotirlingas of Lord Shiva, connected directly to Lalita Ghat via the grand sandstone heritage corridor.", duration: "2 hours", bestTime: "07:30 AM – 10:00 AM", cost: "Free Entry (Sugam Darshan: ₹300)", category: "Religion", tip: "Mobile phones, smartwatches, and leather bags are deposited in lockers outside Gate 4. Check current timings before visiting.", slot: "Morning" },
+    { name: "Kachori Gali, Ram Bhandar & Blue Lassi (Chowk)", desc: "Historic culinary alleys serving crisp hing kachori-sabzi, jalebi, winter malaiyo, and earthen kulhad fruit lassi.", duration: "1.5 hours", bestTime: "12:00 PM – 02:00 PM", cost: "₹150 – ₹350 per person", category: "Food", tip: "Try hot Tamatar Chaat at Kashi Chaat Bhandar near Godowlia.", slot: "Lunch" },
+    { name: "Dashashwamedh Ghat Evening Ganga Aarti", desc: "World-renowned synchronized brass-lamp ceremonial worship of Mother Ganga performed by priests on the river steps.", duration: "2 hours", bestTime: "05:45 PM – 07:30 PM (Sunset)", cost: "Free (Boat view: ₹200–₹400)", category: "Spirituality", tip: "Reach by 5:15 PM or hire a shared wooden boat for an unobstructed river view. Check current timings before visiting.", slot: "Evening" },
+    { name: "Sarnath Buddhist Complex & Dhamek Stupa", desc: "Where Gautama Buddha delivered his first sermon (Dhammacakkappavattana); features the 5th-century Dhamek Stupa and Ashoka Lion Capital Museum.", duration: "2.5 hours", bestTime: "09:00 AM – 12:00 PM", cost: "₹25 Indian / ₹300 Foreigner", category: "History", tip: "Sarnath Archaeological Museum is closed on Fridays. Check current timings before visiting.", slot: "Morning" },
+    { name: "BHU Campus, New Vishwanath Temple & Bharat Kala Bhavan", desc: "Lush 1,300-acre university campus housing the towering marble Birla Vishwanath Temple and rare miniature paintings at Bharat Kala Bhavan.", duration: "2 hours", bestTime: "02:00 PM – 04:30 PM", cost: "Free Entry (Museum: ₹20)", category: "Architecture", tip: "Stop for cold coffee and samosas at VT canteen inside the campus. Check current timings before visiting.", slot: "Afternoon" },
+    { name: "Madanpura & Vishwanath Gali Silk Weavers", desc: "Centuries-old handloom clusters producing authentic GI-tagged Banarasi brocade sarees, zari dupattas, and Gulabi Meenakari.", duration: "1.5 hours", bestTime: "05:00 PM – 07:30 PM", cost: "Free browsing", category: "Shopping", tip: "Look for the Silk Mark hologram to verify pure handwoven silk.", slot: "Evening" },
+    { name: "Ramnagar Fort & Royal Museum across the Ganga", desc: "18th-century sandstone fort-palace of the Kashi Naresh overlooking the eastern bank of the Ganga with vintage cars and royal armory.", duration: "2 hours", bestTime: "10:00 AM – 12:30 PM", cost: "₹50 Indian", category: "History", tip: "Cross via pontoon bridge (winter/spring) or boat from Assi Ghat. Check current timings before visiting.", slot: "Morning" },
+    { name: "Manikarnika & Harishchandra Heritage Walk", desc: "Guided architectural walk through ancient hidden shrines, stepwells (Lolarak Kund), and panoramic rooftop photography viewpoints.", duration: "1.5 hours", bestTime: "04:30 PM – 06:00 PM", cost: "Free", category: "Photography", tip: "Always respect local customs and avoid close-up photography at cremation ghats.", slot: "Evening" }
+  ],
+  "Agra": [
+    { name: "Taj Mahal (Sunrise Visit via East Gate)", desc: "UNESCO World Heritage ivory-white Makrana marble mausoleum built by Emperor Shah Jahan on the south bank of the Yamuna.", duration: "2.5 hours", bestTime: "06:00 AM – 08:30 AM (Sunrise)", cost: "₹50 Indian (+₹200 main mausoleum)", category: "Architecture", tip: "Taj Mahal is closed every Friday. Book tickets online via the ASI portal. Check current timings before visiting.", slot: "Morning" },
+    { name: "Agra Fort (Red Fort of Agra)", desc: "Monumental 16th-century UNESCO Mughal fortress featuring Jahangiri Mahal, Diwan-i-Khas, Musamman Burj, and views toward the Taj.", duration: "2 hours", bestTime: "09:30 AM – 11:30 AM", cost: "₹50 Indian / ₹650 Foreigner", category: "History", tip: "Enter via Amar Singh Gate and notice the acoustic plaster work in Diwan-i-Khas. Check current timings before visiting.", slot: "Morning" },
+    { name: "Sadar Bazaar & Classic Bedai-Jalebi / Mughlai Lunch", desc: "Agra's vibrant culinary hub serving crisp Bedai with spicy aloo sabzi, Panchhi Petha, and royal Mughlai gravies.", duration: "1.5 hours", bestTime: "01:00 PM – 02:30 PM", cost: "₹250 – ₹600 per person", category: "Food", tip: "Pick up authentic Angoori and Kesar Petha from original Panchhi Petha outlets.", slot: "Lunch" },
+    { name: "Mehtab Bagh (Moonlight Garden Sunset View)", desc: "Charbagh garden complex directly across the Yamuna River offering the most symmetrical sunset reflection view of the Taj Mahal.", duration: "1.5 hours", bestTime: "05:00 PM – 06:30 PM (Sunset)", cost: "₹25 Indian / ₹300 Foreigner", category: "Photography", tip: "Ideal golden-hour photography spot without the main complex crowds. Check current timings before visiting.", slot: "Evening" },
+    { name: "Fatehpur Sikri UNESCO World Heritage Excursion", desc: "Emperor Akbar's preserved 16th-century red sandstone walled capital featuring Buland Darwaza, Panch Mahal, and Salim Chishti Tomb.", duration: "3 hours", bestTime: "08:30 AM – 11:30 AM", cost: "₹50 Indian", category: "History", tip: "Take an official prepaid shuttle bus from the parking lot to Buland Darwaza. Check current timings before visiting.", slot: "Morning" },
+    { name: "Tomb of I'timad-ud-Daulah (Baby Taj)", desc: "First Mughal structure built completely of white marble with intricate Pietra Dura semi-precious stone inlay along the Yamuna.", duration: "1.5 hours", bestTime: "03:00 PM – 04:30 PM", cost: "₹30 Indian", category: "Architecture", tip: "Quieter than the Taj and extraordinary for close-up macro photography of marble inlay. Check current timings before visiting.", slot: "Afternoon" },
+    { name: "Sikandra (Akbar's Tomb) & Marble Inlay Atelier", desc: "Five-tiered sandstone-and-marble mausoleum surrounded by blackbuck deer gardens, followed by live Pietra Dura craft demonstration.", duration: "2 hours", bestTime: "09:00 AM – 11:00 AM", cost: "₹30 Indian", category: "Culture", tip: "Clap at the center of the vaulted vestibule to hear the famous acoustic echo. Check current timings before visiting.", slot: "Morning" }
+  ],
+  "Lucknow": [
+    { name: "Bara Imambara, Bhool Bhulaiya & Rumi Darwaza", desc: "Asaf-ud-Daula's 1784 architectural marvel featuring the world's largest arched hall without beams, the labyrinthine Bhool Bhulaiya, and 60-ft Rumi Gate.", duration: "2.5 hours", bestTime: "08:30 AM – 11:00 AM", cost: "₹50 Indian / ₹500 Foreigner", category: "Architecture", tip: "Take an authorized guide for the upper Bhool Bhulaiya labyrinth passages and Shahi Baoli stepwell. Check current timings before visiting.", slot: "Morning" },
+    { name: "Chhota Imambara & Husainabad Clock Tower", desc: "Known as the Palace of Lights for its Belgian crystal chandeliers, gilded dome, and tranquil reflections pool.", duration: "1.5 hours", bestTime: "11:15 AM – 12:45 PM", cost: "Included in Husainabad combo ticket", category: "History", tip: "Stroll past the 221-ft Husainabad Clock Tower and Picture Gallery nearby. Check current timings before visiting.", slot: "Morning" },
+    { name: "Chowk / Aminabad Awadhi Culinary Trail", desc: "Home to Tunday Kababi's 160-spice Galawati Kebabs with ulte tawe ka paratha, Idris/Dastarkhwan Dum Biryani, and winter Malai Makkhan.", duration: "1.5 hours", bestTime: "01:00 PM – 02:30 PM", cost: "₹200 – ₹500 per person", category: "Food", tip: "Vegetarian travelers should try Royal Cafe Basket Chaat and Netram's kachori-jalebi.", slot: "Lunch" },
+    { name: "Hazratganj Heritage Walk & Chikankari Bazaars", desc: "Victorian-style shopping boulevard and Janpath market famous for authentic hand-embroidered Lucknowi Chikankari and Zardozi.", duration: "2 hours", bestTime: "05:30 PM – 08:00 PM", cost: "Free walk", category: "Shopping", tip: "Visit SEWA Chikan in Hazratganj or old Chowk workshops for genuine artisan embroidery.", slot: "Evening" },
+    { name: "The British Residency & 1857 Museum", desc: "Tree-shaded red-brick ruins and museum preserving the dramatic history of the 1857 Siege of Lucknow.", duration: "2 hours", bestTime: "09:00 AM – 11:00 AM", cost: "₹25 Indian", category: "History", tip: "Peaceful heritage gardens ideal for morning photography and history buffs. Check current timings before visiting.", slot: "Morning" },
+    { name: "Ambedkar Memorial Park & Gomti Riverfront", desc: "Monumental pink Mirzapur sandstone architectural complex with 60 bronze elephants and illuminated evening promenades along the Gomti.", duration: "2 hours", bestTime: "05:00 PM – 07:00 PM (Sunset)", cost: "₹20 entry", category: "Photography", tip: "Best visited at dusk when the sandstone domes and fountains light up. Check current timings before visiting.", slot: "Evening" }
+  ],
+  "Ayodhya": [
+    { name: "Shri Ram Janmabhoomi Mandir", desc: "Magnificent three-storey Nagara-style pink sandstone temple at the sacred birthplace of Lord Shri Ram.", duration: "2.5 hours", bestTime: "07:00 AM – 10:00 AM", cost: "Free Darshan", category: "Religion", tip: "Deposit electronics at the free Janmabhoomi Path locker facility before security screening. Check current timings before visiting.", slot: "Morning" },
+    { name: "Hanuman Garhi & Kanak Bhawan", desc: "10th-century fortress-style shrine of Lord Hanuman (76 steps) and the golden-crowned palace temple gifted by Queen Kaikeyi to Devi Sita.", duration: "2 hours", bestTime: "10:30 AM – 12:30 PM", cost: "Free Entry", category: "Spirituality", tip: "Taste the famous Hanuman Garhi besan laddu prasad and view the courtyard bhajans at Kanak Bhawan. Check current timings before visiting.", slot: "Morning" },
+    { name: "Satvik Bhoj & Ayodhya Khurchan Peda Lunch", desc: "Wholesome pure vegetarian Awadhi-Satvik thali, kachori-sabzi, and caramelised milk peda along Ram Path.", duration: "1.5 hours", bestTime: "01:00 PM – 02:30 PM", cost: "₹150 – ₹350 per person", category: "Food", tip: "All dining around the core temple zone is strictly vegetarian.", slot: "Lunch" },
+    { name: "Ram Ki Paidi & Naya Ghat Sarayu Maha Aarti", desc: "Redeveloped stepped riverfront bathing ghats on the sacred Sarayu River with evening synchronized lamps and projection show.", duration: "2 hours", bestTime: "05:45 PM – 07:30 PM", cost: "Free", category: "Spirituality", tip: "Arrive before sunset to watch the ghats glow in golden reflection. Check current timings before visiting.", slot: "Evening" },
+    { name: "Guptar Ghat & Surya Kund Heritage Complex", desc: "Peaceful riverfront ghat on the Sarayu with historic temples and boat rides, plus the rejuvenated Surya Kund sun-temple tank.", duration: "2 hours", bestTime: "08:30 AM – 11:00 AM", cost: "Free (Laser show: ₹30)", category: "History", tip: "Great for families and serene morning walks away from central crowds. Check current timings before visiting.", slot: "Morning" }
+  ],
+  "Mathura": [
+    { name: "Shri Krishna Janmasthan Temple Complex", desc: "Sacred prison-cell birthplace (Garbha Griha) of Lord Krishna alongside Keshavdeva Temple and Bhagavata Bhavan.", duration: "2 hours", bestTime: "07:30 AM – 09:30 AM", cost: "Free Entry", category: "Religion", tip: "Mobile phones and cameras must be deposited at the official cloakroom outside. Check current timings before visiting.", slot: "Morning" },
+    { name: "Dwarkadhish Temple & Vishram Ghat Boat Ride", desc: "1814 carved Haveli-style temple famous for vibrant swings and paintings, steps away from Vishram Ghat on the Yamuna.", duration: "2 hours", bestTime: "10:00 AM – 12:00 PM", cost: "Free (Boat: ₹100–₹200)", category: "Spirituality", tip: "Attend the morning or evening Yamuna Aarti at Vishram Ghat. Check current timings before visiting.", slot: "Morning" },
+    { name: "Braj Peda & Dubki Wale Aloo Breakfast/Lunch", desc: "Signature Mathura brown khoya peda at Brijwasi and spicyhing-flavored potato curry with crisp bedhai puris.", duration: "1.5 hours", bestTime: "12:30 PM – 02:00 PM", cost: "₹150 – ₹300 per person", category: "Food", tip: "Pack sealed boxes of Brijwasi Mathura Peda and earthen kulhad lassi.", slot: "Lunch" },
+    { name: "Prem Mandir & Banke Bihari Excursion (Vrindavan)", desc: "Short 11-km hop to Vrindavan's iconic Banke Bihari shrine and the illuminated Italian white marble Prem Mandir.", duration: "2.5 hours", bestTime: "05:30 PM – 08:00 PM", cost: "Free Entry", category: "Architecture", tip: "Prem Mandir's musical fountain and colored lighting run from 6:30 PM to 8:00 PM. Check current timings before visiting.", slot: "Evening" }
+  ],
+  "Prayagraj": [
+    { name: "Triveni Sangam Boat Ride & Bade Hanuman Mandir", desc: "Sacred confluence of the clear Ganga, greenish Yamuna, and mythical Saraswati, plus the reclining Hanuman temple near the fort.", duration: "2.5 hours", bestTime: "06:30 AM – 09:00 AM", cost: "Boat: ₹150–₹300/person", category: "Spirituality", tip: "Hire an official UP Tourism numbered boat from Sangam VIP ghat. Check current timings before visiting.", slot: "Morning" },
+    { name: "Anand Bhavan & Swaraj Bhawan Museum", desc: "Historic ancestral home of the Nehru family and headquarters of key Indian independence movement deliberations, plus Jawahar Planetarium.", duration: "2 hours", bestTime: "10:30 AM – 12:30 PM", cost: "₹70 Indian", category: "History", tip: "Closed on Mondays and public holidays. Check current timings before visiting.", slot: "Morning" },
+    { name: "Civil Lines & Netram / Loknath Culinary Trail", desc: "Classic Prayagraj kachori-dam aloo, dahi-jalebi, Dehati Rasgulla, and seasonal GI-tagged Allahabadi Surkha guava.", duration: "1.5 hours", bestTime: "01:00 PM – 02:30 PM", cost: "₹200 – ₹450 per person", category: "Food", tip: "Try hot gulab jamun and samosas in historic Loknath lane.", slot: "Lunch" },
+    { name: "Khusro Bagh Mughal Tombs & All Saints Cathedral", desc: "Walled 17th-century charbagh enclosing sandstone mausoleums and the 1887 Gothic stone cathedral ('Patthar Girjaghar').", duration: "2 hours", bestTime: "04:30 PM – 06:30 PM", cost: "Free Entry", category: "Architecture", tip: "Khusro Bagh's carved sandstone arches are superb for sunset photography. Check current timings before visiting.", slot: "Evening" }
+  ]
+};
+
+function populateAtpDestinationDatalist() {
+  const dl = document.getElementById('atpDestinationList');
+  const legacySelect = document.getElementById('plannerCitySelect');
+  if (!dl) return;
+  const names = new Set();
+  cities.forEach(c => names.add(c.name));
+  UP_75_DISTRICTS.forEach(d => names.add(d));
+  const sorted = Array.from(names).sort();
+  dl.innerHTML = sorted.map(n => `<option value="${escapeHtml(n)}"></option>`).join('');
+  if (legacySelect) {
+    legacySelect.innerHTML = sorted.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
+    legacySelect.value = atpState.destination;
+  }
+}
+
+function resolveAtpDestination(rawInput) {
+  const cleaned = String(rawInput || '').trim();
+  if (!cleaned) {
+    return { valid: false, error: "Please enter a destination or district in Uttar Pradesh (e.g. Varanasi, Agra, Lucknow, Ayodhya)." };
+  }
+  const lower = cleaned.toLowerCase().replace(/\s+/g, ' ');
+  if (UP_CITY_ALIASES[lower]) {
+    return { valid: true, name: UP_CITY_ALIASES[lower] };
+  }
+  const fromCities = cities.find(c => c.name.toLowerCase() === lower);
+  if (fromCities) return { valid: true, name: fromCities.name };
+
+  const from75 = UP_75_DISTRICTS.find(d => d.toLowerCase() === lower);
+  if (from75) return { valid: true, name: from75 };
+
+  const source = window.districtsData || loadedDistrictsData || {};
+  const slug = lower.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  if (source[slug]) {
+    return { valid: true, name: source[slug].name || cleaned };
+  }
+
+  const partialCity = cities.find(c => c.name.toLowerCase().startsWith(lower) && lower.length >= 3);
+  if (partialCity) return { valid: true, name: partialCity.name };
+
+  const partial75 = UP_75_DISTRICTS.find(d => d.toLowerCase().startsWith(lower) && lower.length >= 3);
+  if (partial75) return { valid: true, name: partial75 };
+
+  return {
+    valid: false,
+    error: `"${escapeHtml(cleaned)}" is not a recognized Uttar Pradesh city or district. Please choose a valid UP destination (e.g. Varanasi, Agra, Lucknow, Ayodhya, Mathura, Prayagraj, Kanpur, Gorakhpur, or any of the 75 UP districts).`
+  };
+}
+
+function showAtpAlert(msg, type = 'error') {
+  const el = document.getElementById('atpAlertBanner');
+  if (!el) return;
+  if (!msg) {
+    el.className = 'atp-alert';
+    el.innerHTML = '';
+    return;
+  }
+  const icon = type === 'success' ? '✅' : (type === 'warn' ? '⚠️' : '🚨');
+  el.className = `atp-alert show ${type}`;
+  el.innerHTML = `<span>${icon}</span><div style="flex:1">${msg}</div>`;
+}
+
+function checkAtpTransportWarning(cityName, transportMode) {
+  const warnEl = document.getElementById('atpTransportWarn');
+  if (!warnEl) return;
+  const lowerCity = String(cityName || '').trim().toLowerCase();
+  if (transportMode === 'Flight' && lowerCity && !UP_AIRPORT_CITIES.has(lowerCity)) {
+    const cityObj = cities.find(c => c.name.toLowerCase() === lowerCity);
+    const distHint = cityObj && cityObj.distance ? ` (${cityObj.distance})` : '';
+    warnEl.className = 'atp-alert warn show';
+    warnEl.innerHTML = `<span>✈️</span><div style="flex:1"><b>Flight Advisory for ${escapeHtml(cityName)}:</b> ${escapeHtml(cityName)} does not have a direct commercial passenger airport${escapeHtml(distHint)}. We have calculated your budget via the nearest UP/NCR airport (Lucknow/Varanasi/Agra/Delhi) + surface transfer, or you can switch to <b>Train</b> or <b>Private Car</b>.</div>`;
+  } else {
+    warnEl.className = 'atp-alert warn';
+    warnEl.innerHTML = '';
+  }
+}
+
+function setPlannerMode(mode) {
+  atpState.mode = (mode === 'smart') ? 'smart' : 'quick';
+  const qCard = document.getElementById('atpModeQuick');
+  const sCard = document.getElementById('atpModeSmart');
+  if (qCard && sCard) {
+    qCard.classList.toggle('active', atpState.mode === 'quick');
+    qCard.setAttribute('aria-checked', atpState.mode === 'quick' ? 'true' : 'false');
+    sCard.classList.toggle('active', atpState.mode === 'smart');
+    sCard.setAttribute('aria-checked', atpState.mode === 'smart' ? 'true' : 'false');
+  }
+  const btn = document.getElementById('atpMakePlanBtn');
+  if (btn) {
+    btn.innerHTML = atpState.mode === 'smart'
+      ? '✨ Make My Smart Plan (Arya AI)'
+      : '⚡ Make My Plan';
+  }
+}
+
+function selectAtpQuickCity(cityName) {
+  const input = document.getElementById('atpDestination');
+  if (input) input.value = cityName;
+  onAtpDestinationInput(cityName);
+}
+
+function onAtpDestinationInput(val) {
+  const resolved = resolveAtpDestination(val);
+  document.querySelectorAll('#atpQuickCities .atp-city-pill').forEach(btn => {
+    btn.classList.toggle('active', resolved.valid && btn.textContent.toLowerCase() === resolved.name.toLowerCase());
+  });
+  if (resolved.valid) {
+    atpState.destination = resolved.name;
+    const legacy = document.getElementById('plannerCitySelect');
+    if (legacy) legacy.value = resolved.name;
+    showAtpAlert('');
+    checkAtpTransportWarning(resolved.name, atpState.transport);
+    updateAtpLiveBudget();
+  }
+}
+
+function onAtpDurationChange() {
+  const sel = document.getElementById('plannerDaysSelect');
+  const customInput = document.getElementById('atpCustomDays');
+  if (!sel) return;
+  if (sel.value === 'custom') {
+    if (customInput) {
+      customInput.style.display = 'block';
+      atpState.days = Math.max(1, Math.min(21, parseInt(customInput.value, 10) || 3));
+    }
+  } else {
+    if (customInput) customInput.style.display = 'none';
+    atpState.days = Math.max(1, parseInt(sel.value, 10) || 3);
+  }
+  syncEndDateFromStartAndDays();
+  updateAtpNightsBadge();
+  updateAtpLiveBudget();
+}
+
+function onAtpCustomDaysInput() {
+  const customInput = document.getElementById('atpCustomDays');
+  if (!customInput) return;
+  let d = parseInt(customInput.value, 10);
+  if (isNaN(d) || d < 1) d = 1;
+  if (d > 21) d = 21;
+  atpState.days = d;
+  syncEndDateFromStartAndDays();
+  updateAtpNightsBadge();
+  updateAtpLiveBudget();
+}
+
+function syncEndDateFromStartAndDays() {
+  const sEl = document.getElementById('atpStartDate');
+  const eEl = document.getElementById('atpEndDate');
+  if (sEl && eEl && sEl.value) {
+    const start = new Date(sEl.value + 'T00:00:00');
+    if (!isNaN(start.getTime())) {
+      const end = new Date(start);
+      end.setDate(start.getDate() + Math.max(0, atpState.days - 1));
+      eEl.value = end.toISOString().slice(0, 10);
+      atpState.startDate = sEl.value;
+      atpState.endDate = eEl.value;
+    }
+  }
+}
+
+function onAtpDatesChange(which) {
+  const sEl = document.getElementById('atpStartDate');
+  const eEl = document.getElementById('atpEndDate');
+  if (!sEl || !eEl) return;
+  atpState.startDate = sEl.value || '';
+  atpState.endDate = eEl.value || '';
+
+  if (sEl.value && !eEl.value && which === 'start') {
+    syncEndDateFromStartAndDays();
+    return;
+  }
+
+  if (sEl.value && eEl.value) {
+    const sDate = new Date(sEl.value + 'T00:00:00');
+    const eDate = new Date(eEl.value + 'T00:00:00');
+    const diffMs = eDate.getTime() - sDate.getTime();
+    const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24)) + 1;
+    if (diffDays < 1) {
+      showAtpAlert('End date cannot be earlier than start date. Please choose an end date on or after your start date.', 'error');
+      return;
+    }
+    showAtpAlert('');
+    const clampedDays = Math.min(21, Math.max(1, diffDays));
+    atpState.days = clampedDays;
+    const sel = document.getElementById('plannerDaysSelect');
+    const customInput = document.getElementById('atpCustomDays');
+    const presetVals = ['1','2','3','4','5','7','10'];
+    if (sel) {
+      if (presetVals.includes(String(clampedDays))) {
+        sel.value = String(clampedDays);
+        if (customInput) customInput.style.display = 'none';
+      } else {
+        sel.value = 'custom';
+        if (customInput) {
+          customInput.style.display = 'block';
+          customInput.value = String(clampedDays);
+        }
+      }
+    }
+    updateAtpNightsBadge();
+    updateAtpLiveBudget();
+  }
+}
+
+function updateAtpNightsBadge() {
+  const badge = document.getElementById('atpNightsBadge');
+  const days = Math.max(1, atpState.days || 1);
+  const nights = Math.max(0, days - 1);
+  if (badge) {
+    badge.textContent = `${days} ${days === 1 ? 'Day' : 'Days'} • ${nights} ${nights === 1 ? 'Night' : 'Nights'}`;
+  }
+}
+
+function adjustAtpTravelers(type, delta) {
+  if (type === 'adults') {
+    atpState.adults = Math.max(1, Math.min(30, (atpState.adults || 1) + delta));
+    const el = document.getElementById('atpAdultsVal');
+    if (el) el.textContent = String(atpState.adults);
+  } else {
+    atpState.children = Math.max(0, Math.min(20, (atpState.children || 0) + delta));
+    const el = document.getElementById('atpChildrenVal');
+    if (el) el.textContent = String(atpState.children);
+  }
+  updateAtpLiveBudget();
+}
+
+function selectAtpBudgetTier(tier) {
+  atpState.budgetTier = tier;
+  document.querySelectorAll('#atpBudgetTierGroup .atp-choice-pill').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('data-tier') === tier);
+  });
+  const stayEl = document.getElementById('atpStayType');
+  if (stayEl) {
+    if (tier === 'Budget') stayEl.value = 'Budget Hotel';
+    else if (tier === 'Standard') stayEl.value = 'Standard Hotel';
+    else if (tier === 'Premium') stayEl.value = 'Premium Hotel';
+    else if (tier === 'Luxury') stayEl.value = 'Luxury Hotel';
+    atpState.stayType = stayEl.value;
+  }
+  updateAtpLiveBudget();
+}
+
+function selectAtpTravelStyle(style) {
+  atpState.travelStyle = style;
+  document.querySelectorAll('#atpTravelStyleGroup .atp-choice-pill').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('data-style') === style);
+  });
+  updateAtpLiveBudget();
+}
+
+function onAtpTransportOrStayChange() {
+  const tr = document.getElementById('atpTransport');
+  const st = document.getElementById('atpStayType');
+  if (tr) atpState.transport = tr.value;
+  if (st) atpState.stayType = st.value;
+  checkAtpTransportWarning(atpState.destination, atpState.transport);
+  updateAtpLiveBudget();
+}
+
+function toggleAtpInterest(chip) {
+  if (!chip) return;
+  chip.classList.toggle('active');
+  const selected = [];
+  document.querySelectorAll('#atpInterestsGrid .atp-interest-chip.active').forEach(el => {
+    selected.push(el.getAttribute('data-interest'));
+  });
+  atpState.interests = selected;
+}
+
+// Clean, deterministic, reusable budget calculation function
+function calculateTripBudget(params = {}) {
+  const city = params.destination || atpState.destination || 'Varanasi';
+  const days = Math.max(1, parseInt(params.days ?? atpState.days, 10) || 1);
+  const nights = days === 1 ? 0 : (days - 1);
+  const adults = Math.max(1, parseInt(params.adults ?? atpState.adults, 10) || 1);
+  const children = Math.max(0, parseInt(params.children ?? atpState.children, 10) || 0);
+  const totalTravelers = adults + children;
+  const effectivePax = adults + (children * 0.55);
+  const tier = params.budgetTier || atpState.budgetTier || 'Standard';
+  const stayType = params.stayType || atpState.stayType || 'Standard Hotel';
+  const transport = params.transport || atpState.transport || 'Mixed Transport';
+  const style = params.travelStyle || atpState.travelStyle || 'Balanced';
+
+  // City cost multiplier (major metro/tourism hubs vs regional districts)
+  const majorHubs = new Set(['agra','varanasi','lucknow','ayodhya','prayagraj','kanpur','mathura','vrindavan','lakhimpur kheri','pilibhit']);
+  const cityFactor = majorHubs.has(city.toLowerCase()) ? 1.08 : 0.92;
+
+  // 1. Accommodation
+  const stayRatesPerUnit = {
+    'Hostel': 650,
+    'Budget Hotel': 1450,
+    'Standard Hotel': 2800,
+    'Premium Hotel': 5500,
+    'Luxury Hotel': 11500
+  };
+  const baseStayRate = stayRatesPerUnit[stayType] || 2800;
+  const roomsNeeded = stayType === 'Hostel' ? totalTravelers : Math.max(1, Math.ceil((adults + children * 0.5) / 2));
+  const accommodation = nights > 0
+    ? Math.round(baseStayRate * roomsNeeded * nights * cityFactor)
+    : Math.round(baseStayRate * roomsNeeded * 0.35 * cityFactor); // Day-use lounge/freshen-up room for 1-day trip
+
+  // 2. Food & Dining
+  const dailyFoodRates = { 'Budget': 450, 'Standard': 850, 'Premium': 1500, 'Luxury': 2800 };
+  const foodRate = dailyFoodRates[tier] || 850;
+  const food = Math.round(foodRate * effectivePax * days * cityFactor);
+
+  // 3. Local Transport
+  const localDailyBase = {
+    'Bus': 350,
+    'Train': 650,
+    'Mixed Transport': 850,
+    'Private Car': 1600,
+    'Flight': 1100
+  }[transport] || 800;
+  const vehiclesCount = Math.max(1, Math.ceil(totalTravelers / 4));
+  const localTransport = Math.round(localDailyBase * vehiclesCount * days);
+
+  // 4. Intercity Transport
+  const intercityPerPax = {
+    'Bus': 650,
+    'Train': 1350,
+    'Mixed Transport': 1650,
+    'Private Car': 0,
+    'Flight': 6800
+  }[transport] || 1350;
+  const intercityTransport = transport === 'Private Car'
+    ? Math.round(2600 * vehiclesCount + (days * 950 * vehiclesCount))
+    : Math.round(intercityPerPax * effectivePax);
+
+  // 5. Activities / Entry Tickets / Boats / Safaris
+  const stylePaceMult = style === 'Fast-paced' ? 1.3 : (style === 'Relaxed' ? 0.8 : 1.0);
+  const isSafariCity = /lakhimpur|pilibhit|etawah|chandauli|sonbhadra/i.test(city);
+  const dailyActivityPerPax = isSafariCity ? 850 : 280;
+  const activities = Math.round(dailyActivityPerPax * effectivePax * days * stylePaceMult);
+
+  // 6. Shopping / Miscellaneous
+  const miscRate = { 'Budget': 220, 'Standard': 450, 'Premium': 900, 'Luxury': 1800 }[tier] || 450;
+  const shoppingMisc = Math.round(miscRate * effectivePax * days);
+
+  const estimatedTotal = accommodation + food + localTransport + intercityTransport + activities + shoppingMisc;
+  const perPerson = Math.round(estimatedTotal / Math.max(1, totalTravelers));
+  const perDay = Math.round(estimatedTotal / Math.max(1, days));
+
+  const customInputEl = document.getElementById('atpCustomBudget');
+  const rawCustom = params.customBudget !== undefined ? params.customBudget : (customInputEl && customInputEl.value ? parseFloat(customInputEl.value) : null);
+  const hasCustomBudget = typeof rawCustom === 'number' && !isNaN(rawCustom) && rawCustom > 0;
+  const remainingBudget = hasCustomBudget ? Math.round(rawCustom - estimatedTotal) : null;
+
+  return {
+    city,
+    days,
+    nights,
+    adults,
+    children,
+    totalTravelers,
+    tier,
+    stayType,
+    transport,
+    accommodation,
+    food,
+    localTransport,
+    intercityTransport,
+    totalTransport: localTransport + intercityTransport,
+    activities,
+    shoppingMisc,
+    estimatedTotal,
+    perPerson,
+    perDay,
+    customBudget: hasCustomBudget ? Math.round(rawCustom) : null,
+    remainingBudget
+  };
+}
+
+function updateAtpLiveBudget() {
+  const b = calculateTripBudget();
+  const topLabel = document.getElementById('atpLiveEstimateLabel');
+  const subLabel = document.getElementById('atpBreakSubtitle');
+  const estText = document.getElementById('atpEstTotalText');
+  const remText = document.getElementById('atpRemBudgetText');
+  const progFill = document.getElementById('atpBudgetProgressFill');
+  const pillsBox = document.getElementById('atpMiniBreakdownPills');
+
+  if (topLabel) topLabel.textContent = `Estimated Total: ₹${b.estimatedTotal.toLocaleString('en-IN')} (~₹${b.perPerson.toLocaleString('en-IN')}/person)`;
+  if (subLabel) subLabel.textContent = `${b.city} • ${b.days} ${b.days === 1 ? 'Day' : 'Days'} (${b.nights} ${b.nights === 1 ? 'Night' : 'Nights'}) • ${b.totalTravelers} ${b.totalTravelers === 1 ? 'Traveler' : 'Travelers'}`;
+  if (estText) estText.textContent = `₹${b.estimatedTotal.toLocaleString('en-IN')}`;
+
+  if (remText) {
+    if (b.customBudget !== null) {
+      if (b.remainingBudget >= 0) {
+        remText.style.color = '#15803d';
+        remText.textContent = `+₹${b.remainingBudget.toLocaleString('en-IN')} (Under Custom Budget)`;
+      } else {
+        remText.style.color = '#dc2626';
+        remText.textContent = `-₹${Math.abs(b.remainingBudget).toLocaleString('en-IN')} (Exceeds Custom Budget)`;
+      }
+    } else {
+      remText.style.color = '#15803d';
+      remText.textContent = `₹0 Variance (${b.tier} Tier Target)`;
+    }
+  }
+
+  if (progFill) {
+    const pct = b.customBudget ? Math.min(100, Math.round((b.estimatedTotal / b.customBudget) * 100)) : 72;
+    progFill.style.width = `${pct}%`;
+    progFill.style.background = (b.customBudget && b.remainingBudget < 0)
+      ? 'linear-gradient(90deg,#f59e0b,#ef4444)'
+      : 'linear-gradient(90deg,#0b67d1,#ffb51b)';
+  }
+
+  if (pillsBox) {
+    pillsBox.innerHTML = `
+      <div class="atp-b-item"><small>🏨 Stay (${b.nights}N)</small><b>₹${b.accommodation.toLocaleString('en-IN')}</b></div>
+      <div class="atp-b-item"><small>🍛 Food</small><b>₹${b.food.toLocaleString('en-IN')}</b></div>
+      <div class="atp-b-item"><small>🚕 Local Transit</small><b>₹${b.localTransport.toLocaleString('en-IN')}</b></div>
+      <div class="atp-b-item"><small>🚆 Intercity</small><b>₹${b.intercityTransport.toLocaleString('en-IN')}</b></div>
+      <div class="atp-b-item"><small>🎟️ Activities</small><b>₹${b.activities.toLocaleString('en-IN')}</b></div>
+      <div class="atp-b-item"><small>🛍️ Shopping/Misc</small><b>₹${b.shoppingMisc.toLocaleString('en-IN')}</b></div>
+    `;
+  }
+}
+
+function getAtpCityAttractions(cityName) {
+  if (ATP_CURATED_SPOTS[cityName]) {
+    return ATP_CURATED_SPOTS[cityName];
+  }
+  const cityObj = cities.find(c => c.name.toLowerCase() === cityName.toLowerCase());
+  const slug = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const distObj = (window.districtsData && window.districtsData[slug]) || (loadedDistrictsData && loadedDistrictsData[slug]) || {};
+
+  const placesList = (cityObj ? cityObj.places : (distObj.places || `${cityName} Heritage Fort, Central Temple, Riverfront Ghats, Old Bazaar, District Museum`)).split(',').map(s => s.trim()).filter(Boolean);
+  const foodList = (cityObj ? cityObj.food : (distObj.food || 'Traditional Kachori-Sabzi, Desi Ghee Sweets, Regional Thali, Kulhad Lassi')).split(',').map(s => s.trim()).filter(Boolean);
+  const shopList = (cityObj ? cityObj.shop : (distObj.shopping || 'Local Handloom & GI Handicrafts, Traditional Sweets')).split(',').map(s => s.trim()).filter(Boolean);
+  const baseTip = (cityObj && cityObj.tip) ? cityObj.tip : `Start early in the morning for pleasant weather in ${cityName}.`;
+  const feeText = (cityObj && cityObj.fee) ? cityObj.fee : 'Free / Nominal entry';
+
+  const generated = [];
+  placesList.forEach((p, idx) => {
+    const slot = idx % 2 === 0 ? 'Morning' : 'Afternoon';
+    generated.push({
+      name: p,
+      desc: `Landmark attraction in ${cityName} showcasing authentic regional heritage, culture, and local architecture.`,
+      duration: "1.5 – 2 hours",
+      bestTime: slot === 'Morning' ? "07:30 AM – 10:30 AM" : "02:30 PM – 05:00 PM",
+      cost: feeText,
+      category: /temple|mandir|devi|nath|dargah|masjid|stupa|ghat/i.test(p) ? "Spirituality" : (/safari|park|falls|sanctuary|beach|dam/i.test(p) ? "Nature" : "History"),
+      tip: `${baseTip} Check current timings before visiting.`,
+      slot
+    });
+  });
+
+  generated.push({
+    name: `${cityName} Signature Culinary Trail (${foodList.slice(0, 2).join(' & ')})`,
+    desc: `Savor authentic local delicacies of ${cityName}: ${foodList.join(', ')}.`,
+    duration: "1.5 hours",
+    bestTime: "01:00 PM – 02:30 PM",
+    cost: "₹180 – ₹450 per person",
+    category: "Food",
+    tip: "Ask locals for long-standing family-run sweet and snack shops. Check current timings before visiting.",
+    slot: "Lunch"
+  });
+
+  generated.push({
+    name: `${cityName} Artisan Bazaar & Evening Stroll (${shopList[0] || 'Heritage Market'})`,
+    desc: `Explore ${cityName}'s traditional craft markets famous for ${shopList.join(', ')}.`,
+    duration: "1.5 hours",
+    bestTime: "05:30 PM – 07:30 PM",
+    cost: "Free browsing",
+    category: "Shopping",
+    tip: "Bargain politely and ask for authentic GI-tagged or artisan-made items. Check current timings before visiting.",
+    slot: "Evening"
+  });
+
+  return generated;
+}
+
+function buildAtpStructuredPlan(customAiNote = '') {
+  const inputVal = document.getElementById('atpDestination')?.value || atpState.destination;
+  const resolved = resolveAtpDestination(inputVal);
+  if (!resolved.valid) {
+    showAtpAlert(resolved.error, 'error');
+    return null;
+  }
+  const cityName = resolved.name;
+  atpState.destination = cityName;
+  atpState.specialReq = (document.getElementById('atpSpecialReq')?.value || '').trim();
+
+  const budgetData = calculateTripBudget({ destination: cityName });
+  const basePool = getAtpCityAttractions(cityName);
+  const cityObj = cities.find(c => c.name.toLowerCase() === cityName.toLowerCase()) || {};
+
+  // Sort/prioritize pool based on selected interests
+  const userInterests = new Set((atpState.interests || []).map(x => x.toLowerCase()));
+  const scoredPool = basePool.map((item, idx) => {
+    let score = 10 - (idx * 0.3);
+    if (userInterests.has((item.category || '').toLowerCase())) score += 8;
+    if (userInterests.has('spirituality') && /spirituality|religion/i.test(item.category)) score += 6;
+    if (userInterests.has('architecture') && /architecture|history/i.test(item.category)) score += 6;
+    return { ...item, score };
+  }).sort((a, b) => b.score - a.score);
+
+  const daysCount = budgetData.days;
+  const style = atpState.travelStyle; // Relaxed (3 slots/day), Balanced (4 slots/day), Fast-paced (5 slots/day)
+  const slotsPerDay = style === 'Relaxed' ? 3 : (style === 'Fast-paced' ? 5 : 4);
+
+  const dayPlans = [];
+  for (let d = 1; d <= daysCount; d++) {
+    const dayItems = [];
+    const slotLabels = style === 'Relaxed'
+      ? ['🌅 Morning', '🍛 Lunch & Local Flavors', '🌇 Evening']
+      : (style === 'Fast-paced'
+        ? ['🌅 Early Morning', '🏛️ Late Morning', '🍛 Lunch & Culinary Stop', '☀️ Afternoon Sightseeing', '🌇 Evening & Bazaar']
+        : ['🌅 Morning', '🍛 Lunch & Culinary Stop', '☀️ Afternoon', '🌇 Evening']);
+
+    slotLabels.forEach((slotTitle, sIdx) => {
+      const pickIndex = ((d - 1) * slotsPerDay + sIdx) % scoredPool.length;
+      const baseSpot = scoredPool[pickIndex];
+      let spotName = baseSpot.name;
+      let spotDesc = baseSpot.desc;
+      let spotTip = baseSpot.tip;
+
+      if (d > 1 && ((d - 1) * slotsPerDay + sIdx) >= scoredPool.length) {
+        const themes = [
+          `Old ${cityName} Heritage Lanes & Photography Walk`,
+          `${cityName} Riverfront / Nature Promenade & Sunrise View`,
+          `${cityName} Craft Workshop & Souvenir Curation`,
+          `${cityName} Cultural Centre & Regional Sweet Tasting`,
+          `${cityName} Evening Illumination & Local Market Trail`
+        ];
+        spotName = themes[(d + sIdx) % themes.length];
+        spotDesc = `Curated Day ${d} exploration in ${cityName} tailored for ${style.toLowerCase()} pace${atpState.interests.length ? ' (' + atpState.interests.slice(0, 3).join(', ') + ')' : ''}.`;
+      }
+
+      if (atpState.specialReq) {
+        spotTip = `${spotTip} • Note applied: "${atpState.specialReq}".`;
+      }
+
+      dayItems.push({
+        slotTitle,
+        name: spotName,
+        desc: spotDesc,
+        duration: style === 'Relaxed' ? '2 – 2.5 hours' : (style === 'Fast-paced' ? '1 – 1.25 hours' : baseSpot.duration),
+        bestTime: baseSpot.bestTime,
+        cost: baseSpot.cost,
+        category: baseSpot.category,
+        tip: spotTip
+      });
+    });
+
+    dayPlans.push({
+      day: d,
+      theme: d === 1 ? `${cityName} Iconic Landmarks & Signature Flavors` : (d === 2 ? `${cityName} Cultural Deep-Dive & Artisan Trail` : `Day ${d} — ${cityName} Hidden Gems & Local Immersion`),
+      items: dayItems
+    });
+  }
+
+  // Destination-specific Recommendations
+  const foods = (cityObj.food || 'Traditional Kachori-Sabzi, Regional Sweets, Kulhad Lassi').split(',').map(s => s.trim());
+  const shops = (cityObj.shop || 'GI-Tagged Local Handicrafts, Traditional Textiles & Sweets').split(',').map(s => s.trim());
+  const places = (cityObj.places || basePool.map(b => b.name).join(', ')).split(',').map(s => s.trim());
+
+  const recommendations = {
+    bestPlaces: places.slice(0, 5),
+    bestFoods: foods,
+    photoSpots: [
+      `${places[0] || cityName} during Golden Hour (06:00 AM – 07:30 AM)`,
+      `${places[1] || cityName + ' Heritage Zone'} architectural symmetry perspectives`,
+      `${cityName} evening illuminated ghats/monuments and bustling bazaar street life`
+    ],
+    familyFriendly: [
+      `${places[0] || cityName + ' Main Monument'} (accessible walkways & guided tours)`,
+      `${cityName} Parks, Museums & Evening Promenade`,
+      `Hygiene-verified family dining in central ${cityName}`
+    ],
+    mustTryExperiences: [
+      cityObj.tip || `Early morning heritage walk in ${cityName}`,
+      `Tasting authentic ${foods[0] || 'local delicacies'} from heritage kitchens`,
+      `Shopping for genuine ${shops[0] || 'local crafts'} directly from artisans`
+    ],
+    stayAreas: [
+      `Central Heritage / Cantonment / Civil Lines zone in ${cityName} (Best for ${atpState.stayType})`,
+      `Near primary transit hub (${cityName} Junction / Pilgrim Corridor) for easy local commute`
+    ]
+  };
+
+  return {
+    id: 'ATP-' + Date.now(),
+    createdAt: new Date().toLocaleString('en-IN'),
+    mode: atpState.mode,
+    destination: cityName,
+    tagline: cityObj.tag || `Explore ${cityName}, Uttar Pradesh`,
+    days: budgetData.days,
+    nights: budgetData.nights,
+    adults: budgetData.adults,
+    children: budgetData.children,
+    totalTravelers: budgetData.totalTravelers,
+    startDate: atpState.startDate || 'Flexible Dates',
+    endDate: atpState.endDate || 'Flexible Dates',
+    budgetTier: atpState.budgetTier,
+    stayType: atpState.stayType,
+    transport: atpState.transport,
+    travelStyle: atpState.travelStyle,
+    interests: [...atpState.interests],
+    specialReq: atpState.specialReq,
+    budget: budgetData,
+    dayPlans,
+    recommendations,
+    aiNote: customAiNote,
+    bestSeason: cityObj.time || 'October – March',
+    distanceInfo: cityObj.distance || 'Well connected across UP via Expressways & Indian Railways'
+  };
+}
+
+async function makeMyTripPlan() {
+  showAtpAlert('');
+  const destInput = document.getElementById('atpDestination')?.value || '';
+  const resolved = resolveAtpDestination(destInput);
+  if (!resolved.valid) {
+    showAtpAlert(resolved.error, 'error');
+    return;
+  }
+
+  // Validate dates if both entered
+  const sVal = document.getElementById('atpStartDate')?.value;
+  const eVal = document.getElementById('atpEndDate')?.value;
+  if (sVal && eVal && new Date(eVal) < new Date(sVal)) {
+    showAtpAlert('End date cannot be earlier than start date. Please correct your travel dates.', 'error');
+    return;
+  }
+
+  // Validate custom budget if entered
+  const customBVal = document.getElementById('atpCustomBudget')?.value;
+  if (customBVal !== '' && customBVal !== undefined && parseFloat(customBVal) <= 0) {
+    showAtpAlert('Custom budget must be a positive amount greater than ₹0.', 'error');
+    return;
+  }
+
+  const out = document.getElementById('plannerOutput');
+  const btn = document.getElementById('atpMakePlanBtn');
+  if (!out) return;
+
+  if (btn) btn.disabled = true;
+  out.innerHTML = `
+    <div style="padding:28px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:18px">
+      <div style="font-size:28px;margin-bottom:8px">🧭</div>
+      <h3 style="margin:0 0 6px;color:var(--text)">Arya is planning your trip...</h3>
+      <p style="margin:0;color:var(--muted);font-size:13.5px">Curating ${resolved.name} day-by-day attractions, timing slots, and ₹ budget breakdown...</p>
+      <div class="atp-progress-track" style="max-width:340px;margin:14px auto 0"><div class="atp-progress-fill" style="width:85%"></div></div>
+    </div>
+  `;
+
+  let aiSummaryNote = '';
+  if (atpState.mode === 'smart') {
+    try {
+      const b = calculateTripBudget({ destination: resolved.name });
+      const prompt = `Create a concise expert Uttar Pradesh travel advisor summary and special day-by-day tips for:
+Destination: ${resolved.name}, Uttar Pradesh
+Duration: ${b.days} days (${b.nights} nights)
+Dates: ${atpState.startDate || 'Flexible'} to ${atpState.endDate || 'Flexible'}
+Travelers: ${b.adults} Adults, ${b.children} Children
+Budget Tier: ${atpState.budgetTier} (Est. ₹${b.estimatedTotal})
+Transport: ${atpState.transport}
+Stay: ${atpState.stayType}
+Travel Style: ${atpState.travelStyle}
+Interests: ${atpState.interests.join(', ') || 'General Sightseeing'}
+Special Requirements: ${atpState.specialReq || 'None'}`;
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 9500);
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ query: prompt, stream: false }),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.reply) {
+          aiSummaryNote = data.reply;
+        }
+      }
+    } catch (err) {
+      aiSummaryNote = `Smart Plan Notice: Live Gemini API connection timed out or is offline — Arya generated your personalized ${resolved.name} itinerary using ExploreUP's built-in knowledge engine.`;
+    }
+  } else {
+    // Brief smooth UI transition for Quick Plan
+    await new Promise(r => setTimeout(r, 180));
+  }
+
+  if (btn) btn.disabled = false;
+  const plan = buildAtpStructuredPlan(aiSummaryNote);
+  if (!plan) return;
+  atpState.lastGeneratedPlan = plan;
+  atpState.activeTab = 'itinerary';
+  renderAtpOutput();
+}
+
+function showDedicatedBudgetCalculation() {
+  showAtpAlert('');
+  const destInput = document.getElementById('atpDestination')?.value || '';
+  const resolved = resolveAtpDestination(destInput);
+  if (!resolved.valid) {
+    showAtpAlert(resolved.error, 'error');
+    return;
+  }
+  atpState.destination = resolved.name;
+  updateAtpLiveBudget();
+  if (!atpState.lastGeneratedPlan || atpState.lastGeneratedPlan.destination !== resolved.name) {
+    atpState.lastGeneratedPlan = buildAtpStructuredPlan();
+  } else {
+    atpState.lastGeneratedPlan.budget = calculateTripBudget({ destination: resolved.name });
+  }
+  atpState.activeTab = 'budget';
+  renderAtpOutput();
+  const out = document.getElementById('plannerOutput');
+  if (out) out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function switchPlannerTab(tabName) {
+  atpState.activeTab = tabName;
+  if (!atpState.lastGeneratedPlan && tabName !== 'saved') {
+    const resolved = resolveAtpDestination(document.getElementById('atpDestination')?.value || 'Varanasi');
+    if (resolved.valid) {
+      atpState.lastGeneratedPlan = buildAtpStructuredPlan();
+    }
+  }
+  renderAtpOutput();
+}
+
+function renderAtpOutput() {
+  const out = document.getElementById('plannerOutput');
+  if (!out) return;
+  const plan = atpState.lastGeneratedPlan || buildAtpStructuredPlan();
+  if (!plan) return;
+  const b = plan.budget;
+  const savedList = getSavedItinerariesList();
+  const countEl = document.getElementById('atpSavedCount');
+  if (countEl) countEl.textContent = String(savedList.length);
+
+  let tabContentHtml = '';
+
+  if (atpState.activeTab === 'itinerary') {
+    const aiBannerHtml = plan.aiNote ? `
+      <div style="background:var(--surface);border:1px solid var(--gold);border-left:5px solid var(--gold);border-radius:14px;padding:14px 16px;margin-bottom:14px;font-size:13px;line-height:1.6">
+        <div style="font-weight:800;color:var(--blue);margin-bottom:4px">✨ Arya AI Concierge Note (${escapeHtml(plan.destination)})</div>
+        <div style="white-space:pre-line;color:var(--text)">${escapeHtml(plan.aiNote)}</div>
+      </div>
+    ` : '';
+
+    const daysHtml = plan.dayPlans.map(d => `
+      <div class="itinerary-day">
+        <div class="itinerary-day-head">
+          <h4>🗓️ DAY ${d.day} — ${escapeHtml(d.theme)}</h4>
+          <span style="font-size:11.5px;font-weight:700;color:var(--muted)">Pace: ${escapeHtml(plan.travelStyle)} (${d.items.length} stops)</span>
+        </div>
+        <div class="atp-slot-grid">
+          ${d.items.map(item => `
+            <div class="atp-place-card">
+              <div class="atp-place-top">
+                <span class="atp-slot-badge">${escapeHtml(item.slotTitle)}</span>
+                <span class="atp-cat-badge">🏷️ ${escapeHtml(item.category)}</span>
+              </div>
+              <div class="atp-place-title">${escapeHtml(item.name)}</div>
+              <p class="atp-place-desc">${escapeHtml(item.desc)}</p>
+              <div class="atp-place-meta">
+                <span>⏱️ Suggested duration: ${escapeHtml(item.duration)}</span>
+                <span>🕰️ Best time: ${escapeHtml(item.bestTime)}</span>
+                <span>🎟️ Est. cost: ${escapeHtml(item.cost)}</span>
+              </div>
+              <div class="atp-place-tip">💡 <b>Practical Tip:</b> ${escapeHtml(item.tip)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    const uxExtrasHtml = `
+      <div class="atp-rec-grid" style="margin-top:14px">
+        <div class="atp-rec-card">
+          <h4>🎒 Packing & Weather Advisory</h4>
+          <ul class="atp-rec-list">
+            <li><b>Best Season:</b> ${escapeHtml(plan.bestSeason)}. <i>(Current live weather requires live meteorological data; check IMD forecast before departure.)</i></li>
+            <li><b>Modest Temple Attire:</b> Carry slip-on footwear and shoulder-covering cotton clothes for shrines & ghats.</li>
+            <li><b>Essentials:</b> Power bank, reusable water bottle, govt photo ID (Aadhaar/Passport), and small cash/UPI for e-rickshaws.</li>
+          </ul>
+        </div>
+        <div class="atp-rec-card">
+          <h4>🚨 Official Uttar Pradesh Tourist Helplines</h4>
+          <ul class="atp-rec-list">
+            <li><b>UP Integrated Police / Emergency:</b> <a href="tel:112" style="color:var(--blue);font-weight:800">112</a></li>
+            <li><b>UP Tourism Toll-Free Helpline:</b> <a href="tel:1363" style="color:var(--blue);font-weight:800">1363</a></li>
+            <li><b>Ambulance:</b> <a href="tel:108" style="color:var(--blue);font-weight:800">108</a> • <b>Women Powerline:</b> <a href="tel:1090" style="color:var(--blue);font-weight:800">1090</a> • <b>Railway:</b> <a href="tel:139" style="color:var(--blue);font-weight:800">139</a></li>
+          </ul>
+        </div>
+      </div>
+    `;
+
+    tabContentHtml = aiBannerHtml + daysHtml + uxExtrasHtml;
+  } else if (atpState.activeTab === 'recommendations') {
+    const rec = plan.recommendations;
+    tabContentHtml = `
+      <div class="atp-rec-grid">
+        <div class="atp-rec-card">
+          <h4>🏛️ Best Places to Visit in ${escapeHtml(plan.destination)}</h4>
+          <ul class="atp-rec-list">${rec.bestPlaces.map(x => `<li><b>${escapeHtml(x)}</b> — Check current timings before visiting.</li>`).join('')}</ul>
+        </div>
+        <div class="atp-rec-card">
+          <h4>🍛 Best Local Foods & Must-Try Flavors</h4>
+          <ul class="atp-rec-list">${rec.bestFoods.map(x => `<li><b>${escapeHtml(x)}</b> — Authentic ${escapeHtml(plan.destination)} specialty.</li>`).join('')}</ul>
+        </div>
+        <div class="atp-rec-card">
+          <h4>📸 Top Photography Spots</h4>
+          <ul class="atp-rec-list">${rec.photoSpots.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>
+        </div>
+        <div class="atp-rec-card">
+          <h4>👨‍👩‍👧‍👦 Family-Friendly Places</h4>
+          <ul class="atp-rec-list">${rec.familyFriendly.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>
+        </div>
+        <div class="atp-rec-card">
+          <h4>✨ Must-Try Cultural Experiences</h4>
+          <ul class="atp-rec-list">${rec.mustTryExperiences.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>
+        </div>
+        <div class="atp-rec-card">
+          <h4>🏨 Suggested Areas to Stay (${escapeHtml(plan.stayType)})</h4>
+          <ul class="atp-rec-list">${rec.stayAreas.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>
+        </div>
+      </div>
+    `;
+  } else if (atpState.activeTab === 'budget') {
+    tabContentHtml = `
+      <div class="itinerary-day">
+        <div class="itinerary-day-head">
+          <h4>💰 Trip Cost Estimate — ${escapeHtml(plan.destination)} (${b.days} Days, ${b.totalTravelers} Travelers)</h4>
+          <span style="font-size:12px;font-weight:800;color:var(--blue)">Tier: ${escapeHtml(b.tier)} • Stay: ${escapeHtml(b.stayType)}</span>
+        </div>
+        <div style="display:grid;gap:8px;font-size:14px">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line)"><span>🏨 Accommodation (${b.nights} ${b.nights === 1 ? 'Night' : 'Nights'} • ${escapeHtml(b.stayType)})</span><b>₹${b.accommodation.toLocaleString('en-IN')}</b></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line)"><span>🍛 Food & Regional Dining (${b.days} Days)</span><b>₹${b.food.toLocaleString('en-IN')}</b></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line)"><span>🚕 Local Transport (Auto / E-Rickshaw / Cab)</span><b>₹${b.localTransport.toLocaleString('en-IN')}</b></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line)"><span>🚆 Intercity Transport (${escapeHtml(b.transport)})</span><b>₹${b.intercityTransport.toLocaleString('en-IN')}</b></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line)"><span>🎟️ Activities & Entry Tickets</span><b>₹${b.activities.toLocaleString('en-IN')}</b></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:2px solid var(--line)"><span>🛍️ Shopping / Miscellaneous</span><b>₹${b.shoppingMisc.toLocaleString('en-IN')}</b></div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:18px;font-weight:900;color:var(--blue)"><span>TOTAL ESTIMATED COST</span><span>₹${b.estimatedTotal.toLocaleString('en-IN')}</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px">
+          <div class="atp-b-item" style="padding:10px"><small>Per Person</small><b style="font-size:16px">₹${b.perPerson.toLocaleString('en-IN')}</b></div>
+          <div class="atp-b-item" style="padding:10px"><small>Per Day</small><b style="font-size:16px">₹${b.perDay.toLocaleString('en-IN')}</b></div>
+          <div class="atp-b-item" style="padding:10px"><small>Remaining vs Custom Budget</small><b style="font-size:16px;color:${b.remainingBudget !== null && b.remainingBudget < 0 ? '#dc2626' : '#15803d'}">${b.remainingBudget !== null ? (b.remainingBudget >= 0 ? '+₹' + b.remainingBudget.toLocaleString('en-IN') : '-₹' + Math.abs(b.remainingBudget).toLocaleString('en-IN')) : 'Within Tier'}</b></div>
+        </div>
+      </div>
+    `;
+  } else if (atpState.activeTab === 'saved') {
+    if (savedList.length === 0) {
+      tabContentHtml = `
+        <div class="itinerary-day" style="text-align:center;padding:28px">
+          <div style="font-size:28px;margin-bottom:6px">💾</div>
+          <h4 style="justify-content:center;margin-bottom:6px">No Saved Trips Yet</h4>
+          <p style="margin:0;color:var(--muted);font-size:13.5px">Click <b>"💾 Save Itinerary"</b> below any generated plan to store it here for quick offline access.</p>
+        </div>
+      `;
+    } else {
+      tabContentHtml = `<div style="display:grid;gap:10px">` + savedList.map(item => `
+        <div class="atp-place-card" style="flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap">
+          <div>
+            <div class="atp-place-title">📍 ${escapeHtml(item.destination)} — ${item.days} ${item.days === 1 ? 'Day' : 'Days'} (${item.totalTravelers} Travelers)</div>
+            <div style="font-size:12px;color:var(--muted)">${escapeHtml(item.budgetTier)} • ${escapeHtml(item.transport)} • Est. ₹${Number(item.budget?.estimatedTotal || 0).toLocaleString('en-IN')} • Saved: ${escapeHtml(item.createdAt || '')}</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button type="button" class="planner-action-btn primary" onclick="openSavedItinerary('${escapeHtml(item.id)}')">📂 Open Trip</button>
+            <button type="button" class="planner-action-btn" onclick="deleteSavedItinerary('${escapeHtml(item.id)}')">🗑️ Delete</button>
+          </div>
+        </div>
+      `).join('') + `</div>`;
+    }
+  }
+
+  out.innerHTML = `
+    <!-- Trip Summary Card -->
+    <div class="atp-summary-banner">
+      <div>
+        <div style="font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--gold);text-transform:uppercase">YOUR TRIP SUMMARY • ${plan.mode === 'smart' ? 'SMART PLAN (ARYA AI)' : 'QUICK PLAN (BUILT-IN UP DATA)'}</div>
+        <h3>${escapeHtml(plan.destination)} • ${plan.days} ${plan.days === 1 ? 'Day' : 'Days'} (${plan.nights} ${plan.nights === 1 ? 'Night' : 'Nights'}) • ${plan.totalTravelers} ${plan.totalTravelers === 1 ? 'Traveler' : 'Travelers'}</h3>
+        <div class="atp-summary-meta">
+          <span>👥 ${plan.adults} Adult${plan.adults > 1 ? 's' : ''}${plan.children > 0 ? ', ' + plan.children + ' Child' + (plan.children > 1 ? 'ren' : '') : ''}</span>
+          <span>🏨 ${escapeHtml(plan.stayType)}</span>
+          <span>🚆 ${escapeHtml(plan.transport)}</span>
+          <span>⚡ ${escapeHtml(plan.travelStyle)} Pace</span>
+          ${plan.interests.length ? `<span>🎯 ${escapeHtml(plan.interests.slice(0, 4).join(', '))}</span>` : ''}
+        </div>
+      </div>
+      <div class="atp-summary-budget-box">
+        <small>Estimated Budget</small>
+        <strong>₹${b.estimatedTotal.toLocaleString('en-IN')}</strong>
+        <span style="font-size:11.5px;color:#e2e8f0">₹${b.perPerson.toLocaleString('en-IN')}/person • ₹${b.perDay.toLocaleString('en-IN')}/day</span>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="atp-tabs">
+      <button type="button" class="atp-tab-btn ${atpState.activeTab === 'itinerary' ? 'active' : ''}" onclick="switchPlannerTab('itinerary')">🗓️ Day-by-Day Itinerary (${plan.days}D)</button>
+      <button type="button" class="atp-tab-btn ${atpState.activeTab === 'recommendations' ? 'active' : ''}" onclick="switchPlannerTab('recommendations')">🎯 Recommendations</button>
+      <button type="button" class="atp-tab-btn ${atpState.activeTab === 'budget' ? 'active' : ''}" onclick="switchPlannerTab('budget')">💰 Trip Cost Estimate</button>
+      <button type="button" class="atp-tab-btn ${atpState.activeTab === 'saved' ? 'active' : ''}" onclick="switchPlannerTab('saved')">💾 My Saved Trips (${savedList.length})</button>
+    </div>
+
+    ${tabContentHtml}
+
+    <!-- Bottom Utility Action Buttons -->
+    <div class="planner-actions">
+      <button type="button" class="planner-action-btn primary" onclick="saveCurrentItinerary()">💾 Save Itinerary</button>
+      <button type="button" class="planner-action-btn" onclick="downloadOrPrintItineraryPdf()">🖨️ Download / Print PDF</button>
+      <button type="button" class="planner-action-btn" onclick="copyItinerary()">📋 Copy Itinerary</button>
+      <button type="button" class="planner-action-btn" onclick="openCityFromPlanner()">📍 Open ${escapeHtml(plan.destination)} City Guide</button>
+      <button type="button" class="planner-action-btn" onclick="resetTripPlanner(true)">🔄 Start Again</button>
+    </div>
+  `;
+}
+
+function getSavedItinerariesList() {
+  try {
+    const raw = exploreStorage.get(ATP_STORAGE_KEY, '[]');
+    const parsed = JSON.parse(raw || '[]');
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveCurrentItinerary() {
+  const plan = atpState.lastGeneratedPlan || buildAtpStructuredPlan();
+  if (!plan) return;
+  atpState.lastGeneratedPlan = plan;
+  const list = getSavedItinerariesList();
+  const existingIdx = list.findIndex(x => x.id === plan.id);
+  if (existingIdx >= 0) list[existingIdx] = plan;
+  else list.unshift(plan);
+  exploreStorage.set(ATP_STORAGE_KEY, JSON.stringify(list.slice(0, 25)));
+  const countEl = document.getElementById('atpSavedCount');
+  if (countEl) countEl.textContent = String(list.length);
+  showAtpAlert('Itinerary saved successfully.', 'success');
+  renderAtpOutput();
+}
+
+function openSavedItinerary(id) {
+  const list = getSavedItinerariesList();
+  const found = list.find(x => x.id === id);
+  if (!found) return;
+  atpState.lastGeneratedPlan = found;
+  atpState.destination = found.destination;
+  atpState.days = found.days;
+  atpState.adults = found.adults || 2;
+  atpState.children = found.children || 0;
+  atpState.budgetTier = found.budgetTier || 'Standard';
+  atpState.stayType = found.stayType || 'Standard Hotel';
+  atpState.transport = found.transport || 'Mixed Transport';
+  atpState.travelStyle = found.travelStyle || 'Balanced';
+  atpState.interests = Array.isArray(found.interests) ? found.interests : ['History'];
+  atpState.activeTab = 'itinerary';
+
+  const destEl = document.getElementById('atpDestination');
+  if (destEl) destEl.value = found.destination;
+  const adEl = document.getElementById('atpAdultsVal');
+  if (adEl) adEl.textContent = String(atpState.adults);
+  const chEl = document.getElementById('atpChildrenVal');
+  if (chEl) chEl.textContent = String(atpState.children);
+  updateAtpNightsBadge();
+  updateAtpLiveBudget();
+  showAtpAlert(`Loaded saved itinerary for ${escapeHtml(found.destination)} (${found.days} Days).`, 'success');
+  renderAtpOutput();
+}
+
+function deleteSavedItinerary(id) {
+  const list = getSavedItinerariesList().filter(x => x.id !== id);
+  exploreStorage.set(ATP_STORAGE_KEY, JSON.stringify(list));
+  const countEl = document.getElementById('atpSavedCount');
+  if (countEl) countEl.textContent = String(list.length);
+  showAtpAlert('Saved itinerary deleted.', 'warn');
+  renderAtpOutput();
+}
+
+function downloadOrPrintItineraryPdf() {
+  const plan = atpState.lastGeneratedPlan || buildAtpStructuredPlan();
+  if (!plan) return;
+  const b = plan.budget;
+  const printWin = window.open('', '_blank', 'width=900,height=750');
+  if (!printWin) {
+    window.print();
+    return;
+  }
+  const daysHtml = plan.dayPlans.map(d => `
+    <div style="border:1px solid #cbd5e1;border-radius:12px;padding:14px;margin-bottom:12px;page-break-inside:avoid">
+      <h3 style="margin:0 0 8px;color:#071b35;font-size:16px">DAY ${d.day} — ${escapeHtml(d.theme)}</h3>
+      ${d.items.map(it => `
+        <div style="padding:7px 0;border-top:1px dashed #e2e8f0;font-size:13px">
+          <div><b>${escapeHtml(it.slotTitle)}: ${escapeHtml(it.name)}</b> <span>(${escapeHtml(it.category)} • ${escapeHtml(it.duration)} • Est: ${escapeHtml(it.cost)})</span></div>
+          <div style="color:#334155;margin-top:2px">${escapeHtml(it.desc)}</div>
+          <div style="color:#64748b;font-size:12px;margin-top:2px">Best time: ${escapeHtml(it.bestTime)} | Tip: ${escapeHtml(it.tip)}</div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+
+  printWin.document.write(`<!DOCTYPE html><html><head><title>ExploreUP — Arya Trip Plan Maker (${escapeHtml(plan.destination)})</title>
+    <style>body{font-family:Arial,sans-serif;color:#0f172a;padding:24px;max-width:840px;margin:auto}h1{margin:0;color:#071b35}table{width:100%;border-collapse:collapse;margin:12px 0}td,th{border:1px solid #cbd5e1;padding:8px;text-align:left;font-size:13px}</style>
+    </head><body>
+    <div style="border-bottom:3px solid #ffb51b;padding-bottom:12px;margin-bottom:16px">
+      <h1>ExploreUP — Arya Trip Plan Maker</h1>
+      <div style="color:#475569;font-size:14px;margin-top:4px">Official Uttar Pradesh Personalized Itinerary & Budget Breakdown</div>
+    </div>
+    <table>
+      <tr><th>Destination</th><td><b>${escapeHtml(plan.destination)}, Uttar Pradesh</b></td><th>Duration</th><td>${plan.days} Days / ${plan.nights} Nights</td></tr>
+      <tr><th>Dates</th><td>${escapeHtml(plan.startDate)} to ${escapeHtml(plan.endDate)}</td><th>Travelers</th><td>${plan.adults} Adults, ${plan.children} Children (${plan.totalTravelers} Total)</td></tr>
+      <tr><th>Budget Tier</th><td>${escapeHtml(plan.budgetTier)}</td><th>Transport & Stay</th><td>${escapeHtml(plan.transport)} • ${escapeHtml(plan.stayType)}</td></tr>
+      <tr><th>Travel Style</th><td>${escapeHtml(plan.travelStyle)}</td><th>Interests</th><td>${escapeHtml(plan.interests.join(', ') || 'All Highlights')}</td></tr>
+    </table>
+    <h2 style="font-size:18px;color:#071b35">Budget Breakdown (Estimated Total: ₹${b.estimatedTotal.toLocaleString('en-IN')})</h2>
+    <table>
+      <tr><th>Accommodation</th><th>Food</th><th>Local + Intercity Transport</th><th>Activities</th><th>Shopping/Misc</th><th>TOTAL</th></tr>
+      <tr><td>₹${b.accommodation.toLocaleString('en-IN')}</td><td>₹${b.food.toLocaleString('en-IN')}</td><td>₹${b.totalTransport.toLocaleString('en-IN')}</td><td>₹${b.activities.toLocaleString('en-IN')}</td><td>₹${b.shoppingMisc.toLocaleString('en-IN')}</td><td><b>₹${b.estimatedTotal.toLocaleString('en-IN')}</b> (₹${b.perPerson.toLocaleString('en-IN')}/person)</td></tr>
+    </table>
+    <h2 style="font-size:18px;color:#071b35">Day-by-Day Itinerary</h2>
+    ${daysHtml}
+    <p style="font-size:12px;color:#64748b;margin-top:16px">Note: Check current monument timings and ticket availability before visiting. Emergency Helplines: Police 112 | UP Tourism 1363 | Ambulance 108.</p>
+    <script>window.onload=function(){setTimeout(function(){window.print();},250);};<\/script>
+    </body></html>`);
+  printWin.document.close();
+}
+
+function resetTripPlanner(askConfirmation = false) {
+  if (askConfirmation && atpState.lastGeneratedPlan) {
+    if (!window.confirm('Are you sure you want to reset your current trip plan and start over?')) {
+      return;
+    }
+  }
+  atpState.mode = 'quick';
+  atpState.destination = 'Varanasi';
+  atpState.days = 3;
+  atpState.adults = 2;
+  atpState.children = 0;
+  atpState.startDate = '';
+  atpState.endDate = '';
+  atpState.budgetTier = 'Standard';
+  atpState.customBudget = null;
+  atpState.transport = 'Mixed Transport';
+  atpState.stayType = 'Standard Hotel';
+  atpState.travelStyle = 'Balanced';
+  atpState.interests = ['History', 'Food', 'Photography'];
+  atpState.specialReq = '';
+  atpState.activeTab = 'itinerary';
+  atpState.lastGeneratedPlan = null;
+
+  const destEl = document.getElementById('atpDestination');
+  if (destEl) destEl.value = 'Varanasi';
+  const daysEl = document.getElementById('plannerDaysSelect');
+  if (daysEl) daysEl.value = '3';
+  const customDaysEl = document.getElementById('atpCustomDays');
+  if (customDaysEl) { customDaysEl.style.display = 'none'; customDaysEl.value = '3'; }
+  const adEl = document.getElementById('atpAdultsVal');
+  if (adEl) adEl.textContent = '2';
+  const chEl = document.getElementById('atpChildrenVal');
+  if (chEl) chEl.textContent = '0';
+  const sEl = document.getElementById('atpStartDate');
+  if (sEl) sEl.value = '';
+  const eEl = document.getElementById('atpEndDate');
+  if (eEl) eEl.value = '';
+  const cbEl = document.getElementById('atpCustomBudget');
+  if (cbEl) cbEl.value = '';
+  const trEl = document.getElementById('atpTransport');
+  if (trEl) trEl.value = 'Mixed Transport';
+  const stEl = document.getElementById('atpStayType');
+  if (stEl) stEl.value = 'Standard Hotel';
+  const reqEl = document.getElementById('atpSpecialReq');
+  if (reqEl) reqEl.value = '';
+
+  setPlannerMode('quick');
+  selectAtpBudgetTier('Standard');
+  selectAtpTravelStyle('Balanced');
+  document.querySelectorAll('#atpInterestsGrid .atp-interest-chip').forEach(el => {
+    const iName = el.getAttribute('data-interest');
+    el.classList.toggle('active', ['History', 'Food', 'Photography'].includes(iName));
+  });
+  onAtpDestinationInput('Varanasi');
+  updateAtpNightsBadge();
+  updateAtpLiveBudget();
+  showAtpAlert('');
+  checkAtpTransportWarning('Varanasi', 'Mixed Transport');
+  const out = document.getElementById('plannerOutput');
+  if (out) out.innerHTML = '';
+}
+
+function openTripPlanner(cityName = 'Varanasi') {
   const modal = document.getElementById('plannerModal');
-  if(!modal) return;
+  if (!modal) return;
+  populateAtpDestinationDatalist();
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 
-  const select = document.getElementById('plannerCitySelect');
-  if(select && cityName){
-    for(let opt of select.options){
-      if(opt.value.toLowerCase() === cityName.toLowerCase()){
-        select.value = opt.value;
-        break;
-      }
+  const savedList = getSavedItinerariesList();
+  const countEl = document.getElementById('atpSavedCount');
+  if (countEl) countEl.textContent = String(savedList.length);
+
+  if (cityName && typeof cityName === 'string') {
+    const resolved = resolveAtpDestination(cityName);
+    if (resolved.valid) {
+      atpState.destination = resolved.name;
+      const destInput = document.getElementById('atpDestination');
+      if (destInput) destInput.value = resolved.name;
+      onAtpDestinationInput(resolved.name);
     }
   }
+  updateAtpNightsBadge();
+  updateAtpLiveBudget();
   generateTripPlan();
 }
 
-function closeTripPlanner(){
+function closeTripPlanner() {
   const modal = document.getElementById('plannerModal');
-  if(modal){
+  if (modal) {
     modal.style.display = 'none';
-    if(!document.getElementById('modal') || document.getElementById('modal').style.display !== 'block'){
+    if (!document.getElementById('modal') || document.getElementById('modal').style.display !== 'block') {
       document.body.style.overflow = '';
     }
   }
 }
 
-function generateTripPlan(){
-  const city = document.getElementById('plannerCitySelect').value;
-  const days = parseInt(document.getElementById('plannerDaysSelect').value, 10);
-  const style = document.getElementById('plannerStyleSelect').value;
-  const budget = document.getElementById('plannerBudgetSelect').value;
-  const out = document.getElementById('plannerOutput');
-  if(!out) return;
-
-  const budgetText = budget === 'budget' ? '₹1,200/day' : (budget === 'luxury' ? '₹8,500/day' : '₹3,200/day');
-
-  let day1Morning = "Sunrise monument visit & photography";
-  let day1Afternoon = "Main architectural landmarks & authentic regional lunch";
-  let day1Evening = "Sunset viewpoint & heritage night bazaar shopping";
-
-  let day2Morning = "Early morning spiritual walk or riverfront boat ride";
-  let day2Afternoon = "UNESCO excursion or artisan workshops tour";
-  let day2Evening = "Traditional musical performance or fine dining experience";
-
-  let day3Morning = "Hidden gems & tranquil temples or bird sanctuary visit";
-  let day3Afternoon = "Souvenir shopping for authentic GI crafts";
-  let day3Evening = "Leisurely food walk & farewell street snacks";
-
-  if (city === 'Agra') {
-    day1Morning = "06:00 AM — Sunrise at the Taj Mahal (enter through East Gate). Marvel at the changing morning glow on the white Makrana marble.";
-    day1Afternoon = "11:30 AM — Tour Agra Fort (Diwan-i-Aam, Diwan-i-Khas, Jahangiri Mahal). Lunch at Dasaprakash or Pinch of Spice with Mughlai specials.";
-    day1Evening = "05:00 PM — Watch the sunset behind the Taj Mahal from Mehtab Bagh across the Yamuna. Taste Bedai-Jalebi at Deviram & shop for Panchhi Petha.";
-    
-    day2Morning = "08:30 AM — Day excursion to UNESCO World Heritage site Fatehpur Sikri (37 km) — Buland Darwaza, Salim Chishti Tomb, and Panch Mahal.";
-    day2Afternoon = "02:00 PM — Return to Agra and visit the Tomb of I'timad-ud-Daulah ('Baby Taj'), the delicate jewel-box of marble inlay.";
-    day2Evening = "06:30 PM — Shop for authentic marble inlay coasters and leatherware in Sadar Bazaar, followed by rooftop dinner overlooking the illuminated Taj.";
-
-    day3Morning = "08:00 AM — Explore Akbar's grand Tomb at Sikandra, blending red sandstone and white minarets in serene deer-filled parkland.";
-    day3Afternoon = "01:00 PM — Visit the historic Chini Ka Rauza and Dayalbagh Temple; sample local chaat at Sadar Chaat Gali.";
-    day3Evening = "06:00 PM — Relax by the Yamuna banks, enjoy Agra Metro ride, and pick up sealed boxes of Angoori & Kesar Petha for home.";
-  } else if (city === 'Varanasi') {
-    day1Morning = "05:30 AM — Subah-e-Banaras: Dawn wooden boat ride along the 84 ghats from Assi to Manikarnika. Visit Kashi Vishwanath Temple via Corridor.";
-    day1Afternoon = "12:00 PM — Kachori-Sabzi breakfast at Ram Bhandar, followed by exploration of the silk weaving lanes in Chowk & Madanpura.";
-    day1Evening = "06:00 PM — Spectacular evening Ganga Aarti at Dashashwamedh Ghat viewed from river steps or boat. Taste Tamatar Chaat at Kashi Chaat.";
-    
-    day2Morning = "08:30 AM — Excursion to sacred Sarnath (10 km): Dhamek Stupa, Ashoka Lion Capital at Sarnath Museum, and tranquil Thai/Tibetan temples.";
-    day2Afternoon = "02:00 PM — Visit Banaras Hindu University (BHU) campus, New Vishwanath Temple (VT), and Bharat Kala Bhavan art museum.";
-    day2Evening = "06:00 PM — Stroll along Assi Ghat, try refreshing Pehlwan Lassi / Thandai, and enjoy classical music kirtan.";
-
-    day3Morning = "08:00 AM — Heritage walk through narrow galis (alleys), visiting hidden shrines and stepwells; taste hot Malaiyo in winter.";
-    day3Afternoon = "01:00 PM — Cross the Ganga to visit Ramnagar Fort and its vintage royal car & weaponry museum.";
-    day3Evening = "06:00 PM — Sunset at Rajghat, try genuine Banarasi Paan, and shop for authentic handwoven Banarasi silk sarees.";
-  } else if (city === 'Lucknow') {
-    day1Morning = "08:30 AM — Bara Imambara, navigate the labyrinthine Bhool Bhulaiya with an official guide, and admire the majestic Rumi Darwaza.";
-    day1Afternoon = "01:00 PM — Chhota Imambara and Picture Gallery. Savor world-famous melt-in-mouth Galawati Kebabs at Tunday Kababi in Chowk.";
-    day1Evening = "05:30 PM — Stroll Hazratganj ('Ganjing'), taste Basket Chaat at Royal Cafe, and finish with Prakash Ki Kulfi in Aminabad.";
-
-    day2Morning = "09:00 AM — Walk through the historic ruins and peaceful gardens of the British Residency, deeply tied to the 1857 Uprising.";
-    day2Afternoon = "01:30 PM — Lunch on fragrant Awadhi Dum Biryani at Dastarkhwan. Shop for delicate Chikankari kurtas at Sewa Chikan / Janpath.";
-    day2Evening = "06:00 PM — Sunset stroll at Gomti Riverfront Park and Ambedkar Memorial Park with monumental stone architecture.";
-
-    day3Morning = "09:00 AM — Explore State Museum and Lucknow Zoo, or visit the historic Dilkusha Kothi and La Martiniere College architecture.";
-    day3Afternoon = "01:30 PM — Nihari-Kulcha at Rahim's in Akbari Gate. Sample artisanal attar perfumes and silver zardozi crafts in old bazaars.";
-    day3Evening = "06:30 PM — Modern shopping and dining at Phoenix Palassio or Lulu Mall Lucknow.";
-  } else if (city === 'Ayodhya') {
-    day1Morning = "06:30 AM — Holy dip at Sarayu Ghats (Ram Ki Paidi). Darshan at the magnificent Shri Ram Janmabhoomi Mandir.";
-    day1Afternoon = "12:30 PM — Visit Hanuman Garhi fortress temple and the ornate Kanak Bhawan Palace. Enjoy traditional Satvik thali lunch.";
-    day1Evening = "06:30 PM — Magnificent Sarayu River Maha Aarti at Naya Ghat. Stroll down the brightly illuminated Ram Path.";
-    
-    day2Morning = "08:30 AM — Visit Dashrath Mahal, Sita Ki Rasoi, and the ancient Nageshwarnath Temple established by Kusha.";
-    day2Afternoon = "01:00 PM — Explore Ram Katha Museum and park. Sample local Ayodhya Khurchan Peda and Bedhai-Jalebi.";
-    day2Evening = "05:30 PM — Sunset at Guptar Ghat on the Sarayu, where Lord Rama is believed to have concluded his earthly journey.";
-
-    day3Morning = "08:30 AM — Visit Mani Parbat and the peaceful international monasteries; explore Surya Kund heritage complex.";
-    day3Afternoon = "01:30 PM — Shop for holy souvenirs, brass puja idols, and wooden mementos along Bhakti Path.";
-    day3Evening = "06:00 PM — Evening musical fountain show at Ram Ki Paidi.";
+function generateTripPlan() {
+  const plan = buildAtpStructuredPlan();
+  if (plan) {
+    atpState.lastGeneratedPlan = plan;
+    renderAtpOutput();
   }
-
-  let html = `
-    <div style="margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-      <h3 style="margin:0;font-size:20px">🗺️ ${days}-Day ${escapeHtml(city)} Plan (${escapeHtml(style.toUpperCase())})</h3>
-      <span style="font-weight:800;background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:20px;font-size:13px">Est. Budget: ${budgetText}</span>
-    </div>
-
-    <div class="itinerary-day">
-      <h4>☀️ Day 1 — Highlights & Flavors</h4>
-      <div class="itinerary-slot"><b>🌅 Morning:</b> ${escapeHtml(day1Morning)}</div>
-      <div class="itinerary-slot"><b>🍽️ Afternoon:</b> ${escapeHtml(day1Afternoon)}</div>
-      <div class="itinerary-slot"><b>🌆 Evening:</b> ${escapeHtml(day1Evening)}</div>
-    </div>
-  `;
-
-  if (days >= 2) {
-    html += `
-      <div class="itinerary-day">
-        <h4>🏛️ Day 2 — Cultural Deep Dive & Excursions</h4>
-        <div class="itinerary-slot"><b>🌅 Morning:</b> ${escapeHtml(day2Morning)}</div>
-        <div class="itinerary-slot"><b>🍽️ Afternoon:</b> ${escapeHtml(day2Afternoon)}</div>
-        <div class="itinerary-slot"><b>🌆 Evening:</b> ${escapeHtml(day2Evening)}</div>
-      </div>
-    `;
-  }
-
-  if (days >= 3) {
-    html += `
-      <div class="itinerary-day">
-        <h4>🌿 Day 3 — Hidden Gems & Souvenirs</h4>
-        <div class="itinerary-slot"><b>🌅 Morning:</b> ${escapeHtml(day3Morning)}</div>
-        <div class="itinerary-slot"><b>🍽️ Afternoon:</b> ${escapeHtml(day3Afternoon)}</div>
-        <div class="itinerary-slot"><b>🌆 Evening:</b> ${escapeHtml(day3Evening)}</div>
-      </div>
-    `;
-  }
-
-  out.innerHTML = html;
 }
 
-function copyItinerary(){
+function copyItinerary() {
   const out = document.getElementById('plannerOutput');
-  if(!out) return;
+  if (!out) return;
   const text = out.innerText;
   navigator.clipboard.writeText(text).then(() => {
-    alert('Itinerary copied to clipboard!');
+    showAtpAlert('Itinerary copied to clipboard!', 'success');
   }).catch(() => {
-    alert('Please select and copy the text directly.');
+    showAtpAlert('Please select and copy the itinerary text directly.', 'warn');
   });
 }
 
-function openCityFromPlanner(){
-  const city = document.getElementById('plannerCitySelect').value;
+function openCityFromPlanner() {
+  const city = atpState.destination || document.getElementById('atpDestination')?.value || 'Varanasi';
   closeTripPlanner();
   safeOpenCity(city);
 }
