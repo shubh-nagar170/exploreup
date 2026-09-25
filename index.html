@@ -179,18 +179,15 @@ body.dark .search-autocomplete-action{color:#60a5fa}
 .home-trust{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
 .home-trust span{padding:7px 13px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);border-radius:999px;color:#f2f7ff;font-size:12px;font-weight:750;backdrop-filter:blur(8px)}
 
-/* Arya AI Hero Widget - Stitch Concierge Styling */
-.hero-arya{width:min(420px,36vw);flex:0 0 auto;background:#ffffff;color:var(--text);border-radius:22px;box-shadow:0 22px 60px rgba(5,24,51,.25);overflow:hidden;border:1px solid rgba(11,36,71,.15)}
-.hero-arya-head{display:flex;align-items:center;gap:12px;padding:14px 18px;background:#0b2447;color:#fff;border-bottom:1px solid rgba(255,184,46,.3)}
-.hero-arya-head b{font-size:16px;color:#fff;display:block;letter-spacing:-.2px}.hero-arya-head small{display:flex;align-items:center;gap:5px;font-size:11px;color:#cbd5e1;margin-top:2px}
-.hero-arya-body{padding:16px;background:linear-gradient(180deg,#f8fafc 0%,#f1f5f9 100%)}
-.hero-arya-body p{color:var(--muted);font-size:12.5px;line-height:1.5;margin:2px 0 10px}
-.hero-arya-msg{background:#ffffff;border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.5;border:1px solid #e2e8f0;border-left:4px solid #f59e0b;box-shadow:0 2px 6px rgba(0,0,0,.03)}
-.hero-arya-prompts{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.hero-arya-prompts button{border:1px solid #e2e8f0;background:#fff;color:#334155;border-radius:999px;padding:6px 11px;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:4px}
-.hero-arya-prompts button:hover{background:#fffbeb;border-color:#f59e0b;color:#92400e;transform:translateY(-1px);box-shadow:0 2px 8px rgba(245,158,11,.15)}
-.hero-arya-cta{width:100%;margin-top:12px;border:0;border-radius:14px;padding:11px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#071b35;font-weight:800;font-size:13.5px;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 12px rgba(245,158,11,.3)}
-.hero-arya-cta:hover{background:linear-gradient(135deg,#f59e0b,#ea580c);color:#fff;transform:translateY(-1px);box-shadow:0 6px 18px rgba(234,88,12,.4)}
+/* Smart Search Dropdown Enhancements (City, Places & Arya AI Entry Point) */
+.search-autocomplete-section-label{padding:8px 16px 4px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);background:rgba(11,36,71,.02);border-top:1px solid var(--line)}
+.search-autocomplete-section-label:first-child{border-top:0}
+body.dark .search-autocomplete-section-label{background:rgba(255,255,255,.03);color:#94a3b8;border-color:#1e3a5f}
+.search-autocomplete-item.place-item{padding-left:24px}
+.search-autocomplete-item.ai-item{background:linear-gradient(90deg,rgba(251,191,36,.10),rgba(245,158,11,.04));border-left:3px solid #f59e0b}
+.search-autocomplete-item.ai-item:hover{background:linear-gradient(90deg,rgba(251,191,36,.20),rgba(245,158,11,.10))}
+body.dark .search-autocomplete-item.ai-item{background:linear-gradient(90deg,rgba(251,191,36,.14),rgba(245,158,11,.05));border-left:3px solid #fbbf24}
+
 
 /* Main Container & Categories */
 .wrap{width:min(1400px,92%);margin:auto}
@@ -969,7 +966,7 @@ body.dark .district{background:#10243c;border-color:#223854;color:#eef5ff}
 body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 
 /* Responsive */
-@media(max-width:1050px){.categories{grid-template-columns:repeat(5,1fr)}.cities{grid-template-columns:repeat(3,1fr)}.hero-arya{display:none}.planner-form-grid{grid-template-columns:1fr 1fr}.districts{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:1050px){.categories{grid-template-columns:repeat(5,1fr)}.cities{grid-template-columns:repeat(3,1fr)}.planner-form-grid{grid-template-columns:1fr 1fr}.districts{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:768px){
   .navlinks{display:none}.nav{padding:0 4%;height:64px}.logo{font-size:19px}
   .hero{min-height:500px;padding:45px 5% 65px}
@@ -1152,7 +1149,7 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
    <div style="position:relative">
     <div class="search-wrapper" style="position:relative;max-width:740px;">
      <form class="search" id="home-search-form" action="/district.html" method="GET" onsubmit="performSearch(event); return false;">
-      <input id="home-search-input" name="id" placeholder="Search any city, monument or food (e.g. Agra, Taj Mahal, Petha, Varanasi, Ghats)..." autocomplete="off">
+      <input id="home-search-input" name="id" placeholder="Search any city, monument, food or ask Arya AI (e.g. Agra, Taj Mahal, Plan a 3 day Agra trip)..." autocomplete="off">
       <button type="submit" id="home-search-btn" onclick="performSearch(event)">⌕ &nbsp; Search</button>
      </form>
      <div id="home-search-dropdown" class="search-autocomplete-dropdown"></div>
@@ -1171,35 +1168,6 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
    </div>
    </div>
   </div>
- </div>
- 
- <div class="hero-arya" aria-label="Arya AI Concierge preview">
-  <div class="hero-arya-head">
-    <div class="arya-logo-badge" style="width:36px;height:36px">
-      <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;color:#071b35">
-        <path d="M12 2L13.8 8.2L20 10L13.8 11.8L12 18L10.2 11.8L4 10L10.2 8.2L12 2Z"></path>
-      </svg>
-      <span class="arya-pulse-badge"></span>
-    </div>
-    <div>
-      <b>Arya AI Concierge</b>
-      <small><span class="arya-pulse-dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10b981;margin-right:2px"></span> Explore Uttar Pradesh • Gemini AI</small>
-    </div>
-  </div>
-  <div class="hero-arya-body">
-   <p>Ask Arya anything about UP cities, Taj Mahal timings, local food, budget itineraries, trains or hotels.</p>
-   <div class="hero-arya-msg"><b>Namaste! 🙏</b><br>Planning a visit to Agra or Varanasi? Ask me for a customized itinerary!</div>
-   <div class="hero-arya-prompts">
-     <button onclick="heroAryaQuick('Agra Taj Mahal timing and 1-day trip plan')">🏰 Agra 1-Day Plan</button>
-     <button onclick="heroAryaQuick('What are the must-try street foods in Varanasi?')">🍲 Varanasi Food</button>
-     <button onclick="heroAryaQuick('Ayodhya Ram Mandir visit guide and tips')">🚩 Ayodhya Guide</button>
-     <button onclick="heroAryaQuick('Lucknow famous kebabs and Awadhi food guide')">🍢 Lucknow Food</button>
-     <button onclick="heroAryaQuick('Calculate 3-day budget for a trip across Uttar Pradesh')">💰 Budget Calculation</button>
-     <button onclick="heroAryaQuick('Best heritage walks and monuments in Uttar Pradesh')">🏛️ Heritage Walks</button>
-   </div>
-   <button class="hero-arya-cta" onclick="toggleArya()">✨ Launch Arya AI Concierge</button>
-  </div>
- </div>
 </section>
 
 <main class="wrap" id="mainContent">
@@ -3630,7 +3598,128 @@ function filterHomeGrids(rawQuery){
   renderSearchDropdown(q);
 }
 
-// Get autocomplete suggestions populated directly from districts.json
+// Curated iconic places per city for rich City + Places search dropdown
+const CITY_FAMOUS_PLACES = {
+  agra: [
+    { icon: '🏛️', name: 'Taj Mahal', sub: 'UNESCO World Heritage White Marble Mausoleum' },
+    { icon: '🏰', name: 'Agra Fort', sub: 'Historic Mughal Red Sandstone Fortress' },
+    { icon: '🏛️', name: 'Fatehpur Sikri', sub: '16th-Century Mughal Imperial Capital & Buland Darwaza' },
+    { icon: '🏛️', name: 'Mehtab Bagh', sub: 'Moonlit Yamuna Riverside Viewpoint of Taj Mahal' },
+    { icon: '🕌', name: 'Itmad-ud-Daulah', sub: 'Baby Taj Marble Tomb on the Yamuna Bank' }
+  ],
+  lucknow: [
+    { icon: '🏛️', name: 'Bara Imambara', sub: 'Asafi Imambara & Legendary Bhool Bhulaiya Labyrinth' },
+    { icon: '🏛️', name: 'Rumi Darwaza', sub: 'Iconic 60-Foot Awadhi Gateway Landmark' },
+    { icon: '🛍️', name: 'Hazratganj', sub: 'Historic Heritage Shopping & Culinary Promenade' },
+    { icon: '🌳', name: 'Ambedkar Memorial Park', sub: 'Grand Pink Sandstone Monument & Gardens' },
+    { icon: '🏛️', name: 'British Residency', sub: 'Historic 1857 Heritage Complex & Museum' }
+  ],
+  varanasi: [
+    { icon: '🏛️', name: 'Kashi Vishwanath Temple', sub: 'Sacred Golden Jyotirlinga Corridor on the Ganges' },
+    { icon: '🌊', name: 'Dashashwamedh Ghat', sub: 'World-Famous Evening Ganga Aarti Riverfront' },
+    { icon: '🌊', name: 'Assi Ghat', sub: 'Subah-e-Banaras Morning Aarti & Heritage Ghat' },
+    { icon: '☸️', name: 'Sarnath', sub: 'Dhamek Stupa & Ancient Buddhist Deer Park' },
+    { icon: '🏰', name: 'Ramnagar Fort', sub: '18th-Century Kashi Naresh Riverside Fortress' }
+  ],
+  ayodhya: [
+    { icon: '🛕', name: 'Shri Ram Janmabhoomi Mandir', sub: 'Grand Sacred Ram Mandir Complex' },
+    { icon: '🛕', name: 'Hanuman Garhi', sub: 'Ancient Hilltop Fortress Temple of Lord Hanuman' },
+    { icon: '🌊', name: 'Saryu Ghat (Ram Ki Paidi)', sub: 'Sacred Riverfront Ghats & Evening Aarti' },
+    { icon: '🏛️', name: 'Kanak Bhawan', sub: 'Ornate Golden-Crowned Palace Temple' }
+  ],
+  mathura: [
+    { icon: '🛕', name: 'Shri Krishna Janmasthan', sub: 'Sacred Birthplace Temple of Lord Krishna' },
+    { icon: '🛕', name: 'Dwarkadhish Temple', sub: 'Iconic Carved Braj Temple Architecture' },
+    { icon: '🌊', name: 'Vishram Ghat', sub: 'Sacred Yamuna Riverfront & Evening Aarti' },
+    { icon: '🛕', name: 'Banke Bihari Temple, Vrindavan', sub: 'World-Famous Sacred Vrindavan Shrine' }
+  ],
+  prayagraj: [
+    { icon: '🌊', name: 'Triveni Sangam', sub: 'Sacred Confluence of Ganga, Yamuna & Saraswati' },
+    { icon: '🏰', name: 'Allahabad Fort', sub: 'Emperor Akbar’s Grand Riverfront Fort' },
+    { icon: '🏛️', name: 'Anand Bhavan', sub: 'Historic Nehru Family Museum & Planetarium' },
+    { icon: '🌳', name: 'Khusro Bagh', sub: 'Mughal Walled Garden & Sandstone Mausoleums' }
+  ],
+  kanpur: [
+    { icon: '🛕', name: 'JK Temple', sub: 'White Marble Radha Krishna Temple' },
+    { icon: '🌳', name: 'Allen Forest Zoo', sub: 'Natural Forest Zoological Park' },
+    { icon: '🌊', name: 'Bithoor Ganga Ghat', sub: 'Historic Brahmavarta Ghat & Nana Rao Park' }
+  ],
+  gorakhpur: [
+    { icon: '🛕', name: 'Gorakhnath Temple', sub: 'Sacred Nath Tradition Peeth & Complex' },
+    { icon: '🌊', name: 'Ramgarh Tal', sub: 'Scenic 1700-Acre Waterfront Promenade' },
+    { icon: '🏛️', name: 'Geeta Press', sub: 'World-Famous Spiritual Heritage Landmark' }
+  ],
+  jhansi: [
+    { icon: '🏰', name: 'Jhansi Fort', sub: 'Rani Lakshmibai’s Historic Hilltop Fortress' },
+    { icon: '🏛️', name: 'Rani Mahal', sub: 'Royal 18th-Century Palace & Archaeological Museum' }
+  ]
+};
+
+function getPlacesForDistrict(districtId, districtName){
+  const slug = String(districtId || '').toLowerCase().trim();
+  if(CITY_FAMOUS_PLACES[slug]) return CITY_FAMOUS_PLACES[slug];
+
+  const results = [];
+  const source = window.districtsData || loadedDistrictsData || {};
+  const dObj = source[slug];
+  const cObj = (typeof cities !== 'undefined' && Array.isArray(cities))
+    ? cities.find(c => c.name.toLowerCase() === String(districtName || slug).toLowerCase())
+    : null;
+
+  const rawPlaces = (dObj && dObj.places) || (cObj && cObj.places) || '';
+  if(typeof rawPlaces === 'string' && rawPlaces.trim()){
+    rawPlaces.split(',').map(s => s.trim()).filter(Boolean).slice(0, 5).forEach(pName => {
+      let icon = '🏛️';
+      const lower = pName.toLowerCase();
+      if(lower.includes('fort') || lower.includes('qila')) icon = '🏰';
+      else if(lower.includes('ghat') || lower.includes('sangam') || lower.includes('lake') || lower.includes('tal')) icon = '🌊';
+      else if(lower.includes('temple') || lower.includes('mandir') || lower.includes('dham')) icon = '🛕';
+      else if(lower.includes('park') || lower.includes('wildlife') || lower.includes('sanctuary') || lower.includes('zoo')) icon = '🌳';
+      results.push({
+        icon,
+        name: pName,
+        sub: `Famous Landmark in ${districtName || slug.charAt(0).toUpperCase() + slug.slice(1)}`
+      });
+    });
+  }
+  return results;
+}
+
+// Determine whether a search query is an AI/travel question vs a City/Place search
+function isAiTravelQuery(rawQuery){
+  if(!rawQuery) return false;
+  const q = String(rawQuery).trim().toLowerCase();
+  if(!q) return false;
+
+  // 1. Ends with a question mark
+  if(q.includes('?')) return true;
+
+  // 2. Starts with natural-language question/command words
+  if(/^(plan|what|how|where|when|which|why|who|can|could|should|suggest|recommend|calculate|tell|give|guide|create|make|help|find|best|top|is|are|do|does)\b/i.test(q)){
+    return true;
+  }
+
+  // 3. Contains travel-planning, budget, food-in-city, transport or itinerary intent patterns
+  if(/\b(plan\b|itinerary|trip\b|budget|cost|expense|under\s*₹?\s*\d+|₹\s*\d+|rs\.?\s*\d+|\d+\s*days?|day\s+trip|family\s+trip|solo\s+trip|couple\s+trip|what\s+to|where\s+to|how\s+to|how\s+do|how\s+much|best\s+places|best\s+time|best\s+food|best\s+hotels|places\s+to\s+visit|places\s+in\b|things\s+to\s+do|must\s+visit|must\s+try|food\s+in\b|eat\s+in\b|stay\s+in\b|hotels?\s+in\b|reach\b|travel\s+from|from\s+[a-z]+\s+to\s+[a-z]+|time\s+to\s+visit|weather\s+in|timings?\b|ticket\s+price)/i.test(q)){
+    return true;
+  }
+
+  return false;
+}
+
+// Launch full Arya AI Concierge panel and immediately submit the user's query
+function openAryaWithQuery(queryText){
+  const q = String(queryText || '').trim();
+  if(!q) return;
+  const dropdown = document.getElementById('home-search-dropdown');
+  if(dropdown) dropdown.style.display = 'none';
+  const res = document.getElementById('results');
+  if(res) res.style.display = 'none';
+
+  heroAryaQuick(q);
+}
+
+// Get autocomplete suggestions populated directly from districts.json & cities
 function getDistrictSuggestions(query){
   if(!query) return [];
   const q = String(query).trim().toLowerCase();
@@ -3675,8 +3764,12 @@ function getDistrictSuggestions(query){
     });
   }
 
-  // Sort: items starting with typed query appear first (e.g. 'ag' -> 'Agra' first)
+  // Sort: exact match first, then startsWith, then alphabetical
   list.sort((a, b) => {
+    const aExact = a.name.toLowerCase() === q || a.id === q;
+    const bExact = b.name.toLowerCase() === q || b.id === q;
+    if(aExact && !bExact) return -1;
+    if(!aExact && bExact) return 1;
     if(a.starts && !b.starts) return -1;
     if(!a.starts && b.starts) return 1;
     return a.name.localeCompare(b.name);
@@ -3685,7 +3778,48 @@ function getDistrictSuggestions(query){
   return list;
 }
 
-// Render dynamic autocomplete dropdown menu
+// Search across all famous places in UP cities (e.g. "Taj Mahal", "Bara Imambara", "Kashi Vishwanath")
+function getPlaceSuggestions(query){
+  if(!query) return [];
+  const q = String(query).trim().toLowerCase();
+  if(!q) return [];
+
+  const matches = [];
+  const allCityMeta = [];
+
+  if(typeof cities !== 'undefined' && Array.isArray(cities)){
+    cities.forEach(c => {
+      const slug = c.name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      allCityMeta.push({ id: slug, name: c.name });
+    });
+  } else {
+    Object.keys(CITY_FAMOUS_PLACES).forEach(slug => {
+      allCityMeta.push({ id: slug, name: slug.charAt(0).toUpperCase() + slug.slice(1) });
+    });
+  }
+
+  allCityMeta.forEach(city => {
+    const places = getPlacesForDistrict(city.id, city.name);
+    places.forEach(p => {
+      const pLower = p.name.toLowerCase();
+      if(pLower.includes(q) || q.includes(pLower)){
+        matches.push({
+          districtId: city.id,
+          districtName: city.name,
+          icon: p.icon || '🏛️',
+          name: p.name,
+          sub: p.sub || `Famous Place in ${city.name}`,
+          starts: pLower.startsWith(q)
+        });
+      }
+    });
+  });
+
+  matches.sort((a, b) => (b.starts ? 1 : 0) - (a.starts ? 1 : 0));
+  return matches;
+}
+
+// Render dynamic Smart Search dropdown menu (Cities + Places + Arya AI Suggestions)
 function renderSearchDropdown(q){
   const dropdown = document.getElementById('home-search-dropdown');
   const box = document.getElementById('results');
@@ -3698,50 +3832,187 @@ function renderSearchDropdown(q){
     return;
   }
 
-  const suggestions = getDistrictSuggestions(raw);
-
-  if(suggestions.length === 0){
-    const emptyHtml = `
-      <div class="search-autocomplete-item no-match" style="cursor:default;padding:12px 16px;color:var(--muted)">
-        <span>No matching district for "<b>${escapeHtml(raw)}</b>"</span>
-      </div>
-    `;
-    if(dropdown){ dropdown.innerHTML = emptyHtml; dropdown.style.display = 'block'; }
-    if(box){ box.innerHTML = emptyHtml; box.style.display = 'block'; }
-    return;
-  }
-
+  const lower = raw.toLowerCase();
   const escapedQuery = raw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const regex = new RegExp(`(${escapedQuery})`, 'gi');
+  const safeHighlight = (text) => escapeHtml(text).replace(regex, '<mark>$1</mark>');
+  const safeJsStr = (text) => String(text || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
-  const itemsHtml = suggestions.slice(0, 8).map(s => {
-    const highlightedTitle = escapeHtml(s.name).replace(regex, '<mark>$1</mark>');
-    return `
-      <div class="search-autocomplete-item" data-district-id="${escapeHtml(s.id)}" onclick="navigateToDistrict('${escapeHtml(s.id)}')">
+  let htmlParts = [];
+
+  const aiMode = isAiTravelQuery(raw) || lower.startsWith('plan') || lower.startsWith('budget') || lower.startsWith('ask');
+  const citySuggestions = getDistrictSuggestions(raw);
+  const placeSuggestions = getPlaceSuggestions(raw);
+
+  // MODE B: If user is typing "plan" or an AI travel query, show compact AI options at top
+  if(aiMode){
+    htmlParts.push(`<div class="search-autocomplete-section-label">✨ Arya AI Travel Concierge</div>`);
+    htmlParts.push(`
+      <div class="search-autocomplete-item ai-item" onclick="openAryaWithQuery('${safeJsStr(raw)}')">
+        <div class="search-autocomplete-icon">✨</div>
+        <div class="search-autocomplete-content">
+          <div class="search-autocomplete-title">Ask Arya AI: "${escapeHtml(raw)}"</div>
+          <div class="search-autocomplete-sub">Get an instant personalized answer from Arya AI Concierge</div>
+        </div>
+        <div class="search-autocomplete-action">Ask Arya →</div>
+      </div>
+    `);
+
+    if(lower === 'plan' || lower.startsWith('plan')){
+      htmlParts.push(`
+        <div class="search-autocomplete-item ai-item" onclick="openAryaWithQuery('Plan a 3 day Uttar Pradesh heritage and food trip')">
+          <div class="search-autocomplete-icon">✨</div>
+          <div class="search-autocomplete-content">
+            <div class="search-autocomplete-title">Plan a trip</div>
+            <div class="search-autocomplete-sub">Custom day-by-day itinerary for Agra, Varanasi, Lucknow or Ayodhya</div>
+          </div>
+          <div class="search-autocomplete-action">Plan →</div>
+        </div>
+        <div class="search-autocomplete-item ai-item" onclick="openAryaWithQuery('Calculate trip budget for a 3-day trip in Uttar Pradesh')">
+          <div class="search-autocomplete-icon">✨</div>
+          <div class="search-autocomplete-content">
+            <div class="search-autocomplete-title">Calculate trip budget</div>
+            <div class="search-autocomplete-sub">Estimate hotel, transport, food & sightseeing expenses</div>
+          </div>
+          <div class="search-autocomplete-action">Calculate →</div>
+        </div>
+        <div class="search-autocomplete-item ai-item" onclick="openAryaWithQuery('Best places to visit in Uttar Pradesh')">
+          <div class="search-autocomplete-icon">✨</div>
+          <div class="search-autocomplete-content">
+            <div class="search-autocomplete-title">Find places to visit</div>
+            <div class="search-autocomplete-sub">Top monuments, sacred temples, riverfront ghats & hidden gems</div>
+          </div>
+          <div class="search-autocomplete-action">Explore →</div>
+        </div>
+      `);
+    }
+  }
+
+  // MODE A: City & Place Search Results
+  if(citySuggestions.length > 0){
+    const primaryCity = citySuggestions[0];
+    const cityPlaces = getPlacesForDistrict(primaryCity.id, primaryCity.name);
+
+    htmlParts.push(`<div class="search-autocomplete-section-label">📍 City Destination</div>`);
+    htmlParts.push(`
+      <div class="search-autocomplete-item" data-district-id="${escapeHtml(primaryCity.id)}" onclick="navigateToDistrict('${escapeHtml(primaryCity.id)}')">
         <div class="search-autocomplete-icon">📍</div>
         <div class="search-autocomplete-content">
-          <div class="search-autocomplete-title">${highlightedTitle}</div>
-          ${s.tagline ? `<div class="search-autocomplete-sub">${escapeHtml(s.tagline)}</div>` : ''}
+          <div class="search-autocomplete-title">${safeHighlight(primaryCity.name)}</div>
+          <div class="search-autocomplete-sub">${escapeHtml(primaryCity.tagline || `Explore ${primaryCity.name} tourism guide, monuments, food & stays`)}</div>
+        </div>
+        <div class="search-autocomplete-action">Explore ${escapeHtml(primaryCity.name)} →</div>
+      </div>
+    `);
+
+    if(cityPlaces.length > 0){
+      htmlParts.push(`<div class="search-autocomplete-section-label">🏛️ Places Inside ${escapeHtml(primaryCity.name)}</div>`);
+      cityPlaces.slice(0, 5).forEach(p => {
+        htmlParts.push(`
+          <div class="search-autocomplete-item place-item" data-district-id="${escapeHtml(primaryCity.id)}" onclick="navigateToDistrict('${escapeHtml(primaryCity.id)}', '${safeJsStr(p.name)}')">
+            <div class="search-autocomplete-icon">${p.icon || '🏛️'}</div>
+            <div class="search-autocomplete-content">
+              <div class="search-autocomplete-title">${safeHighlight(p.name)}, ${escapeHtml(primaryCity.name)}</div>
+              <div class="search-autocomplete-sub">${escapeHtml(p.sub || `Famous Place in ${primaryCity.name}`)}</div>
+            </div>
+            <div class="search-autocomplete-action">View Place →</div>
+          </div>
+        `);
+      });
+    }
+
+    // Additional matching cities if query is a short prefix (e.g. "A" -> Agra, Ayodhya, Aligarh)
+    if(citySuggestions.length > 1){
+      htmlParts.push(`<div class="search-autocomplete-section-label">🗺️ Other Matching Cities</div>`);
+      citySuggestions.slice(1, 4).forEach(c => {
+        htmlParts.push(`
+          <div class="search-autocomplete-item" data-district-id="${escapeHtml(c.id)}" onclick="navigateToDistrict('${escapeHtml(c.id)}')">
+            <div class="search-autocomplete-icon">📍</div>
+            <div class="search-autocomplete-content">
+              <div class="search-autocomplete-title">${safeHighlight(c.name)}</div>
+              ${c.tagline ? `<div class="search-autocomplete-sub">${escapeHtml(c.tagline)}</div>` : ''}
+            </div>
+            <div class="search-autocomplete-action">Explore ${escapeHtml(c.name)} →</div>
+          </div>
+        `);
+      });
+    }
+  } else if(placeSuggestions.length > 0){
+    // User searched directly for a place/monument (e.g. "Taj Mahal", "Bara Imambara", "Kashi Vishwanath")
+    const topPlace = placeSuggestions[0];
+    const parentPlaces = getPlacesForDistrict(topPlace.districtId, topPlace.districtName);
+
+    htmlParts.push(`<div class="search-autocomplete-section-label">🏛️ Matching Landmark & City</div>`);
+    htmlParts.push(`
+      <div class="search-autocomplete-item" data-district-id="${escapeHtml(topPlace.districtId)}" onclick="navigateToDistrict('${escapeHtml(topPlace.districtId)}', '${safeJsStr(topPlace.name)}')">
+        <div class="search-autocomplete-icon">${topPlace.icon || '🏛️'}</div>
+        <div class="search-autocomplete-content">
+          <div class="search-autocomplete-title">${safeHighlight(topPlace.name)}, ${escapeHtml(topPlace.districtName)}</div>
+          <div class="search-autocomplete-sub">${escapeHtml(topPlace.sub)}</div>
         </div>
         <div class="search-autocomplete-action">Open Guide →</div>
       </div>
-    `;
-  }).join('');
+      <div class="search-autocomplete-item" data-district-id="${escapeHtml(topPlace.districtId)}" onclick="navigateToDistrict('${escapeHtml(topPlace.districtId)}')">
+        <div class="search-autocomplete-icon">📍</div>
+        <div class="search-autocomplete-content">
+          <div class="search-autocomplete-title">${escapeHtml(topPlace.districtName)}</div>
+          <div class="search-autocomplete-sub">Explore all monuments, food, hotels & transport in ${escapeHtml(topPlace.districtName)}</div>
+        </div>
+        <div class="search-autocomplete-action">Explore ${escapeHtml(topPlace.districtName)} →</div>
+      </div>
+    `);
 
+    const otherPlaces = parentPlaces.filter(p => p.name.toLowerCase() !== topPlace.name.toLowerCase()).slice(0, 4);
+    if(otherPlaces.length > 0){
+      htmlParts.push(`<div class="search-autocomplete-section-label">🏛️ More Places in ${escapeHtml(topPlace.districtName)}</div>`);
+      otherPlaces.forEach(p => {
+        htmlParts.push(`
+          <div class="search-autocomplete-item place-item" data-district-id="${escapeHtml(topPlace.districtId)}" onclick="navigateToDistrict('${escapeHtml(topPlace.districtId)}', '${safeJsStr(p.name)}')">
+            <div class="search-autocomplete-icon">${p.icon || '🏛️'}</div>
+            <div class="search-autocomplete-content">
+              <div class="search-autocomplete-title">${escapeHtml(p.name)}, ${escapeHtml(topPlace.districtName)}</div>
+              <div class="search-autocomplete-sub">${escapeHtml(p.sub)}</div>
+            </div>
+            <div class="search-autocomplete-action">View Place →</div>
+          </div>
+        `);
+      });
+    }
+  }
+
+  // If not already in AI mode, include a subtle Arya AI option at the bottom so any search can launch AI
+  if(!aiMode){
+    htmlParts.push(`
+      <div class="search-autocomplete-item ai-item" onclick="openAryaWithQuery('${safeJsStr(raw)}')">
+        <div class="search-autocomplete-icon">✨</div>
+        <div class="search-autocomplete-content">
+          <div class="search-autocomplete-title">Ask Arya AI about "${escapeHtml(raw)}"</div>
+          <div class="search-autocomplete-sub">Plan itinerary, check timings, local food & trip budget with AI</div>
+        </div>
+        <div class="search-autocomplete-action">Ask Arya AI →</div>
+      </div>
+    `);
+  }
+
+  const finalHtml = htmlParts.join('');
   if(dropdown){
-    dropdown.innerHTML = itemsHtml;
+    dropdown.innerHTML = finalHtml;
     dropdown.style.display = 'block';
   }
   if(box){
-    box.innerHTML = itemsHtml;
+    box.innerHTML = finalHtml;
     box.style.display = 'block';
   }
 }
 
-// Immediate navigation on clicking a suggestion
-function navigateToDistrict(id){
+// Immediate navigation on clicking a city or place suggestion
+function navigateToDistrict(id, placeName){
   if(!id) return;
-  window.location.href = '/district.html?id=' + encodeURIComponent(id.toLowerCase().trim());
+  let url = '/district.html?id=' + encodeURIComponent(id.toLowerCase().trim());
+  if(placeName){
+    url += '&place=' + encodeURIComponent(placeName.trim());
+  }
+  window.location.href = url;
 }
 
 // Main Search & Redirect on click or Enter
@@ -3752,6 +4023,7 @@ function searchSite(e){
 const homeSearchInput = document.getElementById('home-search-input');
 if(homeSearchInput){
   homeSearchInput.addEventListener('input', () => {
+    window._lastSubmittedCitySearch = null;
     const val = homeSearchInput.value;
     filterHomeGrids(val);
     renderSearchDropdown(val);
@@ -6197,27 +6469,51 @@ function performSearch(event) {
   if (!input) return;
   const rawQuery = input.value.trim();
   if (!rawQuery) return;
-  
-  const query = rawQuery.toLowerCase();
-  
-  // Map common search words to district IDs
-  let districtName = query;
-  if (query.includes('prayagraj') || query.includes('allahabad') || query.includes('sangam')) {
-    districtName = 'prayagraj';
-  } else if (query.includes('lucknow')) {
-    districtName = 'lucknow';
-  } else if (query.includes('agra') || query.includes('petha') || query.includes('taj')) {
-    districtName = 'agra';
-  } else if (query.includes('varanasi') || query.includes('banaras') || query.includes('kashi')) {
-    districtName = 'varanasi';
-  } else if (query.includes('ayodhya') || query.includes('ram')) {
-    districtName = 'ayodhya';
-  } else {
-    // Convert typed district name to lowercase
-    districtName = query;
+
+  // MODE B: Natural-Language AI / Travel Question -> Open Arya AI Concierge & auto-send question
+  if (typeof isAiTravelQuery === 'function' && isAiTravelQuery(rawQuery)) {
+    openAryaWithQuery(rawQuery);
+    return;
   }
-  
-  window.location.href = '/district.html?id=' + encodeURIComponent(districtName);
+
+  const query = rawQuery.toLowerCase();
+  const cityMatches = typeof getDistrictSuggestions === 'function' ? getDistrictSuggestions(rawQuery) : [];
+  const placeMatches = typeof getPlaceSuggestions === 'function' ? getPlaceSuggestions(rawQuery) : [];
+
+  // Fallback to Arya AI if query doesn't match any known city or monument
+  const matchedDistrictSlug = typeof findMatchingDistrict === 'function' ? findMatchingDistrict(rawQuery) : null;
+  if (cityMatches.length === 0 && placeMatches.length === 0 && !matchedDistrictSlug) {
+    openAryaWithQuery(rawQuery);
+    return;
+  }
+
+  // MODE A: City / Place Search -> Show rich City + Places dropdown first; navigate on second Enter/Search or click
+  const dropdown = document.getElementById('home-search-dropdown');
+  const isDropdownVisible = dropdown && dropdown.style.display === 'block' && dropdown.innerHTML.trim().length > 0;
+
+  if (!isDropdownVisible || window._lastSubmittedCitySearch !== query) {
+    window._lastSubmittedCitySearch = query;
+    filterHomeGrids(rawQuery);
+    renderSearchDropdown(rawQuery);
+    return;
+  }
+
+  // Second submit on same city/place query -> Navigate directly to the top matched city/place guide
+  let targetDistrict = matchedDistrictSlug || (cityMatches[0] && cityMatches[0].id) || (placeMatches[0] && placeMatches[0].districtId) || query;
+  if (query.includes('prayagraj') || query.includes('allahabad') || query.includes('sangam')) {
+    targetDistrict = 'prayagraj';
+  } else if (query.includes('lucknow') || query.includes('imambara') || query.includes('rumi darwaza')) {
+    targetDistrict = 'lucknow';
+  } else if (query.includes('agra') || query.includes('petha') || query.includes('taj')) {
+    targetDistrict = 'agra';
+  } else if (query.includes('varanasi') || query.includes('banaras') || query.includes('kashi')) {
+    targetDistrict = 'varanasi';
+  } else if (query.includes('ayodhya') || query.includes('ram')) {
+    targetDistrict = 'ayodhya';
+  }
+
+  const targetPlace = (placeMatches.length > 0 && cityMatches.length === 0) ? placeMatches[0].name : '';
+  navigateToDistrict(targetDistrict, targetPlace);
 }
 
 // Attach onsubmit and click event listeners to that existing search bar element
@@ -6238,11 +6534,6 @@ if (searchBtn) {
 const searchInputEl = document.getElementById('home-search-input') || document.querySelector('.search input');
 if (searchInputEl) {
   searchInputEl.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-      performSearch(e);
-    }
-  });
-  searchInputEl.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
       performSearch(e);
     }
