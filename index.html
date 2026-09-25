@@ -911,52 +911,84 @@ body.dark .atp-place-tip{background:#2b2110;color:#fcd34d;border-color:#78350f}
 }
 
 /* Floating Favourites & Recent */
-.favbar{position:fixed;right:16px;bottom:74px;background:var(--navy);color:#fff;padding:10px 18px;border-radius:30px;z-index:94;box-shadow:0 8px 25px rgba(0,27,59,.4);cursor:pointer;font-weight:800;font-size:13px;border:1px solid rgba(255,255,255,.15);display:inline-flex;align-items:center;gap:6px;transition:all .2s ease}
+.favbar{position:fixed;left:18px;bottom:18px;background:var(--navy);color:#fff;padding:10px 18px;border-radius:30px;z-index:94;box-shadow:0 8px 25px rgba(0,27,59,.4);cursor:pointer;font-weight:800;font-size:13px;border:1px solid rgba(255,255,255,.15);display:inline-flex;align-items:center;gap:6px;transition:all .2s ease}
 .favbar:hover{transform:translateY(-2px);background:#0d284a}
-.favpanel{display:none;position:fixed;right:16px;bottom:128px;width:min(340px,90vw);background:var(--card);border:1px solid var(--line);border-radius:18px;z-index:96;padding:18px;box-shadow:0 12px 40px rgba(0,27,59,.35)}
+.favpanel{display:none;position:fixed;left:18px;bottom:72px;width:min(340px,90vw);background:var(--card);border:1px solid var(--line);border-radius:18px;z-index:96;padding:18px;box-shadow:0 12px 40px rgba(0,27,59,.35)}
 .favpanel h3{margin-top:0}.favitem{padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}.empty{color:var(--muted);font-size:13px}
 .recent-wrap{margin:18px auto 0;max-width:1400px;padding:0 5%}
 .recent-strip{display:flex;gap:10px;overflow-x:auto;padding:4px 0 8px;scrollbar-width:thin}
 .recent-card{flex:0 0 auto;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:10px 14px;cursor:pointer;font-weight:800;color:var(--text);box-shadow:0 4px 14px rgba(7,27,53,.06)}
 .recent-card small{display:block;color:var(--muted);font-weight:600;margin-top:3px}
 
-/* Mobile & Global Sticky Bottom Action Bar (Plan Trip + Ask Arya) */
-.bottom-sticky-bar{
+/* Single Floating Draggable "✨ Ask Arya" Button */
+.floating-ask-arya-btn{
   position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  z-index:95;
-  background:rgba(255,255,255,0.2);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  padding:8px 14px;
-  box-shadow:0 -4px 16px rgba(0,0,0,.06);
-  border-top:1px solid rgba(255,255,255,0.25);
-  display:flex;
-  justify-content:center;
+  right:24px;
+  bottom:24px;
+  z-index:9990;
+  min-width:168px;
+  height:50px;
+  padding:0 22px;
+  border-radius:999px;
+  border:1.5px solid rgba(255,255,255,.68);
+  background:linear-gradient(135deg,#ffd04d 0%,#f59e0b 100%);
+  color:#071b35;
+  font-family:inherit;
+  font-weight:850;
+  font-size:15.5px;
+  letter-spacing:-.2px;
+  display:inline-flex;
   align-items:center;
-  transition:transform .32s cubic-bezier(0.16,1,0.3,1),opacity .28s ease;
-  transform:translateY(0);
-  opacity:1;
+  justify-content:center;
+  gap:8px;
+  box-shadow:0 10px 28px rgba(7,27,53,.24),0 4px 12px rgba(245,158,11,.42),inset 0 1px 0 rgba(255,255,255,.55);
+  cursor:grab;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+  touch-action:none;
+  transition:transform .16s ease,box-shadow .16s ease,filter .16s ease;
+  white-space:nowrap;
+}
+.floating-ask-arya-btn:hover{
+  filter:brightness(1.04);
+  box-shadow:0 14px 32px rgba(7,27,53,.30),0 6px 16px rgba(245,158,11,.52),inset 0 1px 0 rgba(255,255,255,.7);
+}
+.floating-ask-arya-btn.is-dragging{
+  cursor:grabbing;
+  transform:scale(1.05);
+  box-shadow:0 18px 38px rgba(7,27,53,.36),0 8px 20px rgba(245,158,11,.58);
+  transition:none;
+}
+.floating-ask-arya-btn .ask-arya-sparkle{
+  font-size:16px;
+  line-height:1;
+  display:inline-flex;
+  align-items:center;
   pointer-events:none;
 }
-.bottom-sticky-bar.hidden-bar{
-  transform:translateY(115%);
-  opacity:0;
+.floating-ask-arya-btn .ask-arya-label{
+  color:#071b35;
+  font-weight:850;
   pointer-events:none;
 }
-body.dark .bottom-sticky-bar{
-  background:rgba(7,21,37,0.45);
-  border-top-color:rgba(255,255,255,0.08);
-  box-shadow:0 -4px 16px rgba(0,0,0,.25);
+body.dark .floating-ask-arya-btn{
+  background:linear-gradient(135deg,#ffd55e 0%,#f59e0b 100%);
+  color:#05162c;
+  border-color:rgba(255,255,255,.78);
+  box-shadow:0 12px 32px rgba(0,0,0,.58),0 0 18px rgba(251,191,36,.38),inset 0 1px 0 rgba(255,255,255,.65);
 }
-.sticky-bar-inner{width:100%;max-width:540px;background:var(--gold);border-radius:28px;padding:4px;display:flex;align-items:center;gap:4px;box-shadow:0 4px 15px rgba(255,181,27,.35);pointer-events:auto}
-.sticky-btn-plan,.sticky-btn-arya{flex:1;border:0;border-radius:24px;padding:10px 14px;font-weight:850;font-size:15px;color:#071b35;background:transparent;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;transition:all .18s ease;font-family:inherit}
-.sticky-btn-plan:hover{background:rgba(255,255,255,.22)}
-.sticky-btn-arya{background:rgba(255,255,255,.32);box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.sticky-btn-arya:hover{background:rgba(255,255,255,.45)}
-body{padding-bottom:76px}
+body.dark .floating-ask-arya-btn .ask-arya-label{
+  color:#05162c;
+}
+@media(max-width:768px){
+  .floating-ask-arya-btn{
+    min-width:152px;
+    height:46px;
+    padding:0 18px;
+    font-size:14.5px;
+  }
+}
 
 /* Districts Grid */
 .districts{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
@@ -2235,17 +2267,11 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   <div id="favList"><div class="empty">No saved destinations yet.</div></div>
 </div>
 
-<!-- Sticky Bottom Action Bar (Plan Trip + Ask Arya) -->
-<div class="bottom-sticky-bar" id="bottomStickyBar">
-  <div class="sticky-bar-inner">
-    <button class="sticky-btn-plan" onclick="openTripPlanner()" aria-label="Plan Trip">
-      <span>🧳 Plan Trip</span>
-    </button>
-    <button class="sticky-btn-arya" onclick="toggleArya()" aria-label="Ask Arya">
-      <span>✨ Ask Arya</span>
-    </button>
-  </div>
-</div>
+<!-- Single Floating Draggable "✨ Ask Arya" Button -->
+<button type="button" id="floatingAskAryaBtn" class="floating-ask-arya-btn" aria-label="Ask Arya AI Concierge" title="Click to Ask Arya AI • Drag to move anywhere">
+  <span class="ask-arya-sparkle" aria-hidden="true">✨</span>
+  <span class="ask-arya-label">Ask Arya</span>
+</button>
 
 <!-- Category Showcase Modal -->
 <div class="planner-modal" id="categoryModal" style="display:none" role="dialog" aria-modal="true">
@@ -6410,37 +6436,210 @@ function initFeaturedCarousel(){
   }
 }
 
-// Sticky Bottom Bar scroll-down hide and scroll-up reveal animation
-let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+// =========================================================
+// FLOATING DRAGGABLE "✨ ASK ARYA" BUTTON ENGINE
+// =========================================================
+const ASK_ARYA_STORAGE_KEY = 'exploreup_ask_arya_position_v1';
+const ASK_ARYA_DRAG_THRESHOLD = 7; // 7px movement threshold to distinguish Click/Tap vs Drag
 
-function initBottomBarScroll(){
-  const bottomBar = document.getElementById('bottomStickyBar');
-  if(!bottomBar || bottomBar._scrollSetup) return;
-  bottomBar._scrollSetup = true;
+function clampAskAryaPosition(x, y, btnEl){
+  const btn = btnEl || document.getElementById('floatingAskAryaBtn');
+  const width = (btn && btn.offsetWidth) ? btn.offsetWidth : 168;
+  const height = (btn && btn.offsetHeight) ? btn.offsetHeight : 50;
+  const margin = 12;
+  const vw = Math.max(width + margin * 2, window.innerWidth || document.documentElement.clientWidth || 360);
+  const vh = Math.max(height + margin * 2, window.innerHeight || document.documentElement.clientHeight || 640);
 
-  let ticking = false;
+  const maxX = Math.max(margin, vw - width - margin);
+  const maxY = Math.max(margin, vh - height - margin);
 
-  window.addEventListener('scroll', function() {
-    if(!ticking){
-      window.requestAnimationFrame(function() {
-        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-        const diff = currentScrollY - lastScrollY;
+  return {
+    x: Math.round(Math.min(Math.max(margin, x), maxX)),
+    y: Math.round(Math.min(Math.max(margin, y), maxY))
+  };
+}
 
-        // When scrolling down past 60px, hide the bottom bar
-        if(diff > 8 && currentScrollY > 60){
-          bottomBar.classList.add('hidden-bar');
-        }
-        // When scrolling up or near top of the page, reveal the bottom bar
-        else if(diff < -8 || currentScrollY <= 60){
-          bottomBar.classList.remove('hidden-bar');
-        }
+function applyAskAryaPosition(x, y, saveToStorage){
+  const btn = document.getElementById('floatingAskAryaBtn');
+  if(!btn) return { x: 0, y: 0 };
+  const clamped = clampAskAryaPosition(x, y, btn);
+  btn.style.left = clamped.x + 'px';
+  btn.style.top = clamped.y + 'px';
+  btn.style.right = 'auto';
+  btn.style.bottom = 'auto';
 
-        lastScrollY = currentScrollY;
-        ticking = false;
-      });
-      ticking = true;
+  if(saveToStorage){
+    try {
+      localStorage.setItem(ASK_ARYA_STORAGE_KEY, JSON.stringify({ x: clamped.x, y: clamped.y }));
+    } catch(e) {}
+  }
+  return clamped;
+}
+
+function restoreAskAryaPosition(){
+  const btn = document.getElementById('floatingAskAryaBtn');
+  if(!btn) return;
+  let saved = null;
+  try {
+    const raw = localStorage.getItem(ASK_ARYA_STORAGE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      if(parsed && typeof parsed.x === 'number' && isFinite(parsed.x) && typeof parsed.y === 'number' && isFinite(parsed.y)){
+        saved = parsed;
+      }
     }
-  }, { passive: true });
+  } catch(e) {}
+
+  if(saved){
+    applyAskAryaPosition(saved.x, saved.y, false);
+  } else {
+    const width = btn.offsetWidth || 168;
+    const height = btn.offsetHeight || 50;
+    const vw = window.innerWidth || document.documentElement.clientWidth || 1200;
+    const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+    applyAskAryaPosition(vw - width - 24, vh - height - 24, false);
+  }
+}
+
+function initFloatingAskArya(){
+  // Remove any obsolete bottom planner bar or V20 overlay if present
+  const oldBottomBar = document.getElementById('bottomStickyBar');
+  if(oldBottomBar) oldBottomBar.remove();
+  document.querySelectorAll('.bottom-sticky-bar').forEach(el => el.remove());
+
+  const btn = document.getElementById('floatingAskAryaBtn');
+  if(!btn || btn._draggableInitialized) return;
+  btn._draggableInitialized = true;
+
+  // Place button at saved localStorage position or default bottom-right
+  restoreAskAryaPosition();
+
+  let isPointerDown = false;
+  let activePointerId = null;
+  let startClientX = 0;
+  let startClientY = 0;
+  let initialLeft = 0;
+  let initialTop = 0;
+  let hasDragged = false;
+  let suppressClickUntil = 0;
+
+  function beginDrag(clientX, clientY){
+    const rect = btn.getBoundingClientRect();
+    isPointerDown = true;
+    hasDragged = false;
+    startClientX = clientX;
+    startClientY = clientY;
+    initialLeft = rect.left;
+    initialTop = rect.top;
+  }
+
+  function updateDrag(clientX, clientY, eventObj){
+    if(!isPointerDown) return;
+    const dx = clientX - startClientX;
+    const dy = clientY - startClientY;
+    const dist = Math.hypot(dx, dy);
+
+    if(!hasDragged && dist >= ASK_ARYA_DRAG_THRESHOLD){
+      hasDragged = true;
+      btn.classList.add('is-dragging');
+    }
+
+    if(hasDragged){
+      if(eventObj && typeof eventObj.preventDefault === 'function'){
+        eventObj.preventDefault();
+      }
+      applyAskAryaPosition(initialLeft + dx, initialTop + dy, false);
+    }
+  }
+
+  function endDrag(){
+    if(!isPointerDown) return;
+    isPointerDown = false;
+    btn.classList.remove('is-dragging');
+
+    if(hasDragged){
+      const rect = btn.getBoundingClientRect();
+      applyAskAryaPosition(rect.left, rect.top, true);
+      suppressClickUntil = Date.now() + 300;
+    } else {
+      suppressClickUntil = Date.now() + 300;
+      toggleArya();
+    }
+  }
+
+  if(window.PointerEvent){
+    btn.addEventListener('pointerdown', function(e){
+      if(e.button !== undefined && e.button !== 0) return;
+      activePointerId = e.pointerId;
+      beginDrag(e.clientX, e.clientY);
+      try { btn.setPointerCapture(e.pointerId); } catch(err) {}
+    });
+
+    btn.addEventListener('pointermove', function(e){
+      if(!isPointerDown || (activePointerId !== null && e.pointerId !== activePointerId)) return;
+      updateDrag(e.clientX, e.clientY, e);
+    });
+
+    btn.addEventListener('pointerup', function(e){
+      if(activePointerId !== null && e.pointerId !== activePointerId) return;
+      try { btn.releasePointerCapture(e.pointerId); } catch(err) {}
+      activePointerId = null;
+      endDrag();
+    });
+
+    btn.addEventListener('pointercancel', function(e){
+      try { btn.releasePointerCapture(e.pointerId); } catch(err) {}
+      activePointerId = null;
+      isPointerDown = false;
+      btn.classList.remove('is-dragging');
+    });
+  } else {
+    // Fallback for legacy touch/mouse browsers without PointerEvent
+    btn.addEventListener('touchstart', function(e){
+      if(!e.touches || !e.touches[0]) return;
+      beginDrag(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+
+    btn.addEventListener('touchmove', function(e){
+      if(!isPointerDown || !e.touches || !e.touches[0]) return;
+      updateDrag(e.touches[0].clientX, e.touches[0].clientY, e);
+    }, { passive: false });
+
+    btn.addEventListener('touchend', function(){
+      endDrag();
+    });
+  }
+
+  // Keyboard & assistive click support while preventing post-drag accidental chat open
+  btn.addEventListener('click', function(e){
+    if(Date.now() < suppressClickUntil){
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    toggleArya();
+  });
+
+  // Clamp inside visible viewport whenever window is resized or rotated
+  function handleViewportResize(){
+    const rect = btn.getBoundingClientRect();
+    let targetX = rect.left;
+    let targetY = rect.top;
+    try {
+      const savedRaw = localStorage.getItem(ASK_ARYA_STORAGE_KEY);
+      if(savedRaw){
+        const parsed = JSON.parse(savedRaw);
+        if(parsed && typeof parsed.x === 'number' && typeof parsed.y === 'number'){
+          targetX = parsed.x;
+          targetY = parsed.y;
+        }
+      }
+    } catch(err) {}
+    applyAskAryaPosition(targetX, targetY, false);
+  }
+
+  window.addEventListener('resize', handleViewportResize);
+  window.addEventListener('orientationchange', handleViewportResize);
 }
 
 // Initialization
@@ -6454,7 +6653,7 @@ function initApp(){
   renderRecentDestinations();
   checkInitialUrl();
   initFeaturedCarousel();
-  initBottomBarScroll();
+  initFloatingAskArya();
   checkAuthState();
 }
 document.addEventListener('DOMContentLoaded', initApp);
