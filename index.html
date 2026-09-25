@@ -1026,20 +1026,126 @@ body.dark .floating-ask-arya-btn .ask-arya-label{
 body.dark .district{background:#10243c;border-color:#223854;color:#eef5ff}
 body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 
-/* Responsive */
-@media(max-width:1050px){.categories{grid-template-columns:repeat(5,1fr)}.cities{grid-template-columns:repeat(3,1fr)}.planner-form-grid{grid-template-columns:1fr 1fr}.districts{grid-template-columns:repeat(4,1fr)}}
+/* Responsive — Unified Desktop / Tablet / Mobile Polish (Desktop >1050px untouched) */
+@media(max-width:1050px){
+  .categories{grid-template-columns:repeat(4,1fr)}
+  .cities{grid-template-columns:repeat(3,1fr)}
+  .gems{grid-template-columns:repeat(2,1fr)}
+  .planner-form-grid{grid-template-columns:1fr 1fr}
+  .districts{grid-template-columns:repeat(4,1fr)}
+}
 @media(max-width:768px){
-  .navlinks{display:none}.nav{padding:0 4%;height:64px}.logo{font-size:19px}
-  .hero{min-height:500px;padding:45px 5% 65px}
-  .hero h1{font-size:40px}.search{flex-direction:column;border-radius:20px;padding:8px}
-  .search button{height:46px}.categories{grid-template-columns:repeat(2,1fr);margin-top:-28px}
-  .cities{grid-template-columns:repeat(2,1fr);gap:10px}.city{height:190px}
+  html,body{overflow-x:clip;max-width:100%}
+  .navlinks{display:none!important}
+  .nav{padding:0 14px;height:60px}
+  .nav-left{gap:10px;min-width:0}
+  .hamburger-btn{width:40px;height:40px;border-radius:11px;flex-shrink:0}
+  .logo{font-size:18px;gap:8px;min-width:0}
+  .logo small.tag{font-size:8.5px;letter-spacing:.7px}
+  .drawer-panel{width:min(320px,88vw);max-width:calc(100vw - 16px)}
+  .drawer-item{padding:11px 12px;min-height:48px}
+
+  /* Hero & Smart Search Entry Point */
+  .hero{min-height:auto;padding:36px 16px 54px}
+  .hero h1{font-size:clamp(30px,8vw,40px);line-height:1.1}
+  .hero p{font-size:15px;line-height:1.55;margin-bottom:16px}
+  .search-wrapper{max-width:100%!important;width:100%}
+  .search{flex-direction:column;border-radius:18px;padding:8px;gap:8px;width:100%}
+  .search input{width:100%;padding:12px 14px;font-size:16px;min-height:46px}
+  .search button{width:100%;height:46px;border-radius:12px;font-size:15px;justify-content:center}
+  #home-search-dropdown,#results{left:0;right:0;width:100%;max-width:100%;max-height:62vh;border-radius:16px}
+  .search-dd-item{padding:10px 12px;gap:10px;align-items:flex-start}
+  .search-dd-title{white-space:normal;line-height:1.3;font-size:13.5px}
+  .search-dd-sub{white-space:normal;line-height:1.35;font-size:11.5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .search-dd-action{padding:5px 9px;font-size:11px}
+  .home-trust{gap:6px;margin-top:12px}
+  .home-trust span{font-size:11.5px;padding:6px 10px}
+  .hero-buttons{gap:8px;margin-top:14px}
+  .hero-btn{padding:11px 16px;font-size:13.5px;flex:1 1 auto;text-align:center;justify-content:center}
+
+  /* Main Sections & Grids */
+  .wrap{padding:20px 14px 64px;max-width:100%;overflow-x:clip}
+  .categories{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:-24px}
+  .cat{padding:13px 10px;font-size:12.5px;border-radius:14px}
+  .section{margin-top:38px}
+  .sectionhead{flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:14px}
+  .sectionhead h2{font-size:clamp(22px,6vw,28px)}
+  .cities{grid-template-columns:repeat(2,1fr);gap:12px}
+  .city{height:205px;border-radius:16px}
+  .city h3{font-size:18px}
   .districts{grid-template-columns:repeat(2,1fr);gap:10px}
   .district{border-radius:14px;padding:14px 10px;font-size:14px}
-  .feature,.calendar,.trails,.sustain,.detailgrid,.knowledge-grid,.transport-grid,.foodgrid,.contact-grid,.mallgrid,.emergencygrid,.blogs,.footer{grid-template-columns:1fr}
-  .modalhero{min-height:300px;padding:24px 16px 28px}.modalhero h1{font-size:32px!important}
-  .modal-topbar{padding:0 14px;height:58px}.modal-breadcrumb{display:none}
-  .planner-form-grid{grid-template-columns:1fr}
+  .gems,.checks,.tips,.feature,.calendar,.trails,.sustain,.detailgrid,.knowledge-grid,.transport-grid,.foodgrid,.contact-grid,.mallgrid,.emergencygrid,.blogs{grid-template-columns:1fr!important;gap:14px}
+  .suggestrow{grid-template-columns:1fr!important}
+
+  /* Government Profile Card & Footer */
+  .gov-profile-inner{flex-direction:column;align-items:flex-start;gap:16px;padding:20px 18px}
+  .gov-actions{width:100%;display:flex;flex-direction:column;gap:8px}
+  .gov-actions a{width:100%;justify-content:center;text-align:center;box-sizing:border-box}
+  .footer{flex-direction:column;text-align:center;padding:28px 16px 88px;gap:14px}
+
+  /* City Detail Modal & Cinematic Video Hero */
+  .modal-topbar{padding:0 12px;height:54px;gap:8px}
+  .modal-back-btn{padding:7px 12px;font-size:12.5px}
+  .modal-top-close{padding:6px 11px;font-size:12px}
+  .modal-breadcrumb{display:none}
+  .modalhero{min-height:290px;padding:68px 16px 24px}
+  .modalhero .hero-back-tag{top:14px;left:12px;padding:6px 11px;font-size:11.5px;max-width:calc(100% - 170px);overflow:hidden;text-overflow:ellipsis}
+  .modalhero .hero-sound-btn{top:14px;right:56px;padding:6px 11px;font-size:11.5px;min-height:34px}
+  .modalhero .close{top:12px;right:12px;width:38px;height:38px;font-size:17px}
+  #modalHeroTitle,.modalhero h1{font-size:clamp(24px,7vw,34px)!important;line-height:1.15!important;word-break:break-word}
+  .modalbody{padding:18px 14px 50px}
+  .district-subnav{top:54px;padding:10px 4px;gap:6px}
+  .subnav-pill{padding:7px 13px;font-size:12px}
+  .modal-nav-footer{padding:24px 16px;border-radius:18px}
+  .nav-footer-buttons{flex-direction:column;align-items:stretch}
+  .nav-footer-buttons button{width:100%}
+  .modal-floating-back{left:12px;bottom:14px;padding:9px 14px;font-size:12px}
+
+  /* Trip Planner Modal (Arya Trip Plan Maker) */
+  .planner-modal{padding:8px;align-items:flex-end}
+  #plannerModal .planner-box,.planner-box{width:100%;max-width:100%;max-height:94dvh;border-radius:20px}
+  .planner-head{padding:14px 16px;flex-wrap:wrap;gap:10px}
+  .planner-head h2{font-size:17.5px}
+  .planner-body{padding:16px 14px}
+  .atp-mode-grid,.planner-form-grid,.atp-grid-3,.atp-grid-2,.atp-rec-grid,.atp-budget-grid,.atp-export-bar{grid-template-columns:1fr!important;gap:10px}
+  .planner-form-grid > .planner-field{grid-column:1 / -1!important;min-width:0}
+  .planner-field input,.planner-field select,.planner-field textarea{font-size:16px;min-height:44px}
+  .atp-tier-group{grid-template-columns:repeat(2,1fr)}
+  .atp-style-group{grid-template-columns:1fr}
+  .atp-main-actions{grid-template-columns:1fr!important;gap:8px}
+  .atp-budget-pills{grid-template-columns:repeat(2,1fr)}
+  .atp-summary-banner{flex-direction:column;align-items:flex-start;padding:16px}
+  .atp-summary-budget-box{width:100%;text-align:left;box-sizing:border-box}
+  .atp-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+  .atp-tabs::-webkit-scrollbar{display:none}
+  .atp-tab-btn{flex-shrink:0;font-size:12px;padding:8px 13px}
+
+  /* Arya AI Concierge & Floating Controls */
+  .arya-panel{left:8px!important;right:8px!important;bottom:8px!important;width:auto!important;max-width:calc(100vw - 16px)!important;height:min(620px,calc(100dvh - 16px))!important;border-radius:20px}
+  .arya-header{padding:12px 14px}
+  .arya-doodle-banner{height:74px;padding:8px 12px}
+  .arya-doodle-quote b{font-size:12px}
+  .arya-input input{font-size:16px;padding:10px 13px;min-width:0}
+  .arya-input button{padding:0 14px;font-size:13px;flex-shrink:0}
+  .favbar{left:10px;bottom:14px;padding:9px 13px;font-size:12.5px;z-index:95}
+  .floating-ask-arya-btn{min-width:136px;height:44px;padding:0 15px;font-size:13.5px;gap:7px}
+
+  /* Auth Modal */
+  #authModal .planner-box{width:min(440px,calc(100vw - 16px))!important;max-height:92dvh}
+  #authModal input{font-size:16px!important}
+}
+@media(max-width:420px){
+  .cities{grid-template-columns:1fr;gap:12px}
+  .city{height:210px}
+  .categories{grid-template-columns:repeat(2,1fr);gap:8px}
+  .districts{grid-template-columns:repeat(2,1fr);gap:8px}
+  .district{padding:12px 8px;font-size:13px}
+  .atp-stepper-row{grid-template-columns:1fr}
+  .modalhero .hero-back-tag{max-width:142px;font-size:11px;padding:5px 9px}
+  .modalhero .hero-sound-btn{right:52px;font-size:11px;padding:5px 9px}
+  .favbar{padding:8px 11px;font-size:11.5px;left:8px;bottom:12px}
+  .floating-ask-arya-btn{min-width:126px;height:42px;padding:0 13px;font-size:13px}
 }
 </style>
 </head>
@@ -6593,11 +6699,13 @@ const ASK_ARYA_DRAG_THRESHOLD = 7; // 7px movement threshold to distinguish Clic
 
 function clampAskAryaPosition(x, y, btnEl){
   const btn = btnEl || document.getElementById('floatingAskAryaBtn');
-  const width = (btn && btn.offsetWidth) ? btn.offsetWidth : 168;
-  const height = (btn && btn.offsetHeight) ? btn.offsetHeight : 50;
-  const margin = 12;
-  const vw = Math.max(width + margin * 2, window.innerWidth || document.documentElement.clientWidth || 360);
-  const vh = Math.max(height + margin * 2, window.innerHeight || document.documentElement.clientHeight || 640);
+  const width = (btn && btn.offsetWidth) ? btn.offsetWidth : 156;
+  const height = (btn && btn.offsetHeight) ? btn.offsetHeight : 46;
+  const rawVw = window.innerWidth || document.documentElement.clientWidth || 360;
+  const rawVh = window.innerHeight || document.documentElement.clientHeight || 640;
+  const margin = rawVw <= 480 ? 8 : 12;
+  const vw = Math.max(width + margin * 2, rawVw);
+  const vh = Math.max(height + margin * 2, rawVh);
 
   const maxX = Math.max(margin, vw - width - margin);
   const maxY = Math.max(margin, vh - height - margin);
@@ -6642,11 +6750,12 @@ function restoreAskAryaPosition(){
   if(saved){
     applyAskAryaPosition(saved.x, saved.y, false);
   } else {
-    const width = btn.offsetWidth || 168;
-    const height = btn.offsetHeight || 50;
+    const width = btn.offsetWidth || 156;
+    const height = btn.offsetHeight || 46;
     const vw = window.innerWidth || document.documentElement.clientWidth || 1200;
     const vh = window.innerHeight || document.documentElement.clientHeight || 800;
-    applyAskAryaPosition(vw - width - 24, vh - height - 24, false);
+    const edgePad = vw <= 480 ? 10 : 24;
+    applyAskAryaPosition(vw - width - edgePad, vh - height - edgePad, false);
   }
 }
 
@@ -6771,20 +6880,7 @@ function initFloatingAskArya(){
 
   // Clamp inside visible viewport whenever window is resized or rotated
   function handleViewportResize(){
-    const rect = btn.getBoundingClientRect();
-    let targetX = rect.left;
-    let targetY = rect.top;
-    try {
-      const savedRaw = localStorage.getItem(ASK_ARYA_STORAGE_KEY);
-      if(savedRaw){
-        const parsed = JSON.parse(savedRaw);
-        if(parsed && typeof parsed.x === 'number' && typeof parsed.y === 'number'){
-          targetX = parsed.x;
-          targetY = parsed.y;
-        }
-      }
-    } catch(err) {}
-    applyAskAryaPosition(targetX, targetY, false);
+    restoreAskAryaPosition();
   }
 
   window.addEventListener('resize', handleViewportResize);

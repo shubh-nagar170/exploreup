@@ -397,15 +397,39 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
 }
 .floating-back-btn:hover{background:var(--gold);color:#071b35;transform:translateY(-2px)}
 
-/* Responsive */
+/* Responsive — Unified Desktop / Tablet / Mobile Polish */
+@media(max-width:1024px){
+  .detailgrid,.foodgrid{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:768px){
-  .nav{padding:0 4%}
+  html,body{overflow-x:clip;max-width:100%}
+  .nav{padding:0 14px;height:58px}
+  .nav-left{gap:10px;min-width:0}
+  .back-home-link{padding:6px 12px;font-size:12.5px}
+  .logo{font-size:18px;gap:6px}
   .breadcrumb{display:none}
-  .detailgrid,.transport-grid,.foodgrid,.contact-grid,.knowledge-grid,.mallgrid{grid-template-columns:1fr}
-  .district-hero{min-height:430px;padding:75px 18px 32px}
-  .district-hero h1{font-size:34px}
-  .hero-sound-btn{top:18px;right:14px;padding:7px 13px;font-size:12px;min-height:38px}
+  .wrap{padding:18px 14px 74px;max-width:100%;overflow-x:clip}
+  .detailgrid,.transport-grid,.foodgrid,.contact-grid,.knowledge-grid,.mallgrid,.gallery-grid,.suggestrow{grid-template-columns:1fr!important;gap:14px}
+  .district-hero{min-height:390px;padding:74px 16px 28px}
+  .district-hero .hero-back-tag{top:14px;left:12px;padding:6px 12px;font-size:12px;max-width:calc(100% - 150px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .district-hero h1{font-size:clamp(28px,7.5vw,38px);line-height:1.15}
+  .district-hero p{font-size:15px;line-height:1.5}
+  .hero-sound-btn{top:14px;right:12px;padding:6px 12px;font-size:12px;min-height:36px}
   .hero-scroll-btn{padding:9px 18px;font-size:13px}
+  .district-subnav{top:58px;padding:10px 4px;gap:6px}
+  .subnav-pill{padding:7px 13px;font-size:12px}
+  .district-searchbox{padding:9px 12px}
+  .district-searchbox input,.foodsearch input,.suggestform input,.suggestform select,.suggestform textarea{font-size:16px}
+  .dsr-title,.dsr-sub{white-space:normal}
+  .bottom-return-card{padding:24px 16px;border-radius:18px}
+  .bottom-return-btns{flex-direction:column;align-items:stretch}
+  .bottom-return-btns a{width:100%;box-sizing:border-box;justify-content:center}
+  .floating-back-btn{left:12px;bottom:14px;padding:9px 14px;font-size:12px}
+}
+@media(max-width:420px){
+  .district-hero{min-height:360px;padding:68px 14px 24px}
+  .district-hero .hero-back-tag{font-size:11px;padding:5px 10px;max-width:165px}
+  .hero-sound-btn{font-size:11px;padding:5px 10px}
 }
 </style>
 </head>
