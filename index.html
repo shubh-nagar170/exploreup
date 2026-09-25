@@ -270,10 +270,11 @@ body.dark .search-autocomplete-action{color:#60a5fa}
 
 /* Emergency & Government */
 .gov-profile{margin:28px 0;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#fff8ec,var(--card));box-shadow:0 8px 25px rgba(7,27,53,.06)}
+body.dark .gov-profile{background:linear-gradient(135deg,#132946,var(--card));border-color:var(--line);box-shadow:0 8px 25px rgba(0,0,0,.35)}
 .gov-profile-inner{display:flex;align-items:center;gap:24px;padding:24px 26px}
-.gov-photo{width:96px;height:96px;border-radius:20px;object-fit:cover;background:#071b35;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;font-weight:800}
-.gov-copy{flex:1}.gov-eyebrow{font-size:11px;letter-spacing:.14em;font-weight:800;color:#c56b17;text-transform:uppercase}.gov-copy h3{margin:4px 0;font-size:23px;color:var(--navy)}body.dark .gov-copy h3{color:var(--gold)}.gov-copy p{margin:0;color:var(--muted)}
-.gov-actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}.gov-actions a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:700;background:var(--card);color:var(--text)}
+.gov-photo{width:96px;height:96px;border-radius:20px;object-fit:cover;object-position:center top;background:#071b35;flex:0 0 auto;display:block;color:#fff;font-size:32px;font-weight:800}
+.gov-copy{flex:1}.gov-eyebrow{font-size:11px;letter-spacing:.14em;font-weight:800;color:#b45309;text-transform:uppercase}body.dark .gov-eyebrow{color:var(--gold)}.gov-copy h3{margin:4px 0;font-size:23px;color:var(--navy)}body.dark .gov-copy h3{color:#ffffff}.gov-copy p{margin:0;color:#475569;font-weight:500}body.dark .gov-copy p{color:#dbeafe}
+.gov-actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}.gov-actions a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:700;background:var(--card);color:var(--text)}body.dark .gov-actions a{background:rgba(255,255,255,.08);border-color:#2c4869;color:#ffffff}
 .emergencygrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
 .emergencycard{padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.emergencycard a{display:inline-block;margin-top:6px;font-weight:900;font-size:20px;color:var(--blue)}
 .footer{background:var(--navy);color:#cddbf0;padding:40px 5%;display:flex;justify-content:space-between;gap:20px;align-items:center}
@@ -1245,11 +1246,11 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 
   <section class="gov-profile" id="up-government">
     <div class="gov-profile-inner">
-      <div class="gov-photo" id="govPhoto">UP</div>
+      <img src="assets/Yogi-Adityanath.webp" alt="Yogi Adityanath - Honourable Chief Minister, Uttar Pradesh" class="gov-photo" id="govPhoto">
       <div class="gov-copy">
         <div class="gov-eyebrow">Government of Uttar Pradesh</div>
         <h3 id="govCmName">Yogi Adityanath</h3>
-        <p id="govCmRole">Hon’ble Chief Minister, Uttar Pradesh</p>
+        <p id="govCmRole">Honourable Chief Minister, Uttar Pradesh</p>
         <div class="gov-actions">
           <a id="govOfficialLink" href="https://www.vidhanparishad.up.gov.in/chief-minister" target="_blank" rel="noopener">Official Portal ↗</a>
           <a href="https://uptourism.gov.in/" target="_blank" rel="noopener">UP Tourism Official (uptourism.gov.in) ↗</a>
