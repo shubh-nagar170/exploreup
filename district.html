@@ -7,6 +7,7 @@
 <link id="canonicalLink" rel="canonical" href="https://www.upexplore.com/">
 <meta name="description" content="Explore Uttar Pradesh districts with tourist places, food, hotels, hospitals, shopping, transport, culture and trip planning.">
 <meta name="theme-color" content="#071b35">
+<link rel="stylesheet" href="/public/css/i18n.css">
 <style>
 :root{--navy:#071b35;--blue:#0b67d1;--gold:#ffb51b;--bg:#f4f8fc;--text:#10233f;--muted:#60708a;--card:#fff;--line:#e2eaf3;--surface:#f8fbff}
 body.dark{--bg:#071525;--text:#eef5ff;--card:#10243c;--muted:#b3c3d8;--line:#223854;--surface:#0d1e33}
@@ -439,21 +440,22 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
 <header class="nav">
   <div class="nav-left">
     <a href="/" class="back-home-link" aria-label="Back to Home Screen">
-      <span style="font-size:16px">←</span> <b>Home</b>
+      <span style="font-size:16px">←</span> <b data-i18n="buttons.backToHome">Home</b>
     </a>
     <a href="/" class="logo" title="ExploreUP Home">
       <div class="pin"><b>●</b></div>
       <span>Explore<b>UP</b></span>
     </a>
     <div class="breadcrumb">
-      <a href="/">Home</a>
+      <a href="/" data-i18n="nav.home">Home</a>
       <span>›</span>
-      <a href="/#cities">Explore All Cities</a>
+      <a href="/#cities" data-i18n="nav.exploreCities">Explore All Cities</a>
       <span>›</span>
       <span id="crumbDistrict" class="active-crumb">District</span>
     </div>
   </div>
   <div class="nav-right">
+    <button class="circle-btn" onclick="openLanguageModal()" title="Language / भाषा" aria-label="Language selector">🌐</button>
     <button class="circle-btn" onclick="toggleDark()" title="Toggle Dark Mode">☾</button>
   </div>
 </header>
@@ -1756,5 +1758,6 @@ window.addEventListener('DOMContentLoaded', () => {
 loadDistrictFromUrl();
 initDistrictSearch();
 </script>
+<script src="/public/js/i18n.js"></script>
 </body>
 </html>

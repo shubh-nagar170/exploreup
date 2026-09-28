@@ -1301,6 +1301,12 @@ app.post('/api/chat', async (req, res) => {
     }
 
     const isStream = Boolean(req.body.stream || req.headers.accept?.includes('text/event-stream'));
+    const targetLang = (req.body.language || req.body.lang || '').trim();
+    let languageInstruction = '';
+    if (targetLang && !['english', 'en'].includes(targetLang.toLowerCase())) {
+      languageInstruction = `\n\n[MANDATORY MULTILINGUAL INSTRUCTION: The user has selected "${targetLang}" as their preferred language. You MUST compose and deliver your entire response natively and fluently in ${targetLang}. Keep proper names of Uttar Pradesh tourist destinations, temples, monuments, food, and cities clear and recognizable. Maintain a warm, helpful, and natural tone in ${targetLang}.]`;
+    }
+
     const authUser = getAuthenticatedUser(req);
     const isGuest = !authUser;
     const userName = isGuest ? null : (authUser.name || 'Traveler');
@@ -1363,7 +1369,7 @@ For travel planning, ask only for information that is genuinely necessary. If en
 
 Remember the current conversation and understand follow-up questions.
 
-Be natural, helpful, concise when appropriate, and detailed when the user asks for detail.${liveGroundingContext}
+Be natural, helpful, concise when appropriate, and detailed when the user asks for detail.${liveGroundingContext}${languageInstruction}
 
 ${userStatusDesc}
 `;

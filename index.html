@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/public/css/i18n.css">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ExploreUP">
 <meta property="og:title" content="ExploreUP — Explore Uttar Pradesh">
@@ -1761,11 +1762,14 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
     <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})"><div class="pin"><b>●</b></div><div>Explore<span>UP</span><small class="tag">HAR SHEHAR KI KAHANI</small></div></div>
   </div>
   <nav class="navlinks">
-    <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'})">Home</a>
-    <a href="#cities" onclick="openAllCitiesSection()">Explore All Cities</a>
-    <a href="javascript:void(0)" onclick="openTripPlanner()">Trip Planner</a>
-    <a href="#food">Food Trails</a>
-    <a href="#festivals">Festivals</a>
+    <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="nav.home">Home</a>
+    <a href="#cities" onclick="openAllCitiesSection()" data-i18n="nav.exploreCities">Explore All Cities</a>
+    <a href="javascript:void(0)" onclick="openTripPlanner()" data-i18n="nav.tripPlanner">Trip Planner</a>
+    <a href="#food" data-i18n="nav.foodTrails">Food Trails</a>
+    <a href="#festivals" data-i18n="nav.festivals">Festivals</a>
+    <button class="circle" onclick="openLanguageModal()" title="Language / भाषा" aria-label="Language selector" style="cursor:pointer;border-radius:18px;width:auto;padding:0 12px;font-size:13px;font-weight:700;display:inline-flex;gap:6px;align-items:center;height:34px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);color:#fff">
+      <span>🌐</span> <span id="navLangLabel">Language</span>
+    </button>
   </nav>
 </header>
 
@@ -1788,8 +1792,8 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
       <div class="drawer-user-info">
         <div class="drawer-avatar">🧳</div>
         <div class="drawer-user-meta">
-          <div class="drawer-user-name">Welcome, Explorer!</div>
-          <div class="drawer-user-sub">Sign in to plan & save your UP journeys</div>
+          <div class="drawer-user-name" data-i18n="hero.greeting">Welcome, Explorer!</div>
+          <div class="drawer-user-sub" data-i18n="drawer.loginSub">Sign in to plan & save your UP journeys</div>
         </div>
       </div>
     </div>
@@ -1806,26 +1810,26 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
     </div>
 
     <!-- SECTION 1: ACCOUNT & AUTHENTICATION -->
-    <div class="drawer-section-title">Account</div>
+    <div class="drawer-section-title" data-i18n="drawer.account">Account</div>
     <div class="drawer-menu-list">
       <!-- 1. Login (visible when logged out) -->
       <button class="drawer-item" id="drawerLoginItem" onclick="drawerAction(function(){ openAuthModal('login'); })">
         <div class="drawer-item-icon">🔑</div>
         <div class="drawer-item-content">
-          <div class="drawer-item-title">Login</div>
-          <div class="drawer-item-sub">Sign in to your ExploreUP account</div>
+          <div class="drawer-item-title" data-i18n="drawer.login">Login</div>
+          <div class="drawer-item-sub" data-i18n="drawer.loginSub">Sign in to your ExploreUP account</div>
         </div>
-        <span class="drawer-badge">Sign In</span>
+        <span class="drawer-badge" data-i18n="buttons.login">Sign In</span>
       </button>
 
       <!-- 2. Create Account (visible when logged out) -->
       <button class="drawer-item" id="drawerRegisterItem" onclick="drawerAction(function(){ openAuthModal('register'); })">
         <div class="drawer-item-icon">✨</div>
         <div class="drawer-item-content">
-          <div class="drawer-item-title">Create Account</div>
-          <div class="drawer-item-sub">Register a new customer account</div>
+          <div class="drawer-item-title" data-i18n="drawer.createAccount">Create Account</div>
+          <div class="drawer-item-sub" data-i18n="drawer.createAccountSub">Register a new customer account</div>
         </div>
-        <span class="drawer-badge">Free</span>
+        <span class="drawer-badge" data-i18n="buttons.createAccount">Free</span>
       </button>
 
       <!-- 3. Account / User Name (visible when logged in) -->
@@ -1842,20 +1846,20 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
       <button class="drawer-item logout-item" id="drawerLogoutItem" style="display:none" onclick="drawerAction(handleLogout)">
         <div class="drawer-item-icon">🚪</div>
         <div class="drawer-item-content">
-          <div class="drawer-item-title">Logout</div>
-          <div class="drawer-item-sub">Safely sign out of your account</div>
+          <div class="drawer-item-title" data-i18n="drawer.logout">Logout</div>
+          <div class="drawer-item-sub" data-i18n="drawer.logoutSub">Safely sign out of your account</div>
         </div>
       </button>
     </div>
 
     <!-- SECTION 2: PREFERENCES -->
-    <div class="drawer-section-title">Preferences</div>
+    <div class="drawer-section-title" data-i18n="drawer.preferences">Preferences</div>
     <div class="drawer-menu-list">
       <!-- 4. Language -->
       <button class="drawer-item" id="drawerLangItem" onclick="drawerAction(toggleLanguage)">
         <div class="drawer-item-icon">🌐</div>
         <div class="drawer-item-content">
-          <div class="drawer-item-title">Language / भाषा</div>
+          <div class="drawer-item-title" data-i18n="drawer.language">Language / भाषा</div>
           <div class="drawer-item-sub" id="drawerLangSubtitle">Switch English / हिन्दी</div>
         </div>
         <span class="drawer-badge" id="drawerLangBadge">हिंदी</span>
@@ -1865,7 +1869,7 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
       <div class="drawer-item" id="drawerDarkModeItem" onclick="toggleDark()" style="cursor:pointer">
         <div class="drawer-item-icon" id="drawerDarkIcon">☾</div>
         <div class="drawer-item-content">
-          <div class="drawer-item-title">Dark Mode</div>
+          <div class="drawer-item-title" data-i18n="drawer.darkMode">Dark Mode</div>
           <div class="drawer-item-sub" id="drawerDarkSubtitle">Light Theme Active</div>
         </div>
         <div class="drawer-switch" id="drawerDarkSwitch" aria-label="Toggle dark mode">
@@ -1875,7 +1879,7 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
     </div>
 
     <!-- SECTION 3: EXPLORE & SUPPORT -->
-    <div class="drawer-section-title">Explore & Support</div>
+    <div class="drawer-section-title" data-i18n="drawer.navigation">Explore & Support</div>
     <div class="drawer-menu-list">
       <!-- 6. Admin Panel -->
       <button class="drawer-item" id="drawerAdminItem" onclick="drawerAction(openAdminPanel)">
@@ -1900,8 +1904,8 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
       <a href="#about" class="drawer-item" id="drawerAboutItem" onclick="drawerNavigate('#about'); return false;">
         <div class="drawer-item-icon">⭐</div>
         <div class="drawer-item-content">
-          <div class="drawer-item-title">About ExploreUP</div>
-          <div class="drawer-item-sub">Why ExploreUP, mission & city directory</div>
+          <div class="drawer-item-title" data-i18n="drawer.aboutExploreUp">About ExploreUP</div>
+          <div class="drawer-item-sub" data-i18n="drawer.aboutSub">Why ExploreUP, mission & city directory</div>
         </div>
       </a>
     </div>
@@ -1918,14 +1922,14 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 
 <section class="hero">
  <div>
-  <div class="eyebrow" id="heroGreeting" style="font-size:clamp(26px,3.8vw,40px);letter-spacing:0;margin-bottom:8px">नमस्ते 🙏</div>
-  <h1>Explore <em>Uttar Pradesh</em></h1>
-  <p>Discover timeless heritage, legendary street food, spiritual sacred rivers, hotels, transport guides and hidden gems — city by city.</p>
+  <div class="eyebrow" id="heroGreeting" style="font-size:clamp(26px,3.8vw,40px);letter-spacing:0;margin-bottom:8px" data-i18n="hero.greeting">नमस्ते 🙏</div>
+  <h1><span data-i18n="hero.title">Explore</span> <em>Uttar Pradesh</em></h1>
+  <p data-i18n="hero.subtitle">Discover timeless heritage, legendary street food, spiritual sacred rivers, hotels, transport guides and hidden gems — city by city.</p>
    <div style="position:relative">
     <div class="search-wrapper" style="position:relative;max-width:740px;">
      <form class="search" id="home-search-form" action="/district.html" method="GET" onsubmit="performSearch(event); return false;">
-      <input id="home-search-input" name="id" placeholder="Search any city, monument, food or ask Arya AI (e.g. Agra, Taj Mahal, Plan a 3 day Agra trip)..." autocomplete="off">
-      <button type="submit" id="home-search-btn" onclick="performSearch(event)">⌕ &nbsp; Search</button>
+      <input id="home-search-input" name="id" placeholder="Search any city, monument, food or ask Arya AI (e.g. Agra, Taj Mahal, Plan a 3 day Agra trip)..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+      <button type="submit" id="home-search-btn" onclick="performSearch(event)" data-i18n="buttons.search">⌕ &nbsp; Search</button>
      </form>
      <div id="home-search-dropdown" class="search-autocomplete-dropdown"></div>
      <div id="results" class="search-autocomplete-dropdown" style="display:none"></div>
@@ -1937,9 +1941,9 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
      <span>🧳 Smart Trip Planner</span>
    </div>
     <div class="hero-buttons">
-      <button class="hero-btn primary" onclick="openAllCitiesSection()">📍 Explore All Cities</button>
-     <button class="hero-btn secondary" onclick="openTripPlanner('Agra')">🧳 Plan Your Trip</button>
-     <button class="hero-btn secondary" onclick="document.getElementById('hidden-gems').scrollIntoView({behavior:'smooth'})">💎 Hidden Gems</button>
+      <button class="hero-btn primary" onclick="openAllCitiesSection()" data-i18n="nav.exploreCities">📍 Explore All Cities</button>
+     <button class="hero-btn secondary" onclick="openTripPlanner('Agra')" data-i18n="buttons.planTrip">🧳 Plan Your Trip</button>
+     <button class="hero-btn secondary" onclick="document.getElementById('hidden-gems').scrollIntoView({behavior:'smooth'})" data-i18n="drawer.hiddenGems">💎 Hidden Gems</button>
    </div>
    </div>
   </div>
@@ -1971,21 +1975,21 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   <section class="section" id="cities">
    <div class="cities-head-wrap">
      <div class="cities-title-block">
-       <h2>📍 Explore All Cities</h2>
-       <p>Explore Uttar Pradesh city by city, with comprehensive travel guides, transport, hotels and food.</p>
+       <h2>📍 <span data-i18n="home.citiesTitle">Explore All Cities</span></h2>
+       <p data-i18n="home.citiesSub">Explore Uttar Pradesh city by city, with comprehensive travel guides, transport, hotels and food.</p>
      </div>
      <div class="cities-controls">
        <form class="cities-search-box" autocomplete="off" action="javascript:void(0)" onsubmit="event.preventDefault(); return false;" role="search">
-         <input type="search" id="explore-cities-search" name="explore-cities-search" value="" placeholder="Search cities..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search cities">
+         <input type="search" id="explore-cities-search" name="explore-cities-search" value="" placeholder="Search cities..." data-i18n-placeholder="search.citiesPlaceholder" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search cities" data-i18n-aria="search.citiesPlaceholder">
          <span class="cities-search-icon" id="citiesSearchIcon">⌕</span>
          <button type="button" class="cities-search-clear" id="citiesSearchClear" onclick="clearCitiesSearch()" aria-label="Clear search">✕</button>
        </form>
-       <button class="view toggle-cities-btn prominent-cities-btn" id="toggleCitiesBtn" onclick="toggleCitiesGrid()" aria-expanded="false" title="Toggle full cities directory">View All Cities ↓</button>
+       <button class="view toggle-cities-btn prominent-cities-btn" id="toggleCitiesBtn" onclick="toggleCitiesGrid()" aria-expanded="false" title="Toggle full cities directory" data-i18n="buttons.viewAllCities">View All Cities ↓</button>
      </div>
    </div>
    <div class="cities collapsed" id="cityGrid"></div>
    <div id="citiesBottomToggle" style="text-align:center;margin-top:20px;display:none">
-     <button class="view toggle-cities-btn prominent-cities-btn" onclick="toggleCitiesGrid()" style="padding:9px 22px;border-radius:24px;font-size:14px">Hide Cities ↑</button>
+     <button class="view toggle-cities-btn prominent-cities-btn" onclick="toggleCitiesGrid()" style="padding:9px 22px;border-radius:24px;font-size:14px" data-i18n="buttons.hideCities">Hide Cities ↑</button>
    </div>
   </section>
 
@@ -1999,17 +2003,17 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
         <h2 id="featuredTitle">Agra — City of the Taj</h2>
         <p id="featuredDesc">Home to the Taj Mahal, Agra Fort, and Fatehpur Sikri. Experience world-class expressways, high-speed Gatimaan & Vande Bharat trains, Mughlai flavours, and famous Agra Petha.</p>
         <div style="margin-top:14px">
-          <a id="featuredBannerBtn" href="/district.html?id=agra" class="feature-cta-btn">Explore Agra Guide →</a>
+          <a id="featuredBannerBtn" href="/district.html?id=agra" class="feature-cta-btn" data-i18n="buttons.exploreGuide">Explore Agra Guide →</a>
         </div>
       </div>
     </div>
     <div class="panel" id="about">
-      <h2>⭐ Why ExploreUP?</h2>
+      <h2>⭐ <span data-i18n="home.whyExploreUp">Why ExploreUP?</span></h2>
       <div class="checks">
-       <div class="check">✅<div><b>Complete City Directory</b><small>Places, food, stays and medical facilities</small></div></div>
-       <div class="check">🚆<div><b>Live Transport Routes</b><small>Airports, railway junctions & expressways</small></div></div>
-       <div class="check">🍴<div><b>Local Food Trails</b><small>Must-try authentic dishes & sweet shops</small></div></div>
-       <div class="check">🧳<div><b>Smart Trip Planning</b><small>Custom 1, 2, or 3-day realistic itineraries</small></div></div>
+       <div class="check">✅<div><b data-i18n="home.whyDirectory">Complete City Directory</b><small data-i18n="home.whyDirectorySub">Places, food, stays and medical facilities</small></div></div>
+       <div class="check">🚆<div><b data-i18n="home.whyTransport">Live Transport Routes</b><small data-i18n="home.whyTransportSub">Airports, railway junctions & expressways</small></div></div>
+       <div class="check">🍴<div><b data-i18n="home.whyFood">Local Food Trails</b><small data-i18n="home.whyFoodSub">Must-try authentic dishes & sweet shops</small></div></div>
+       <div class="check">🧳<div><b data-i18n="home.whyPlanning">Smart Trip Planning</b><small data-i18n="home.whyPlanningSub">Custom 1, 2, or 3-day realistic itineraries</small></div></div>
       </div>
     </div>
    </div>
@@ -2018,25 +2022,25 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
     <section class="section" id="hidden-gems">
    <div class="sectionhead" style="align-items:flex-start">
      <div>
-       <h2>💎 Hidden Gems of Uttar Pradesh</h2>
-       <p>Discover the lesser-known waterfalls, forests, forts, wildlife sanctuaries and historic places beyond the famous destinations.</p>
+       <h2>💎 <span data-i18n="home.hiddenGemsTitle">Hidden Gems of Uttar Pradesh</span></h2>
+       <p data-i18n="home.hiddenGemsSubtitle">Discover the lesser-known waterfalls, forests, forts, wildlife sanctuaries and historic places beyond the famous destinations.</p>
      </div>
-     <div class="gems-count-badge" id="gemsCountBadge">16 hidden gems to explore</div>
+     <div class="gems-count-badge" id="gemsCountBadge" data-i18n="home.gemsBadge">16 hidden gems to explore</div>
    </div>
 
    <!-- Category Filtering Pills & Search Box -->
    <div class="gems-controls">
      <div class="gems-pills" role="tablist" aria-label="Filter hidden gems by category">
-       <button type="button" class="gem-pill-btn active" data-filter="all" onclick="filterHiddenGems('all')">All (16)</button>
-       <button type="button" class="gem-pill-btn" data-filter="nature-waterfalls" onclick="filterHiddenGems('nature-waterfalls')">🌊 Nature &amp; Waterfalls</button>
-       <button type="button" class="gem-pill-btn" data-filter="history-heritage" onclick="filterHiddenGems('history-heritage')">🏰 History &amp; Heritage</button>
-       <button type="button" class="gem-pill-btn" data-filter="wildlife" onclick="filterHiddenGems('wildlife')">🐅 Wildlife</button>
-       <button type="button" class="gem-pill-btn" data-filter="spiritual" onclick="filterHiddenGems('spiritual')">🕉️ Spiritual</button>
+       <button type="button" class="gem-pill-btn active" data-filter="all" onclick="filterHiddenGems('all')" data-i18n="home.gemsAll">All (16)</button>
+       <button type="button" class="gem-pill-btn" data-filter="nature-waterfalls" onclick="filterHiddenGems('nature-waterfalls')" data-i18n="home.gemsNature">🌊 Nature &amp; Waterfalls</button>
+       <button type="button" class="gem-pill-btn" data-filter="history-heritage" onclick="filterHiddenGems('history-heritage')" data-i18n="home.gemsHistory">🏰 History &amp; Heritage</button>
+       <button type="button" class="gem-pill-btn" data-filter="wildlife" onclick="filterHiddenGems('wildlife')" data-i18n="home.gemsWildlife">🐅 Wildlife</button>
+       <button type="button" class="gem-pill-btn" data-filter="spiritual" onclick="filterHiddenGems('spiritual')" data-i18n="home.gemsSpiritual">🕉️ Spiritual</button>
      </div>
      <div class="gems-actions">
-       <button type="button" class="view prominent-gems-btn" id="toggleGemsBtn" onclick="toggleGemsGrid()" aria-expanded="false" title="Toggle full hidden gems directory">View All Hidden Gems ↓</button>
+       <button type="button" class="view prominent-gems-btn" id="toggleGemsBtn" onclick="toggleGemsGrid()" aria-expanded="false" title="Toggle full hidden gems directory" data-i18n="buttons.viewAllGems">View All Hidden Gems ↓</button>
        <form class="gem-search-box" autocomplete="off" action="javascript:void(0)" onsubmit="event.preventDefault(); return false;" role="search">
-         <input type="search" id="hidden-gems-search" name="hidden-gems-search" value="" placeholder="Search by destination, district, or category..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search hidden gems by destination, district, or category">
+         <input type="search" id="hidden-gems-search" name="hidden-gems-search" value="" placeholder="Search by destination, district, or category..." data-i18n-placeholder="home.gemsSearchPlaceholder" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search hidden gems by destination, district, or category" data-i18n-aria="home.gemsSearchPlaceholder">
          <span class="gem-search-icon" id="gemSearchIcon">⌕</span>
          <button type="button" class="gem-search-clear" id="gemSearchClear" onclick="clearGemSearch()" aria-label="Clear search">✕</button>
        </form>
@@ -2779,8 +2783,8 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
       <div style="display:flex;align-items:center;gap:12px">
         <div class="planner-head-icon">🧭</div>
         <div>
-          <h2>Arya Trip Plan Maker</h2>
-          <small>Plan your perfect Uttar Pradesh trip</small>
+          <h2 data-i18n="trip.title">Arya Trip Plan Maker</h2>
+          <small data-i18n="trip.subtitle">Plan your perfect Uttar Pradesh trip</small>
         </div>
       </div>
       <div class="planner-head-right">
@@ -2997,13 +3001,13 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 
       <!-- 10 & 13 & 16. Main Action Buttons -->
       <div class="atp-main-actions">
-        <button type="button" class="planner-btn" id="atpMakePlanBtn" onclick="makeMyTripPlan()">
+        <button type="button" class="planner-btn" id="atpMakePlanBtn" onclick="makeMyTripPlan()" data-i18n="trip.makePlan">
           ✨ Make My Plan
         </button>
-        <button type="button" class="planner-btn secondary" id="atpCalcBudgetBtn" onclick="showDedicatedBudgetCalculation()">
+        <button type="button" class="planner-btn secondary" id="atpCalcBudgetBtn" onclick="showDedicatedBudgetCalculation()" data-i18n="trip.calculateBudget">
           💰 Calculate Budget
         </button>
-        <button type="button" class="planner-btn ghost" onclick="resetTripPlanner(true)">
+        <button type="button" class="planner-btn ghost" onclick="resetTripPlanner(true)" data-i18n="buttons.resetFilters">
           🔄 Reset Plan
         </button>
       </div>
@@ -3438,92 +3442,93 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
 <div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-label="Customer Authentication" onclick="handleAuthModalBackdrop(event)">
   <div class="auth-box" onclick="event.stopPropagation()">
     <div class="auth-header">
-      <h3 id="authModalHeaderTitle"><span>✨</span> Welcome Back</h3>
+      <h3 id="authModalHeaderTitle"><span>✨</span> <span data-i18n="auth.loginTitle">Welcome Back</span></h3>
       <button type="button" class="auth-header-close" onclick="closeAuthModal()" aria-label="Close modal">✕</button>
     </div>
     <div class="auth-body">
       <div class="auth-tabs">
-        <button type="button" class="auth-tab active" id="tabBtnLogin" onclick="switchAuthTab('login')">Login</button>
-        <button type="button" class="auth-tab" id="tabBtnRegister" onclick="switchAuthTab('register')">Create Account</button>
+        <button type="button" class="auth-tab active" id="tabBtnLogin" onclick="switchAuthTab('login')" data-i18n="buttons.login">Login</button>
+        <button type="button" class="auth-tab" id="tabBtnRegister" onclick="switchAuthTab('register')" data-i18n="buttons.createAccount">Create Account</button>
       </div>
 
       <!-- Login Form -->
       <form id="authLoginForm" class="auth-form" onsubmit="handleLoginSubmit(event)" novalidate>
         <div>
-          <h4 class="auth-form-heading">Welcome Back</h4>
-          <p class="auth-form-sub">Sign in with your registered email and password</p>
+          <h4 class="auth-form-heading" data-i18n="auth.loginTitle">Welcome Back</h4>
+          <p class="auth-form-sub" data-i18n="auth.loginSubtitle">Sign in with your registered email and password</p>
         </div>
         <div id="loginAlert" class="auth-alert" role="alert"></div>
 
         <label class="auth-field-label" for="loginIdentifier">
-          <span>Email</span>
-          <input type="email" id="loginIdentifier" placeholder="Enter your email address" required autocomplete="email">
+          <span data-i18n="auth.email">Email</span>
+          <input type="email" id="loginIdentifier" placeholder="Enter your email address" data-i18n-placeholder="auth.emailPlaceholder" required autocomplete="email">
         </label>
 
         <label class="auth-field-label" for="loginPassword">
-          <span>Password</span>
+          <span data-i18n="auth.password">Password</span>
           <div class="auth-pw-wrap">
-            <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+            <input type="password" id="loginPassword" placeholder="Enter your password" data-i18n-placeholder="auth.passwordPlaceholder" required autocomplete="current-password">
             <button type="button" class="auth-pw-toggle" onclick="toggleAuthPassword('loginPassword', this)" aria-label="Show password" title="Show/Hide Password">👁</button>
           </div>
         </label>
 
         <button type="submit" class="auth-submit-btn" id="loginSubmitBtn">
-          <span>Login</span>
+          <span data-i18n="buttons.login">Login</span>
         </button>
 
         <div class="auth-switch-prompt">
-          Don't have an account?
-          <a href="javascript:void(0)" onclick="switchAuthTab('register')">Create Account</a>
+          <span data-i18n="auth.noAccount">Don't have an account?</span>
+          <a href="javascript:void(0)" onclick="switchAuthTab('register')" data-i18n="buttons.createAccount">Create Account</a>
         </div>
       </form>
 
       <!-- Create Account Form -->
       <form id="authRegisterForm" class="auth-form" style="display:none" onsubmit="handleRegisterSubmit(event)" novalidate>
         <div>
-          <h4 class="auth-form-heading">Create Your Account</h4>
-          <p class="auth-form-sub">Join ExploreUP to start your Uttar Pradesh journey</p>
+          <h4 class="auth-form-heading" data-i18n="auth.registerTitle">Create Your Account</h4>
+          <p class="auth-form-sub" data-i18n="auth.registerSubtitle">Join ExploreUP to start your Uttar Pradesh journey</p>
         </div>
         <div id="registerAlert" class="auth-alert" role="alert"></div>
 
         <label class="auth-field-label" for="regUsername">
-          <span>Full Name</span>
-          <input type="text" id="regUsername" placeholder="Enter your full name" required autocomplete="name">
+          <span data-i18n="auth.fullName">Full Name</span>
+          <input type="text" id="regUsername" placeholder="Enter your full name" data-i18n-placeholder="auth.namePlaceholder" required autocomplete="name">
         </label>
 
         <label class="auth-field-label" for="regEmail">
-          <span>Email Address</span>
-          <input type="email" id="regEmail" placeholder="you@example.com" required autocomplete="email">
+          <span data-i18n="auth.email">Email Address</span>
+          <input type="email" id="regEmail" placeholder="you@example.com" data-i18n-placeholder="auth.emailPlaceholder" required autocomplete="email">
         </label>
 
         <label class="auth-field-label" for="regPassword">
-          <span>Password</span>
+          <span data-i18n="auth.password">Password</span>
           <div class="auth-pw-wrap">
-            <input type="password" id="regPassword" placeholder="Create a password (min 6 characters)" required autocomplete="new-password">
+            <input type="password" id="regPassword" placeholder="Create a password (min 6 characters)" data-i18n-placeholder="auth.createPasswordPlaceholder" required autocomplete="new-password">
             <button type="button" class="auth-pw-toggle" onclick="toggleAuthPassword('regPassword', this)" aria-label="Show password" title="Show/Hide Password">👁</button>
           </div>
         </label>
 
         <label class="auth-field-label" for="regConfirmPassword">
-          <span>Confirm Password</span>
+          <span data-i18n="auth.confirmPassword">Confirm Password</span>
           <div class="auth-pw-wrap">
-            <input type="password" id="regConfirmPassword" placeholder="Re-enter your password" required autocomplete="new-password">
+            <input type="password" id="regConfirmPassword" placeholder="Re-enter your password" data-i18n-placeholder="auth.confirmPasswordPlaceholder" required autocomplete="new-password">
             <button type="button" class="auth-pw-toggle" onclick="toggleAuthPassword('regConfirmPassword', this)" aria-label="Show password" title="Show/Hide Password">👁</button>
           </div>
         </label>
 
         <label class="auth-terms-label" for="regTerms">
           <input type="checkbox" id="regTerms" required>
-          <span>I agree to the Terms &amp; Conditions</span>
+          <span data-i18n="auth.terms">I agree to the Terms &amp; Conditions</span>
         </label>
 
         <button type="submit" class="auth-submit-btn" id="regSubmitBtn">
-          <span>Create Account</span>
+          <span data-i18n="buttons.createAccount">Create Account</span>
         </button>
 
         <div class="auth-switch-prompt">
-          Already have an account?
-          <a href="javascript:void(0)" onclick="switchAuthTab('login')">Login</a>
+          <span data-i18n="auth.hasAccount">Already have an account?</span>
+          <a href="javascript:void(0)" onclick="switchAuthTab('login')" data-i18n="buttons.login">Login</a>
+        </div>
         </div>
       </form>
     </div>
@@ -5744,6 +5749,23 @@ function getDistrictSuggestions(query){
     });
   }
 
+  // Multilingual city alias matching (e.g. Hindi, Tamil, Telugu, Japanese, Arabic)
+  if (window.I18N && typeof window.I18N.matchCityMultilingual === 'function') {
+    const multiCityKey = window.I18N.matchCityMultilingual(q);
+    if (multiCityKey) {
+      const d = source[multiCityKey];
+      const dName = d ? (d.name || multiCityKey) : (multiCityKey.charAt(0).toUpperCase() + multiCityKey.slice(1));
+      if (!list.some(item => item.id === multiCityKey)) {
+        list.unshift({
+          id: multiCityKey,
+          name: dName,
+          tagline: d ? (d.tagline || '') : '',
+          starts: true
+        });
+      }
+    }
+  }
+
   // Sort: exact match first, then startsWith, then alphabetical
   list.sort((a, b) => {
     const aExact = a.name.toLowerCase() === q || a.id === q;
@@ -6645,11 +6667,16 @@ function buildAtpStructuredPlan(customAiNote = '') {
   const dayPlans = [];
   for (let d = 1; d <= daysCount; d++) {
     const dayItems = [];
+    const morningTxt = window.I18N ? window.I18N.t('trip.morning', 'Morning') : 'Morning';
+    const afternoonTxt = window.I18N ? window.I18N.t('trip.afternoon', 'Afternoon') : 'Afternoon';
+    const eveningTxt = window.I18N ? window.I18N.t('trip.evening', 'Evening') : 'Evening';
+    const lunchTxt = window.I18N ? (window.I18N.getLanguage() === 'hi' ? 'दोपहर का भोजन' : window.I18N.getLanguage() === 'ja' ? '昼食' : 'Lunch & Local Flavors') : 'Lunch & Local Flavors';
+
     const slotLabels = style === 'Relaxed'
-      ? ['🌅 Morning', '🍛 Lunch & Local Flavors', '🌇 Evening']
+      ? [`🌅 ${morningTxt}`, `🍛 ${lunchTxt}`, `🌇 ${eveningTxt}`]
       : (style === 'Fast-paced'
-        ? ['🌅 Early Morning', '🏛️ Late Morning', '🍛 Lunch & Culinary Stop', '☀️ Afternoon Sightseeing', '🌇 Evening & Bazaar']
-        : ['🌅 Morning', '🍛 Lunch & Culinary Stop', '☀️ Afternoon', '🌇 Evening']);
+        ? [`🌅 ${morningTxt}`, `🏛️ ${morningTxt}`, `🍛 ${lunchTxt}`, `☀️ ${afternoonTxt}`, `🌇 ${eveningTxt}`]
+        : [`🌅 ${morningTxt}`, `🍛 ${lunchTxt}`, `☀️ ${afternoonTxt}`, `🌇 ${eveningTxt}`]);
 
     slotLabels.forEach((slotTitle, sIdx) => {
       const pickIndex = ((d - 1) * slotsPerDay + sIdx) % scoredPool.length;
@@ -6810,7 +6837,12 @@ Special Requirements: ${atpState.specialReq || 'None'}`;
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ query: prompt, stream: false }),
+        body: JSON.stringify({
+          query: prompt,
+          stream: false,
+          language: (window.I18N ? window.I18N.getLanguageName() : 'English'),
+          lang: (window.I18N ? window.I18N.getLanguage() : 'en')
+        }),
         signal: controller.signal
       });
       clearTimeout(timeoutId);
@@ -6891,7 +6923,7 @@ function renderAtpOutput() {
     const daysHtml = plan.dayPlans.map(d => `
       <div class="itinerary-day">
         <div class="itinerary-day-head">
-          <h4>🗓️ DAY ${d.day} — ${escapeHtml(d.theme)}</h4>
+          <h4>🗓️ ${(window.I18N && window.I18N.getLanguage() === 'ja') ? `${d.day}日目` : `${(window.I18N ? window.I18N.t('trip.day', 'DAY') : 'DAY')} ${d.day}`} — ${escapeHtml(d.theme)}</h4>
           <span style="font-size:11.5px;font-weight:700;color:var(--muted)">Pace: ${escapeHtml(plan.travelStyle)} (${d.items.length} stops)</span>
         </div>
         <div class="atp-slot-grid">
@@ -7817,7 +7849,12 @@ async function askArya(){
         'Accept': 'text/event-stream, application/json'
       },
       credentials: 'include',
-      body: JSON.stringify({ query: q, stream: true })
+      body: JSON.stringify({
+        query: q,
+        stream: true,
+        language: (window.I18N ? window.I18N.getLanguageName() : 'English'),
+        lang: (window.I18N ? window.I18N.getLanguage() : 'en')
+      })
     });
 
     const contentType = res.headers.get('content-type') || '';
@@ -8174,6 +8211,10 @@ function syncDrawerLangUI() {
 }
 
 function toggleLanguage(){
+  if (typeof window.openLanguageModal === 'function') {
+    window.openLanguageModal();
+    return;
+  }
   currentAppLanguage = (currentAppLanguage === 'en') ? 'hi' : 'en';
   exploreStorage.set('exploreup_lang', currentAppLanguage);
   syncDrawerLangUI();
@@ -8698,6 +8739,15 @@ function performSearch(event) {
   const cityMatches = typeof getDistrictSuggestions === 'function' ? getDistrictSuggestions(rawQuery) : [];
   const placeMatches = typeof getPlaceSuggestions === 'function' ? getPlaceSuggestions(rawQuery) : [];
 
+  // Multilingual city alias direct navigation (e.g. "वाराणसी", "バラナシ", "وارانسی", "阿格拉")
+  if (window.I18N && typeof window.I18N.matchCityMultilingual === 'function') {
+    const multiMatch = window.I18N.matchCityMultilingual(rawQuery);
+    if (multiMatch) {
+      navigateToDistrict(multiMatch);
+      return;
+    }
+  }
+
   // Fallback to Arya AI if query doesn't match any known city or monument
   const matchedDistrictSlug = typeof findMatchingDistrict === 'function' ? findMatchingDistrict(rawQuery) : null;
   if (cityMatches.length === 0 && placeMatches.length === 0 && !matchedDistrictSlug) {
@@ -8758,5 +8808,6 @@ if (searchInputEl) {
   });
 }
 </script>
+<script src="/public/js/i18n.js"></script>
 </body>
 </html>
