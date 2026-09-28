@@ -241,10 +241,10 @@ body.dark .search-autocomplete-item.ai-item{background:linear-gradient(90deg,rgb
 .city:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(0,0,0,.88))}
 .city img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}.city:hover img{transform:scale(1.07)}
 .city:hover{transform:translateY(-4px);box-shadow:0 15px 35px rgba(16,35,63,.18)}
-.citytext{position:absolute;z-index:2;bottom:54px;left:15px;right:15px}
+.citytext{position:absolute;z-index:2;bottom:44px;left:15px;right:15px}
 .citytext h3{margin:0 0 3px;font-size:19px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
 .citytext small{color:#e8f1ff;display:block;font-size:12px;line-height:1.3;text-shadow:0 1px 4px rgba(0,0,0,.6)}
-.citymeta{position:absolute;z-index:3;bottom:12px;left:15px;right:15px;display:flex;gap:5px;flex-wrap:wrap}
+.citymeta{position:absolute;z-index:3;bottom:14px;left:15px;right:50px;display:flex;gap:6px;flex-wrap: nowrap;align-items:center}
 .meta{font-size:11px;background:#ffffffdf;color:#071b35;border-radius:14px;padding:4px 8px;font-weight:750;backdrop-filter:blur(4px)}
 .meta.rating{background:#fff1cc;color:#8a5c00}
 .arrow{position:absolute;right:12px;bottom:12px;z-index:3;width:32px;height:32px;border:1px solid #fff8;border-radius:50%;display:grid;place-items:center;font-size:14px}
@@ -266,13 +266,418 @@ body.dark .search-autocomplete-item.ai-item{background:linear-gradient(90deg,rgb
 .check{display:flex;gap:10px}.check b{display:block}.check small{color:var(--muted)}
 
 /* Hidden Gems */
-.gems{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.gem{background:var(--card);border-radius:18px;overflow:hidden;position:relative;border:1px solid var(--line);box-shadow:0 6px 22px rgba(16,35,63,.05);transition:transform .2s}
-.gem:hover{transform:translateY(-3px)}
-.gem img{width:100%;height:165px;object-fit:cover}.gem div{padding:16px}.gem h3{margin:0 0 5px;font-size:18px}.gem p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
-.save{position:absolute;right:12px;top:12px;width:38px;height:38px;border:0;border-radius:50%;background:#fff;color:#071b35;font-size:19px;cursor:pointer;box-shadow:0 4px 15px rgba(0,27,59,.25);display:grid;place-items:center;transition:all .15s}
+.gems-count-badge{
+  font-size:13px;
+  font-weight:800;
+  padding:6px 14px;
+  border-radius:999px;
+  background:rgba(11,103,209,.08);
+  color:var(--blue);
+  border:1px solid rgba(11,103,209,.2);
+  white-space:nowrap;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+body.dark .gems-count-badge{
+  background:rgba(255,181,27,.12);
+  color:var(--gold);
+  border-color:rgba(255,181,27,.3);
+}
+
+.gems-controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:20px;
+}
+.gems-pills{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.gem-pill-btn{
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  padding:8px 16px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:750;
+  cursor:pointer;
+  transition:all .18s ease;
+  white-space:nowrap;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.gem-pill-btn:hover{
+  border-color:var(--gold);
+  color:var(--navy);
+  background:#fff9ed;
+  transform:translateY(-1px);
+}
+body.dark .gem-pill-btn:hover{
+  background:#172b43;
+  color:var(--gold);
+}
+.gem-pill-btn.active{
+  background:var(--navy);
+  color:#fff;
+  border-color:var(--navy);
+  box-shadow:0 3px 12px rgba(7,27,53,.2);
+}
+body.dark .gem-pill-btn.active{
+  background:var(--gold);
+  color:#071b35;
+  border-color:var(--gold);
+  box-shadow:0 3px 12px rgba(255,181,27,.25);
+}
+
+.gem-search-box{
+  position:relative;
+  min-width:240px;
+  max-width:320px;
+  flex:1 1 auto;
+}
+.gem-search-box input{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px 36px 10px 14px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  font:inherit;
+  font-size:13.5px;
+  outline:none;
+  transition:border-color .18s,box-shadow .18s;
+}
+.gem-search-box input:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(255,181,27,.18);
+}
+.gem-search-icon{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:15px;
+  pointer-events:none;
+}
+.gem-search-clear{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-size:16px;
+  cursor:pointer;
+  padding:4px;
+  display:none;
+}
+.gem-search-clear:hover{color:var(--text)}
+
+.gems{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  transition:all .3s ease;
+}
+.gem{
+  background:var(--card);
+  border-radius:18px;
+  overflow:hidden;
+  position:relative;
+  border:1px solid var(--line);
+  box-shadow:0 6px 20px rgba(16,35,63,.05);
+  transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,border-color .22s ease;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+}
+.gem:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 35px rgba(16,35,63,.12);
+  border-color:rgba(255,181,27,.55);
+}
+body.dark .gem{
+  background:#0c1c2e;
+  border-color:#1e3550;
+}
+body.dark .gem:hover{
+  border-color:var(--gold);
+  box-shadow:0 14px 35px rgba(0,0,0,.35);
+}
+
+.gem-img-wrap{
+  position:relative;
+  height:185px;
+  overflow:hidden;
+  background:#18324f;
+}
+.gem-img-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .4s ease;
+}
+.gem:hover .gem-img-wrap img{
+  transform:scale(1.06);
+}
+.gem-badge{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:rgba(7,27,53,.82);
+  color:var(--gold);
+  border:1px solid rgba(255,181,27,.45);
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.3px;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  z-index:2;
+}
+
+.save{position:absolute;right:12px;top:12px;width:38px;height:38px;border:0;border-radius:50%;background:#fff;color:#071b35;font-size:19px;cursor:pointer;box-shadow:0 4px 15px rgba(0,27,59,.25);display:grid;place-items:center;transition:all .15s;z-index:3}
 .save.saved{background:var(--gold);color:#071b35}
+
+.gem-body{
+  padding:16px 18px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+.gem-meta-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:8px;
+  flex-wrap:wrap;
+}
+.gem-cat-tag{
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  padding:3px 8px;
+  border-radius:6px;
+  background:rgba(11,103,209,.1);
+  color:var(--blue);
+}
+body.dark .gem-cat-tag{
+  background:rgba(255,181,27,.12);
+  color:var(--gold);
+}
+.gem-district-tag{
+  font-size:12px;
+  font-weight:750;
+  color:var(--muted);
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+}
+.gem-title{
+  margin:0 0 6px;
+  font-size:18px;
+  font-weight:800;
+  color:var(--text);
+  line-height:1.3;
+}
+.gem-desc{
+  margin:0 0 14px;
+  color:var(--muted);
+  font-size:13.5px;
+  line-height:1.5;
+  flex:1;
+}
+.gem-actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:auto;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+}
+.gem-explore-btn{
+  background:var(--navy);
+  color:#fff;
+  border:0;
+  padding:8px 15px;
+  border-radius:10px;
+  font-size:12.5px;
+  font-weight:800;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:all .18s ease;
+  box-shadow:0 3px 10px rgba(7,27,53,.15);
+}
+.gem-explore-btn:hover{
+  background:var(--gold);
+  color:#071b35;
+  transform:translateY(-1px);
+}
+body.dark .gem-explore-btn{
+  background:var(--gold);
+  color:#071b35;
+}
+body.dark .gem-explore-btn:hover{
+  background:#ffc444;
+}
+.gem-share-btn{
+  background:var(--surface);
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:7px 12px;
+  font-size:12px;
+  font-weight:750;
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.gem-share-btn:hover{
+  border-color:var(--gold);
+  color:var(--navy);
+}
+body.dark .gem-share-btn:hover{
+  color:var(--gold);
+}
 .share{border:0;border-radius:20px;background:#eef5ff;color:#145eaf;padding:8px 14px;font-weight:750;cursor:pointer;margin-top:12px;font-size:12px}
+
+/* Detail Modal for Hidden Gems */
+.gem-modal-hero{
+  position:relative;
+  height:260px;
+  overflow:hidden;
+  flex-shrink:0;
+  background:#071525;
+}
+.gem-modal-hero img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.gem-modal-hero-gradient{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(7,27,53,.2) 0%,rgba(7,27,53,.85) 100%);
+}
+.gem-modal-close{
+  position:absolute;
+  top:16px;
+  right:16px;
+  z-index:10;
+  background:rgba(0,0,0,.5);
+  color:#fff;
+}
+.gem-modal-hero-content{
+  position:absolute;
+  bottom:18px;
+  left:24px;
+  right:24px;
+  z-index:5;
+  color:#fff;
+}
+.gem-modal-tags{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:6px;
+}
+.gem-modal-hero-content h2{
+  margin:0;
+  font-size:clamp(22px,3.8vw,30px);
+  color:#fff;
+  font-weight:850;
+  letter-spacing:-.3px;
+  text-shadow:0 2px 10px rgba(0,0,0,.7);
+}
+.gem-modal-body{
+  padding:22px 24px;
+}
+.gem-detail-section{
+  margin-bottom:20px;
+}
+.gem-detail-section h4{
+  margin:0 0 8px;
+  font-size:15px;
+  font-weight:800;
+  color:var(--navy);
+}
+body.dark .gem-detail-section h4{
+  color:var(--gold);
+}
+.gem-detail-section p{
+  margin:0;
+  line-height:1.65;
+  color:var(--text);
+  font-size:14.5px;
+}
+.gem-detail-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-bottom:20px;
+}
+.gem-info-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px 16px;
+}
+body.dark .gem-info-card{
+  background:#0a1829;
+  border-color:#1a324d;
+}
+.gem-info-label{
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  color:var(--blue);
+  margin-bottom:6px;
+}
+body.dark .gem-info-label{
+  color:var(--gold);
+}
+.gem-info-text{
+  font-size:13.5px;
+  line-height:1.55;
+  color:var(--text);
+}
+.gem-modal-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:10px;
+  padding-top:14px;
+  border-top:1px solid var(--line);
+}
+@media(max-width:650px){
+  .gem-detail-grid{grid-template-columns:1fr;gap:10px}
+  .gem-modal-hero{height:200px}
+  .gem-modal-hero-content{left:16px;right:16px;bottom:14px}
+  .gems-controls{flex-direction:column;align-items:stretch}
+  .gem-search-box{max-width:100%}
+  .gems-pills{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;scrollbar-width:none}
+  .gems-pills::-webkit-scrollbar{display:none}
+  .gem-pill-btn{flex-shrink:0}
+}
 
 /* Districts Grid */
 .districts{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
@@ -1407,25 +1812,351 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
    </div>
   </section>
 
-  <section class="section" id="hidden-gems">
-   <div class="sectionhead">
-     <div><h2>💎 Hidden Gems of Uttar Pradesh</h2><p>Discover breathtaking lesser-known spots away from heavy tourist crowds</p></div>
+    <section class="section" id="hidden-gems">
+   <div class="sectionhead" style="align-items:flex-start">
+     <div>
+       <h2>💎 Hidden Gems of Uttar Pradesh</h2>
+       <p>Discover the lesser-known waterfalls, forests, forts, wildlife sanctuaries and historic places beyond the famous destinations.</p>
+     </div>
+     <div class="gems-count-badge" id="gemsCountBadge">16 hidden gems to explore</div>
    </div>
-   <div class="gems">
-    <article class="gem">
-      <button class="save" onclick="toggleSave(this,'Chunar Fort')">♡</button>
-      <img loading="lazy" src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=700&q=70" onerror="exploreUpImageFallback(this)" alt="Chunar Fort">
-      <div><h3>Chunar Fort, Mirzapur</h3><p>Ancient sandstone fortress perched high above the Ganga with 1,500 years of legend.</p><button class="share" onclick="shareItem('Chunar Fort')">↗ Share</button></div>
+
+   <!-- Category Filtering Pills & Search Box -->
+   <div class="gems-controls">
+     <div class="gems-pills" role="tablist" aria-label="Filter hidden gems by category">
+       <button type="button" class="gem-pill-btn active" data-filter="all" onclick="filterHiddenGems('all')">All (16)</button>
+       <button type="button" class="gem-pill-btn" data-filter="nature-waterfalls" onclick="filterHiddenGems('nature-waterfalls')">🌊 Nature & Waterfalls</button>
+       <button type="button" class="gem-pill-btn" data-filter="history-heritage" onclick="filterHiddenGems('history-heritage')">🏰 History & Heritage</button>
+       <button type="button" class="gem-pill-btn" data-filter="wildlife" onclick="filterHiddenGems('wildlife')">🐅 Wildlife</button>
+       <button type="button" class="gem-pill-btn" data-filter="spiritual" onclick="filterHiddenGems('spiritual')">🕉️ Spiritual</button>
+     </div>
+     <div class="gem-search-box">
+       <input type="text" id="gemSearchInput" placeholder="Search by name, district, or category..." oninput="handleGemSearch(this.value)" autocomplete="off" aria-label="Search hidden gems">
+       <span class="gem-search-icon" id="gemSearchIcon">⌕</span>
+       <button type="button" class="gem-search-clear" id="gemSearchClear" onclick="clearGemSearch()" aria-label="Clear search">✕</button>
+     </div>
+   </div>
+
+   <div class="gems" id="hiddenGemsGrid">
+
+    <article class="gem" data-gem-id="chandraprabha" onclick="openGemModal('chandraprabha')" tabindex="0" role="button" aria-label="View details for Chandraprabha Wildlife Sanctuary">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/chandraprabha.jpg" alt="Chandraprabha Wildlife Sanctuary" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Chandraprabha Wildlife Sanctuary')" aria-label="Save Chandraprabha Wildlife Sanctuary" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Nature &amp; Wildlife</span>
+          <span class="gem-district-tag">📍 Chandauli</span>
+        </div>
+        <h3 class="gem-title">Chandraprabha Wildlife Sanctuary</h3>
+        <p class="gem-desc">Forests, hills and waterfalls near Chakia.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('chandraprabha')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Chandraprabha Wildlife Sanctuary')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
     </article>
-    <article class="gem">
-      <button class="save" onclick="toggleSave(this,'Deogarh')">♡</button>
-      <img loading="lazy" src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=700&q=70" onerror="exploreUpImageFallback(this)" alt="Deogarh">
-      <div><h3>Deogarh, Lalitpur</h3><p>Gupta-period Dashavatara Temple and Betwa river valley cliffs with 31 ancient Jain temples.</p><button class="share" onclick="shareItem('Deogarh')">↗ Share</button></div>
+
+    <article class="gem" data-gem-id="devdari" onclick="openGemModal('devdari')" tabindex="0" role="button" aria-label="View details for Devdari Waterfall">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/devdari.jpg" alt="Devdari Waterfall" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Devdari Waterfall')" aria-label="Save Devdari Waterfall" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Waterfalls &amp; Nature</span>
+          <span class="gem-district-tag">📍 Chandauli</span>
+        </div>
+        <h3 class="gem-title">Devdari Waterfall</h3>
+        <p class="gem-desc">A scenic waterfall surrounded by the Vindhyan landscape.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('devdari')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Devdari Waterfall')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
     </article>
-    <article class="gem">
-      <button class="save" onclick="toggleSave(this,'Saman Bird Sanctuary')">♡</button>
-      <img loading="lazy" src="https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=700&q=70" onerror="exploreUpImageFallback(this)" alt="Saman Bird Sanctuary">
-      <div><h3>Saman Bird Sanctuary</h3><p>Ramsar wetland sanctuary hosting thousands of migratory birds during winter.</p><button class="share" onclick="shareItem('Saman Bird Sanctuary')">↗ Share</button></div>
+
+    <article class="gem" data-gem-id="rajdari" onclick="openGemModal('rajdari')" tabindex="0" role="button" aria-label="View details for Rajdari Waterfalls">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/rajdarifalls.jpg" alt="Rajdari Waterfalls" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Rajdari Waterfalls')" aria-label="Save Rajdari Waterfalls" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Waterfalls &amp; Nature</span>
+          <span class="gem-district-tag">📍 Chandauli</span>
+        </div>
+        <h3 class="gem-title">Rajdari Waterfalls</h3>
+        <p class="gem-desc">A dramatic waterfall area surrounded by the Vindhyan landscape.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('rajdari')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Rajdari Waterfalls')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="lakhaniya-dari" onclick="openGemModal('lakhaniya-dari')" tabindex="0" role="button" aria-label="View details for Lakhaniya Dari">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/lakhaniyadari.jpg" alt="Lakhaniya Dari" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Lakhaniya Dari')" aria-label="Save Lakhaniya Dari" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Waterfalls &amp; Nature</span>
+          <span class="gem-district-tag">📍 Mirzapur</span>
+        </div>
+        <h3 class="gem-title">Lakhaniya Dari</h3>
+        <p class="gem-desc">Rocky terrain, seasonal waterfall and a rugged natural landscape.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('lakhaniya-dari')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Lakhaniya Dari')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="shirsi" onclick="openGemModal('shirsi')" tabindex="0" role="button" aria-label="View details for Shirsi Waterfall">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/shirsi.jpg" alt="Shirsi Waterfall" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Shirsi Waterfall')" aria-label="Save Shirsi Waterfall" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Waterfalls &amp; Nature</span>
+          <span class="gem-district-tag">📍 Mirzapur</span>
+        </div>
+        <h3 class="gem-title">Shirsi Waterfall</h3>
+        <p class="gem-desc">A quieter waterfall destination surrounded by natural scenery.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('shirsi')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Shirsi Waterfall')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="vindham" onclick="openGemModal('vindham')" tabindex="0" role="button" aria-label="View details for Vindham Falls">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/vindham.jpg" alt="Vindham Falls" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Vindham Falls')" aria-label="Save Vindham Falls" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Waterfalls &amp; Nature</span>
+          <span class="gem-district-tag">📍 Mirzapur</span>
+        </div>
+        <h3 class="gem-title">Vindham Falls</h3>
+        <p class="gem-desc">A forested waterfall area close to Mirzapur.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('vindham')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Vindham Falls')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="tanda-falls" onclick="openGemModal('tanda-falls')" tabindex="0" role="button" aria-label="View details for Tanda Falls">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/tandafalls.jpg" alt="Tanda Falls" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Tanda Falls')" aria-label="Save Tanda Falls" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Waterfalls &amp; Nature</span>
+          <span class="gem-district-tag">📍 Mirzapur</span>
+        </div>
+        <h3 class="gem-title">Tanda Falls</h3>
+        <p class="gem-desc">A lesser-known waterfall destination in the Mirzapur region.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('tanda-falls')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Tanda Falls')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="chunar-fort" onclick="openGemModal('chunar-fort')" tabindex="0" role="button" aria-label="View details for Chunar Fort">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/chunarfort.jpg" alt="Chunar Fort" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Chunar Fort')" aria-label="Save Chunar Fort" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">History &amp; Heritage</span>
+          <span class="gem-district-tag">📍 Mirzapur</span>
+        </div>
+        <h3 class="gem-title">Chunar Fort</h3>
+        <p class="gem-desc">A historic fort overlooking the Ganga with spectacular views and rich history.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('chunar-fort')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Chunar Fort')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="ramnagar-fort" onclick="openGemModal('ramnagar-fort')" tabindex="0" role="button" aria-label="View details for Ramnagar Fort">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/ramnagarfort.jpg" alt="Ramnagar Fort" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Ramnagar Fort')" aria-label="Save Ramnagar Fort" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">History &amp; Heritage</span>
+          <span class="gem-district-tag">📍 Varanasi</span>
+        </div>
+        <h3 class="gem-title">Ramnagar Fort</h3>
+        <p class="gem-desc">A historic riverside fort located across the Ganga from Varanasi.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('ramnagar-fort')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Ramnagar Fort')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="bateshwar" onclick="openGemModal('bateshwar')" tabindex="0" role="button" aria-label="View details for Bateshwar">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/bateshwar.jpg" alt="Bateshwar" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Bateshwar')" aria-label="Save Bateshwar" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Spiritual &amp; Heritage</span>
+          <span class="gem-district-tag">📍 Agra</span>
+        </div>
+        <h3 class="gem-title">Bateshwar</h3>
+        <p class="gem-desc">A riverside temple complex along the Yamuna, known for its distinctive line of Shiva temples.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('bateshwar')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Bateshwar')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="mahoba" onclick="openGemModal('mahoba')" tabindex="0" role="button" aria-label="View details for Mahoba">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/mahoba.jpg" alt="Mahoba" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Mahoba')" aria-label="Save Mahoba" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">History &amp; Heritage</span>
+          <span class="gem-district-tag">📍 Mahoba</span>
+        </div>
+        <h3 class="gem-title">Mahoba</h3>
+        <p class="gem-desc">A historic Bundelkhand destination associated with the Chandela period, old temples and historic water bodies.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('mahoba')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Mahoba')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="chitrakoot" onclick="openGemModal('chitrakoot')" tabindex="0" role="button" aria-label="View details for Chitrakoot">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/chitrakoot.jpg" alt="Chitrakoot" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Chitrakoot')" aria-label="Save Chitrakoot" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Nature &amp; Spiritual</span>
+          <span class="gem-district-tag">📍 Chitrakoot</span>
+        </div>
+        <h3 class="gem-title">Chitrakoot</h3>
+        <p class="gem-desc">A culturally important destination with forests, caves, waterfalls and scenic viewpoints beyond the main pilgrimage sites.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('chitrakoot')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Chitrakoot')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="katarniaghat" onclick="openGemModal('katarniaghat')" tabindex="0" role="button" aria-label="View details for Katarniaghat Wildlife Sanctuary">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/katarniaghat.jpg" alt="Katarniaghat Wildlife Sanctuary" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Katarniaghat Wildlife Sanctuary')" aria-label="Save Katarniaghat Wildlife Sanctuary" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Wildlife</span>
+          <span class="gem-district-tag">📍 Bahraich</span>
+        </div>
+        <h3 class="gem-title">Katarniaghat Wildlife Sanctuary</h3>
+        <p class="gem-desc">Terai forests and wildlife along the Girwa River.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('katarniaghat')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Katarniaghat Wildlife Sanctuary')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="pilibhit" onclick="openGemModal('pilibhit')" tabindex="0" role="button" aria-label="View details for Pilibhit Tiger Reserve">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/pilibhit.jpg" alt="Pilibhit Tiger Reserve" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Pilibhit Tiger Reserve')" aria-label="Save Pilibhit Tiger Reserve" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Wildlife</span>
+          <span class="gem-district-tag">📍 Pilibhit</span>
+        </div>
+        <h3 class="gem-title">Pilibhit Tiger Reserve</h3>
+        <p class="gem-desc">Dense Terai forests and important tiger habitat.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('pilibhit')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Pilibhit Tiger Reserve')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="kishanpur" onclick="openGemModal('kishanpur')" tabindex="0" role="button" aria-label="View details for Kishanpur Wildlife Sanctuary">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/kishanpur.jpg" alt="Kishanpur Wildlife Sanctuary" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Kishanpur Wildlife Sanctuary')" aria-label="Save Kishanpur Wildlife Sanctuary" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Wildlife</span>
+          <span class="gem-district-tag">📍 Lakhimpur Kheri</span>
+        </div>
+        <h3 class="gem-title">Kishanpur Wildlife Sanctuary</h3>
+        <p class="gem-desc">A quieter wildlife destination within the Terai ecosystem.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('kishanpur')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Kishanpur Wildlife Sanctuary')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="gem" data-gem-id="hastinapur" onclick="openGemModal('hastinapur')" tabindex="0" role="button" aria-label="View details for Hastinapur Wildlife Sanctuary">
+      <div class="gem-img-wrap">
+        <img loading="lazy" src="assets/hidden-gems/hastinapur.jpg" alt="Hastinapur Wildlife Sanctuary" onerror="exploreUpImageFallback(this)">
+        <span class="gem-badge">💎 Hidden Gem</span>
+        <button class="save" type="button" onclick="event.stopPropagation(); toggleSave(this,'Hastinapur Wildlife Sanctuary')" aria-label="Save Hastinapur Wildlife Sanctuary" title="Save to favourites">♡</button>
+      </div>
+      <div class="gem-body">
+        <div class="gem-meta-row">
+          <span class="gem-cat-tag">Wildlife</span>
+          <span class="gem-district-tag">📍 Meerut region</span>
+        </div>
+        <h3 class="gem-title">Hastinapur Wildlife Sanctuary</h3>
+        <p class="gem-desc">A large wetland and forest landscape associated with the Ganga-Yamuna plains.</p>
+        <div class="gem-actions">
+          <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('hastinapur')">Explore <span>→</span></button>
+          <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('Hastinapur Wildlife Sanctuary')" title="Share this destination">↗ Share</button>
+        </div>
+      </div>
     </article>
    </div>
   </section>
@@ -2418,6 +3149,53 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   <span class="ask-arya-label">Ask Arya</span>
 </button>
 
+<!-- Hidden Gem Detail Modal -->
+<div class="planner-modal" id="gemModal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="gemModalTitle" onclick="if(event.target===this) closeGemModal()">
+  <div class="planner-box gem-modal-box" style="max-width:840px">
+    <div class="gem-modal-hero" id="gemModalHero">
+      <img id="gemModalImg" src="assets/hidden-gems/chandraprabha.jpg" alt="Destination Image">
+      <div class="gem-modal-hero-gradient"></div>
+      <button class="planner-close gem-modal-close" onclick="closeGemModal()" aria-label="Close modal" title="Close modal">✕</button>
+      <div class="gem-modal-hero-content">
+        <div class="gem-modal-tags">
+          <span class="gem-badge">💎 Hidden Gem</span>
+          <span class="gem-cat-tag" id="gemModalCategory">Nature & Wildlife</span>
+          <span class="gem-district-tag" id="gemModalDistrict" style="color:#f1f5f9;font-weight:800">📍 Chandauli</span>
+        </div>
+        <h2 id="gemModalTitle">Chandraprabha Wildlife Sanctuary</h2>
+      </div>
+    </div>
+    <div class="planner-body gem-modal-body">
+      <div class="gem-detail-section">
+        <h4>📖 Overview & Description</h4>
+        <p id="gemModalDesc"></p>
+      </div>
+      <div class="gem-detail-grid">
+        <div class="gem-info-card">
+          <div class="gem-info-label">👀 What to See</div>
+          <div class="gem-info-text" id="gemModalSee"></div>
+        </div>
+        <div class="gem-info-card">
+          <div class="gem-info-label">✨ Why It Is Special</div>
+          <div class="gem-info-text" id="gemModalSpecial"></div>
+        </div>
+        <div class="gem-info-card">
+          <div class="gem-info-label">🗓️ Best Time to Visit</div>
+          <div class="gem-info-text" id="gemModalSeason"></div>
+        </div>
+        <div class="gem-info-card">
+          <div class="gem-info-label">🚗 Basic Travel Information</div>
+          <div class="gem-info-text" id="gemModalTravel"></div>
+        </div>
+      </div>
+      <div class="gem-modal-footer">
+        <button type="button" class="planner-btn secondary" onclick="closeGemModal()" style="width:auto;padding:10px 22px">← Back to Hidden Gems</button>
+        <button type="button" class="gem-share-btn" id="gemModalShareBtn" style="padding:10px 18px;font-size:13.5px">↗ Share Destination</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Category Showcase Modal -->
 <div class="planner-modal" id="categoryModal" style="display:none" role="dialog" aria-modal="true">
   <div class="planner-box" style="max-width:750px">
@@ -2917,6 +3695,385 @@ const mallData = {
   "Prayagraj": [["Vinayak City Centre","Civil Lines, Prayagraj"],["Civil Lines High Street","Prayagraj's premier shopping and dining strip"]]
 };
 
+
+// =========================================================
+// HIDDEN GEMS DATA REPOSITORY & INTERACTIVE ENGINE
+// =========================================================
+const hiddenGemsData = [
+  {
+    id: "chandraprabha",
+    name: "Chandraprabha Wildlife Sanctuary",
+    district: "Chandauli",
+    category: "Nature & Wildlife",
+    filterTags: ["nature-waterfalls", "wildlife"],
+    image: "assets/hidden-gems/chandraprabha.jpg",
+    desc: "Forests, hills and waterfalls near Chakia.",
+    whatToSee: "Dense deciduous forests of the Vindhyan range, the dramatic Rajdari and Devdari waterfalls, Chandraprabha reservoir dam, and indigenous wildlife including leopards, chital, sambar deer, and diverse birds.",
+    whySpecial: "Established in 1957 as an Asiatic lion sanctuary, it remains one of eastern Uttar Pradesh's most picturesque forested highlands, offering pristine plateaus and dramatic gorges.",
+    bestTime: "October to March (post-monsoon months offer the fullest waterfalls and lush greenery).",
+    travelInfo: "Located approx. 70 km from Varanasi and 30 km from Chakia town in Chandauli district; best reached by private taxi or personal vehicle from Varanasi or Pt. Deen Dayal Upadhyaya Junction."
+  },
+  {
+    id: "devdari",
+    name: "Devdari Waterfall",
+    district: "Chandauli",
+    category: "Waterfalls & Nature",
+    filterTags: ["nature-waterfalls"],
+    image: "assets/hidden-gems/devdari.jpg",
+    desc: "A scenic waterfall surrounded by the Vindhyan landscape.",
+    whatToSee: "A stepped curtain waterfall dropping into a steep sandstone gorge, natural crystal-clear river pools, rugged canyon viewpoints, and tranquil forest trails.",
+    whySpecial: "Located just 500 meters downstream from the popular Rajdari Falls, Devdari offers a secluded and peaceful natural setting where the Chandraprabha River carves through ancient Vindhyan rock.",
+    bestTime: "August to February (water volume peaks between August and November).",
+    travelInfo: "Situated within the Chandraprabha Wildlife Sanctuary near Chakia; reachable by road via car or taxi from Varanasi (approx. 65–70 km)."
+  },
+  {
+    id: "rajdari",
+    name: "Rajdari Waterfalls",
+    district: "Chandauli",
+    category: "Waterfalls & Nature",
+    filterTags: ["nature-waterfalls"],
+    image: "assets/hidden-gems/rajdarifalls.jpg",
+    desc: "A dramatic waterfall area surrounded by the Vindhyan landscape.",
+    whatToSee: "A multi-tiered, cascading waterfall stepping down over 65 meters, elevated viewpoints, lush green surroundings, and family picnic grounds.",
+    whySpecial: "Often celebrated as the 'Niagara of Purvanchal', Rajdari is among the grandest stepped waterfalls in Uttar Pradesh, cascading over natural sandstone terraces.",
+    bestTime: "July to February (peak flow during and immediately following the monsoon).",
+    travelInfo: "Located in the Chakia forest range of Chandauli district, around 65 km south-east of Varanasi; accessible by car/taxi via Chakia."
+  },
+  {
+    id: "lakhaniya-dari",
+    name: "Lakhaniya Dari",
+    district: "Mirzapur",
+    category: "Waterfalls & Nature",
+    filterTags: ["nature-waterfalls"],
+    image: "assets/hidden-gems/lakhaniyadari.jpg",
+    desc: "Rocky terrain, seasonal waterfall and a rugged natural landscape.",
+    whatToSee: "A rushing seasonal waterfall cascading through deep boulder-strewn ravines, natural swimming pools, scenic hiking tracks, and ancient prehistoric rock shelters with cave art.",
+    whySpecial: "A beloved trekking and adventure escape set deep inside a wild Vindhyan gorge, combining raw natural terrain with Mesolithic-era painted rock shelters.",
+    bestTime: "September to February (the post-monsoon months are pleasant; take care during heavy monsoon rains).",
+    travelInfo: "Situated near Ahraura in Mirzapur district, approx. 45–50 km from Varanasi and 60 km from Mirzapur city; accessed via the Varanasi-Shaktinagar highway followed by a scenic rocky trail."
+  },
+  {
+    id: "shirsi",
+    name: "Shirsi Waterfall",
+    district: "Mirzapur",
+    category: "Waterfalls & Nature",
+    filterTags: ["nature-waterfalls"],
+    image: "assets/hidden-gems/shirsi.jpg",
+    desc: "A quieter waterfall destination surrounded by natural scenery.",
+    whatToSee: "The roaring cascade of the Bakhar/Sirsi River framed by the Vindhya hills, Sirsi Dam reservoir, quiet stone gorges, and lush rural countryside.",
+    whySpecial: "Formed downstream from the historic Sirsi Dam, this waterfall produces an expansive and thundering water curtain during the rainy season while retaining a quiet, unhurried charm.",
+    bestTime: "August to January (dam overflow during monsoon creates the most dramatic falls).",
+    travelInfo: "Located in Patehra block near Sant Nagar in Mirzapur district, approx. 45 km south of Mirzapur railway station; taxi or private vehicle recommended."
+  },
+  {
+    id: "vindham",
+    name: "Vindham Falls",
+    district: "Mirzapur",
+    category: "Waterfalls & Nature",
+    filterTags: ["nature-waterfalls"],
+    image: "assets/hidden-gems/vindham.jpg",
+    desc: "A forested waterfall area close to Mirzapur.",
+    whatToSee: "Gentle cascading rocky rapids, tranquil wooded groves, landscaped picnic park, children's mini-zoo, and nearby cave shelters with ancient rock art.",
+    whySpecial: "Named after British collector Wyndham, this is one of Mirzapur's most accessible forest waterfalls, providing a serene green retreat just minutes from the city.",
+    bestTime: "August to February.",
+    travelInfo: "Situated about 14–15 km south of Mirzapur city on the Mirzapur-Ghorawal road; easily reached by auto-rickshaw, taxi, or personal vehicle."
+  },
+  {
+    id: "tanda-falls",
+    name: "Tanda Falls",
+    district: "Mirzapur",
+    category: "Waterfalls & Nature",
+    filterTags: ["nature-waterfalls"],
+    image: "assets/hidden-gems/tandafalls.jpg",
+    desc: "A lesser-known waterfall destination in the Mirzapur region.",
+    whatToSee: "The stepped seasonal waterfall flowing over rocky terraces, the vast tranquil Tanda Dam reservoir across the road, hilltop viewpoints, and sunset spots.",
+    whySpecial: "Treasured for its quiet, peaceful ambiance away from busy city crowds, offering soothing water streams and panoramic views over the scenic water reservoir.",
+    bestTime: "July to November (at its peak during and right after the rainy season).",
+    travelInfo: "Located approx. 14 km from Mirzapur city on the Mirzapur-Ghorawal route; easy to combine with Vindham Falls which is only a short drive away."
+  },
+  {
+    id: "chunar-fort",
+    name: "Chunar Fort",
+    district: "Mirzapur",
+    category: "History & Heritage",
+    filterTags: ["history-heritage"],
+    image: "assets/hidden-gems/chunarfort.jpg",
+    desc: "A historic fort overlooking the Ganga with spectacular views and rich history.",
+    whatToSee: "Sonwa Mandap, the massive ancient stepped well (Bawadi), Warren Hastings' Bungalow, ancient stone ramparts rising sheer from the Ganga, and sweeping river views.",
+    whySpecial: "With legendary roots connecting King Vikramaditya, Raja Bhartruhari, Sher Shah Suri, Humayun, and Akbar, Chunar Fort has stood guard over the holy Ganga for over 1,500 years.",
+    bestTime: "October to March.",
+    travelInfo: "Located in Chunar town on the southern bank of the Ganga, approx. 40 km from Varanasi and 45 km from Mirzapur; well connected by road and Chunar Junction railway station."
+  },
+  {
+    id: "ramnagar-fort",
+    name: "Ramnagar Fort",
+    district: "Varanasi",
+    category: "History & Heritage",
+    filterTags: ["history-heritage"],
+    image: "assets/hidden-gems/ramnagarfort.jpg",
+    desc: "A historic riverside fort located across the Ganga from Varanasi.",
+    whatToSee: "The Saraswati Bhawan Museum (housing vintage royal cars, antique weaponry, palanquins, and a rare astrological clock), Veda Vyasa Temple, and sunset ramparts along the Ganga.",
+    whySpecial: "Built in 1750 by Kashi Naresh Maharaja Balwant Singh in red Chunar sandstone, it remains the ancestral residence of the titular Maharaja of Kashi and the historic center of the month-long Ramnagar Ramlila.",
+    bestTime: "October to March (late afternoons are particularly scenic for sunsets over the river).",
+    travelInfo: "Located across the Ganges from Assi Ghat via the Ramnagar bridge or boat; approx. 8 km from Varanasi Cantonment railway station."
+  },
+  {
+    id: "bateshwar",
+    name: "Bateshwar",
+    district: "Agra",
+    category: "Spiritual & Heritage",
+    filterTags: ["spiritual", "history-heritage"],
+    image: "assets/hidden-gems/bateshwar.jpg",
+    desc: "A riverside temple complex along the Yamuna, known for its distinctive line of Shiva temples.",
+    whatToSee: "The crescent-shaped shoreline of 101 historic Shiva temples along the Yamuna ghats, sacred Bateshwar Nath Temple, Chambal-Yamuna ravines, and nearby Shauripur Jain temples.",
+    whySpecial: "Known as the 'Chhota Haridwar' of western UP, this sacred Yamuna pilgrimage site was patronized by the Bhadauria Rajput kings and is celebrated for its peaceful ghats and historic annual fair.",
+    bestTime: "October to March (especially festive during Kartik Purnima).",
+    travelInfo: "Located in Bah tehsil of Agra district, approx. 70 km from Agra city; accessible via the Agra-Lucknow Expressway or Fatehabad-Bah road."
+  },
+  {
+    id: "mahoba",
+    name: "Mahoba",
+    district: "Mahoba",
+    category: "History & Heritage",
+    filterTags: ["history-heritage"],
+    image: "assets/hidden-gems/mahoba.jpg",
+    desc: "A historic Bundelkhand destination associated with the Chandela period, old temples and historic water bodies.",
+    whatToSee: "9th-century Rahila Sagar Sun Temple, ancient Chandela-era water reservoirs (Madan Sagar, Kirat Sagar, Kalyan Sagar), Vijay Sagar Bird Sanctuary, and the Kakramath granite temple.",
+    whySpecial: "The historic capital of the Chandela kings before Khajuraho and the legendary hometown of warrior heroes Alha and Udal, Mahoba preserves majestic granite and sandstone rock-cut architecture.",
+    bestTime: "October to March.",
+    travelInfo: "Located in southern Bundelkhand, approx. 140 km from Jhansi, 150 km from Kanpur, and 65 km from Khajuraho; Mahoba railway station is directly on the North Central Railway line."
+  },
+  {
+    id: "chitrakoot",
+    name: "Chitrakoot",
+    district: "Chitrakoot",
+    category: "Nature & Spiritual",
+    filterTags: ["spiritual", "nature-waterfalls"],
+    image: "assets/hidden-gems/chitrakoot.jpg",
+    desc: "A culturally important destination with forests, caves, waterfalls and scenic viewpoints beyond the main pilgrimage sites.",
+    whatToSee: "Ramghat on the holy Mandakini River, Kamadgiri forest pilgrimage hill, Gupt Godavari limestone caves with underground streams, Hanuman Dhara hillside spring, and Sati Anusuya hermitage.",
+    whySpecial: "Nestled amidst the forested Vindhyan hills where Lord Rama, Sita, and Lakshmana spent 11 of their 14 exile years; combines sacred spiritual heritage with tranquil cavern springs and river vistas.",
+    bestTime: "October to March.",
+    travelInfo: "Approx. 130 km from Prayagraj and 75 km from Banda; accessible via Bundelkhand Expressway, Chitrakoot Dham Karwi railway station, and Chitrakoot Airport."
+  },
+  {
+    id: "katarniaghat",
+    name: "Katarniaghat Wildlife Sanctuary",
+    district: "Bahraich",
+    category: "Wildlife",
+    filterTags: ["wildlife"],
+    image: "assets/hidden-gems/katarniaghat.jpg",
+    desc: "Terai forests and wildlife along the Girwa River.",
+    whatToSee: "Boat safari on the Girwa River to observe Gharials and Gangetic river dolphins, dense Sal and teak forest tracks, wild tigers, leopards, and herds of wild Asian elephants.",
+    whySpecial: "One of the most pristine riverine Terai wilderness reserves in India, serving as a critical trans-boundary ecological corridor between Dudhwa and Nepal's Bardia National Park.",
+    bestTime: "November to May (sanctuary open season; peak wildlife sightings during winter and spring).",
+    travelInfo: "Situated in Bahraich district bordering Nepal, approx. 200 km from Lucknow and 85 km from Bahraich town; reached via Mailani-Bahraich route or private vehicle from Lucknow."
+  },
+  {
+    id: "pilibhit",
+    name: "Pilibhit Tiger Reserve",
+    district: "Pilibhit",
+    category: "Wildlife",
+    filterTags: ["wildlife"],
+    image: "assets/hidden-gems/pilibhit.jpg",
+    desc: "Dense Terai forests and important tiger habitat.",
+    whatToSee: "Chuka Eco-Tourism Beach on the vast Sharda Sagar reservoir, morning and afternoon open-jeep tiger safaris through towering Sal canopy, and over 320 resident and migratory bird species.",
+    whySpecial: "Recipient of the prestigious international TX2 award for successfully doubling its wild tiger population ahead of target; offers an unspoiled alternative to heavily commercialized safari parks.",
+    bestTime: "November 15 to June 15 (park season; pleasant winters from November to February).",
+    travelInfo: "Located at the Himalayan foothills, approx. 65 km from Bareilly airport and 260 km from New Delhi; entry gates at Mustafabad and Chuka Beach."
+  },
+  {
+    id: "kishanpur",
+    name: "Kishanpur Wildlife Sanctuary",
+    district: "Lakhimpur Kheri",
+    category: "Wildlife",
+    filterTags: ["wildlife"],
+    image: "assets/hidden-gems/kishanpur.jpg",
+    desc: "A quieter wildlife destination within the Terai ecosystem.",
+    whatToSee: "The vast Jhadi Tal wetland lake, herds of endangered Swamp Deer (Barasingha), wild tigers, leopards, otters, pythons, and thousands of winter waterfowl including painted storks and sarus cranes.",
+    whySpecial: "Formed in 1972 and now part of the Dudhwa Tiger Reserve, Kishanpur is celebrated among naturalists for its untouched marshlands and remarkably high tiger density around Jhadi Tal.",
+    bestTime: "November 15 to April 30.",
+    travelInfo: "Located near Mailani in Lakhimpur Kheri district, approx. 30 km from Mailani and 200 km from Lucknow; accessible via Lakhimpur-Mailani highway."
+  },
+  {
+    id: "hastinapur",
+    name: "Hastinapur Wildlife Sanctuary",
+    district: "Meerut region",
+    category: "Wildlife",
+    filterTags: ["wildlife"],
+    image: "assets/hidden-gems/hastinapur.jpg",
+    desc: "A large wetland and forest landscape associated with the Ganga-Yamuna plains.",
+    whatToSee: "Gangetic river dolphins, marsh crocodiles (mugger), softshell turtles, swamp deer, dense floodplains, and hundreds of species of migratory waterbirds flocking to Ganga river oxbow wetlands.",
+    whySpecial: "Spanning over 2,000 square kilometers across Meerut, Muzzafarnagar, Bijnor, and Hapur, this protected wetland corridor along the upper Ganga combines Mahabharata heritage with vital aquatic conservation.",
+    bestTime: "October to March (spectacular winter migratory bird arrival).",
+    travelInfo: "Located in the Meerut-Hastinapur region, approx. 35 km from Meerut city and 110 km from New Delhi via Delhi-Meerut Expressway; Hastinapur is easily reached by taxi or bus."
+  }
+];
+
+let currentGemFilter = 'all';
+let currentGemSearch = '';
+
+function renderHiddenGems(filterCategory, searchQuery){
+  const container = document.getElementById('hiddenGemsGrid');
+  if(!container) return;
+  
+  const cat = filterCategory !== undefined ? filterCategory : currentGemFilter;
+  const q = (searchQuery !== undefined ? searchQuery : currentGemSearch).trim().toLowerCase();
+  currentGemFilter = cat;
+  currentGemSearch = q;
+
+  const filtered = hiddenGemsData.filter(g => {
+    let matchesCat = true;
+    if (cat === 'all') {
+      matchesCat = true;
+    } else if (cat === 'nature-waterfalls') {
+      matchesCat = g.filterTags.includes('nature-waterfalls') || g.category.toLowerCase().includes('waterfall') || g.category.toLowerCase().includes('nature');
+    } else if (cat === 'history-heritage') {
+      matchesCat = g.filterTags.includes('history-heritage') || g.category.toLowerCase().includes('history') || g.category.toLowerCase().includes('heritage');
+    } else if (cat === 'wildlife') {
+      matchesCat = g.filterTags.includes('wildlife') || g.category.toLowerCase().includes('wildlife');
+    } else if (cat === 'spiritual') {
+      matchesCat = g.filterTags.includes('spiritual') || g.category.toLowerCase().includes('spiritual');
+    }
+
+    let matchesSearch = true;
+    if (q) {
+      const haystack = (g.name + ' ' + g.district + ' ' + g.category + ' ' + g.desc).toLowerCase();
+      matchesSearch = haystack.includes(q);
+    }
+
+    return matchesCat && matchesSearch;
+  });
+
+  // Update badge count
+  const badge = document.getElementById('gemsCountBadge');
+  if (badge) {
+    if (filtered.length === hiddenGemsData.length && !q && cat === 'all') {
+      badge.textContent = '16 hidden gems to explore';
+    } else {
+      badge.textContent = `${filtered.length} hidden gem${filtered.length === 1 ? '' : 's'} found`;
+    }
+  }
+
+  // Update active pill state
+  document.querySelectorAll('.gem-pill-btn').forEach(btn => {
+    if (btn.getAttribute('data-filter') === cat) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="gems-empty" style="grid-column:1/-1;text-align:center;padding:48px 16px;background:var(--card);border:1px dashed var(--line);border-radius:18px;">
+        <div style="font-size:36px;margin-bottom:10px">🧭</div>
+        <h3 style="margin:0 0 6px;font-size:18px">No Hidden Gems Found</h3>
+        <p style="margin:0 0 16px;color:var(--muted);font-size:14px">We couldn't find any hidden gems matching "${escapeHtml(q)}". Try searching for waterfalls, forts, or a district.</p>
+        <button type="button" class="gem-explore-btn" onclick="clearGemSearch()" style="margin:0 auto">Reset Filters & Show All</button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(g => {
+    const isFav = (typeof favs !== 'undefined' && Array.isArray(favs)) ? favs.includes(g.name) : false;
+    return `
+      <article class="gem" data-gem-id="${escapeHtml(g.id)}" onclick="openGemModal('${escapeHtml(g.id)}')" tabindex="0" role="button" aria-label="View details for ${escapeHtml(g.name)}">
+        <div class="gem-img-wrap">
+          <img loading="lazy" src="${g.image}" alt="${escapeHtml(g.name)}" onerror="exploreUpImageFallback(this)">
+          <span class="gem-badge">💎 Hidden Gem</span>
+          <button class="save ${isFav ? 'saved' : ''}" type="button" onclick="event.stopPropagation(); toggleSave(this,'${escapeHtml(g.name)}')" aria-label="Save ${escapeHtml(g.name)}" title="Save to favourites">${isFav ? '♥' : '♡'}</button>
+        </div>
+        <div class="gem-body">
+          <div class="gem-meta-row">
+            <span class="gem-cat-tag">${escapeHtml(g.category)}</span>
+            <span class="gem-district-tag">📍 ${escapeHtml(g.district)}</span>
+          </div>
+          <h3 class="gem-title">${escapeHtml(g.name)}</h3>
+          <p class="gem-desc">${escapeHtml(g.desc)}</p>
+          <div class="gem-actions">
+            <button type="button" class="gem-explore-btn" onclick="event.stopPropagation(); openGemModal('${escapeHtml(g.id)}')">Explore <span>→</span></button>
+            <button type="button" class="gem-share-btn" onclick="event.stopPropagation(); shareItem('${escapeHtml(g.name)}')" title="Share this destination">↗ Share</button>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function filterHiddenGems(cat){
+  renderHiddenGems(cat);
+}
+
+function handleGemSearch(val){
+  const clearBtn = document.getElementById('gemSearchClear');
+  if (clearBtn) {
+    clearBtn.style.display = val && val.trim() ? 'block' : 'none';
+  }
+  renderHiddenGems(currentGemFilter, val);
+}
+
+function clearGemSearch(){
+  const input = document.getElementById('gemSearchInput');
+  const clearBtn = document.getElementById('gemSearchClear');
+  if (input) input.value = '';
+  if (clearBtn) clearBtn.style.display = 'none';
+  renderHiddenGems('all', '');
+}
+
+function openGemModal(id){
+  const gem = hiddenGemsData.find(g => g.id === id);
+  if(!gem) return;
+
+  const modal = document.getElementById('gemModal');
+  if(!modal) return;
+
+  const imgEl = document.getElementById('gemModalImg');
+  if(imgEl){
+    imgEl.src = gem.image;
+    imgEl.alt = gem.name;
+  }
+  const titleEl = document.getElementById('gemModalTitle');
+  if(titleEl) titleEl.textContent = gem.name;
+  const catEl = document.getElementById('gemModalCategory');
+  if(catEl) catEl.textContent = gem.category;
+  const distEl = document.getElementById('gemModalDistrict');
+  if(distEl) distEl.textContent = '📍 ' + gem.district;
+  const descEl = document.getElementById('gemModalDesc');
+  if(descEl) descEl.textContent = gem.desc;
+  const seeEl = document.getElementById('gemModalSee');
+  if(seeEl) seeEl.textContent = gem.whatToSee;
+  const specEl = document.getElementById('gemModalSpecial');
+  if(specEl) specEl.textContent = gem.whySpecial;
+  const seasonEl = document.getElementById('gemModalSeason');
+  if(seasonEl) seasonEl.textContent = gem.bestTime;
+  const travelEl = document.getElementById('gemModalTravel');
+  if(travelEl) travelEl.textContent = gem.travelInfo;
+
+  const shareBtn = document.getElementById('gemModalShareBtn');
+  if(shareBtn){
+    shareBtn.onclick = function(){ shareItem(gem.name); };
+  }
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGemModal(){
+  const modal = document.getElementById('gemModal');
+  if(!modal) return;
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Close gem modal on Escape key
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){
+    closeGemModal();
+  }
+});
+
 // =========================================================
 // RENDER CITIES & DISTRICTS ON HOMEPAGE
 // =========================================================
@@ -2940,7 +4097,6 @@ function renderCities(){
         '<small>' + escapeHtml(tag) + '</small>' +
       '</div>' +
       '<div class="citymeta">' +
-        '<span class="meta">📍 ' + escapeHtml(distance) + '</span>' +
         '<span class="meta">₹ ' + escapeHtml(budget.split('–')[0].trim()) + '</span>' +
         '<span class="meta rating">★ ' + escapeHtml(rating) + '</span>' +
       '</div>' +
@@ -6264,6 +7420,7 @@ function saveRecentDestination(name){
   list = list.slice(0, 6);
   exploreStorage.set(recentKey, JSON.stringify(list));
   renderRecentDestinations();
+  renderHiddenGems();
 }
 
 function renderRecentDestinations(){
