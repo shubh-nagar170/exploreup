@@ -469,6 +469,13 @@ body.dark .gem-pill-btn.active{
   outline:none;
   transition:border-color .18s,box-shadow .18s;
 }
+.gem-search-box input::-webkit-search-decoration,
+.gem-search-box input::-webkit-search-cancel-button,
+.gem-search-box input::-webkit-search-results-button,
+.gem-search-box input::-webkit-search-results-decoration{
+  -webkit-appearance:none;
+  display:none;
+}
 .gem-search-box input:focus{
   border-color:var(--gold);
   box-shadow:0 0 0 3px rgba(255,181,27,.18);
@@ -1960,7 +1967,7 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
        <button type="button" class="gem-pill-btn" data-filter="spiritual" onclick="filterHiddenGems('spiritual')">🕉️ Spiritual</button>
      </div>
      <div class="gem-search-box">
-       <input type="text" id="gemSearchInput" placeholder="Search by name, district, or category..." oninput="handleGemSearch(this.value)" autocomplete="off" aria-label="Search hidden gems">
+       <input type="search" id="gemSearchInput" name="hidden_gems_destination_query" value="" placeholder="Search by destination, district, or category..." oninput="handleGemSearch(this.value)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search hidden gems by destination, district, or category">
        <span class="gem-search-icon" id="gemSearchIcon">⌕</span>
        <button type="button" class="gem-search-clear" id="gemSearchClear" onclick="clearGemSearch()" aria-label="Clear search">✕</button>
      </div>
@@ -4146,9 +4153,33 @@ function handleGemSearch(val){
 function clearGemSearch(){
   const input = document.getElementById('gemSearchInput');
   const clearBtn = document.getElementById('gemSearchClear');
-  if (input) input.value = '';
+  if (input) {
+    input.value = '';
+    input.defaultValue = '';
+  }
   if (clearBtn) clearBtn.style.display = 'none';
+  currentGemSearch = '';
   renderHiddenGems('all', '');
+  if (input) input.focus();
+}
+
+function resetHiddenGemsSearchInput(){
+  const input = document.getElementById('gemSearchInput');
+  const clearBtn = document.getElementById('gemSearchClear');
+  if (input) {
+    input.value = '';
+    input.defaultValue = '';
+  }
+  if (clearBtn) clearBtn.style.display = 'none';
+  currentGemSearch = '';
+}
+
+// Ensure Hidden Gems search always starts completely empty on load, refresh, or back/forward restore
+if (typeof window !== 'undefined') {
+  window.addEventListener('pageshow', resetHiddenGemsSearchInput);
+  document.addEventListener('DOMContentLoaded', resetHiddenGemsSearchInput);
+  setTimeout(resetHiddenGemsSearchInput, 50);
+  setTimeout(resetHiddenGemsSearchInput, 300);
 }
 
 function openGemModal(id){
@@ -8300,6 +8331,7 @@ function initApp(){
   initFeaturedCarousel();
   initFloatingAskArya();
   checkAuthState();
+  resetHiddenGemsSearchInput();
 }
 document.addEventListener('DOMContentLoaded', initApp);
 initApp();
