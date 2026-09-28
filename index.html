@@ -282,6 +282,13 @@ body.dark .search-autocomplete-item.ai-item{background:linear-gradient(90deg,rgb
   outline:none;
   transition:border-color .18s,box-shadow .18s;
 }
+.cities-search-box input::-webkit-search-decoration,
+.cities-search-box input::-webkit-search-cancel-button,
+.cities-search-box input::-webkit-search-results-button,
+.cities-search-box input::-webkit-search-results-decoration{
+  -webkit-appearance:none;
+  display:none;
+}
 .cities-search-box input:focus{
   border-color:var(--gold);
   box-shadow:0 0 0 3px rgba(255,181,27,.18);
@@ -1908,11 +1915,11 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
        <p>Explore Uttar Pradesh city by city, with comprehensive travel guides, transport, hotels and food.</p>
      </div>
      <div class="cities-controls">
-       <div class="cities-search-box">
-         <input type="text" id="citiesSearchInput" placeholder="Search cities..." oninput="handleCitiesSearch(this.value)" autocomplete="off" aria-label="Search cities">
+       <form class="cities-search-box" autocomplete="off" action="javascript:void(0)" onsubmit="event.preventDefault(); return false;" role="search">
+         <input type="search" id="explore-cities-search" name="explore-cities-search" value="" placeholder="Search cities..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search cities">
          <span class="cities-search-icon" id="citiesSearchIcon">⌕</span>
          <button type="button" class="cities-search-clear" id="citiesSearchClear" onclick="clearCitiesSearch()" aria-label="Clear search">✕</button>
-       </div>
+       </form>
        <button class="view toggle-cities-btn prominent-cities-btn" id="toggleCitiesBtn" onclick="toggleCitiesGrid()" aria-expanded="false" title="Toggle full cities directory">View All Cities ↓</button>
      </div>
    </div>
@@ -4355,9 +4362,11 @@ function toggleCitiesGrid(forceState){
   }
 
   // Clear search input if user clicks View All Cities to explore all destinations
-  const searchInput = document.getElementById('citiesSearchInput');
+  const searchInput = getExploreCitiesSearchInput();
   if(searchInput && searchInput.value){
+    userHasManuallyTypedInCitiesSearch = false;
     searchInput.value = '';
+    searchInput.defaultValue = '';
     const clearBtn = document.getElementById('citiesSearchClear');
     if(clearBtn) clearBtn.style.display = 'none';
     const cityCards = grid.querySelectorAll('.city');
@@ -4392,10 +4401,29 @@ function toggleCitiesGrid(forceState){
   }
 }
 
+// State tracking: ensures Explore All Cities search only has a value when the user physically types
+let userHasManuallyTypedInCitiesSearch = false;
+
+function getExploreCitiesSearchInput(){
+  return document.getElementById('explore-cities-search') || document.getElementById('citiesSearchInput');
+}
+
 // Filter Explore All Cities cards in real-time
 function handleCitiesSearch(val){
-  const q = String(val || '').trim().toLowerCase();
+  const input = getExploreCitiesSearchInput();
   const clearBtn = document.getElementById('citiesSearchClear');
+  const q = String(val || '').trim().toLowerCase();
+
+  // If input has a value but user never typed or pasted, treat as browser autofill and wipe it
+  if(!userHasManuallyTypedInCitiesSearch && q !== ''){
+    if(input){
+      input.value = '';
+      input.defaultValue = '';
+    }
+    if(clearBtn) clearBtn.style.display = 'none';
+    return;
+  }
+
   if(clearBtn){
     clearBtn.style.display = q ? 'block' : 'none';
   }
@@ -4486,12 +4514,85 @@ function handleCitiesSearch(val){
 }
 
 function clearCitiesSearch(){
-  const input = document.getElementById('citiesSearchInput');
+  userHasManuallyTypedInCitiesSearch = false;
+  const input = getExploreCitiesSearchInput();
   const clearBtn = document.getElementById('citiesSearchClear');
-  if(input) input.value = '';
+  if(input){
+    input.value = '';
+    input.defaultValue = '';
+  }
   if(clearBtn) clearBtn.style.display = 'none';
   handleCitiesSearch('');
   if(input) input.focus();
+}
+
+function resetExploreCitiesSearchInput(force){
+  if(force || !userHasManuallyTypedInCitiesSearch){
+    userHasManuallyTypedInCitiesSearch = false;
+    const input = getExploreCitiesSearchInput();
+    const clearBtn = document.getElementById('citiesSearchClear');
+    if(input){
+      input.value = '';
+      input.defaultValue = '';
+    }
+    if(clearBtn) clearBtn.style.display = 'none';
+  }
+}
+
+function initExploreCitiesSearchField(){
+  const input = getExploreCitiesSearchInput();
+  if(!input) return;
+
+  // Always start completely empty
+  input.value = '';
+  input.defaultValue = '';
+
+  // Track physical user keystrokes vs automated browser autofill
+  input.addEventListener('keydown', (e) => {
+    if(e.isTrusted && e.key !== 'Escape'){
+      userHasManuallyTypedInCitiesSearch = true;
+    } else if(e.key === 'Escape'){
+      clearCitiesSearch();
+    }
+  });
+
+  input.addEventListener('paste', () => {
+    userHasManuallyTypedInCitiesSearch = true;
+  });
+
+  input.addEventListener('input', (e) => {
+    if(!input.value){
+      userHasManuallyTypedInCitiesSearch = false;
+    } else if(e.isTrusted && (e.inputType === 'insertText' || e.inputType === 'deleteContentBackward' || e.inputType === 'insertFromPaste')){
+      userHasManuallyTypedInCitiesSearch = true;
+    }
+    handleCitiesSearch(input.value);
+  });
+}
+
+// Lifecycle listeners for Explore All Cities search
+if (typeof window !== 'undefined') {
+  window.addEventListener('pageshow', () => {
+    resetExploreCitiesSearchInput(true);
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    initExploreCitiesSearchField();
+    resetExploreCitiesSearchInput(true);
+  });
+  // Guard against late asynchronous browser autofill injections
+  [30, 100, 250, 500, 1000].forEach((delay) => {
+    setTimeout(() => {
+      if(!userHasManuallyTypedInCitiesSearch){
+        const inp = getExploreCitiesSearchInput();
+        if(inp && inp.value !== ''){
+          inp.value = '';
+          inp.defaultValue = '';
+          const clearBtn = document.getElementById('citiesSearchClear');
+          if(clearBtn) clearBtn.style.display = 'none';
+        }
+      }
+    }, delay);
+  });
 }
 
 function openAllCitiesSection(){
@@ -8407,6 +8508,8 @@ function initApp(){
   checkAuthState();
   initHiddenGemsSearchField();
   resetHiddenGemsSearchInput(true);
+  initExploreCitiesSearchField();
+  resetExploreCitiesSearchInput(true);
 }
 document.addEventListener('DOMContentLoaded', initApp);
 initApp();
