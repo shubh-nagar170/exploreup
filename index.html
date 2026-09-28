@@ -1966,11 +1966,11 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
        <button type="button" class="gem-pill-btn" data-filter="wildlife" onclick="filterHiddenGems('wildlife')">🐅 Wildlife</button>
        <button type="button" class="gem-pill-btn" data-filter="spiritual" onclick="filterHiddenGems('spiritual')">🕉️ Spiritual</button>
      </div>
-     <div class="gem-search-box">
-       <input type="search" id="gemSearchInput" name="hidden_gems_destination_query" value="" placeholder="Search by destination, district, or category..." oninput="handleGemSearch(this.value)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search hidden gems by destination, district, or category">
+     <form class="gem-search-box" autocomplete="off" action="javascript:void(0)" onsubmit="event.preventDefault(); return false;" role="search">
+       <input type="search" id="hidden-gems-search" name="hidden-gems-search" value="" placeholder="Search by destination, district, or category..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search hidden gems by destination, district, or category">
        <span class="gem-search-icon" id="gemSearchIcon">⌕</span>
        <button type="button" class="gem-search-clear" id="gemSearchClear" onclick="clearGemSearch()" aria-label="Clear search">✕</button>
-     </div>
+     </form>
    </div>
 
    <div class="gems" id="hiddenGemsGrid">
@@ -4142,16 +4142,38 @@ function filterHiddenGems(cat){
   renderHiddenGems(cat);
 }
 
+// State tracking: ensures field only has a value when the user physically types
+let userHasManuallyTypedInHiddenGemsSearch = false;
+
+function getHiddenGemsSearchInput(){
+  return document.getElementById('hidden-gems-search') || document.getElementById('gemSearchInput');
+}
+
 function handleGemSearch(val){
+  const input = getHiddenGemsSearchInput();
   const clearBtn = document.getElementById('gemSearchClear');
+  const queryStr = String(val || '').trim();
+
+  // If input has a value but user never typed or pasted, treat as browser autofill and wipe it
+  if(!userHasManuallyTypedInHiddenGemsSearch && queryStr !== ''){
+    if(input){
+      input.value = '';
+      input.defaultValue = '';
+    }
+    if(clearBtn) clearBtn.style.display = 'none';
+    currentGemSearch = '';
+    return;
+  }
+
   if (clearBtn) {
-    clearBtn.style.display = val && val.trim() ? 'block' : 'none';
+    clearBtn.style.display = queryStr ? 'block' : 'none';
   }
   renderHiddenGems(currentGemFilter, val);
 }
 
 function clearGemSearch(){
-  const input = document.getElementById('gemSearchInput');
+  userHasManuallyTypedInHiddenGemsSearch = false;
+  const input = getHiddenGemsSearchInput();
   const clearBtn = document.getElementById('gemSearchClear');
   if (input) {
     input.value = '';
@@ -4163,23 +4185,75 @@ function clearGemSearch(){
   if (input) input.focus();
 }
 
-function resetHiddenGemsSearchInput(){
-  const input = document.getElementById('gemSearchInput');
-  const clearBtn = document.getElementById('gemSearchClear');
-  if (input) {
-    input.value = '';
-    input.defaultValue = '';
+function resetHiddenGemsSearchInput(force){
+  if(force || !userHasManuallyTypedInHiddenGemsSearch){
+    userHasManuallyTypedInHiddenGemsSearch = false;
+    const input = getHiddenGemsSearchInput();
+    const clearBtn = document.getElementById('gemSearchClear');
+    if (input) {
+      input.value = '';
+      input.defaultValue = '';
+    }
+    if (clearBtn) clearBtn.style.display = 'none';
+    currentGemSearch = '';
   }
-  if (clearBtn) clearBtn.style.display = 'none';
-  currentGemSearch = '';
 }
 
-// Ensure Hidden Gems search always starts completely empty on load, refresh, or back/forward restore
+function initHiddenGemsSearchField(){
+  const input = getHiddenGemsSearchInput();
+  if(!input) return;
+
+  // Ensure field starts completely empty
+  input.value = '';
+  input.defaultValue = '';
+
+  // Track physical user keystrokes vs automated browser autofill
+  input.addEventListener('keydown', (e) => {
+    if(e.isTrusted && e.key !== 'Escape'){
+      userHasManuallyTypedInHiddenGemsSearch = true;
+    } else if(e.key === 'Escape'){
+      clearGemSearch();
+    }
+  });
+
+  input.addEventListener('paste', () => {
+    userHasManuallyTypedInHiddenGemsSearch = true;
+  });
+
+  input.addEventListener('input', (e) => {
+    if(!input.value){
+      userHasManuallyTypedInHiddenGemsSearch = false;
+    } else if(e.isTrusted && (e.inputType === 'insertText' || e.inputType === 'deleteContentBackward' || e.inputType === 'insertFromPaste')){
+      userHasManuallyTypedInHiddenGemsSearch = true;
+    }
+    handleGemSearch(input.value);
+  });
+}
+
+// Lifecycle listeners: ensure field starts completely empty on load, refresh, and back/forward restore
 if (typeof window !== 'undefined') {
-  window.addEventListener('pageshow', resetHiddenGemsSearchInput);
-  document.addEventListener('DOMContentLoaded', resetHiddenGemsSearchInput);
-  setTimeout(resetHiddenGemsSearchInput, 50);
-  setTimeout(resetHiddenGemsSearchInput, 300);
+  window.addEventListener('pageshow', () => {
+    resetHiddenGemsSearchInput(true);
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    initHiddenGemsSearchField();
+    resetHiddenGemsSearchInput(true);
+  });
+  // Guard against late asynchronous browser autofill injections
+  [30, 100, 250, 500, 1000].forEach((delay) => {
+    setTimeout(() => {
+      if(!userHasManuallyTypedInHiddenGemsSearch){
+        const inp = getHiddenGemsSearchInput();
+        if(inp && inp.value !== ''){
+          inp.value = '';
+          inp.defaultValue = '';
+          const clearBtn = document.getElementById('gemSearchClear');
+          if(clearBtn) clearBtn.style.display = 'none';
+          currentGemSearch = '';
+        }
+      }
+    }, delay);
+  });
 }
 
 function openGemModal(id){
@@ -8331,7 +8405,8 @@ function initApp(){
   initFeaturedCarousel();
   initFloatingAskArya();
   checkAuthState();
-  resetHiddenGemsSearchInput();
+  initHiddenGemsSearchField();
+  resetHiddenGemsSearchInput(true);
 }
 document.addEventListener('DOMContentLoaded', initApp);
 initApp();
