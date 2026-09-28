@@ -233,6 +233,120 @@ body.dark .search-autocomplete-item.ai-item{background:linear-gradient(90deg,rgb
 .section h2{margin:0;font-size:28px;letter-spacing:-.4px}.sectionhead p{margin:5px 0 0;color:var(--muted);font-size:14px}
 .view{color:var(--blue);font-weight:800;font-size:14px;cursor:pointer;transition:color .18s;background:none;border:none;padding:0;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
 .view:hover{color:#074894}
+
+/* Explore All Cities Header & Search Bar */
+.cities-head-wrap{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:16px;
+  margin-bottom:22px;
+  flex-wrap:wrap;
+}
+.cities-title-block{
+  flex:1 1 320px;
+}
+.cities-title-block h2{
+  margin:0;
+  font-size:28px;
+  letter-spacing:-.4px;
+}
+.cities-title-block p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:14px;
+}
+.cities-controls{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex:0 1 auto;
+  flex-wrap:wrap;
+}
+.cities-search-box{
+  position:relative;
+  min-width:230px;
+  max-width:320px;
+  flex:1 1 auto;
+}
+.cities-search-box input{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px 36px 10px 14px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  font:inherit;
+  font-size:13.5px;
+  outline:none;
+  transition:border-color .18s,box-shadow .18s;
+}
+.cities-search-box input:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(255,181,27,.18);
+}
+.cities-search-icon{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:15px;
+  pointer-events:none;
+}
+.cities-search-clear{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-size:16px;
+  cursor:pointer;
+  padding:4px;
+  display:none;
+}
+.cities-search-clear:hover{color:var(--text)}
+
+.prominent-cities-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:10px 22px;
+  border-radius:12px;
+  font-size:13.5px;
+  font-weight:750;
+  font-family:inherit;
+  background:var(--card);
+  color:var(--blue);
+  border:1.5px solid var(--blue);
+  box-shadow:0 2px 10px rgba(11,79,162,.1);
+  transition:all .2s ease;
+  white-space:nowrap;
+  cursor:pointer;
+  text-decoration:none;
+}
+.prominent-cities-btn:hover{
+  background:var(--blue);
+  color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(11,79,162,.25);
+}
+body.dark .prominent-cities-btn{
+  background:var(--card);
+  color:var(--gold);
+  border-color:var(--gold);
+  box-shadow:0 2px 10px rgba(255,181,27,.12);
+}
+body.dark .prominent-cities-btn:hover{
+  background:var(--gold);
+  color:#071b35;
+  box-shadow:0 6px 18px rgba(255,181,27,.3);
+}
+
 .cities{display:grid;grid-template-columns:repeat(5,1fr);gap:15px;transition:all .3s ease}
 .cities.collapsed .city:nth-child(n+6){display:none!important}
 .cities.expanded{animation:fadeInGrid .35s ease-out}
@@ -1475,6 +1589,11 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   .section{margin-top:38px}
   .sectionhead{flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:14px}
   .sectionhead h2{font-size:clamp(22px,6vw,28px)}
+  .cities-head-wrap{flex-direction:column;align-items:stretch;gap:12px;margin-bottom:14px}
+  .cities-title-block h2{font-size:clamp(22px,6vw,28px)}
+  .cities-controls{flex-direction:column;align-items:stretch;width:100%;gap:10px}
+  .cities-search-box{max-width:100%;width:100%;min-width:0}
+  .prominent-cities-btn{width:100%;justify-content:center;padding:11px 18px}
   .cities{grid-template-columns:repeat(2,1fr);gap:12px}
   .city{height:205px;border-radius:16px}
   .city h3{font-size:18px}
@@ -1776,13 +1895,23 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   </div>
 
   <section class="section" id="cities">
-   <div class="sectionhead">
-     <div><h2>📍 Explore All Cities</h2><p>Explore Uttar Pradesh city by city, with comprehensive travel guides, transport, hotels and food.</p></div>
-     <button class="view toggle-cities-btn" id="toggleCitiesBtn" onclick="toggleCitiesGrid()" aria-expanded="false" title="Toggle full cities directory">View All Cities ↓</button>
+   <div class="cities-head-wrap">
+     <div class="cities-title-block">
+       <h2>📍 Explore All Cities</h2>
+       <p>Explore Uttar Pradesh city by city, with comprehensive travel guides, transport, hotels and food.</p>
+     </div>
+     <div class="cities-controls">
+       <div class="cities-search-box">
+         <input type="text" id="citiesSearchInput" placeholder="Search cities..." oninput="handleCitiesSearch(this.value)" autocomplete="off" aria-label="Search cities">
+         <span class="cities-search-icon" id="citiesSearchIcon">⌕</span>
+         <button type="button" class="cities-search-clear" id="citiesSearchClear" onclick="clearCitiesSearch()" aria-label="Clear search">✕</button>
+       </div>
+       <button class="view toggle-cities-btn prominent-cities-btn" id="toggleCitiesBtn" onclick="toggleCitiesGrid()" aria-expanded="false" title="Toggle full cities directory">View All Cities ↓</button>
+     </div>
    </div>
    <div class="cities collapsed" id="cityGrid"></div>
    <div id="citiesBottomToggle" style="text-align:center;margin-top:20px;display:none">
-     <button class="view toggle-cities-btn" onclick="toggleCitiesGrid()" style="padding:9px 22px;border-radius:24px;background:var(--card);border:1px solid var(--line);box-shadow:0 3px 12px rgba(0,0,0,.06);font-size:14px">Hide Cities ↑</button>
+     <button class="view toggle-cities-btn prominent-cities-btn" onclick="toggleCitiesGrid()" style="padding:9px 22px;border-radius:24px;font-size:14px">Hide Cities ↑</button>
    </div>
   </section>
 
@@ -4120,6 +4249,18 @@ function toggleCitiesGrid(forceState){
     isCitiesGridExpanded = !isCitiesGridExpanded;
   }
 
+  // Clear search input if user clicks View All Cities to explore all destinations
+  const searchInput = document.getElementById('citiesSearchInput');
+  if(searchInput && searchInput.value){
+    searchInput.value = '';
+    const clearBtn = document.getElementById('citiesSearchClear');
+    if(clearBtn) clearBtn.style.display = 'none';
+    const cityCards = grid.querySelectorAll('.city');
+    cityCards.forEach(c => c.style.display = '');
+    const emptyMsg = document.getElementById('citiesNoResults');
+    if(emptyMsg) emptyMsg.remove();
+  }
+
   if(isCitiesGridExpanded){
     grid.classList.remove('collapsed');
     grid.classList.add('expanded');
@@ -4144,6 +4285,108 @@ function toggleCitiesGrid(forceState){
       }
     }
   }
+}
+
+// Filter Explore All Cities cards in real-time
+function handleCitiesSearch(val){
+  const q = String(val || '').trim().toLowerCase();
+  const clearBtn = document.getElementById('citiesSearchClear');
+  if(clearBtn){
+    clearBtn.style.display = q ? 'block' : 'none';
+  }
+
+  const grid = document.getElementById('cityGrid');
+  if(!grid) return;
+
+  const cityCards = grid.querySelectorAll('.city');
+  let emptyMsg = document.getElementById('citiesNoResults');
+  const bottomToggle = document.getElementById('citiesBottomToggle');
+
+  if(!q){
+    cityCards.forEach(c => c.style.display = '');
+    if(emptyMsg) emptyMsg.remove();
+
+    if(!isCitiesGridExpanded){
+      grid.classList.add('collapsed');
+      grid.classList.remove('expanded');
+      if(bottomToggle) bottomToggle.style.display = 'none';
+    } else {
+      grid.classList.remove('collapsed');
+      grid.classList.add('expanded');
+      if(bottomToggle) bottomToggle.style.display = 'block';
+    }
+    return;
+  }
+
+  // Ensure grid is uncollapsed during search so all matching destinations appear
+  grid.classList.remove('collapsed');
+  if(bottomToggle) bottomToggle.style.display = 'none';
+
+  // Check if query exactly matches a city name or alias
+  const exactMatchExists = Array.from(cityCards).some(card => {
+    const cName = (card.getAttribute('data-city-name') || card.querySelector('h3')?.textContent || '').toLowerCase().trim();
+    return cName === q || (cName === 'varanasi' && (q === 'kashi' || q === 'banaras')) || (cName === 'prayagraj' && q === 'allahabad');
+  });
+
+  // Check if any city name or word starts with query
+  const prefixMatchExists = Array.from(cityCards).some(card => {
+    const cName = (card.getAttribute('data-city-name') || card.querySelector('h3')?.textContent || '').toLowerCase().trim();
+    const words = cName.split(/\s+/);
+    return words.some(w => w.startsWith(q));
+  });
+
+  let matchCount = 0;
+  cityCards.forEach(card => {
+    const cityName = (card.getAttribute('data-city-name') || card.querySelector('h3')?.textContent || '').toLowerCase().trim();
+    let isMatch = false;
+
+    if (exactMatchExists) {
+      isMatch = (cityName === q) ||
+        (cityName === 'varanasi' && (q === 'kashi' || q === 'banaras')) ||
+        (cityName === 'prayagraj' && q === 'allahabad');
+    } else if (prefixMatchExists) {
+      const words = cityName.split(/\s+/);
+      isMatch = words.some(w => w.startsWith(q));
+    } else {
+      isMatch = cityName.includes(q) ||
+        (cityName === 'varanasi' && (q.includes('kashi') || q.includes('banaras') || 'banaras'.includes(q) || 'kashi'.includes(q))) ||
+        (cityName === 'prayagraj' && (q.includes('allahabad') || 'allahabad'.includes(q)));
+    }
+
+    if(isMatch){
+      card.style.display = '';
+      matchCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  if(matchCount === 0){
+    if(!emptyMsg){
+      emptyMsg = document.createElement('div');
+      emptyMsg.id = 'citiesNoResults';
+      emptyMsg.style.cssText = 'grid-column:1/-1;padding:38px 20px;text-align:center;background:var(--card);border-radius:18px;border:1px solid var(--line);font-size:15px;color:var(--muted);margin:6px 0;';
+      grid.appendChild(emptyMsg);
+    }
+    emptyMsg.innerHTML = `
+      <div style="font-size:32px;margin-bottom:8px">🔍</div>
+      <h3 style="margin:0 0 6px;font-size:17.5px;color:var(--text)">No cities found</h3>
+      <p style="margin:0 0 14px;font-size:14px;color:var(--muted)">We couldn't find any cities matching "<b>${escapeHtml(q)}</b>". Try searching for Agra, Varanasi, Lucknow, Ayodhya, or Mathura.</p>
+      <button type="button" class="prominent-cities-btn" onclick="clearCitiesSearch()" style="margin:0 auto;font-size:13px;padding:8px 20px">Clear Search</button>
+    `;
+    emptyMsg.style.display = 'block';
+  } else if(emptyMsg){
+    emptyMsg.remove();
+  }
+}
+
+function clearCitiesSearch(){
+  const input = document.getElementById('citiesSearchInput');
+  const clearBtn = document.getElementById('citiesSearchClear');
+  if(input) input.value = '';
+  if(clearBtn) clearBtn.style.display = 'none';
+  handleCitiesSearch('');
+  if(input) input.focus();
 }
 
 function openAllCitiesSection(){
