@@ -409,15 +409,16 @@ body.dark .gems-count-badge{
 .gems-controls{
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  align-items:flex-start;
   flex-wrap:wrap;
-  gap:12px;
+  gap:14px;
   margin-bottom:20px;
 }
 .gems-pills{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
+  flex:1 1 480px;
 }
 .gem-pill-btn{
   border:1px solid var(--line);
@@ -457,11 +458,60 @@ body.dark .gem-pill-btn.active{
   box-shadow:0 3px 12px rgba(255,181,27,.25);
 }
 
+.gems-actions{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:8px;
+  width:290px;
+  max-width:100%;
+  flex:0 1 auto;
+}
+.prominent-gems-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:10px 22px;
+  border-radius:12px;
+  font-size:13.5px;
+  font-weight:750;
+  font-family:inherit;
+  background:var(--gold);
+  color:#071b35;
+  border:1.5px solid var(--gold);
+  box-shadow:0 3px 14px rgba(255,181,27,.28);
+  transition:all .2s ease;
+  white-space:nowrap;
+  cursor:pointer;
+  text-decoration:none;
+}
+.prominent-gems-btn:hover{
+  background:#ffc444;
+  color:#041021;
+  border-color:#ffc444;
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(255,181,27,.45);
+}
+.prominent-gems-btn:active{
+  transform:translateY(0);
+}
+body.dark .prominent-gems-btn{
+  background:var(--gold);
+  color:#071b35;
+  border-color:var(--gold);
+  box-shadow:0 3px 14px rgba(255,181,27,.22);
+}
+body.dark .prominent-gems-btn:hover{
+  background:#ffc444;
+  color:#041021;
+  border-color:#ffc444;
+  box-shadow:0 6px 20px rgba(255,181,27,.45);
+}
+
 .gem-search-box{
   position:relative;
-  min-width:240px;
-  max-width:320px;
-  flex:1 1 auto;
+  width:100%;
 }
 .gem-search-box input{
   width:100%;
@@ -516,6 +566,12 @@ body.dark .gem-pill-btn.active{
   grid-template-columns:repeat(3,1fr);
   gap:18px;
   transition:all .3s ease;
+}
+.gems.collapsed .gem:nth-child(n+7){
+  display:none!important;
+}
+.gems.expanded{
+  animation:fadeInGrid .35s ease-out;
 }
 .gem{
   background:var(--card);
@@ -800,8 +856,10 @@ body.dark .gem-info-label{
   .gem-detail-grid{grid-template-columns:1fr;gap:10px}
   .gem-modal-hero{height:200px}
   .gem-modal-hero-content{left:16px;right:16px;bottom:14px}
-  .gems-controls{flex-direction:column;align-items:stretch}
-  .gem-search-box{max-width:100%}
+  .gems-controls{flex-direction:column;align-items:stretch;gap:12px}
+  .gems-actions{width:100%;max-width:100%;align-items:stretch;gap:10px}
+  .prominent-gems-btn{width:100%;justify-content:center;padding:11px 18px}
+  .gem-search-box{max-width:100%;width:100%;min-width:0}
   .gems-pills{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;scrollbar-width:none}
   .gems-pills::-webkit-scrollbar{display:none}
   .gem-pill-btn{flex-shrink:0}
@@ -1608,6 +1666,8 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   .cities-controls{flex-direction:column;align-items:stretch;width:100%;gap:10px}
   .cities-search-box{max-width:100%;width:100%;min-width:0}
   .prominent-cities-btn{width:100%;justify-content:center;padding:11px 18px}
+  .gems-actions{width:100%;max-width:100%;align-items:stretch;gap:10px}
+  .prominent-gems-btn{width:100%;justify-content:center;padding:11px 18px}
   .cities{grid-template-columns:repeat(2,1fr);gap:12px}
   .city{height:205px;border-radius:16px}
   .city h3{font-size:18px}
@@ -1968,19 +2028,22 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
    <div class="gems-controls">
      <div class="gems-pills" role="tablist" aria-label="Filter hidden gems by category">
        <button type="button" class="gem-pill-btn active" data-filter="all" onclick="filterHiddenGems('all')">All (16)</button>
-       <button type="button" class="gem-pill-btn" data-filter="nature-waterfalls" onclick="filterHiddenGems('nature-waterfalls')">🌊 Nature & Waterfalls</button>
-       <button type="button" class="gem-pill-btn" data-filter="history-heritage" onclick="filterHiddenGems('history-heritage')">🏰 History & Heritage</button>
+       <button type="button" class="gem-pill-btn" data-filter="nature-waterfalls" onclick="filterHiddenGems('nature-waterfalls')">🌊 Nature &amp; Waterfalls</button>
+       <button type="button" class="gem-pill-btn" data-filter="history-heritage" onclick="filterHiddenGems('history-heritage')">🏰 History &amp; Heritage</button>
        <button type="button" class="gem-pill-btn" data-filter="wildlife" onclick="filterHiddenGems('wildlife')">🐅 Wildlife</button>
        <button type="button" class="gem-pill-btn" data-filter="spiritual" onclick="filterHiddenGems('spiritual')">🕉️ Spiritual</button>
      </div>
-     <form class="gem-search-box" autocomplete="off" action="javascript:void(0)" onsubmit="event.preventDefault(); return false;" role="search">
-       <input type="search" id="hidden-gems-search" name="hidden-gems-search" value="" placeholder="Search by destination, district, or category..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search hidden gems by destination, district, or category">
-       <span class="gem-search-icon" id="gemSearchIcon">⌕</span>
-       <button type="button" class="gem-search-clear" id="gemSearchClear" onclick="clearGemSearch()" aria-label="Clear search">✕</button>
-     </form>
+     <div class="gems-actions">
+       <button type="button" class="view prominent-gems-btn" id="toggleGemsBtn" onclick="toggleGemsGrid()" aria-expanded="false" title="Toggle full hidden gems directory">View All Hidden Gems ↓</button>
+       <form class="gem-search-box" autocomplete="off" action="javascript:void(0)" onsubmit="event.preventDefault(); return false;" role="search">
+         <input type="search" id="hidden-gems-search" name="hidden-gems-search" value="" placeholder="Search by destination, district, or category..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search hidden gems by destination, district, or category">
+         <span class="gem-search-icon" id="gemSearchIcon">⌕</span>
+         <button type="button" class="gem-search-clear" id="gemSearchClear" onclick="clearGemSearch()" aria-label="Clear search">✕</button>
+       </form>
+     </div>
    </div>
 
-   <div class="gems" id="hiddenGemsGrid">
+   <div class="gems collapsed" id="hiddenGemsGrid">
 
     <article class="gem" data-gem-id="chandraprabha" onclick="openGemModal('chandraprabha')" tabindex="0" role="button" aria-label="View details for Chandraprabha Wildlife Sanctuary">
       <div class="gem-img-wrap">
@@ -2301,6 +2364,9 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
         </div>
       </div>
     </article>
+   </div>
+   <div id="gemsBottomToggle" style="text-align:center;margin-top:20px;display:none">
+     <button type="button" class="view prominent-gems-btn" onclick="toggleGemsGrid()" style="padding:9px 22px;border-radius:24px;font-size:14px">Hide Hidden Gems ↑</button>
    </div>
   </section>
 
@@ -4116,6 +4182,15 @@ function renderHiddenGems(filterCategory, searchQuery){
         <button type="button" class="gem-explore-btn" onclick="clearGemSearch()" style="margin:0 auto">Reset Filters & Show All</button>
       </div>
     `;
+    const btn = document.getElementById('toggleGemsBtn');
+    const bottomToggle = document.getElementById('gemsBottomToggle');
+    container.classList.remove('collapsed');
+    container.classList.remove('expanded');
+    if(btn){
+      btn.textContent = 'View All Hidden Gems ↓';
+      btn.setAttribute('aria-expanded', 'false');
+    }
+    if(bottomToggle) bottomToggle.style.display = 'none';
     return;
   }
 
@@ -4143,6 +4218,95 @@ function renderHiddenGems(filterCategory, searchQuery){
       </article>
     `;
   }).join('');
+
+  // Update grid collapsed / expanded state and toggle buttons
+  const btn = document.getElementById('toggleGemsBtn');
+  const bottomToggle = document.getElementById('gemsBottomToggle');
+
+  if(q !== '' || cat !== 'all'){
+    container.classList.remove('collapsed');
+    container.classList.remove('expanded');
+    if(btn){
+      btn.textContent = 'View All Hidden Gems ↓';
+      btn.setAttribute('aria-expanded', 'false');
+    }
+    if(bottomToggle) bottomToggle.style.display = 'none';
+  } else {
+    if(isGemsGridExpanded){
+      container.classList.remove('collapsed');
+      container.classList.add('expanded');
+      if(btn){
+        btn.textContent = 'Hide Hidden Gems ↑';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+      if(bottomToggle) bottomToggle.style.display = 'block';
+    } else {
+      container.classList.remove('expanded');
+      container.classList.add('collapsed');
+      if(btn){
+        btn.textContent = 'View All Hidden Gems ↓';
+        btn.setAttribute('aria-expanded', 'false');
+      }
+      if(bottomToggle) bottomToggle.style.display = 'none';
+    }
+  }
+}
+
+let isGemsGridExpanded = false;
+
+function toggleGemsGrid(forceState){
+  const grid = document.getElementById('hiddenGemsGrid');
+  const btn = document.getElementById('toggleGemsBtn');
+  const bottomToggle = document.getElementById('gemsBottomToggle');
+  const section = document.getElementById('hidden-gems');
+  if(!grid) return;
+
+  if(typeof forceState === 'boolean'){
+    isGemsGridExpanded = forceState;
+  } else if(currentGemFilter !== 'all' || currentGemSearch !== ''){
+    isGemsGridExpanded = true;
+  } else {
+    isGemsGridExpanded = !isGemsGridExpanded;
+  }
+
+  if(isGemsGridExpanded){
+    // Reset filters and search so user gets complete view of all 16 hidden gems
+    if(currentGemFilter !== 'all' || currentGemSearch !== ''){
+      currentGemFilter = 'all';
+      currentGemSearch = '';
+      userHasManuallyTypedInHiddenGemsSearch = false;
+      const input = getHiddenGemsSearchInput();
+      const clearBtn = document.getElementById('gemSearchClear');
+      if(input){
+        input.value = '';
+        input.defaultValue = '';
+      }
+      if(clearBtn) clearBtn.style.display = 'none';
+      renderHiddenGems('all', '');
+    }
+    grid.classList.remove('collapsed');
+    grid.classList.add('expanded');
+    if(btn){
+      btn.textContent = 'Hide Hidden Gems ↑';
+      btn.setAttribute('aria-expanded', 'true');
+    }
+    if(bottomToggle) bottomToggle.style.display = 'block';
+  } else {
+    grid.classList.remove('expanded');
+    grid.classList.add('collapsed');
+    if(btn){
+      btn.textContent = 'View All Hidden Gems ↓';
+      btn.setAttribute('aria-expanded', 'false');
+    }
+    if(bottomToggle) bottomToggle.style.display = 'none';
+
+    if(section){
+      const rect = section.getBoundingClientRect();
+      if(rect.top < 0 || rect.bottom < window.innerHeight){
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
 }
 
 function filterHiddenGems(cat){
