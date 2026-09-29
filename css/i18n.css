@@ -1,0 +1,293 @@
+/* =========================================================
+   ExploreUP Internationalization & RTL Stylesheet
+   ========================================================= */
+
+/* Language Selector Modal Backdrop */
+.lang-modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(4,14,28,.65);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  z-index:9998;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .25s ease,visibility .25s ease;
+}
+.lang-modal-backdrop.active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* Language Selector Modal Panel */
+.lang-modal-panel{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(.95);
+  width:92vw;
+  max-width:680px;
+  max-height:85vh;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:24px;
+  box-shadow:0 16px 48px rgba(0,20,45,.28);
+  z-index:9999;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:all .28s cubic-bezier(.16,1,.3,1);
+}
+.lang-modal-panel.open{
+  transform:translate(-50%,-50%) scale(1);
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+body.dark .lang-modal-panel{
+  background:#0d1e33;
+  border-color:var(--line);
+  box-shadow:0 20px 54px rgba(0,0,0,.6);
+}
+
+/* Modal Header */
+.lang-modal-header{
+  padding:20px 24px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(255,181,27,.05) 0%,transparent 100%);
+}
+.lang-modal-title-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.lang-modal-icon{
+  font-size:24px;
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  background:rgba(255,181,27,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.lang-modal-title{
+  margin:0;
+  font-size:20px;
+  font-weight:800;
+  color:var(--text);
+  letter-spacing:-.02em;
+}
+.lang-modal-sub{
+  margin:2px 0 0;
+  font-size:13px;
+  color:var(--muted);
+}
+.lang-modal-close{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  cursor:pointer;
+  transition:all .18s ease;
+}
+.lang-modal-close:hover{
+  background:var(--card);
+  border-color:var(--gold);
+  color:var(--gold);
+  transform:scale(1.05);
+}
+
+/* Modal Body & Grid */
+.lang-modal-body{
+  padding:20px 24px 26px;
+  overflow-y:auto;
+  max-height:calc(85vh - 90px);
+}
+.lang-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:12px;
+}
+
+/* Language Cards */
+.lang-option-card{
+  border:1.5px solid var(--line);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:14px;
+  padding:12px 14px;
+  text-align:left;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:4px;
+  transition:all .18s ease;
+  position:relative;
+  font-family:inherit;
+}
+.lang-option-card:hover{
+  border-color:var(--gold);
+  background:#fffdf7;
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(255,181,27,.18);
+}
+body.dark .lang-option-card{
+  background:#10243c;
+}
+body.dark .lang-option-card:hover{
+  background:#152d4a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+.lang-option-card.active{
+  border-color:var(--gold);
+  background:rgba(255,181,27,.12);
+  box-shadow:0 4px 14px rgba(255,181,27,.25);
+}
+.lang-card-main{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.lang-card-native{
+  font-size:16px;
+  font-weight:800;
+  color:var(--text);
+  line-height:1.25;
+}
+.lang-card-name{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:600;
+}
+.lang-card-badge{
+  align-self:flex-start;
+  margin-top:6px;
+  font-size:10.5px;
+  font-weight:800;
+  background:var(--gold);
+  color:#071b35;
+  padding:2px 8px;
+  border-radius:999px;
+  letter-spacing:.3px;
+}
+
+/* =========================================================
+   RIGHT-TO-LEFT (RTL) STYLES (for Arabic & Urdu)
+   ========================================================= */
+body.rtl{
+  direction:rtl;
+  text-align:right;
+}
+
+body.rtl .nav{
+  flex-direction:row-reverse;
+}
+body.rtl .nav-left{
+  flex-direction:row-reverse;
+}
+body.rtl .navlinks{
+  flex-direction:row-reverse;
+}
+body.rtl .actions{
+  flex-direction:row-reverse;
+}
+
+/* Drawer in RTL */
+body.rtl .drawer-panel{
+  left:auto;
+  right:0;
+  transform:translateX(100%);
+}
+body.rtl .drawer-panel.open{
+  transform:translateX(0);
+}
+body.rtl .drawer-item{
+  text-align:right;
+}
+body.rtl .drawer-badge{
+  margin-left:0;
+  margin-right:auto;
+}
+
+/* Forms & Inputs in RTL */
+body.rtl input,
+body.rtl select,
+body.rtl textarea{
+  text-align:right;
+}
+body.rtl .search input{
+  padding:12px 18px 12px 50px;
+}
+body.rtl .search button{
+  margin-left:0;
+  margin-right:auto;
+}
+
+/* Modal and cards in RTL */
+body.rtl .lang-modal-header{
+  flex-direction:row-reverse;
+}
+body.rtl .lang-modal-title-wrap{
+  flex-direction:row-reverse;
+  text-align:right;
+}
+body.rtl .lang-option-card{
+  text-align:right;
+}
+body.rtl .lang-card-badge{
+  align-self:flex-end;
+}
+body.rtl .sectionhead{
+  flex-direction:row-reverse;
+  text-align:right;
+}
+body.rtl .cities-head-wrap{
+  flex-direction:row-reverse;
+}
+body.rtl .cities-title-block{
+  text-align:right;
+}
+body.rtl .breadcrumb{
+  direction:rtl;
+}
+
+/* Responsive adjustment for Mobile */
+@media(max-width:650px){
+  .lang-modal-panel{
+    width:94vw;
+    border-radius:20px;
+  }
+  .lang-modal-header{
+    padding:16px 18px 14px;
+  }
+  .lang-modal-body{
+    padding:14px 16px 20px;
+  }
+  .lang-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+  }
+  .lang-option-card{
+    padding:10px 12px;
+  }
+  .lang-card-native{
+    font-size:15px;
+  }
+}

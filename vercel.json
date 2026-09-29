@@ -15,22 +15,13 @@
     {
       "source": "/district",
       "destination": "/district.html"
+    },
+    {
+      "source": "/public/(.*)",
+      "destination": "/$1"
     }
   ],
   "headers": [
-    {
-      "source": "/locales/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, must-revalidate"
-        },
-        {
-          "key": "Content-Type",
-          "value": "application/json; charset=utf-8"
-        }
-      ]
-    },
     {
       "source": "/(.*)",
       "headers": [
@@ -45,6 +36,19 @@
         {
           "key": "Expires",
           "value": "0"
+        }
+      ]
+    },
+    {
+      "source": "/locales/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
         }
       ]
     },
