@@ -1773,6 +1773,10 @@ app.get(['/district.html', '/district'], (req, res) => {
   res.sendFile(path.join(__dirname, 'district.html'), { dotfiles: 'allow' });
 });
 
+// Static locale dictionaries for i18n (root & public)
+app.use('/locales', express.static(path.join(__dirname, 'locales'), { maxAge: '1h' }));
+app.use('/locales', express.static(path.join(__dirname, 'public', 'locales'), { maxAge: '1h' }));
+
 // Static assets (CSS, JS, images, media, districts.json)
 app.use(express.static(__dirname, { dotfiles: 'allow' }));
 app.use(express.static(path.join(__dirname, 'public'), { dotfiles: 'allow' }));
