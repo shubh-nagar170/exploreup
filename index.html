@@ -15,6 +15,46 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            obsidian: '#050d25',
+            navy: '#0a122a',
+            surface: '#101a38',
+            surfaceAlt: '#18244a',
+            card: 'rgba(16, 26, 56, 0.72)',
+            border: 'rgba(255, 255, 255, 0.08)',
+            borderLight: 'rgba(255, 255, 255, 0.14)',
+            gold: '#f59e0b',
+            goldLight: '#fbbf24',
+            goldDim: '#d97706',
+            champagne: '#fef3c7',
+            accentCyan: '#38bdf8'
+          }
+        },
+        fontFamily: {
+          sans: ['"Manrope"', 'system-ui', 'sans-serif'],
+          serif: ['"DM Serif Display"', 'Georgia', 'serif'],
+        },
+        boxShadow: {
+          'glow-gold': '0 0 35px -5px rgba(245, 158, 11, 0.3)',
+          'glow-soft': '0 10px 40px -10px rgba(0, 0, 0, 0.6)',
+          'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.45)'
+        }
+      }
+    }
+  }
+</script>
 <link rel="stylesheet" href="/public/css/i18n.css?v=3.0.0">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ExploreUP">
@@ -1746,31 +1786,525 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   .favbar{padding:8px 11px;font-size:11.5px;left:8px;bottom:12px}
   .floating-ask-arya-btn{min-width:126px;height:42px;padding:0 13px;font-size:13px}
 }
+
+  /* Stitch Royal Awadh Modern Custom Utilities */
+  ::-webkit-scrollbar { width: 7px; }
+  ::-webkit-scrollbar-track { background: #050d25; }
+  ::-webkit-scrollbar-thumb { background: #18244a; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
+  .text-glow { text-shadow: 0 0 36px rgba(245, 158, 11, 0.35); }
+  
+  /* Directional left-to-right deep dark vignette so Taj Mahal stays visible on the right */
+  .hero-cinematic-mask {
+    background: linear-gradient(
+      to right,
+      rgba(5, 13, 37, 0.96) 0%,
+      rgba(5, 13, 37, 0.88) 32%,
+      rgba(5, 13, 37, 0.55) 60%,
+      rgba(5, 13, 37, 0.2) 80%,
+      rgba(5, 13, 37, 0.45) 100%
+    );
+  }
+  .hero-bottom-fade {
+    background: linear-gradient(to top, #050d25 0%, rgba(5, 13, 37, 0.8) 25%, transparent 60%);
+  }
+  
+  /* Scroll Reveal Utilities */
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Initial Hero Entrance Animation */
+  .hero-text-enter {
+    animation: heroFadeSlide 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes heroFadeSlide {
+    0% { opacity: 0; transform: translateY(28px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  body {
+    background-color: #050d25 !important;
+    color: #dbe1ff;
+    font-family: 'Manrope', system-ui, sans-serif;
+  }
+  h1, h2, h3, .font-serif {
+    font-family: 'DM Serif Display', Georgia, serif;
+  }
+
+
+
+/* ========================================================
+   STITCH ROYAL AWADH MODERN CARD & INTERACTIVE COMPONENT STYLES
+   ======================================================== */
+.cities {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+  gap: 22px !important;
+  transition: all 0.4s ease !important;
+}
+.cities.collapsed {
+  max-height: 860px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+.cities.collapsed::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 140px !important;
+  background: linear-gradient(to top, #050d25 0%, rgba(5, 13, 37, 0.8) 50%, transparent 100%) !important;
+  pointer-events: none !important;
+}
+.cities.expanded {
+  max-height: none !important;
+}
+
+/* Stitch Editorial City Cards */
+.city {
+  position: relative !important;
+  min-height: 390px !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  background: #101a38 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding: 22px !important;
+  text-decoration: none !important;
+  color: #fff !important;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+.city:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(245, 158, 11, 0.5) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 25px rgba(245, 158, 11, 0.2) !important;
+}
+.city img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  z-index: 1 !important;
+}
+.city:hover img {
+  transform: scale(1.06) !important;
+}
+.city::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(to top, #050d25 0%, rgba(5, 13, 37, 0.72) 48%, rgba(5, 13, 37, 0.1) 100%) !important;
+  z-index: 2 !important;
+}
+.citytext, .citymeta, .arrow {
+  position: relative !important;
+  z-index: 3 !important;
+}
+.citytext h3 {
+  font-family: 'DM Serif Display', Georgia, serif !important;
+  font-size: 24px !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+  margin: 0 0 4px !important;
+  letter-spacing: -0.01em !important;
+}
+.citytext small {
+  display: block !important;
+  font-size: 12px !important;
+  color: #cbd5e1 !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+  margin-bottom: 14px !important;
+}
+.citymeta {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-top: 12px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.citymeta .meta {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #fbbf24 !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+.citymeta .meta.rating {
+  color: #f59e0b !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+}
+.city .arrow {
+  position: absolute !important;
+  right: 20px !important;
+  bottom: 20px !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(8px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  transition: all 0.2s ease !important;
+}
+.city:hover .arrow {
+  background: #f59e0b !important;
+  color: #050d25 !important;
+  transform: translateX(3px) !important;
+}
+
+/* Stitch Editorial Hidden Gems Cards */
+.gems {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+  gap: 28px !important;
+}
+.gems.collapsed {
+  max-height: 980px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+.gems.collapsed::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 160px !important;
+  background: linear-gradient(to top, #050d25 0%, rgba(5, 13, 37, 0.85) 50%, transparent 100%) !important;
+  pointer-events: none !important;
+}
+.gems.expanded {
+  max-height: none !important;
+}
+.gem {
+  border-radius: 24px !important;
+  background: #101a38 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+}
+.gem:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.15) !important;
+}
+.gem-img-wrap {
+  position: relative !important;
+  height: 240px !important;
+  overflow: hidden !important;
+}
+.gem-img-wrap img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.gem:hover .gem-img-wrap img {
+  transform: scale(1.06) !important;
+}
+.gem-badge {
+  position: absolute !important;
+  top: 14px !important;
+  left: 14px !important;
+  padding: 4px 12px !important;
+  border-radius: 9999px !important;
+  background: rgba(5, 13, 37, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  color: #38bdf8 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+.gem .save {
+  position: absolute !important;
+  top: 14px !important;
+  right: 14px !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  background: rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #cbd5e1 !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+.gem .save.saved {
+  color: #f43f5e !important;
+}
+.gem-body {
+  padding: 24px !important;
+}
+.gem-meta-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 10px !important;
+}
+.gem-cat-tag {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.12) !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+}
+.gem-district-tag {
+  font-size: 12px !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+}
+.gem-title {
+  font-family: 'DM Serif Display', Georgia, serif !important;
+  font-size: 21px !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+  margin: 0 0 8px !important;
+  line-height: 1.3 !important;
+}
+.gem:hover .gem-title {
+  color: #38bdf8 !important;
+}
+.gem-desc {
+  font-size: 13px !important;
+  color: #94a3b8 !important;
+  line-height: 1.55 !important;
+  margin: 0 0 20px !important;
+}
+.gem-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-top: 14px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.gem-explore-btn {
+  padding: 8px 18px !important;
+  border-radius: 12px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #f59e0b !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+.gem-explore-btn:hover {
+  background: #f59e0b !important;
+  color: #050d25 !important;
+}
+.gem-share-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #94a3b8 !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+  transition: color 0.2s !important;
+}
+.gem-share-btn:hover {
+  color: #fff !important;
+}
+
+/* Gem Pill Active & State */
+.gem-pill-btn.active {
+  background: #f59e0b !important;
+  color: #050d25 !important;
+  border-color: #f59e0b !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Floating Ask Arya Button Stitch Polish */
+.floating-ask-arya-btn {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: #050d25 !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-weight: 800 !important;
+}
+.floating-ask-arya-btn:hover {
+  transform: translateY(-3px) scale(1.03) !important;
+  box-shadow: 0 14px 40px rgba(245, 158, 11, 0.55) !important;
+}
+
+
+
+/* ========================================================
+   STITCH ROYAL AWADH MODERN DRAWER & MODAL STYLES
+   ======================================================== */
+.drawer-panel {
+  background: #0a122a !important;
+  color: #fff !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 12px 0 50px rgba(0, 0, 0, 0.75) !important;
+}
+.drawer-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.drawer-title {
+  font-family: 'DM Serif Display', Georgia, serif !important;
+  font-size: 22px !important;
+  color: #fff !important;
+}
+.drawer-section-title {
+  color: #94a3b8 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  font-weight: 700 !important;
+}
+.drawer-item {
+  border-radius: 14px !important;
+  background: rgba(16, 26, 56, 0.65) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  color: #dbe1ff !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.drawer-item:hover {
+  background: rgba(24, 36, 74, 0.9) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #fbbf24 !important;
+  transform: translateX(3px) !important;
+}
+.drawer-badge {
+  background: rgba(245, 158, 11, 0.18) !important;
+  color: #f59e0b !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  border-radius: 9999px !important;
+  font-weight: 700 !important;
+}
+.drawer-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #64748b !important;
+}
+
+/* Stitch Trip Planner Modal & Box */
+.planner-modal {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  background: rgba(5, 13, 37, 0.85) !important;
+}
+.planner-box {
+  background: #0a122a !important;
+  color: #fff !important;
+  border-radius: 28px !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 35px rgba(245, 158, 11, 0.15) !important;
+}
+.planner-head {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(16, 26, 56, 0.5) !important;
+}
+.planner-head h2 {
+  font-family: 'DM Serif Display', Georgia, serif !important;
+  font-size: 26px !important;
+  color: #fff !important;
+}
+
+/* Stitch Hidden Gems Detail Modal */
+.gem-modal-box {
+  background: #0a122a !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.15) !important;
+  border-radius: 28px !important;
+}
+
+/* Stitch Auth Modals */
+.auth-box {
+  background: #0a122a !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  border-radius: 24px !important;
+  color: #fff !important;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8) !important;
+}
+
 </style>
 </head>
 <body id="top">
 
-<header class="nav">
-  <div class="nav-left">
-    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleDrawer(true)" aria-label="Open Navigation Menu" title="Menu">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
-    <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})"><div class="pin"><b>●</b></div><div>Explore<span>UP</span><small class="tag">HAR SHEHAR KI KAHANI</small></div></div>
+
+<!-- Stitch Royal Awadh Modern Header -->
+<header class="sticky top-0 z-40 backdrop-blur-md bg-brand-obsidian/75 border-b border-white/10 transition-all duration-300" id="globalHeader">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-20 flex items-center justify-between gap-6">
+    <div class="flex items-center gap-4">
+      <!-- Left Hamburger Menu Toggle Button -->
+      <button aria-label="Open Navigation Menu" class="p-2.5 rounded-xl bg-brand-surface border border-white/10 text-slate-300 hover:text-white hover:border-amber-400/40 transition flex items-center justify-center cursor-pointer" id="hamburgerBtn" onclick="toggleDrawer(true)" type="button">
+        <span class="material-symbols-outlined text-xl text-amber-400">menu</span>
+      </button>
+      <!-- Brand & Emblem -->
+      <a class="flex items-center gap-3.5 group focus:outline-none cursor-pointer" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-amber-400 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform duration-300">
+          <svg class="w-5 h-5 text-slate-950 font-black fill-current" viewBox="0 0 24 24">
+            <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"></path>
+          </svg>
+        </div>
+        <div class="flex flex-col text-left">
+          <span class="font-serif text-2xl font-normal tracking-wide text-white flex items-center">
+            Explore<span class="text-amber-400 font-semibold ml-0.5">UP</span>
+          </span>
+          <span class="text-[9px] uppercase tracking-[0.25em] text-slate-400 font-semibold -mt-1">
+            Har Shehar Ki Kahani
+          </span>
+        </div>
+      </a>
+    </div>
+    <!-- Primary Nav Links -->
+    <nav class="hidden lg:flex items-center gap-8 text-[13px] tracking-wide font-medium">
+      <a class="text-white hover:text-amber-400 transition" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="nav.home">Home</a>
+      <a class="text-slate-300 hover:text-amber-400 transition" href="#cities" onclick="openAllCitiesSection()" data-i18n="nav.exploreCities">Explore All Cities</a>
+      <a class="text-slate-300 hover:text-amber-400 transition" href="#hidden-gems" onclick="document.getElementById('hidden-gems').scrollIntoView({behavior:'smooth'})" data-i18n="drawer.hiddenGems">Hidden Gems</a>
+      <a class="text-slate-300 hover:text-amber-400 transition" href="javascript:void(0)" onclick="openTripPlanner()" data-i18n="nav.tripPlanner">Trip Planner</a>
+      <a class="text-slate-300 hover:text-amber-400 transition" href="#food" data-i18n="nav.foodTrails">Food Trails</a>
+      <a class="text-slate-300 hover:text-amber-400 transition" href="#festivals" data-i18n="nav.festivals">Festivals</a>
+    </nav>
+    <!-- Right Quick Actions -->
+    <div class="flex items-center gap-3">
+      <!-- Language Selector -->
+      <button class="p-2 rounded-xl bg-brand-surface border border-white/10 text-slate-300 hover:text-white hover:border-amber-400/40 transition flex items-center gap-1.5 cursor-pointer text-xs font-semibold px-3" onclick="openLanguageModal()" title="Language / भाषा" aria-label="Language selector">
+        <span>🌐</span> <span id="navLangLabel">Language</span>
+      </button>
+      <!-- Trip Planner / Favourites Trigger -->
+      <button aria-label="Open Trip Planner" class="p-2 rounded-xl bg-brand-surface border border-white/10 text-slate-300 hover:text-amber-400 transition cursor-pointer" onclick="openTripPlanner()" title="Saved Trips / Planner" type="button">
+        <span class="material-symbols-outlined text-lg">favorite</span>
+      </button>
+      <!-- Ask Arya Button -->
+      <button class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:brightness-110 text-slate-950 font-bold text-xs tracking-wide shadow-lg shadow-amber-500/20 active:scale-95 transition flex items-center gap-1.5 cursor-pointer" onclick="openAryaModal()" type="button">
+        <span>✨</span>
+        <span>Ask Arya</span>
+      </button>
+    </div>
   </div>
-  <nav class="navlinks">
-    <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="nav.home">Home</a>
-    <a href="#cities" onclick="openAllCitiesSection()" data-i18n="nav.exploreCities">Explore All Cities</a>
-    <a href="javascript:void(0)" onclick="openTripPlanner()" data-i18n="nav.tripPlanner">Trip Planner</a>
-    <a href="#food" data-i18n="nav.foodTrails">Food Trails</a>
-    <a href="#festivals" data-i18n="nav.festivals">Festivals</a>
-    <button class="circle" onclick="openLanguageModal()" title="Language / भाषा" aria-label="Language selector" style="cursor:pointer;border-radius:18px;width:auto;padding:0 12px;font-size:13px;font-weight:700;display:inline-flex;gap:6px;align-items:center;height:34px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);color:#fff">
-      <span>🌐</span> <span id="navLangLabel">Language</span>
-    </button>
-  </nav>
 </header>
 
 <!-- Left-Side Navigation Drawer Backdrop -->
@@ -1920,49 +2454,144 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
   </div>
 </aside>
 
-<section class="hero">
- <div>
-  <div class="eyebrow" id="heroGreeting" style="font-size:clamp(26px,3.8vw,40px);letter-spacing:0;margin-bottom:8px" data-i18n="hero.greeting">नमस्ते 🙏</div>
-  <h1><span data-i18n="hero.title">Explore</span> <em>Uttar Pradesh</em></h1>
-  <p data-i18n="hero.subtitle">Discover timeless heritage, legendary street food, spiritual sacred rivers, hotels, transport guides and hidden gems — city by city.</p>
-   <div style="position:relative">
-    <div class="search-wrapper" style="position:relative;max-width:740px;">
-     <form class="search" id="home-search-form" action="/district.html" method="GET" onsubmit="performSearch(event); return false;">
-      <input id="home-search-input" name="id" placeholder="Search any city, monument, food or ask Arya AI (e.g. Agra, Taj Mahal, Plan a 3 day Agra trip)..." data-i18n-placeholder="search.placeholder" autocomplete="off">
-      <button type="submit" id="home-search-btn" onclick="performSearch(event)" data-i18n="buttons.search">⌕ &nbsp; Search</button>
-     </form>
-     <div id="home-search-dropdown" class="search-autocomplete-dropdown"></div>
-     <div id="results" class="search-autocomplete-dropdown" style="display:none"></div>
+
+<!-- Stitch Royal Awadh Modern Hero with Taj Mahal Background -->
+<section class="relative min-h-[92vh] flex items-center overflow-hidden pt-8 pb-20" id="hero">
+  <!-- Original Taj Mahal Backdrop Visual - Preserved verbatim and positioned to showcase Taj on the right -->
+  <div class="absolute inset-0 z-0">
+    <img alt="Uttar Pradesh Tourism Backdrop - Taj Mahal Agra" class="w-full h-full object-cover object-right md:object-[center_right] filter brightness-[0.78] contrast-[1.04]" src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1800&q=80">
+    <!-- Left-to-right cinematic gradient vignette leaving right side open & bottom blend -->
+    <div class="absolute inset-0 hero-cinematic-mask"></div>
+    <div class="absolute inset-0 hero-bottom-fade"></div>
+  </div>
+  
+  <!-- Left-Aligned Hero Content Container (Occupies ~42-48% width on desktop) -->
+  <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
+    <div class="w-full lg:max-w-2xl text-left hero-text-enter" id="heroContent">
+      <!-- Eyebrow Pill -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md mb-6 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+        <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-300 uppercase" id="heroGreeting" data-i18n="hero.greeting">
+          Welcome to Uttar Pradesh • Heartland of India
+        </span>
+      </div>
+      
+      <!-- Main Headline: DM Serif Display -->
+      <h1 class="font-serif text-4xl sm:text-6xl lg:text-[68px] font-normal tracking-tight text-white mb-5 leading-[1.12]">
+        Namaste 🙏<br>
+        <span class="text-amber-400 text-glow">
+          Explore Uttar Pradesh
+        </span>
+      </h1>
+      
+      <!-- Clean Subtext: Manrope -->
+      <p class="text-base sm:text-lg text-slate-300 font-light leading-relaxed mb-8 max-w-xl" data-i18n="hero.subtitle">
+        Discover timeless heritage, legendary street food, spiritual rivers, beautiful hotels, transport, hidden gems and unforgettable experiences.
+      </p>
+      
+      <!-- Sleek Search Bar Pill with Smart Search form -->
+      <div class="max-w-xl mb-6 relative">
+        <form class="relative flex items-center p-1.5 sm:p-2 rounded-full bg-brand-surface/90 border border-brand-borderLight shadow-2xl backdrop-blur-2xl focus-within:border-amber-400 focus-within:ring-2 focus-within:ring-amber-400/20 transition-all duration-300" id="home-search-form" action="/district.html" method="GET" onsubmit="performSearch(event); return false;">
+          <div class="pl-4 pr-1 text-amber-400">
+            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </div>
+          <input id="home-search-input" name="id" class="w-full bg-transparent border-none text-slate-100 placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-0 px-3 py-2 font-medium" placeholder="Search any city, monument, food or ask Arya AI (e.g. Agra, Taj Mahal)..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+          <button type="submit" id="home-search-btn" class="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 hover:brightness-110 shadow-lg shadow-amber-500/25 active:scale-95 transition-all whitespace-nowrap flex items-center gap-1.5" data-i18n="buttons.search">
+            <span>Search</span>
+            <svg class="w-3.5 h-3.5 text-slate-950 font-bold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+            </svg>
+          </button>
+        </form>
+        <div id="home-search-dropdown" class="search-autocomplete-dropdown"></div>
+        <div id="results" class="search-autocomplete-dropdown" style="display:none"></div>
+      </div>
+      
+      <!-- Quick Platform Filter Pills -->
+      <div class="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-8 text-xs text-slate-300 font-medium">
+        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-surface/80 border border-white/10 backdrop-blur-md">
+          <span>🏛️</span> <span id="destinationCountBadge">36 Destinations</span>
+        </span>
+        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-surface/80 border border-white/10 backdrop-blur-md">
+          <span>🚆</span> Live Transport Guides
+        </span>
+        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-surface/80 border border-white/10 backdrop-blur-md">
+          <span>🏨</span> Verified Stays
+        </span>
+        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-surface/80 border border-white/10 backdrop-blur-md">
+          <span>🗺️</span> Smart Trip Planner
+        </span>
+      </div>
+      
+      <!-- Primary CTAs -->
+      <div class="flex flex-wrap items-center gap-4">
+        <button class="px-7 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs sm:text-sm shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5" onclick="openAllCitiesSection()" data-i18n="nav.exploreCities">
+          Explore All Cities
+        </button>
+        <button class="px-7 py-3 rounded-xl bg-brand-surface/80 hover:bg-brand-surfaceAlt text-slate-200 border border-white/15 font-semibold text-xs sm:text-sm backdrop-blur-md transition hover:-translate-y-0.5" onclick="openTripPlanner('Agra')" data-i18n="buttons.planTrip">
+          Plan Your Trip
+        </button>
+        <button class="px-7 py-3 rounded-xl bg-brand-surface/80 hover:bg-brand-surfaceAlt text-amber-300 border border-amber-400/30 font-semibold text-xs sm:text-sm backdrop-blur-md transition hover:-translate-y-0.5" onclick="document.getElementById('hidden-gems').scrollIntoView({behavior:'smooth'})" data-i18n="drawer.hiddenGems">
+          💎 Hidden Gems
+        </button>
+      </div>
     </div>
-   <div class="home-trust">
-     <span id="destinationCountBadge">36 Destinations</span>
-     <span>🚆 Live Transport Guides</span>
-     <span>🏨 Verified Stays & Healthcare</span>
-     <span>🧳 Smart Trip Planner</span>
-   </div>
-    <div class="hero-buttons">
-      <button class="hero-btn primary" onclick="openAllCitiesSection()" data-i18n="nav.exploreCities">📍 Explore All Cities</button>
-     <button class="hero-btn secondary" onclick="openTripPlanner('Agra')" data-i18n="buttons.planTrip">🧳 Plan Your Trip</button>
-     <button class="hero-btn secondary" onclick="document.getElementById('hidden-gems').scrollIntoView({behavior:'smooth'})" data-i18n="drawer.hiddenGems">💎 Hidden Gems</button>
-   </div>
-   </div>
   </div>
 </section>
 
 <main class="wrap" id="mainContent">
   <div class="breadcrumb" id="breadcrumb">Home <span>›</span> <b>Explore Uttar Pradesh</b></div>
   
-  <div class="categories">
-    <div class="cat" onclick="openAllCitiesSection()"><div class="ico">🏛️</div>Famous Places</div>
-    <div class="cat" onclick="document.getElementById('food').scrollIntoView({behavior:'smooth'})"><div class="ico">🍛</div>Food & Cuisine</div>
-    <div class="cat" onclick="openCategoryShowcase('shopping')"><div class="ico">🛍️</div>Shopping & Crafts</div>
-    <div class="cat" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})"><div class="ico">🏺</div>Culture & History</div>
-    <div class="cat" onclick="document.getElementById('festivals').scrollIntoView({behavior:'smooth'})"><div class="ico">🎉</div>Festivals</div>
-    <div class="cat" onclick="openCategoryShowcase('stays')"><div class="ico">🛏️</div>Where to Stay</div>
-    <div class="cat" onclick="openCategoryShowcase('transport')"><div class="ico">🚌</div>Transport Guide</div>
-    <div class="cat" onclick="openTripPlanner()"><div class="ico">₹</div>Budget Planner</div>
-    <div class="cat" onclick="openCategoryShowcase('season')"><div class="ico">☀️</div>Best Time</div>
-    <div class="cat" onclick="document.getElementById('sustainabilitySection').scrollIntoView({behavior:'smooth'})"><div class="ico">💡</div>Local Tips</div>
+  
+<!-- Stitch 10-Grid Category/Circuit Showcase -->
+<section class="relative -mt-6 z-20 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 mb-10">
+  <div class="p-5 sm:p-7 rounded-3xl bg-brand-navy/90 border border-white/10 backdrop-blur-2xl shadow-glass">
+    <div class="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-3 sm:gap-4 text-center">
+      <div class="group flex flex-col items-center p-2.5 rounded-2xl hover:bg-white/5 transition-all cursor-pointer" onclick="openAllCitiesSection()">
+        <div class="w-12 h-12 rounded-2xl bg-brand-surface border border-white/10 flex items-center justify-center text-lg group-hover:border-amber-400 group-hover:scale-105 transition-all shadow-md">🏛️</div>
+        <span class="mt-2 text-[11px] font-medium text-slate-300 group-hover:text-amber-300 transition">Famous Places</span>
+      </div>
+      <div class="group flex flex-col items-center p-2.5 rounded-2xl hover:bg-white/5 transition-all cursor-pointer" onclick="document.getElementById('food').scrollIntoView({behavior:'smooth'})">
+        <div class="w-12 h-12 rounded-2xl bg-brand-surface border border-white/10 flex items-center justify-center text-lg group-hover:border-amber-400 group-hover:scale-105 transition-all shadow-md">🍲</div>
+        <span class="mt-2 text-[11px] font-medium text-slate-300 group-hover:text-amber-300 transition">Food & Cuisine</span>
+      </div>
+      <div class="group flex flex-col items-center p-2.5 rounded-2xl hover:bg-white/5 transition-all cursor-pointer" onclick="openCategoryShowcase('shopping')">
+        <div class="w-12 h-12 rounded-2xl bg-brand-surface border border-white/10 flex items-center justify-center text-lg group-hover:border-amber-400 group-hover:scale-105 transition-all shadow-md">🛍️</div>
+        <span class="mt-2 text-[11px] font-medium text-slate-300 group-hover:text-amber-300 transition">Shopping & Crafts</span>
+      </div>
+      <div class="group flex flex-col items-center p-2.5 rounded-2xl hover:bg-white/5 transition-all cursor-pointer" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+        <div class="w-12 h-12 rounded-2xl bg-brand-surface border border-white/10 flex items-center justify-center text-lg group-hover:border-amber-400 group-hover:scale-105 transition-all shadow-md">🪔</div>
+        <span class="mt-2 text-[11px] font-medium text-slate-300 group-hover:text-amber-300 transition">Culture & History</span>
+      </div>
+      <div class="group flex flex-col items-center p-2.5 rounded-2xl hover:bg-white/5 transition-all cursor-pointer" onclick="document.getElementById('festivals').scrollIntoView({behavior:'smooth'})">
+        <div class="w-12 h-12 rounded-2xl bg-brand-surface border border-white/10 flex items-center justify-center text-lg group-hover:border-amber-400 group-hover:scale-105 transition-all shadow-md">🎭</div>
+        <span class="mt-2 text-[11px] font-medium text-slate-300 group-hover:text-amber-300 transition">Festivals</span>
+      </div>
+      <div class="group flex flex-col items-center p-2.5 rounded-2xl hover:bg-white/5 transition-all cursor-pointer" onclick="openCategoryShowcase('stays')">
+        <div class="w-12 h-12 rounded-2xl bg-brand-surface border border-white/10 flex items-center justify-center text-lg group-hover:border-amber-400 group-hover:scale-105 transition-all shadow-md">🏨</div>
+        <span class="mt-2 text-[11px] font-medium text-slate-300 group-hover:text-amber-300 transition">Where to Stay</span>
+      </div>
+      <div class="group flex flex-col items-center p-2.5 rounded-2xl hover:bg-white/5 transition-all cursor-pointer" onclick="openCategoryShowcase('transport')">
+        <div class="w-12 h-12 rounded-2xl bg-brand-surface border border-white/10 flex items-center justify-center text-lg group-hover:border-amber-400 group-hover:scale-105 transition-all shadow-md">🚆</div>
+        <span class="mt-2 text-[11px] font-medium text-slate-300 group-hover:text-amber-300 transition">Transport Guide</span>
+      </div>
+      <div class="group flex flex-col items-center p-2.5 rounded-2xl hover:bg-white/5 transition-all cursor-pointer" onclick="openTripPlanner()">
+        <div class="w-12 h-12 rounded-2xl bg-brand-surface border border-white/10 flex items-center justify-center text-lg group-hover:border-amber-400 group-hover:scale-105 transition-all shadow-md">🪙</div>
+        <span class="mt-2 text-[11px] font-medium text-slate-300 group-hover:text-amber-300 transition">Budget Planner</span>
+      </div>
+      <div class="group flex flex-col items-center p-2.5 rounded-2xl hover:bg-white/5 transition-all cursor-pointer" onclick="openCategoryShowcase('season')">
+        <div class="w-12 h-12 rounded-2xl bg-brand-surface border border-white/10 flex items-center justify-center text-lg group-hover:border-amber-400 group-hover:scale-105 transition-all shadow-md">☀️</div>
+        <span class="mt-2 text-[11px] font-medium text-slate-300 group-hover:text-amber-300 transition">Best Time</span>
+      </div>
+      <div class="group flex flex-col items-center p-2.5 rounded-2xl hover:bg-white/5 transition-all cursor-pointer" onclick="document.getElementById('suggestionSection').scrollIntoView({behavior:'smooth'})">
+        <div class="w-12 h-12 rounded-2xl bg-brand-surface border border-white/10 flex items-center justify-center text-lg group-hover:border-amber-400 group-hover:scale-105 transition-all shadow-md">💡</div>
+        <span class="mt-2 text-[11px] font-medium text-slate-300 group-hover:text-amber-300 transition">Local Tips</span>
+      </div>
+    </div>
+  </div>
+</section>
   </div>
 
   <div class="recent-wrap" id="recentWrap" style="display:none">
@@ -1972,19 +2601,31 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
     <div class="recent-strip" id="recentStrip"></div>
   </div>
 
-  <section class="section" id="cities">
-   <div class="cities-head-wrap">
-     <div class="cities-title-block">
-       <h2>📍 <span data-i18n="home.citiesTitle">Explore All Cities</span></h2>
-       <p data-i18n="home.citiesSub">Explore Uttar Pradesh city by city, with comprehensive travel guides, transport, hotels and food.</p>
+  
+  <section class="section py-20 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 reveal-on-scroll is-visible" id="cities">
+   <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+     <div>
+       <div class="inline-flex items-center gap-2 text-amber-400 text-xs font-bold tracking-wider uppercase mb-2">
+         <span>📍</span>
+         <span>Gateway Destinations</span>
+       </div>
+       <h2 class="font-serif text-3xl sm:text-4xl text-white tracking-tight">
+         <span data-i18n="home.citiesTitle">Explore All Cities</span>
+       </h2>
+       <p class="text-slate-400 text-sm sm:text-base mt-2 max-w-xl font-light" data-i18n="home.citiesSub">
+         Explore Uttar Pradesh city by city, with comprehensive travel guides, transport, hotels and food.
+       </p>
      </div>
-     <div class="cities-controls">
-       <form class="cities-search-box" autocomplete="off" action="javascript:void(0)" onsubmit="event.preventDefault(); return false;" role="search">
-         <input type="search" id="explore-cities-search" name="explore-cities-search" value="" placeholder="Search cities..." data-i18n-placeholder="search.citiesPlaceholder" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search cities" data-i18n-aria="search.citiesPlaceholder">
-         <span class="cities-search-icon" id="citiesSearchIcon">⌕</span>
-         <button type="button" class="cities-search-clear" id="citiesSearchClear" onclick="clearCitiesSearch()" aria-label="Clear search">✕</button>
+     <div class="flex items-center gap-3 flex-wrap">
+       <form class="cities-search-box relative flex items-center" autocomplete="off" action="javascript:void(0)" onsubmit="event.preventDefault(); return false;" role="search">
+         <span class="absolute left-3.5 text-slate-400 pointer-events-none">⌕</span>
+         <input type="search" id="explore-cities-search" name="explore-cities-search" value="" placeholder="Search cities..." data-i18n-placeholder="search.citiesPlaceholder" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search cities" data-i18n-aria="search.citiesPlaceholder" class="pl-9 pr-8 py-2.5 text-xs sm:text-sm rounded-xl bg-brand-surface border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 w-48 sm:w-64 font-medium transition">
+         <button type="button" class="cities-search-clear absolute right-2.5 text-slate-400 hover:text-white" id="citiesSearchClear" onclick="clearCitiesSearch()" aria-label="Clear search" style="display:none">✕</button>
        </form>
-       <button class="view toggle-cities-btn prominent-cities-btn" id="toggleCitiesBtn" onclick="toggleCitiesGrid()" aria-expanded="false" title="Toggle full cities directory" data-i18n="buttons.viewAllCities">View All Cities ↓</button>
+       <button class="view toggle-cities-btn prominent-cities-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-amber-400/40 text-amber-400 hover:bg-amber-400 hover:text-slate-950 font-semibold text-xs sm:text-sm transition cursor-pointer shadow-md" id="toggleCitiesBtn" onclick="toggleCitiesGrid()" aria-expanded="false" title="Toggle full cities directory" data-i18n="buttons.viewAllCities">
+         <span>View All Cities</span>
+         <span>↓</span>
+       </button>
      </div>
    </div>
    <div class="cities collapsed" id="cityGrid"></div>
@@ -2019,34 +2660,48 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
    </div>
   </section>
 
-    <section class="section" id="hidden-gems">
-   <div class="sectionhead" style="align-items:flex-start">
+    
+  <section class="section py-20 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 reveal-on-scroll is-visible" id="hidden-gems">
+   <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
      <div>
-       <h2>💎 <span data-i18n="home.hiddenGemsTitle">Hidden Gems of Uttar Pradesh</span></h2>
-       <p data-i18n="home.hiddenGemsSubtitle">Discover the lesser-known waterfalls, forests, forts, wildlife sanctuaries and historic places beyond the famous destinations.</p>
+       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold mb-3" id="gemsCountBadge" data-i18n="home.gemsBadge">
+         <span>💎</span>
+         <span>16 hidden gems to explore</span>
+       </div>
+       <h2 class="font-serif text-3xl sm:text-4xl text-white tracking-tight">
+         <span data-i18n="home.hiddenGemsTitle">Hidden Gems of Uttar Pradesh</span>
+       </h2>
+       <p class="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl font-light" data-i18n="home.hiddenGemsSubtitle">
+         Discover the lesser-known waterfalls, forests, forts, wildlife sanctuaries and historic places beyond the famous destinations.
+       </p>
      </div>
-     <div class="gems-count-badge" id="gemsCountBadge" data-i18n="home.gemsBadge">16 hidden gems to explore</div>
+     <button class="prominent-gems-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 shadow-md hover:brightness-110 self-start md:self-auto transition cursor-pointer" id="toggleGemsBtn" onclick="toggleGemsGrid()" aria-expanded="false" title="Toggle full hidden gems directory">
+       <span>View All Hidden Gems</span>
+       <span>↓</span>
+     </button>
    </div>
 
    <!-- Category Filtering Pills & Search Box -->
-   <div class="gems-controls">
-     <div class="gems-pills" role="tablist" aria-label="Filter hidden gems by category">
-       <button type="button" class="gem-pill-btn active" data-filter="all" onclick="filterHiddenGems('all')" data-i18n="home.gemsAll">All (16)</button>
-       <button type="button" class="gem-pill-btn" data-filter="nature-waterfalls" onclick="filterHiddenGems('nature-waterfalls')" data-i18n="home.gemsNature">🌊 Nature &amp; Waterfalls</button>
-       <button type="button" class="gem-pill-btn" data-filter="history-heritage" onclick="filterHiddenGems('history-heritage')" data-i18n="home.gemsHistory">🏰 History &amp; Heritage</button>
-       <button type="button" class="gem-pill-btn" data-filter="wildlife" onclick="filterHiddenGems('wildlife')" data-i18n="home.gemsWildlife">🐅 Wildlife</button>
-       <button type="button" class="gem-pill-btn" data-filter="spiritual" onclick="filterHiddenGems('spiritual')" data-i18n="home.gemsSpiritual">🕉️ Spiritual</button>
-     </div>
-     <div class="gems-actions">
-       <button type="button" class="view prominent-gems-btn" id="toggleGemsBtn" onclick="toggleGemsGrid()" aria-expanded="false" title="Toggle full hidden gems directory" data-i18n="buttons.viewAllGems">View All Hidden Gems ↓</button>
-       <form class="gem-search-box" autocomplete="off" action="javascript:void(0)" onsubmit="event.preventDefault(); return false;" role="search">
-         <input type="search" id="hidden-gems-search" name="hidden-gems-search" value="" placeholder="Search by destination, district, or category..." data-i18n-placeholder="home.gemsSearchPlaceholder" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search hidden gems by destination, district, or category" data-i18n-aria="home.gemsSearchPlaceholder">
-         <span class="gem-search-icon" id="gemSearchIcon">⌕</span>
-         <button type="button" class="gem-search-clear" id="gemSearchClear" onclick="clearGemSearch()" aria-label="Clear search">✕</button>
-       </form>
-     </div>
+   <div class="flex flex-wrap items-center gap-2 mb-6 pb-2 border-b border-white/10" role="tablist" aria-label="Filter hidden gems by category">
+     <button type="button" class="gem-pill-btn active px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer" data-filter="all" onclick="filterHiddenGems('all')" data-i18n="home.gemsAll">All (16)</button>
+     <button type="button" class="gem-pill-btn px-4 py-2 rounded-xl text-xs font-semibold bg-brand-surface border border-white/10 text-slate-300 hover:text-white hover:border-slate-500 transition cursor-pointer" data-filter="nature-waterfalls" onclick="filterHiddenGems('nature-waterfalls')" data-i18n="home.gemsNature">🌊 Nature & Waterfalls</button>
+     <button type="button" class="gem-pill-btn px-4 py-2 rounded-xl text-xs font-semibold bg-brand-surface border border-white/10 text-slate-300 hover:text-white hover:border-slate-500 transition cursor-pointer" data-filter="history-heritage" onclick="filterHiddenGems('history-heritage')" data-i18n="home.gemsHistory">🏰 History & Heritage</button>
+     <button type="button" class="gem-pill-btn px-4 py-2 rounded-xl text-xs font-semibold bg-brand-surface border border-white/10 text-slate-300 hover:text-white hover:border-slate-500 transition cursor-pointer" data-filter="wildlife" onclick="filterHiddenGems('wildlife')" data-i18n="home.gemsWildlife">🐅 Wildlife</button>
+     <button type="button" class="gem-pill-btn px-4 py-2 rounded-xl text-xs font-semibold bg-brand-surface border border-white/10 text-slate-300 hover:text-white hover:border-slate-500 transition cursor-pointer" data-filter="spiritual" onclick="filterHiddenGems('spiritual')" data-i18n="home.gemsSpiritual">🕉️ Spiritual</button>
    </div>
 
+   <!-- Dedicated Hidden Gems Search Input -->
+   <div class="max-w-xl mb-10">
+     <div class="relative flex items-center p-1.5 sm:p-2 rounded-xl bg-brand-surface border border-white/10 backdrop-blur-md focus-within:border-amber-400 focus-within:ring-2 focus-within:ring-amber-400/20 transition-all duration-300">
+       <div class="pl-3 pr-1 text-slate-400">
+         <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+           <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+         </svg>
+       </div>
+       <input type="search" id="hidden-gems-search" name="hidden-gems-search" value="" placeholder="Search by destination, district, or category..." data-i18n-placeholder="home.gemsSearchPlaceholder" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="searchbox" data-lpignore="true" data-form-type="other" aria-label="Search hidden gems by destination, district, or category" data-i18n-aria="home.gemsSearchPlaceholder" class="w-full bg-transparent border-none text-slate-100 placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:ring-0 px-2 py-1.5 font-medium">
+       <button type="button" class="gems-search-clear absolute right-3 text-slate-400 hover:text-white" id="gemsSearchClear" onclick="clearGemSearch()" aria-label="Clear search" style="display:none">✕</button>
+     </div>
+   </div>
    <div class="gems collapsed" id="hiddenGemsGrid">
 
     <article class="gem" data-gem-id="chandraprabha" onclick="openGemModal('chandraprabha')" tabindex="0" role="button" aria-label="View details for Chandraprabha Wildlife Sanctuary">
