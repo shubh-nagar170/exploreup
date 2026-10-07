@@ -1350,12 +1350,22 @@ function renderDistrictData(d){
   }
 }
 
+const LOCAL_IMAGE_SLUGS = new Set([
+  'agra', 'aligarh', 'amroha', 'ayodhya', 'bareilly', 'bhadohi', 'budaun', 'bulandshahr',
+  'chandauli', 'chitrakoot', 'etawah', 'firozabad', 'gorakhpur', 'hapur', 'jaunpur', 'jhansi',
+  'kannauj', 'kanpur', 'kushinagar', 'lakhimpur-kheri', 'lucknow', 'mathura', 'meerut', 'mirzapur',
+  'moradabad', 'muzaffarnagar', 'pilibhit', 'pratapgarh', 'prayagraj', 'rampur', 'saharanpur',
+  'sonbhadra', 'sultanpur', 'unnao', 'varanasi', 'vrindavan'
+]);
+
 function getGenericDistrict(nameOrId){
   const clean = String(nameOrId || 'District').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  const slug = String(nameOrId || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const districtImg = LOCAL_IMAGE_SLUGS.has(slug) ? ('/assets/' + slug + '/' + slug + '.jpg') : 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=85';
   return {
     name: clean,
-    heroSubtitle: `Historic District & Cultural Center in Uttar Pradesh`,
-    image: `https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=85`,
+    heroSubtitle: 'Historic District & Cultural Center in Uttar Pradesh',
+    image: districtImg,
     about: `Welcome to ${clean}, an integral district of Uttar Pradesh celebrated for its rich local heritage, cultural traditions, handicraft industries, and regional cuisine. Explore its landmarks, local markets, and travel amenities.`,
     places: `${clean} District Center, Historic Temples & Shrines, Clock Tower & Heritage Market, Memorial Park & Riverside`,
     food: `Regional Bedhai-Aloo, Pure Desi Ghee Sweets, Famous Local Chaat, Fresh Thick Kulhad Lassi`,
