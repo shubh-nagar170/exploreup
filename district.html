@@ -482,8 +482,8 @@ body.dark .foodchip{background:#15263c;border-color:#29415d}
 <section class="district-hero" id="districtHero">
   <!-- Cinematic Background Video for Varanasi & Agra -->
   <div class="district-hero-video-wrap" id="heroVideoWrap" style="display:none">
-    <video id="varanasiHeroVideo" class="hero-video-bg" autoplay muted loop playsinline preload="auto" src="assets/varanasi/varanasi.mp4" data-loaded-src="assets/varanasi/varanasi.mp4">
-      <source id="heroVideoSource" src="assets/varanasi/varanasi.mp4" type="video/mp4">
+    <video id="varanasiHeroVideo" class="hero-video-bg" autoplay muted loop playsinline preload="none">
+      <source id="heroVideoSource" src="" type="video/mp4">
     </video>
     <div class="hero-video-gradient"></div>
   </div>
@@ -981,26 +981,37 @@ const fallbackDistricts = {
 ;
 
 // Cinematic Hero Video & Sound Control (Varanasi, Agra, Lucknow, Mathura & Ayodhya)
+// Strict 1-to-1 Explicit District Video Mapping (Approved Uploaded Videos Only)
 const CINEMATIC_VIDEOS = {
-  'varanasi': {
-    videoSrc: 'assets/varanasi/varanasi.mp4',
-    storageKey: 'exploreup_varanasi_sound'
-  },
   'agra': {
+    id: 'agra',
+    name: 'Agra',
     videoSrc: 'assets/agra/agra.mp4',
     storageKey: 'exploreup_agra_sound'
   },
+  'ayodhya': {
+    id: 'ayodhya',
+    name: 'Ayodhya',
+    videoSrc: 'assets/ayodhya/ayodhya.mp4',
+    storageKey: 'exploreup_ayodhya_sound'
+  },
   'lucknow': {
+    id: 'lucknow',
+    name: 'Lucknow',
     videoSrc: 'assets/lucknow/lucknow.mp4',
     storageKey: 'exploreup_lucknow_sound'
   },
   'mathura': {
+    id: 'mathura',
+    name: 'Mathura',
     videoSrc: 'assets/mathura/mathura.mp4',
     storageKey: 'exploreup_mathura_sound'
   },
-  'ayodhya': {
-    videoSrc: 'assets/ayodhya/ayodhya.mp4',
-    storageKey: 'exploreup_ayodhya_sound'
+  'varanasi': {
+    id: 'varanasi',
+    name: 'Varanasi',
+    videoSrc: 'assets/varanasi/varanasi.mp4',
+    storageKey: 'exploreup_varanasi_sound'
   }
 };
 
@@ -1146,13 +1157,9 @@ function renderDistrictData(d){
   const video = document.getElementById('varanasiHeroVideo');
   const videoSrcEl = document.getElementById('heroVideoSource');
 
-  const districtKey = (d.id || d.name || '').toLowerCase().trim();
-  const videoConfig = CINEMATIC_VIDEOS[districtKey] ||
-    (districtKey.includes('varanasi') ? CINEMATIC_VIDEOS['varanasi'] :
-    (districtKey.includes('agra') ? CINEMATIC_VIDEOS['agra'] :
-    (districtKey.includes('lucknow') ? CINEMATIC_VIDEOS['lucknow'] :
-    (districtKey.includes('mathura') ? CINEMATIC_VIDEOS['mathura'] :
-    (districtKey.includes('ayodhya') ? CINEMATIC_VIDEOS['ayodhya'] : null)))));
+  // STRICT 1-TO-1 EXPLICIT DISTRICT VIDEO MAPPING (Zero borrowing, zero loose substring matching)
+  const districtSlug = (d.id || d.name || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const videoConfig = CINEMATIC_VIDEOS[districtSlug] || null;
 
   if (videoConfig) {
     if (video) {
@@ -1180,14 +1187,19 @@ function renderDistrictData(d){
     clearTimeout(heroOverlayTimer);
     const heroContent = document.getElementById('heroContent') || document.querySelector('.hero-content');
     if (heroContent) heroContent.classList.remove('overlay-hidden');
-    if (video) video.pause();
+    if (video) {
+      video.pause();
+      video.removeAttribute('src');
+      video.removeAttribute('data-loaded-src');
+      if (videoSrcEl) videoSrcEl.removeAttribute('src');
+      video.load();
+    }
     if (videoWrap) videoWrap.style.display = 'none';
     if (soundBtn) soundBtn.style.display = 'none';
     if (heroEl) {
       heroEl.classList.remove('varanasi-cinematic-hero');
-      if (d.image) {
-        heroEl.style.backgroundImage = `linear-gradient(180deg, rgba(7,27,53,0.35) 0%, rgba(7,27,53,0.9) 100%), url('${d.image}')`;
-      }
+      const bgImg = d.image || d.img || 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=85';
+      heroEl.style.backgroundImage = `linear-gradient(180deg, rgba(7,27,53,0.35) 0%, rgba(7,27,53,0.9) 100%), url('${bgImg}')`;
     }
   }
   document.getElementById('districtTitle').textContent = d.name;
@@ -1343,6 +1355,7 @@ function getGenericDistrict(nameOrId){
   return {
     name: clean,
     heroSubtitle: `Historic District & Cultural Center in Uttar Pradesh`,
+    image: `https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=85`,
     about: `Welcome to ${clean}, an integral district of Uttar Pradesh celebrated for its rich local heritage, cultural traditions, handicraft industries, and regional cuisine. Explore its landmarks, local markets, and travel amenities.`,
     places: `${clean} District Center, Historic Temples & Shrines, Clock Tower & Heritage Market, Memorial Park & Riverside`,
     food: `Regional Bedhai-Aloo, Pure Desi Ghee Sweets, Famous Local Chaat, Fresh Thick Kulhad Lassi`,
@@ -1389,8 +1402,13 @@ function getGenericDistrict(nameOrId){
 // Read district name from web address: /district.html?id=[district-name] or /district?id=[district-name]
 function loadDistrictFromUrl(){
   let rawId = '';
-  // 1. Check standard query params (?id=lucknow or ?city=lucknow)
-  if (window.location.search) {
+  // 1. Check pathname (e.g. /district/agra or /district/varanasi)
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  if (pathParts.length >= 2 && pathParts[0] === 'district' && !pathParts[1].endsWith('.html')) {
+    rawId = decodeURIComponent(pathParts[1]);
+  }
+  // 2. Check standard query params (?id=lucknow or ?city=lucknow)
+  if (!rawId && window.location.search) {
     const urlParams = new URLSearchParams(window.location.search);
     rawId = urlParams.get('id') || urlParams.get('city') || urlParams.get('district') || urlParams.get('name') || '';
   }

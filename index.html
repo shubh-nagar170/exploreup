@@ -3196,8 +3196,8 @@ body.dark .district:hover{border-color:var(--gold);background:#162e4c}
     <div class="modalhero" id="modalHero">
       <!-- Varanasi & Agra Cinematic Video Wrap -->
       <div class="district-hero-video-wrap" id="modalHeroVideoWrap" style="display:none">
-        <video id="modalVaranasiHeroVideo" class="hero-video-bg" autoplay muted loop playsinline preload="auto">
-          <source id="modalHeroVideoSource" src="assets/varanasi/varanasi.mp4" type="video/mp4">
+        <video id="modalVaranasiHeroVideo" class="hero-video-bg" autoplay muted loop playsinline preload="none">
+          <source id="modalHeroVideoSource" src="" type="video/mp4">
         </video>
         <div class="hero-video-gradient"></div>
       </div>
@@ -5486,13 +5486,9 @@ function openCity(name, options = {}){
   const modalVideo = document.getElementById('modalVaranasiHeroVideo');
   const modalVideoSrcEl = document.getElementById('modalHeroVideoSource');
 
-  const cityKey = (c.name || '').toLowerCase().trim();
-  const videoConfig = (typeof CINEMATIC_VIDEOS !== 'undefined' ? CINEMATIC_VIDEOS[cityKey] : null) ||
-    (cityKey.includes('varanasi') ? { videoSrc: 'assets/varanasi/varanasi.mp4', storageKey: 'exploreup_varanasi_sound' } :
-    (cityKey.includes('agra') ? { videoSrc: 'assets/agra/agra.mp4', storageKey: 'exploreup_agra_sound' } :
-    (cityKey.includes('lucknow') ? { videoSrc: 'assets/lucknow/lucknow.mp4', storageKey: 'exploreup_lucknow_sound' } :
-    (cityKey.includes('mathura') ? { videoSrc: 'assets/mathura/mathura.mp4', storageKey: 'exploreup_mathura_sound' } :
-    (cityKey.includes('ayodhya') ? { videoSrc: 'assets/ayodhya/ayodhya.mp4', storageKey: 'exploreup_ayodhya_sound' } : null)))));
+  // STRICT 1-TO-1 EXPLICIT DISTRICT VIDEO MAPPING (Zero borrowing, zero loose substring matching)
+  const citySlug = (c.name || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const videoConfig = (typeof CINEMATIC_VIDEOS !== 'undefined' ? CINEMATIC_VIDEOS[citySlug] : null);
 
   if (videoConfig) {
     if (modalVideo) {
@@ -5520,7 +5516,13 @@ function openCity(name, options = {}){
     clearTimeout(modalHeroOverlayTimer);
     const mContent = document.getElementById('modalHeroContent');
     if (mContent) mContent.classList.remove('overlay-hidden');
-    if (modalVideo) modalVideo.pause();
+    if (modalVideo) {
+      modalVideo.pause();
+      modalVideo.removeAttribute('src');
+      modalVideo.removeAttribute('data-loaded-src');
+      if (modalVideoSrcEl) modalVideoSrcEl.removeAttribute('src');
+      modalVideo.load();
+    }
     if (modalVideoWrap) modalVideoWrap.style.display = 'none';
     if (modalSoundBtn) modalSoundBtn.style.display = 'none';
     if (modalHeroActions) modalHeroActions.style.display = 'none';
