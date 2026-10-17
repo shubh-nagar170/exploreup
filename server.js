@@ -1,8 +1,12 @@
 require('dotenv').config();
 const dns = require('dns');
-try {
-  dns.setServers(['1.1.1.1']);
-} catch (e) {}
+// Only configure custom DNS servers locally (to workaround ISP DNS SRV issues).
+// Never override DNS inside Vercel or AWS Lambda cloud serverless containers.
+if (!process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  try {
+    dns.setServers(['1.1.1.1', '8.8.8.8']);
+  } catch (e) {}
+}
 const express = require('express');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
@@ -94,16 +98,65 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
+// Robust MongoDB URI extractor supporting standard names, alternative casings, and stripping extraneous quotes/whitespace
+function getMongoUri() {
+  const candidates = [
+    'MONGODB_URI',
+    'MONGO_URI',
+    'MONGODB_URL',
+    'MONGO_URL',
+    'DATABASE_URL',
+    'DATABASE_URI',
+    'mongodb_uri',
+    'mongo_uri'
+  ];
+  for (const key of candidates) {
+    const val = process.env[key];
+    if (val && typeof val === 'string' && val.trim()) {
+      return val.trim().replace(/^["']|["']$/g, '').trim();
+    }
+  }
+
+  // Scan environment variables for any case/whitespace variant
+  for (const [k, v] of Object.entries(process.env)) {
+    const cleanK = k.trim().toUpperCase();
+    if (
+      cleanK === 'MONGODB_URI' ||
+      cleanK === 'MONGO_URI' ||
+      cleanK === 'MONGODB_URL' ||
+      cleanK === 'MONGO_URL' ||
+      cleanK === 'DATABASE_URL' ||
+      cleanK === 'DATABASE_URI'
+    ) {
+      if (v && typeof v === 'string' && v.trim()) {
+        return v.trim().replace(/^["']|["']$/g, '').trim();
+      }
+    }
+  }
+
+  // Fallback: search for any environment variable containing a MongoDB connection URI
+  for (const [k, v] of Object.entries(process.env)) {
+    if (v && typeof v === 'string') {
+      const trimmed = v.trim().replace(/^["']|["']$/g, '').trim();
+      if (trimmed.startsWith('mongodb://') || trimmed.startsWith('mongodb+srv://')) {
+        return trimmed;
+      }
+    }
+  }
+
+  return '';
+}
+
 let mongoConnectionPromise = null;
 async function connectMongoDB() {
-  const uri = (process.env.MONGODB_URI || process.env.MONGO_URI || '').trim();
+  const uri = getMongoUri();
   if (!uri) {
     throw new Error('MONGODB_URI environment variable is not configured.');
   }
   if (mongoose.connection.readyState === 1) {
     return mongoose.connection;
   }
-  if (!mongoConnectionPromise) {
+  if (!mongoConnectionPromise || mongoose.connection.readyState === 0) {
     mongoConnectionPromise = mongoose
       .connect(uri, {
         dbName: 'ExploreUP',
@@ -126,8 +179,8 @@ async function connectMongoDB() {
   return mongoConnectionPromise;
 }
 
-// Initiate MongoDB connection on startup if MONGODB_URI is present
-if ((process.env.MONGODB_URI || process.env.MONGO_URI || '').trim()) {
+// Initiate MongoDB connection on startup if connection URI is present
+if (getMongoUri()) {
   connectMongoDB().catch((err) => {
     console.warn('[ExploreUP MongoDB Startup Warning]:', err.message);
   });
@@ -1102,7 +1155,7 @@ getOpenAIClient();
 const EMAIL_FORMAT_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // POST /api/register (Create Account)
-app.post('/api/register', async (req, res) => {
+app.post(['/api/register', '/register'], async (req, res) => {
   try {
     const rawName = req.body.name !== undefined ? req.body.name : req.body.username;
     const rawEmail = req.body.email;
@@ -1181,7 +1234,7 @@ app.post('/api/register', async (req, res) => {
 });
 
 // POST /api/login
-app.post('/api/login', async (req, res) => {
+app.post(['/api/login', '/login'], async (req, res) => {
   try {
     const rawEmail = req.body.email || req.body.usernameOrEmail || req.body.username || '';
     const password = req.body.password || '';
@@ -1231,7 +1284,7 @@ app.post('/api/login', async (req, res) => {
 });
 
 // POST /api/logout
-app.post('/api/logout', (req, res) => {
+app.post(['/api/logout', '/logout'], (req, res) => {
   clearAuthenticatedSession(req, res);
   if (req.session) {
     req.session.destroy((err) => {
@@ -1246,7 +1299,7 @@ app.post('/api/logout', (req, res) => {
 });
 
 // GET /api/me
-app.get('/api/me', async (req, res) => {
+app.get(['/api/me', '/me'], async (req, res) => {
   try {
     const sessionUser = getAuthenticatedUser(req);
     if (!sessionUser || !sessionUser.email) {
@@ -1283,6 +1336,36 @@ app.get('/api/me', async (req, res) => {
   } catch (err) {
     return res.status(200).json({ user: null, userName: null, authenticated: false });
   }
+});
+
+// GET /api/health (Safe diagnostic endpoint: checks server and DB connection without exposing secrets)
+app.get(['/api/health', '/health'], async (req, res) => {
+  const uri = getMongoUri();
+  const isConfigured = Boolean(uri);
+  let dbConnected = mongoose.connection.readyState === 1;
+  let dbError = null;
+
+  if (isConfigured && !dbConnected) {
+    try {
+      await connectMongoDB();
+      dbConnected = mongoose.connection.readyState === 1;
+    } catch (err) {
+      dbError = err.message ? err.message.replace(/mongodb(\+srv)?:\/\/[^@]+@/gi, 'mongodb+srv://***:***@') : 'Connection error';
+    }
+  }
+
+  return res.status(200).json({
+    status: 'ok',
+    environment: process.env.VERCEL ? 'vercel' : (process.env.NODE_ENV || 'development'),
+    database: {
+      configured: isConfigured,
+      connected: dbConnected,
+      readyState: mongoose.connection.readyState,
+      dbName: dbConnected ? (mongoose.connection.name || 'ExploreUP') : undefined,
+      error: dbError || undefined
+    },
+    timestamp: new Date().toISOString()
+  });
 });
 
 // POST /api/chat/reset & /api/reset
