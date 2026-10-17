@@ -1,4 +1,8 @@
 require('dotenv').config();
+const dns = require('dns');
+try {
+  dns.setServers(['1.1.1.1']);
+} catch (e) {}
 const express = require('express');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
@@ -88,8 +92,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.index({ email: 1 }, { unique: true });
-
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 let mongoConnectionPromise = null;
@@ -104,7 +106,8 @@ async function connectMongoDB() {
   if (!mongoConnectionPromise) {
     mongoConnectionPromise = mongoose
       .connect(uri, {
-        serverSelectionTimeoutMS: 6000
+        dbName: 'ExploreUP',
+        serverSelectionTimeoutMS: 8000
       })
       .then(async (conn) => {
         try {
@@ -112,7 +115,7 @@ async function connectMongoDB() {
         } catch (idxErr) {
           console.warn('[MongoDB] Index initialization note:', idxErr.message);
         }
-        console.log('[ExploreUP] Connected to MongoDB (users collection ready).');
+        console.log(`[ExploreUP] Connected to MongoDB database "${conn.connection.name}" (users collection ready).`);
         return conn;
       })
       .catch((err) => {
