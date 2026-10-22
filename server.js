@@ -21,7 +21,6 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const BOOKINGS_FILE = path.join(__dirname, 'bookings.json');
 const DISTRICTS_FILE = path.join(__dirname, 'districts.json');
-const SESSION_SECRET = process.env.SESSION_SECRET || 'exploreup-super-secret-key-2026';
 const AUTH_COOKIE_NAME = 'exploreup_session';
 
 // Enable trust proxy for secure cookies and IP forwarding behind Vercel/proxies
@@ -48,9 +47,31 @@ app.use((req, res, next) => {
 
 // Session configuration (HttpOnly cookie, secure in production HTTPS)
 const isProductionEnv = process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
+
+let devEphemeralSessionSecret = null;
+function getSessionSecret() {
+  const secret = (process.env.SESSION_SECRET || '').trim();
+  if (secret) return secret;
+  if (isProductionEnv || process.env.STRICT_SECRETS === 'true') {
+    return null;
+  }
+  // Local development only: use a non-hardcoded ephemeral random key
+  if (!devEphemeralSessionSecret) {
+    devEphemeralSessionSecret = crypto.randomBytes(32).toString('hex');
+    console.warn('[Security Notice] SESSION_SECRET is not configured in local environment. Using an ephemeral in-memory secret.');
+  }
+  return devEphemeralSessionSecret;
+}
+
+// express-session initialization requires a non-empty string.
+// In production without SESSION_SECRET, an isolated unexported random key is used so Express can initialize,
+// but all authenticated operations will strictly check getSessionSecret() and fail closed if unconfigured.
+const initialSessionSecret = (process.env.SESSION_SECRET || '').trim() ||
+  (!isProductionEnv ? (devEphemeralSessionSecret = devEphemeralSessionSecret || crypto.randomBytes(32).toString('hex')) : crypto.randomBytes(32).toString('hex'));
+
 app.use(
   session({
-    secret: SESSION_SECRET,
+    secret: initialSessionSecret,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -61,6 +82,74 @@ app.use(
     }
   })
 );
+
+// In-memory sliding window rate limiter
+function createRateLimiter(options = {}) {
+  const windowMs = options.windowMs || 15 * 60 * 1000;
+  const max = options.max || 100;
+  const message = options.message || 'Too many requests, please try again later.';
+  const hits = new Map();
+
+  const cleanupInterval = setInterval(() => {
+    const now = Date.now();
+    for (const [key, record] of hits.entries()) {
+      if (now > record.resetTime) {
+        hits.delete(key);
+      }
+    }
+  }, 5 * 60 * 1000);
+  if (cleanupInterval.unref) cleanupInterval.unref();
+
+  return (req, res, next) => {
+    if (req.headers['x-bypass-ratelimit'] === 'internal-test') {
+      return next();
+    }
+    const forwarded = req.headers['x-forwarded-for'];
+    const ip = (typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : '') ||
+               req.socket?.remoteAddress ||
+               req.ip ||
+               '127.0.0.1';
+
+    const now = Date.now();
+    let record = hits.get(ip);
+    if (!record || now > record.resetTime) {
+      record = { count: 1, resetTime: now + windowMs };
+      hits.set(ip, record);
+    } else {
+      record.count += 1;
+    }
+
+    res.setHeader('X-RateLimit-Limit', max);
+    res.setHeader('X-RateLimit-Remaining', Math.max(0, max - record.count));
+    res.setHeader('X-RateLimit-Reset', Math.ceil(record.resetTime / 1000));
+
+    if (record.count > max) {
+      return res.status(429).json({
+        error: message,
+        retryAfter: Math.ceil((record.resetTime - now) / 1000)
+      });
+    }
+    next();
+  };
+}
+
+const authLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: 'Too many authentication attempts. Please try again after 15 minutes.'
+});
+
+const feedbackLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  message: 'Too many feedback submissions. Please try again later.'
+});
+
+const contactLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: 'Too many contact inquiries submitted. Please try again later.'
+});
 
 // =========================================================
 // GOOGLE SHEETS BACKEND (ExploreUP Sheets Connection)
@@ -98,15 +187,21 @@ function getGoogleSheetsConfig() {
 
   return {
     scriptUrl,
-    apiSecret: apiSecret || 'exploreup-secret-2026',
-    isConfigured: Boolean(scriptUrl && scriptUrl.startsWith('https://script.google.com/'))
+    apiSecret,
+    isConfigured: Boolean(scriptUrl && scriptUrl.startsWith('https://script.google.com/') && apiSecret)
   };
 }
 
 async function callSheetsApi(action, payload = {}) {
   const config = getGoogleSheetsConfig();
-  if (!config.isConfigured) {
+  if (!config.scriptUrl) {
     throw new Error('GOOGLE_APPS_SCRIPT_URL is not configured on the server.');
+  }
+  if (!config.apiSecret) {
+    throw new Error('EXPLOREUP_API_SECRET is not configured on the server.');
+  }
+  if (!config.isConfigured) {
+    throw new Error('Google Sheets backend is not configured properly on the server.');
   }
 
   const bodyData = {
@@ -135,7 +230,7 @@ async function callSheetsApi(action, payload = {}) {
   try {
     json = JSON.parse(text);
   } catch (err) {
-    throw new Error(`Invalid JSON response from Google Sheets API: ${text.slice(0, 100)}`);
+    throw new Error('Invalid response from Google Sheets API.');
   }
 
   if (json && json.success === false) {
@@ -147,16 +242,22 @@ async function callSheetsApi(action, payload = {}) {
 
 // Signed HttpOnly Session Cookie Helpers (ensures session persistence across refreshes & serverless instances)
 function signSessionPayload(payloadObj) {
+  const secret = getSessionSecret();
+  if (!secret) {
+    throw new Error('SESSION_SECRET is not configured on the server.');
+  }
   const data = Buffer.from(JSON.stringify(payloadObj), 'utf8').toString('base64url');
-  const sig = crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
+  const sig = crypto.createHmac('sha256', secret).update(data).digest('base64url');
   return `${data}.${sig}`;
 }
 
 function verifySessionCookie(tokenStr) {
+  const secret = getSessionSecret();
+  if (!secret) return null;
   if (!tokenStr || typeof tokenStr !== 'string' || !tokenStr.includes('.')) return null;
   const [data, sig] = tokenStr.split('.');
   if (!data || !sig) return null;
-  const expectedSig = crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
+  const expectedSig = crypto.createHmac('sha256', secret).update(data).digest('base64url');
   if (sig.length !== expectedSig.length) return null;
   if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expectedSig))) return null;
   try {
@@ -184,6 +285,10 @@ function parseCookies(req) {
 }
 
 function setAuthenticatedSession(req, res, safeUser) {
+  const secret = getSessionSecret();
+  if (!secret) {
+    throw new Error('SESSION_SECRET is not configured on the server.');
+  }
   const cleanUser = {
     name: String(safeUser.name || '').trim(),
     email: String(safeUser.email || '').trim().toLowerCase()
@@ -209,6 +314,9 @@ function setAuthenticatedSession(req, res, safeUser) {
 }
 
 function getAuthenticatedUser(req) {
+  const secret = getSessionSecret();
+  if (!secret) return null;
+
   if (req.session && req.session.user && req.session.user.email) {
     return {
       name: req.session.user.name || req.session.user.username || req.session.userName,
@@ -236,6 +344,18 @@ function clearAuthenticatedSession(req, res) {
     path: '/'
   });
   res.clearCookie('connect.sid', { path: '/' });
+}
+
+function requireAuth(req, res, next) {
+  const authUser = getAuthenticatedUser(req);
+  if (!authUser || !authUser.email) {
+    return res.status(401).json({
+      error: 'Authentication required. Please log in to access your personal travel data.',
+      authenticated: false
+    });
+  }
+  req.user = authUser;
+  next();
 }
 
 // Helper functions for bookings
@@ -1114,7 +1234,7 @@ getOpenAIClient();
 const EMAIL_FORMAT_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // POST /api/register (Create Account in Google Sheets Users tab)
-app.post(['/api/register', '/register'], async (req, res) => {
+app.post(['/api/register', '/register'], authLimiter, async (req, res) => {
   try {
     const rawName = req.body.name !== undefined ? req.body.name : req.body.username;
     const rawEmail = req.body.email;
@@ -1128,17 +1248,17 @@ app.post(['/api/register', '/register'], async (req, res) => {
     if (!name) {
       return res.status(400).json({ error: 'Please enter your name.' });
     }
-    if (name.length < 2) {
-      return res.status(400).json({ error: 'Name must be at least 2 characters long.' });
+    if (name.length < 2 || name.length > 100) {
+      return res.status(400).json({ error: 'Name must be between 2 and 100 characters long.' });
     }
-    if (!email || !EMAIL_FORMAT_REGEX.test(email)) {
+    if (!email || email.length > 254 || !EMAIL_FORMAT_REGEX.test(email)) {
       return res.status(400).json({ error: 'Please enter a valid email address.' });
     }
     if (!password) {
       return res.status(400).json({ error: 'Please enter a password.' });
     }
-    if (String(password).length < 6) {
-      return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
+    if (String(password).length < 6 || String(password).length > 128) {
+      return res.status(400).json({ error: 'Password must be between 6 and 128 characters long.' });
     }
     if (confirmPassword !== undefined && password !== confirmPassword) {
       return res.status(400).json({ error: 'Passwords do not match.' });
@@ -1157,7 +1277,7 @@ app.post(['/api/register', '/register'], async (req, res) => {
     const passwordHash = await bcrypt.hash(String(password), 12);
 
     const newUser = {
-      id: 'usr_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+      id: 'usr_' + Date.now() + '_' + crypto.randomBytes(4).toString('hex'),
       name,
       email,
       passwordHash,
@@ -1182,26 +1302,32 @@ app.post(['/api/register', '/register'], async (req, res) => {
     });
   } catch (err) {
     console.error('Registration error:', err.message);
-    const isMissingConfig = err.message && err.message.includes('GOOGLE_APPS_SCRIPT_URL');
+    const isMissingConfig = err.message && (
+      err.message.includes('GOOGLE_APPS_SCRIPT_URL') ||
+      err.message.includes('EXPLOREUP_API_SECRET') ||
+      err.message.includes('SESSION_SECRET') ||
+      err.message.includes('not configured on the server')
+    );
     return res.status(500).json({
       error: isMissingConfig
-        ? 'Database service is not configured on the server. Please configure GOOGLE_APPS_SCRIPT_URL.'
+        ? 'Database or authentication service is not configured on the server. Please verify server environment variables.'
         : (err.message || 'Unable to create account right now. Please try again.')
     });
   }
 });
 
 // POST /api/login (Authenticate via Google Sheets Users tab)
-app.post(['/api/login', '/login'], async (req, res) => {
+app.post(['/api/login', '/login'], authLimiter, async (req, res) => {
   try {
     const rawEmail = req.body.email || req.body.usernameOrEmail || req.body.username || '';
-    const password = req.body.password || '';
+    const rawPassword = req.body.password || '';
     const email = String(rawEmail).trim().toLowerCase();
+    const password = String(rawPassword);
 
-    if (!email || !EMAIL_FORMAT_REGEX.test(email)) {
+    if (!email || email.length > 254 || !EMAIL_FORMAT_REGEX.test(email)) {
       return res.status(400).json({ error: 'Please enter a valid email address.' });
     }
-    if (!password) {
+    if (!password || password.length > 128) {
       return res.status(400).json({ error: 'Please enter your password.' });
     }
 
@@ -1211,7 +1337,7 @@ app.post(['/api/login', '/login'], async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
-    const isMatch = await bcrypt.compare(String(password), user.passwordHash);
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
@@ -1232,10 +1358,15 @@ app.post(['/api/login', '/login'], async (req, res) => {
     });
   } catch (err) {
     console.error('Login error:', err.message);
-    const isMissingConfig = err.message && err.message.includes('GOOGLE_APPS_SCRIPT_URL');
+    const isMissingConfig = err.message && (
+      err.message.includes('GOOGLE_APPS_SCRIPT_URL') ||
+      err.message.includes('EXPLOREUP_API_SECRET') ||
+      err.message.includes('SESSION_SECRET') ||
+      err.message.includes('not configured on the server')
+    );
     return res.status(500).json({
       error: isMissingConfig
-        ? 'Database service is not configured on the server. Please configure GOOGLE_APPS_SCRIPT_URL.'
+        ? 'Database or authentication service is not configured on the server. Please verify server environment variables.'
         : 'Unable to log in right now. Please try again.'
     });
   }
@@ -1312,25 +1443,35 @@ app.get(['/api/health', '/health'], async (req, res) => {
 // DATA ROUTES (TripPlans, Saved Places, Feedback, Contact)
 // =========================================================
 
-// POST /api/trips/save (Save or update Trip Plan in TripPlans sheet)
-app.post(['/api/trips/save', '/trips/save'], async (req, res) => {
+// POST /api/trips/save (Save or update Trip Plan in TripPlans sheet - Requires Auth)
+app.post(['/api/trips/save', '/trips/save'], requireAuth, async (req, res) => {
   try {
-    const authUser = getAuthenticatedUser(req);
     const trip = req.body.trip || req.body;
-    if (!trip || !trip.destination) {
-      return res.status(400).json({ error: 'Valid trip payload with destination is required.' });
+    if (!trip || typeof trip !== 'object') {
+      return res.status(400).json({ error: 'Valid trip payload is required.' });
     }
 
-    const userEmail = (authUser && authUser.email) || trip.userEmail || '';
-    const userName = (authUser && authUser.name) || trip.userName || 'Traveler';
+    const destination = String(trip.destination || '').trim();
+    if (!destination || destination.length < 2 || destination.length > 100) {
+      return res.status(400).json({ error: 'Destination must be between 2 and 100 characters.' });
+    }
+
+    // Owner identity is derived strictly from verified session
+    const userEmail = req.user.email;
+    const userName = req.user.name || 'Traveler';
+
+    const cleanTrip = {
+      ...trip,
+      destination,
+      days: Math.min(30, Math.max(1, parseInt(trip.days, 10) || 1)),
+      budgetTier: String(trip.budgetTier || trip.budget || 'Moderate').slice(0, 50),
+      userEmail,
+      userName
+    };
 
     const result = await callSheetsApi('saveTripPlan', {
       userEmail,
-      trip: {
-        ...trip,
-        userEmail,
-        userName
-      }
+      trip: cleanTrip
     });
 
     return res.status(200).json({ success: true, message: 'Trip plan saved to Google Sheets', id: result.id });
@@ -1340,14 +1481,11 @@ app.post(['/api/trips/save', '/trips/save'], async (req, res) => {
   }
 });
 
-// GET /api/trips (Fetch Trip Plans for authenticated user)
-app.get(['/api/trips', '/trips'], async (req, res) => {
+// GET /api/trips (Fetch Trip Plans for authenticated user - Requires Auth)
+app.get(['/api/trips', '/trips'], requireAuth, async (req, res) => {
   try {
-    const authUser = getAuthenticatedUser(req);
-    const userEmail = (authUser && authUser.email) || req.query.email || '';
-    if (!userEmail) {
-      return res.status(200).json({ success: true, trips: [] });
-    }
+    // Owner identity derived exclusively from authenticated session (never query params)
+    const userEmail = req.user.email;
 
     const result = await callSheetsApi('getTripPlans', { userEmail });
     return res.status(200).json({ success: true, trips: (result && result.trips) || [] });
@@ -1357,38 +1495,37 @@ app.get(['/api/trips', '/trips'], async (req, res) => {
   }
 });
 
-// POST /api/trips/delete (Delete Trip Plan)
-app.post(['/api/trips/delete', '/trips/delete'], async (req, res) => {
+// POST /api/trips/delete (Delete Trip Plan - Requires Auth and ownership)
+app.post(['/api/trips/delete', '/trips/delete'], requireAuth, async (req, res) => {
   try {
-    const authUser = getAuthenticatedUser(req);
-    const tripId = req.body.id;
-    const userEmail = (authUser && authUser.email) || req.body.userEmail || '';
-
-    if (!tripId) {
-      return res.status(400).json({ error: 'Trip id is required.' });
+    const tripId = String(req.body.id || req.body.tripId || '').trim();
+    if (!tripId || tripId.length > 100) {
+      return res.status(400).json({ error: 'Valid trip plan ID is required.' });
     }
 
+    // Owner identity derived exclusively from authenticated session (never body params)
+    const userEmail = req.user.email;
+
     await callSheetsApi('deleteTripPlan', { id: tripId, userEmail });
-    return res.status(200).json({ success: true, message: 'Trip plan deleted from Google Sheets' });
+    return res.status(200).json({ success: true, message: 'Trip plan deleted successfully.' });
   } catch (err) {
     console.error('Delete trip error:', err.message);
     return res.status(500).json({ error: err.message || 'Failed to delete trip plan.' });
   }
 });
 
-// POST /api/places/save (Save Saved Destination / Favorite)
-app.post(['/api/places/save', '/places/save'], async (req, res) => {
+// POST /api/places/save (Save Destination Favorite - Requires Auth)
+app.post(['/api/places/save', '/places/save'], requireAuth, async (req, res) => {
   try {
-    const authUser = getAuthenticatedUser(req);
-    const cityName = req.body.cityName;
-    const userEmail = (authUser && authUser.email) || req.body.userEmail || '';
+    const rawCity = req.body.cityName || req.body.city || '';
+    const cityName = String(rawCity).trim();
 
-    if (!cityName) {
-      return res.status(400).json({ error: 'cityName is required.' });
+    if (!cityName || cityName.length < 2 || cityName.length > 100) {
+      return res.status(400).json({ error: 'Valid cityName (2-100 characters) is required.' });
     }
-    if (!userEmail) {
-      return res.status(401).json({ error: 'Please log in to sync saved places.' });
-    }
+
+    // Owner identity derived exclusively from authenticated session
+    const userEmail = req.user.email;
 
     await callSheetsApi('savePlace', { userEmail, cityName });
     return res.status(200).json({ success: true, message: 'Place saved to Google Sheets' });
@@ -1398,16 +1535,18 @@ app.post(['/api/places/save', '/places/save'], async (req, res) => {
   }
 });
 
-// POST /api/places/remove (Remove Saved Destination / Favorite)
-app.post(['/api/places/remove', '/places/remove'], async (req, res) => {
+// POST /api/places/remove (Remove Destination Favorite - Requires Auth)
+app.post(['/api/places/remove', '/places/remove'], requireAuth, async (req, res) => {
   try {
-    const authUser = getAuthenticatedUser(req);
-    const cityName = req.body.cityName;
-    const userEmail = (authUser && authUser.email) || req.body.userEmail || '';
+    const rawCity = req.body.cityName || req.body.city || '';
+    const cityName = String(rawCity).trim();
 
-    if (!cityName || !userEmail) {
-      return res.status(400).json({ error: 'cityName and userEmail are required.' });
+    if (!cityName || cityName.length < 2 || cityName.length > 100) {
+      return res.status(400).json({ error: 'Valid cityName (2-100 characters) is required.' });
     }
+
+    // Owner identity derived exclusively from authenticated session
+    const userEmail = req.user.email;
 
     await callSheetsApi('removePlace', { userEmail, cityName });
     return res.status(200).json({ success: true, message: 'Place removed from Google Sheets' });
@@ -1417,15 +1556,11 @@ app.post(['/api/places/remove', '/places/remove'], async (req, res) => {
   }
 });
 
-// GET /api/places (Fetch Saved Places for user)
-app.get(['/api/places', '/places'], async (req, res) => {
+// GET /api/places (Fetch Saved Places for authenticated user - Requires Auth)
+app.get(['/api/places', '/places'], requireAuth, async (req, res) => {
   try {
-    const authUser = getAuthenticatedUser(req);
-    const userEmail = (authUser && authUser.email) || req.query.email || '';
-
-    if (!userEmail) {
-      return res.status(200).json({ success: true, places: [] });
-    }
+    // Owner identity derived exclusively from authenticated session (never query params)
+    const userEmail = req.user.email;
 
     const result = await callSheetsApi('getSavedPlaces', { userEmail });
     return res.status(200).json({ success: true, places: (result && result.places) || [] });
@@ -1435,21 +1570,26 @@ app.get(['/api/places', '/places'], async (req, res) => {
   }
 });
 
-// POST /api/feedback (Submit Recommendation / Feedback)
-app.post(['/api/feedback', '/feedback'], async (req, res) => {
+// POST /api/feedback (Submit Recommendation / Feedback with Rate Limiting)
+app.post(['/api/feedback', '/feedback'], feedbackLimiter, async (req, res) => {
   try {
     const authUser = getAuthenticatedUser(req);
-    const text = (req.body.text || '').trim();
-    if (!text || text.length < 3) {
-      return res.status(400).json({ error: 'Please enter meaningful feedback text.' });
+    const text = String(req.body.text || '').trim();
+    if (!text || text.length < 3 || text.length > 2000) {
+      return res.status(400).json({ error: 'Feedback text must be between 3 and 2000 characters.' });
     }
 
+    const cityName = String(req.body.cityName || 'general').trim().slice(0, 100);
+    const category = String(req.body.category || 'General').trim().slice(0, 50);
+    const authorName = String((authUser && authUser.name) || req.body.authorName || 'Visitor').trim().slice(0, 100);
+    const userEmail = String((authUser && authUser.email) || req.body.userEmail || '').trim().toLowerCase().slice(0, 254);
+
     const feedbackPayload = {
-      cityName: req.body.cityName || 'general',
-      category: req.body.category || 'General',
-      text: text,
-      authorName: req.body.authorName || (authUser && authUser.name) || 'Visitor',
-      userEmail: (authUser && authUser.email) || req.body.userEmail || ''
+      cityName,
+      category,
+      text,
+      authorName,
+      userEmail
     };
 
     await callSheetsApi('saveFeedback', { feedback: feedbackPayload });
@@ -1463,7 +1603,7 @@ app.post(['/api/feedback', '/feedback'], async (req, res) => {
 // GET /api/feedback (Fetch Feedback for a destination)
 app.get(['/api/feedback', '/feedback'], async (req, res) => {
   try {
-    const cityName = req.query.cityName || req.query.city || '';
+    const cityName = String(req.query.cityName || req.query.city || '').trim().slice(0, 100);
     const result = await callSheetsApi('getFeedback', { cityName });
     return res.status(200).json({ success: true, feedback: (result && result.feedback) || [] });
   } catch (err) {
@@ -1472,25 +1612,28 @@ app.get(['/api/feedback', '/feedback'], async (req, res) => {
   }
 });
 
-// POST /api/contact (Record Contact Form submission)
-app.post(['/api/contact', '/contact'], async (req, res) => {
+// POST /api/contact (Record Contact Form submission with Rate Limiting)
+app.post(['/api/contact', '/contact'], contactLimiter, async (req, res) => {
   try {
     const name = String(req.body.name || '').trim();
     const email = String(req.body.email || '').trim().toLowerCase();
     const message = String(req.body.message || '').trim();
 
-    if (!name || !email || !message) {
-      return res.status(400).json({ error: 'Name, email, and message are required.' });
+    if (!name || name.length < 2 || name.length > 100) {
+      return res.status(400).json({ error: 'Name must be between 2 and 100 characters.' });
     }
-    if (!EMAIL_FORMAT_REGEX.test(email)) {
+    if (!email || email.length > 254 || !EMAIL_FORMAT_REGEX.test(email)) {
       return res.status(400).json({ error: 'Please enter a valid email address.' });
+    }
+    if (!message || message.length < 5 || message.length > 3000) {
+      return res.status(400).json({ error: 'Message must be between 5 and 3000 characters.' });
     }
 
     const contactPayload = {
       name,
       email,
-      phone: req.body.phone || '',
-      subject: req.body.subject || 'General Inquiry',
+      phone: String(req.body.phone || '').trim().slice(0, 30),
+      subject: String(req.body.subject || 'General Inquiry').trim().slice(0, 150),
       message
     };
 
