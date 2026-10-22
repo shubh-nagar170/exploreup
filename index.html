@@ -7769,6 +7769,16 @@ function saveCurrentItinerary() {
   if (countEl) countEl.textContent = String(list.length);
   showAtpAlert('Itinerary saved successfully.', 'success');
   renderAtpOutput();
+
+  // Asynchronously sync to Google Sheets backend
+  try {
+    fetch('/api/trips/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ trip: plan })
+    }).catch(err => console.debug('Trip cloud sync note:', err));
+  } catch (e) {}
 }
 
 function openSavedItinerary(id) {
@@ -7806,6 +7816,16 @@ function deleteSavedItinerary(id) {
   if (countEl) countEl.textContent = String(list.length);
   showAtpAlert('Saved itinerary deleted.', 'warn');
   renderAtpOutput();
+
+  // Asynchronously delete from Google Sheets backend
+  try {
+    fetch('/api/trips/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ id })
+    }).catch(err => console.debug('Trip cloud delete note:', err));
+  } catch (e) {}
 }
 
 function downloadOrPrintItineraryPdf() {
@@ -8089,6 +8109,42 @@ function toggleAuthPassword(inputId, btnEl) {
   }
 }
 
+async function syncUserDataFromCloud() {
+  if (!currentAppUser || !currentAppUser.email) return;
+  try {
+    // 1. Sync saved places from Google Sheets
+    const placesRes = await fetch('/api/places', { credentials: 'include' });
+    if (placesRes.ok) {
+      const placesData = await placesRes.json();
+      if (placesData && Array.isArray(placesData.places)) {
+        placesData.places.forEach(p => {
+          if (p && !favs.includes(p)) favs.push(p);
+        });
+        exploreStorage.set('exploreup_favs', JSON.stringify(favs));
+        updateFavs();
+      }
+    }
+    // 2. Sync saved itineraries from Google Sheets
+    const tripsRes = await fetch('/api/trips', { credentials: 'include' });
+    if (tripsRes.ok) {
+      const tripsData = await tripsRes.json();
+      if (tripsData && Array.isArray(tripsData.trips) && tripsData.trips.length > 0) {
+        const localTrips = getSavedItinerariesList();
+        tripsData.trips.forEach(cloudTrip => {
+          if (cloudTrip && cloudTrip.id && !localTrips.some(x => x.id === cloudTrip.id)) {
+            localTrips.unshift(cloudTrip);
+          }
+        });
+        exploreStorage.set(ATP_STORAGE_KEY, JSON.stringify(localTrips.slice(0, 25)));
+        const countEl = document.getElementById('atpSavedCount');
+        if (countEl) countEl.textContent = String(localTrips.length);
+      }
+    }
+  } catch (err) {
+    console.debug('Cloud data sync note:', err);
+  }
+}
+
 async function checkAuthState() {
   try {
     const res = await fetch('/api/me', { credentials: 'include' });
@@ -8099,6 +8155,7 @@ async function checkAuthState() {
           name: data.user.name || data.user.username || data.userName || 'Traveler',
           email: data.user.email || ''
         };
+        syncUserDataFromCloud();
       } else {
         currentAppUser = null;
       }
@@ -8672,19 +8729,46 @@ function toggleSave(btn, name){
     favs.push(name);
     btn.classList.add('saved');
     btn.textContent = '♥';
+    try {
+      fetch('/api/places/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ cityName: name })
+      }).catch(err => console.debug('Place cloud save note:', err));
+    } catch (e) {}
   } else {
     favs.splice(idx, 1);
     btn.classList.remove('saved');
     btn.textContent = '♡';
+    try {
+      fetch('/api/places/remove', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ cityName: name })
+      }).catch(err => console.debug('Place cloud remove note:', err));
+    } catch (e) {}
   }
   exploreStorage.set('exploreup_favs', JSON.stringify(favs));
   updateFavs();
 }
 
 function removeFav(i){
+  const removedName = favs[i];
   favs.splice(i, 1);
   exploreStorage.set('exploreup_favs', JSON.stringify(favs));
   updateFavs();
+  if (removedName) {
+    try {
+      fetch('/api/places/remove', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ cityName: removedName })
+      }).catch(err => console.debug('Place cloud remove note:', err));
+    } catch (e) {}
+  }
   document.querySelectorAll('.save').forEach(b => {
     const match = b.getAttribute('onclick')?.match(/'([^']+)'/);
     if(match && !favs.includes(match[1])){
@@ -8760,6 +8844,21 @@ function submitSuggestion(e){
   const items = JSON.parse(exploreStorage.get(key, '[]'));
   items.push({ name: name || 'Visitor', cat, text, date: new Date().toLocaleDateString() });
   exploreStorage.set(key, JSON.stringify(items));
+
+  // Sync to Google Sheets Feedback tab
+  try {
+    fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        cityName: currentExploreCity || 'general',
+        category: cat,
+        text: text,
+        authorName: name || 'Visitor'
+      })
+    }).catch(err => console.debug('Feedback cloud save note:', err));
+  } catch (e) {}
 
   document.getElementById('suggestionForm').reset();
   status.textContent = '✓ Thank you! Your recommendation has been saved.';

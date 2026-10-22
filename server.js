@@ -10,7 +10,6 @@ if (!process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
 const express = require('express');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
-const mongoose = require('mongoose');
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
@@ -64,126 +63,86 @@ app.use(
 );
 
 // =========================================================
-// MONGODB CONNECTION & USER MODEL (users collection)
+// GOOGLE SHEETS BACKEND (ExploreUP Sheets Connection)
 // =========================================================
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-      index: true
-    },
-    passwordHash: {
-      type: String,
-      required: true
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now
-    }
-  },
-  {
-    collection: 'users',
-    versionKey: false
-  }
-);
-
-const User = mongoose.models.User || mongoose.model('User', userSchema);
-
-// Robust MongoDB URI extractor supporting standard names, alternative casings, and stripping extraneous quotes/whitespace
-function getMongoUri() {
-  const candidates = [
-    'MONGODB_URI',
-    'MONGO_URI',
-    'MONGODB_URL',
-    'MONGO_URL',
-    'DATABASE_URL',
-    'DATABASE_URI',
-    'mongodb_uri',
-    'mongo_uri'
+function getGoogleSheetsConfig() {
+  const urlCandidates = [
+    'GOOGLE_APPS_SCRIPT_URL',
+    'APPS_SCRIPT_URL',
+    'SHEETS_API_URL',
+    'GOOGLE_SHEET_URL',
+    'GOOGLE_SCRIPT_URL',
+    'EXPLOREUP_SHEETS_URL'
   ];
-  for (const key of candidates) {
-    const val = process.env[key];
-    if (val && typeof val === 'string' && val.trim()) {
-      return val.trim().replace(/^["']|["']$/g, '').trim();
+  let scriptUrl = '';
+  for (const k of urlCandidates) {
+    if (process.env[k] && process.env[k].trim()) {
+      scriptUrl = process.env[k].trim().replace(/^["']|["']$/g, '').trim();
+      break;
     }
   }
 
-  // Scan environment variables for any case/whitespace variant
-  for (const [k, v] of Object.entries(process.env)) {
-    const cleanK = k.trim().toUpperCase();
-    if (
-      cleanK === 'MONGODB_URI' ||
-      cleanK === 'MONGO_URI' ||
-      cleanK === 'MONGODB_URL' ||
-      cleanK === 'MONGO_URL' ||
-      cleanK === 'DATABASE_URL' ||
-      cleanK === 'DATABASE_URI'
-    ) {
-      if (v && typeof v === 'string' && v.trim()) {
-        return v.trim().replace(/^["']|["']$/g, '').trim();
-      }
+  const secretCandidates = [
+    'EXPLOREUP_API_SECRET',
+    'SHEETS_API_SECRET',
+    'API_SECRET',
+    'GOOGLE_SHEETS_SECRET'
+  ];
+  let apiSecret = '';
+  for (const k of secretCandidates) {
+    if (process.env[k] && process.env[k].trim()) {
+      apiSecret = process.env[k].trim().replace(/^["']|["']$/g, '').trim();
+      break;
     }
   }
 
-  // Fallback: search for any environment variable containing a MongoDB connection URI
-  for (const [k, v] of Object.entries(process.env)) {
-    if (v && typeof v === 'string') {
-      const trimmed = v.trim().replace(/^["']|["']$/g, '').trim();
-      if (trimmed.startsWith('mongodb://') || trimmed.startsWith('mongodb+srv://')) {
-        return trimmed;
-      }
-    }
-  }
-
-  return '';
+  return {
+    scriptUrl,
+    apiSecret: apiSecret || 'exploreup-secret-2026',
+    isConfigured: Boolean(scriptUrl && scriptUrl.startsWith('https://script.google.com/'))
+  };
 }
 
-let mongoConnectionPromise = null;
-async function connectMongoDB() {
-  const uri = getMongoUri();
-  if (!uri) {
-    throw new Error('MONGODB_URI environment variable is not configured.');
+async function callSheetsApi(action, payload = {}) {
+  const config = getGoogleSheetsConfig();
+  if (!config.isConfigured) {
+    throw new Error('GOOGLE_APPS_SCRIPT_URL is not configured on the server.');
   }
-  if (mongoose.connection.readyState === 1) {
-    return mongoose.connection;
-  }
-  if (!mongoConnectionPromise || mongoose.connection.readyState === 0) {
-    mongoConnectionPromise = mongoose
-      .connect(uri, {
-        dbName: 'ExploreUP',
-        serverSelectionTimeoutMS: 8000
-      })
-      .then(async (conn) => {
-        try {
-          await User.init(); // Ensure unique email index is built
-        } catch (idxErr) {
-          console.warn('[MongoDB] Index initialization note:', idxErr.message);
-        }
-        console.log(`[ExploreUP] Connected to MongoDB database "${conn.connection.name}" (users collection ready).`);
-        return conn;
-      })
-      .catch((err) => {
-        mongoConnectionPromise = null;
-        throw err;
-      });
-  }
-  return mongoConnectionPromise;
-}
 
-// Initiate MongoDB connection on startup if connection URI is present
-if (getMongoUri()) {
-  connectMongoDB().catch((err) => {
-    console.warn('[ExploreUP MongoDB Startup Warning]:', err.message);
+  const bodyData = {
+    secret: config.apiSecret,
+    action,
+    ...payload
+  };
+
+  const response = await fetch(config.scriptUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(bodyData),
+    redirect: 'follow',
+    signal: AbortSignal.timeout(12000)
   });
+
+  if (!response.ok && response.status !== 302) {
+    throw new Error(`Google Sheets API responded with status ${response.status}`);
+  }
+
+  const text = await response.text();
+  let json;
+  try {
+    json = JSON.parse(text);
+  } catch (err) {
+    throw new Error(`Invalid JSON response from Google Sheets API: ${text.slice(0, 100)}`);
+  }
+
+  if (json && json.success === false) {
+    throw new Error(json.error || 'Google Sheets operation failed.');
+  }
+
+  return json;
 }
 
 // Signed HttpOnly Session Cookie Helpers (ensures session persistence across refreshes & serverless instances)
@@ -1149,12 +1108,12 @@ function getOpenAIClient() {
 getOpenAIClient();
 
 // =========================================================
-// AUTHENTICATION ROUTES (MongoDB users collection)
+// GOOGLE SHEETS AUTHENTICATION & DATA ROUTES
 // =========================================================
 
 const EMAIL_FORMAT_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// POST /api/register (Create Account)
+// POST /api/register (Create Account in Google Sheets Users tab)
 app.post(['/api/register', '/register'], async (req, res) => {
   try {
     const rawName = req.body.name !== undefined ? req.body.name : req.body.username;
@@ -1188,27 +1147,28 @@ app.post(['/api/register', '/register'], async (req, res) => {
       return res.status(400).json({ error: 'Please agree to the Terms & Conditions.' });
     }
 
-    await connectMongoDB();
-
-    // Check if email already exists in MongoDB users collection
-    const existingUser = await User.findOne({ email }).lean();
-    if (existingUser) {
+    // Check if user already exists in Google Sheets Users tab
+    const existing = await callSheetsApi('findUserByEmail', { email });
+    if (existing && existing.user) {
       return res.status(409).json({ error: 'This email is already registered.' });
     }
 
     // Hash password securely using bcryptjs (never store plain-text password)
     const passwordHash = await bcrypt.hash(String(password), 12);
 
-    const createdUser = await User.create({
+    const newUser = {
+      id: 'usr_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
       name,
       email,
       passwordHash,
-      createdAt: new Date()
-    });
+      createdAt: new Date().toISOString()
+    };
+
+    await callSheetsApi('registerUser', { user: newUser });
 
     const safeUser = setAuthenticatedSession(req, res, {
-      name: createdUser.name,
-      email: createdUser.email
+      name: newUser.name,
+      email: newUser.email
     });
 
     return res.status(201).json({
@@ -1221,19 +1181,17 @@ app.post(['/api/register', '/register'], async (req, res) => {
       }
     });
   } catch (err) {
-    if (err && err.code === 11000) {
-      return res.status(409).json({ error: 'This email is already registered.' });
-    }
     console.error('Registration error:', err.message);
+    const isMissingConfig = err.message && err.message.includes('GOOGLE_APPS_SCRIPT_URL');
     return res.status(500).json({
-      error: err.message && err.message.includes('MONGODB_URI')
-        ? 'Database connection is not configured on the server.'
-        : 'Unable to create account right now. Please try again.'
+      error: isMissingConfig
+        ? 'Database service is not configured on the server. Please configure GOOGLE_APPS_SCRIPT_URL.'
+        : (err.message || 'Unable to create account right now. Please try again.')
     });
   }
 });
 
-// POST /api/login
+// POST /api/login (Authenticate via Google Sheets Users tab)
 app.post(['/api/login', '/login'], async (req, res) => {
   try {
     const rawEmail = req.body.email || req.body.usernameOrEmail || req.body.username || '';
@@ -1247,9 +1205,8 @@ app.post(['/api/login', '/login'], async (req, res) => {
       return res.status(400).json({ error: 'Please enter your password.' });
     }
 
-    await connectMongoDB();
-
-    const user = await User.findOne({ email }).lean();
+    const result = await callSheetsApi('findUserByEmail', { email });
+    const user = result ? result.user : null;
     if (!user || !user.passwordHash) {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
@@ -1275,9 +1232,10 @@ app.post(['/api/login', '/login'], async (req, res) => {
     });
   } catch (err) {
     console.error('Login error:', err.message);
+    const isMissingConfig = err.message && err.message.includes('GOOGLE_APPS_SCRIPT_URL');
     return res.status(500).json({
-      error: err.message && err.message.includes('MONGODB_URI')
-        ? 'Database connection is not configured on the server.'
+      error: isMissingConfig
+        ? 'Database service is not configured on the server. Please configure GOOGLE_APPS_SCRIPT_URL.'
         : 'Unable to log in right now. Please try again.'
     });
   }
@@ -1298,7 +1256,7 @@ app.post(['/api/logout', '/logout'], (req, res) => {
   }
 });
 
-// GET /api/me
+// GET /api/me (Session check)
 app.get(['/api/me', '/me'], async (req, res) => {
   try {
     const sessionUser = getAuthenticatedUser(req);
@@ -1306,66 +1264,242 @@ app.get(['/api/me', '/me'], async (req, res) => {
       return res.status(200).json({ user: null, userName: null, authenticated: false });
     }
 
-    // Verify account still exists in MongoDB if connected
-    try {
-      await connectMongoDB();
-      const dbUser = await User.findOne({ email: sessionUser.email }).select('name email -_id').lean();
-      if (!dbUser) {
-        clearAuthenticatedSession(req, res);
-        return res.status(200).json({ user: null, userName: null, authenticated: false });
+    return res.status(200).json({
+      authenticated: true,
+      userName: sessionUser.name,
+      user: {
+        name: sessionUser.name,
+        email: sessionUser.email
       }
-      return res.status(200).json({
-        authenticated: true,
-        userName: dbUser.name,
-        user: {
-          name: dbUser.name,
-          email: dbUser.email
-        }
-      });
-    } catch (dbCheckErr) {
-      // If transient DB check fails, fall back to verified HMAC-signed session user
-      return res.status(200).json({
-        authenticated: true,
-        userName: sessionUser.name,
-        user: {
-          name: sessionUser.name,
-          email: sessionUser.email
-        }
-      });
-    }
+    });
   } catch (err) {
     return res.status(200).json({ user: null, userName: null, authenticated: false });
   }
 });
 
-// GET /api/health (Safe diagnostic endpoint: checks server and DB connection without exposing secrets)
+// GET /api/health (Safe diagnostic endpoint: checks server and Google Sheets connection without exposing secrets)
 app.get(['/api/health', '/health'], async (req, res) => {
-  const uri = getMongoUri();
-  const isConfigured = Boolean(uri);
-  let dbConnected = mongoose.connection.readyState === 1;
-  let dbError = null;
+  const config = getGoogleSheetsConfig();
+  let sheetsConnected = false;
+  let sheetsError = null;
+  let spreadsheetName = null;
 
-  if (isConfigured && !dbConnected) {
+  if (config.isConfigured) {
     try {
-      await connectMongoDB();
-      dbConnected = mongoose.connection.readyState === 1;
+      const pingRes = await callSheetsApi('ping');
+      sheetsConnected = Boolean(pingRes && pingRes.success);
+      spreadsheetName = pingRes ? pingRes.spreadsheetName : undefined;
     } catch (err) {
-      dbError = err.message ? err.message.replace(/mongodb(\+srv)?:\/\/[^@]+@/gi, 'mongodb+srv://***:***@') : 'Connection error';
+      sheetsError = err.message || 'Connection error';
     }
   }
 
   return res.status(200).json({
     status: 'ok',
+    backend: 'google_sheets',
     environment: process.env.VERCEL ? 'vercel' : (process.env.NODE_ENV || 'development'),
-    database: {
-      configured: isConfigured,
-      connected: dbConnected,
-      readyState: mongoose.connection.readyState,
-      dbName: dbConnected ? (mongoose.connection.name || 'ExploreUP') : undefined,
-      error: dbError || undefined
+    sheets: {
+      configured: config.isConfigured,
+      connected: sheetsConnected,
+      spreadsheetName: spreadsheetName || undefined,
+      error: sheetsError || undefined
     },
     timestamp: new Date().toISOString()
   });
+});
+
+// =========================================================
+// DATA ROUTES (TripPlans, Saved Places, Feedback, Contact)
+// =========================================================
+
+// POST /api/trips/save (Save or update Trip Plan in TripPlans sheet)
+app.post(['/api/trips/save', '/trips/save'], async (req, res) => {
+  try {
+    const authUser = getAuthenticatedUser(req);
+    const trip = req.body.trip || req.body;
+    if (!trip || !trip.destination) {
+      return res.status(400).json({ error: 'Valid trip payload with destination is required.' });
+    }
+
+    const userEmail = (authUser && authUser.email) || trip.userEmail || '';
+    const userName = (authUser && authUser.name) || trip.userName || 'Traveler';
+
+    const result = await callSheetsApi('saveTripPlan', {
+      userEmail,
+      trip: {
+        ...trip,
+        userEmail,
+        userName
+      }
+    });
+
+    return res.status(200).json({ success: true, message: 'Trip plan saved to Google Sheets', id: result.id });
+  } catch (err) {
+    console.error('Save trip error:', err.message);
+    return res.status(500).json({ error: err.message || 'Failed to save trip plan.' });
+  }
+});
+
+// GET /api/trips (Fetch Trip Plans for authenticated user)
+app.get(['/api/trips', '/trips'], async (req, res) => {
+  try {
+    const authUser = getAuthenticatedUser(req);
+    const userEmail = (authUser && authUser.email) || req.query.email || '';
+    if (!userEmail) {
+      return res.status(200).json({ success: true, trips: [] });
+    }
+
+    const result = await callSheetsApi('getTripPlans', { userEmail });
+    return res.status(200).json({ success: true, trips: (result && result.trips) || [] });
+  } catch (err) {
+    console.error('Get trips error:', err.message);
+    return res.status(500).json({ error: err.message || 'Failed to retrieve trip plans.' });
+  }
+});
+
+// POST /api/trips/delete (Delete Trip Plan)
+app.post(['/api/trips/delete', '/trips/delete'], async (req, res) => {
+  try {
+    const authUser = getAuthenticatedUser(req);
+    const tripId = req.body.id;
+    const userEmail = (authUser && authUser.email) || req.body.userEmail || '';
+
+    if (!tripId) {
+      return res.status(400).json({ error: 'Trip id is required.' });
+    }
+
+    await callSheetsApi('deleteTripPlan', { id: tripId, userEmail });
+    return res.status(200).json({ success: true, message: 'Trip plan deleted from Google Sheets' });
+  } catch (err) {
+    console.error('Delete trip error:', err.message);
+    return res.status(500).json({ error: err.message || 'Failed to delete trip plan.' });
+  }
+});
+
+// POST /api/places/save (Save Saved Destination / Favorite)
+app.post(['/api/places/save', '/places/save'], async (req, res) => {
+  try {
+    const authUser = getAuthenticatedUser(req);
+    const cityName = req.body.cityName;
+    const userEmail = (authUser && authUser.email) || req.body.userEmail || '';
+
+    if (!cityName) {
+      return res.status(400).json({ error: 'cityName is required.' });
+    }
+    if (!userEmail) {
+      return res.status(401).json({ error: 'Please log in to sync saved places.' });
+    }
+
+    await callSheetsApi('savePlace', { userEmail, cityName });
+    return res.status(200).json({ success: true, message: 'Place saved to Google Sheets' });
+  } catch (err) {
+    console.error('Save place error:', err.message);
+    return res.status(500).json({ error: err.message || 'Failed to save place.' });
+  }
+});
+
+// POST /api/places/remove (Remove Saved Destination / Favorite)
+app.post(['/api/places/remove', '/places/remove'], async (req, res) => {
+  try {
+    const authUser = getAuthenticatedUser(req);
+    const cityName = req.body.cityName;
+    const userEmail = (authUser && authUser.email) || req.body.userEmail || '';
+
+    if (!cityName || !userEmail) {
+      return res.status(400).json({ error: 'cityName and userEmail are required.' });
+    }
+
+    await callSheetsApi('removePlace', { userEmail, cityName });
+    return res.status(200).json({ success: true, message: 'Place removed from Google Sheets' });
+  } catch (err) {
+    console.error('Remove place error:', err.message);
+    return res.status(500).json({ error: err.message || 'Failed to remove place.' });
+  }
+});
+
+// GET /api/places (Fetch Saved Places for user)
+app.get(['/api/places', '/places'], async (req, res) => {
+  try {
+    const authUser = getAuthenticatedUser(req);
+    const userEmail = (authUser && authUser.email) || req.query.email || '';
+
+    if (!userEmail) {
+      return res.status(200).json({ success: true, places: [] });
+    }
+
+    const result = await callSheetsApi('getSavedPlaces', { userEmail });
+    return res.status(200).json({ success: true, places: (result && result.places) || [] });
+  } catch (err) {
+    console.error('Get places error:', err.message);
+    return res.status(500).json({ error: err.message || 'Failed to get saved places.' });
+  }
+});
+
+// POST /api/feedback (Submit Recommendation / Feedback)
+app.post(['/api/feedback', '/feedback'], async (req, res) => {
+  try {
+    const authUser = getAuthenticatedUser(req);
+    const text = (req.body.text || '').trim();
+    if (!text || text.length < 3) {
+      return res.status(400).json({ error: 'Please enter meaningful feedback text.' });
+    }
+
+    const feedbackPayload = {
+      cityName: req.body.cityName || 'general',
+      category: req.body.category || 'General',
+      text: text,
+      authorName: req.body.authorName || (authUser && authUser.name) || 'Visitor',
+      userEmail: (authUser && authUser.email) || req.body.userEmail || ''
+    };
+
+    await callSheetsApi('saveFeedback', { feedback: feedbackPayload });
+    return res.status(200).json({ success: true, message: 'Feedback recorded successfully in Google Sheets.' });
+  } catch (err) {
+    console.error('Feedback error:', err.message);
+    return res.status(500).json({ error: err.message || 'Failed to save feedback.' });
+  }
+});
+
+// GET /api/feedback (Fetch Feedback for a destination)
+app.get(['/api/feedback', '/feedback'], async (req, res) => {
+  try {
+    const cityName = req.query.cityName || req.query.city || '';
+    const result = await callSheetsApi('getFeedback', { cityName });
+    return res.status(200).json({ success: true, feedback: (result && result.feedback) || [] });
+  } catch (err) {
+    console.error('Get feedback error:', err.message);
+    return res.status(500).json({ error: err.message || 'Failed to get feedback.' });
+  }
+});
+
+// POST /api/contact (Record Contact Form submission)
+app.post(['/api/contact', '/contact'], async (req, res) => {
+  try {
+    const name = String(req.body.name || '').trim();
+    const email = String(req.body.email || '').trim().toLowerCase();
+    const message = String(req.body.message || '').trim();
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: 'Name, email, and message are required.' });
+    }
+    if (!EMAIL_FORMAT_REGEX.test(email)) {
+      return res.status(400).json({ error: 'Please enter a valid email address.' });
+    }
+
+    const contactPayload = {
+      name,
+      email,
+      phone: req.body.phone || '',
+      subject: req.body.subject || 'General Inquiry',
+      message
+    };
+
+    await callSheetsApi('saveContactForm', { contact: contactPayload });
+    return res.status(200).json({ success: true, message: 'Thank you! Your message has been saved to Google Sheets.' });
+  } catch (err) {
+    console.error('Contact error:', err.message);
+    return res.status(500).json({ error: err.message || 'Failed to record contact form.' });
+  }
 });
 
 // POST /api/chat/reset & /api/reset
