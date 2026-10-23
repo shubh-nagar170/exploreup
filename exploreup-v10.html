@@ -1,0 +1,3125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ExploreUP — Explore Uttar Pradesh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="data/cities.js"></script>
+<script src="data/districts.js"></script>
+<script src="data/gems.js"></script>
+
+<style>
+:root{
+  --ivory:#FBF6EC;
+  --paper:#FFFFFF;
+  --paper-warm:#FFFDF8;
+  --sand:#F4E4C8;
+  --sand-light:#F9EFE0;
+  --clay:#F6A94E;
+  --saf:#E87A18;
+  --saf-light:#FFF1DE;
+  --saf-glow:rgba(232,122,24,0.18);
+  --terra:#B94E07;
+  --green:#0E5E33;
+  --olive:#0A4727;
+  --ink:#0A331D;
+  --text:#132219;
+  --blue:#1E3785;
+  --mute:#635747;
+  --mute-light:#877A68;
+  --line:rgba(20,35,26,0.10);
+  --line-subtle:rgba(20,35,26,0.06);
+  --display:'Fraunces',Georgia,serif;
+  --body:'Manrope',system-ui,sans-serif;
+  --f-sky:'Skyvia','Fraunces',Georgia,serif;
+  --f-triver:'Triver','Fraunces',Georgia,serif;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+  --shadow-sm:0 2px 8px -2px rgba(20,35,26,0.06);
+  --shadow-md:0 12px 32px -10px rgba(20,35,26,0.10);
+  --shadow-lg:0 24px 50px -16px rgba(20,35,26,0.16);
+}
+@font-face{font-family:'Skyvia';src:local('Skyvia Demo Bold'),local('SkyviaDemo-Bold'),local('Skyvia'),url('fonts/SkyviaDemo-Bold.otf') format('opentype');font-weight:400 900;font-display:swap}
+@font-face{font-family:'Triver';src:local('Triver Demo Bold'),local('TriverDemo-Bold'),local('Triver'),url('fonts/TriverDemo-Bold.otf') format('opentype');font-weight:400 900;font-display:swap}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{
+  margin:0;
+  background:var(--ivory);
+  color:var(--text);
+  font:400 16px/1.65 var(--body);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+h1,h2,h3{
+  font-family:var(--display);
+  font-weight:500;
+  line-height:1.08;
+  letter-spacing:-0.022em;
+  margin:0;
+  font-optical-sizing:auto;
+}
+p{margin:0}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--saf);outline-offset:3px}
+
+.wrap{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4.5vw,52px)}
+.muted{color:var(--mute)}
+.eyebrow{
+  font-family:var(--display);
+  font-size:clamp(1.15rem,2vw,1.45rem);
+  font-weight:600;
+  font-style:italic;
+  color:var(--saf);
+  line-height:1.2;
+  letter-spacing:-0.01em;
+  display:inline-flex;
+  align-items:center;
+}
+.eyebrow::before{
+  content:"";
+  display:inline-block;
+  width:28px;
+  height:3px;
+  border-radius:3px;
+  margin-right:12px;
+  background:linear-gradient(90deg,var(--saf) 33.3%,#FFFFFF 33.3% 66.6%,var(--green) 66.6%);
+  box-shadow:0 1px 2px rgba(20,35,26,0.12);
+}
+
+section{padding:clamp(68px,8.5vw,112px) 0}
+.head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  flex-wrap:wrap;
+  margin-bottom:38px;
+}
+.head h2{
+  font-size:clamp(2.4rem,4.8vw,4.2rem);
+  line-height:1.04;
+  margin-top:10px;
+}
+.head p{
+  max-width:42ch;
+  color:var(--mute);
+  font-size:1.05rem;
+  line-height:1.55;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  border:0;
+  border-radius:999px;
+  padding:14px 26px;
+  background:var(--ink);
+  color:var(--ivory);
+  font-weight:600;
+  font-size:15px;
+  text-decoration:none;
+  box-shadow:var(--shadow-sm);
+  transition:background 0.3s ease,color 0.3s ease,transform 0.3s var(--ease),box-shadow 0.3s ease;
+}
+.btn:hover{
+  background:var(--saf);
+  color:#1b1206;
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px -8px var(--saf);
+}
+.btn.ghost{
+  background:transparent;
+  border:1px solid var(--ink);
+  color:var(--ink);
+  box-shadow:none;
+}
+.btn.ghost:hover{
+  background:var(--ink);
+  color:var(--ivory);
+  transform:translateY(-2px);
+}
+.btn.sm{padding:10px 20px;font-size:14px}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:9px 18px;
+  border-radius:999px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  font-size:13px;
+  font-weight:600;
+  color:var(--mute);
+  box-shadow:var(--shadow-sm);
+  transition:border-color 0.25s,color 0.25s;
+}
+
+/* media art frame with real photo & vector fallback */
+.art{
+  position:relative;
+  overflow:hidden;
+  background:var(--sand);
+  isolation:isolate;
+}
+.art svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  z-index:1;
+}
+.art-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:2;
+  opacity:0;
+  transition:opacity 0.6s ease,transform 0.7s var(--ease);
+}
+.art-img.is-loaded{
+  opacity:1;
+}
+
+/* top scroll progress bar */
+.prog{
+  position:fixed;
+  top:0;
+  left:0;
+  height:3px;
+  width:0;
+  background:linear-gradient(90deg,var(--saf) 0,var(--saf) 40%,#FFFFFF 50%,var(--green) 60%,var(--green) 100%);
+  z-index:90;
+  box-shadow:0 1px 4px rgba(232,122,24,0.4);
+}
+
+/* sticky navigation */
+.bar{
+  position:sticky;
+  top:14px;
+  z-index:50;
+  margin:14px auto 0;
+  max-width:1220px;
+  padding:0 clamp(16px,4vw,44px);
+  transition:box-shadow 0.3s;
+}
+.bar-in{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  background:rgba(255,252,245,0.88);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border:1px solid rgba(20,35,26,0.10);
+  border-radius:999px;
+  padding:8px 10px 8px 22px;
+  box-shadow:0 12px 36px -18px rgba(20,35,26,0.18);
+}
+.logo{
+  text-decoration:none;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:11px;
+}
+.lpin{
+  width:32px;
+  height:40px;
+  flex:none;
+  filter:drop-shadow(0 4px 6px rgba(20,35,26,0.18));
+}
+.lpin.big{width:52px;height:66px}
+.logo .ltext{
+  display:flex;
+  flex-direction:column;
+  line-height:1;
+}
+.logo b{
+  font:600 24px/1 var(--display);
+  letter-spacing:-0.025em;
+  color:var(--text);
+}
+.logo b i{font-style:normal;color:var(--saf)}
+.logo small{
+  font-size:9.5px;
+  letter-spacing:0.18em;
+  color:var(--mute);
+  margin-top:4px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+.links{
+  display:flex;
+  gap:4px;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.links a{
+  display:block;
+  text-decoration:none;
+  font-size:14.5px;
+  font-weight:600;
+  padding:9px 15px;
+  border-radius:999px;
+  color:var(--mute);
+  transition:background 0.25s,color 0.25s;
+}
+.links a:hover{
+  background:var(--sand-light);
+  color:var(--ink);
+}
+.bar-r{display:flex;gap:10px;align-items:center}
+.burger{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  width:44px;
+  height:44px;
+  border:1px solid var(--line);
+  background:var(--paper);
+  border-radius:999px;
+  padding:0;
+}
+.burger span{
+  display:block;
+  width:18px;
+  height:2px;
+  border-radius:2px;
+  background:var(--ink);
+  transition:transform 0.35s var(--ease),opacity 0.25s;
+}
+.burger[aria-expanded=true] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){opacity:0}
+.burger[aria-expanded=true] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* mobile drawer */
+.drawer{
+  position:fixed;
+  inset:0;
+  z-index:70;
+  background:rgba(20,35,26,0.48);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.35s;
+}
+.drawer.open{opacity:1;pointer-events:auto}
+.drawer nav{
+  position:absolute;
+  top:0;
+  right:0;
+  height:100%;
+  width:min(380px,88vw);
+  background:var(--ivory);
+  padding:32px 30px;
+  display:flex;
+  flex-direction:column;
+  transform:translateX(100%);
+  transition:transform 0.4s var(--ease);
+  overflow-y:auto;
+  box-shadow:-10px 0 35px rgba(20,35,26,0.25);
+}
+.drawer.open nav{transform:none}
+.drawer nav a{
+  text-decoration:none;
+  font:500 1.6rem/1.2 var(--display);
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  color:var(--text);
+  transition:color 0.2s,transform 0.2s;
+}
+.drawer nav a:hover{color:var(--saf);transform:translateX(4px)}
+.dclose{
+  align-self:flex-end;
+  border:1px solid var(--line);
+  background:var(--paper);
+  border-radius:999px;
+  padding:9px 18px;
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:16px;
+}
+
+/* hero wrap */
+.hero-wrap{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  margin-top:-96px;
+  padding-top:104px;
+  border-radius:0 0 clamp(36px,5.5vw,64px) clamp(36px,5.5vw,64px);
+  box-shadow:0 30px 60px -30px rgba(20,35,26,0.12);
+}
+.hero-bg{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:var(--sand);
+}
+.hero-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 64% 78% at 50% 46%,rgba(251,246,236,0.94) 0%,rgba(251,246,236,0.85) 54%,rgba(251,246,236,0.20) 100%),
+    linear-gradient(180deg,rgba(251,246,236,0.65) 0%,rgba(251,246,236,0) 16%,rgba(251,246,236,0) 84%,rgba(251,246,236,0.6) 100%);
+}
+.hero-wrap::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:4px;
+  z-index:2;
+  background:linear-gradient(90deg,var(--saf) 0 33.33%,#FFFFFF 33.33% 66.66%,var(--green) 66.66%);
+  box-shadow:0 1px 3px rgba(20,35,26,0.15);
+}
+
+.slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity 1.6s ease;
+}
+.slide.on{opacity:1}
+.slide svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  transform:scale(1);
+}
+.hero-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:1;
+  opacity:0;
+  transition:opacity 1.2s ease;
+}
+.hero-img.is-loaded{opacity:1}
+.slide.on svg,
+.slide.on .hero-img.is-loaded{
+  animation:kb 12s ease-out both;
+}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.08)}}
+
+.hero{
+  text-align:center;
+  padding:clamp(46px,6vw,84px) clamp(20px,4.5vw,52px) clamp(24px,3.5vw,36px);
+}
+.greet{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 22px 10px 14px;
+  border-radius:999px;
+  background:rgba(255,252,245,0.92);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--line);
+  font-weight:600;
+  font-size:15px;
+  color:var(--text);
+  box-shadow:var(--shadow-sm);
+}
+.greet i{
+  width:32px;
+  height:32px;
+  border-radius:999px;
+  background:linear-gradient(150deg,#FDE2BD,var(--clay));
+  display:grid;
+  place-items:center;
+  font-style:normal;
+  font-size:16px;
+  line-height:1;
+  flex:none;
+  box-shadow:0 3px 8px rgba(246,169,78,0.3);
+}
+
+.hero h1{
+  font-family:var(--f-sky);
+  font-weight:700;
+  font-size:clamp(2.8rem,7.5vw,6.2rem);
+  line-height:1.02;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+  margin:28px auto 20px;
+  max-width:20ch;
+}
+.hero h1 em{
+  display:block;
+  font-family:var(--f-triver);
+  font-style:normal;
+  font-weight:700;
+  color:var(--saf);
+  margin-top:0.04em;
+  letter-spacing:0;
+  white-space:nowrap;
+}
+.lede{
+  max-width:52ch;
+  margin:0 auto;
+  color:var(--mute);
+  font-size:clamp(1.08rem,1.8vw,1.24rem);
+  line-height:1.6;
+}
+
+/* search bar */
+.search{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  max-width:660px;
+  margin:38px auto 0;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:7px 8px 7px 24px;
+  box-shadow:0 18px 45px -24px rgba(20,35,26,0.35);
+  transition:border-color 0.25s,box-shadow 0.25s;
+}
+.search:focus-within{
+  border-color:var(--saf);
+  box-shadow:0 20px 48px -20px var(--saf-glow),0 0 0 3px rgba(232,122,24,0.15);
+}
+.search input{
+  flex:1;
+  min-width:0;
+  border:0;
+  background:none;
+  outline:0;
+  font-size:15.5px;
+  padding:12px 0;
+  color:var(--text);
+}
+.search input::placeholder{color:#9C8F7F}
+.search button{
+  border:0;
+  border-radius:999px;
+  background:var(--ink);
+  color:var(--ivory);
+  padding:14px 26px;
+  font-weight:600;
+  font-size:14.5px;
+  box-shadow:var(--shadow-sm);
+  transition:background 0.25s,transform 0.25s;
+}
+.search button:hover{background:var(--saf);color:#1b1206;transform:scale(1.02)}
+.hint{min-height:22px;margin-top:10px;font-size:14px;color:var(--terra);font-weight:500}
+.quick{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:10px 24px;
+  margin-top:20px;
+  font-size:14px;
+  color:var(--mute);
+}
+.quick span{font-weight:700;color:var(--ink);letter-spacing:0.02em}
+.quick a{
+  text-decoration:none;
+  color:var(--ink);
+  border-bottom:1px solid var(--line);
+  padding-bottom:2px;
+  transition:color 0.2s,border-color 0.2s;
+}
+.quick a:hover{color:var(--saf);border-color:var(--saf)}
+.hero .cta{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:34px}
+
+/* stats */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+  max-width:920px;
+  margin:clamp(36px,5vw,52px) auto 0;
+}
+.stats div{
+  position:relative;
+  overflow:hidden;
+  background:rgba(255,252,245,0.92);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:20px 22px 18px;
+  text-align:left;
+  box-shadow:0 18px 36px -24px rgba(20,35,26,0.35);
+  transition:transform 0.3s var(--ease),box-shadow 0.3s;
+}
+.stats div:hover{transform:translateY(-3px);box-shadow:0 22px 42px -22px rgba(20,35,26,0.45)}
+.stats div::before{
+  content:"";
+  position:absolute;
+  left:22px;
+  top:0;
+  width:32px;
+  height:4px;
+  border-radius:0 0 4px 4px;
+  background:var(--saf);
+}
+.stats div:nth-child(even)::before{background:var(--green)}
+.stats div:nth-child(3)::before{background:var(--blue)}
+.stats b{
+  display:block;
+  font:600 clamp(1.6rem,2.8vw,2.3rem)/1.1 var(--display);
+  letter-spacing:-0.02em;
+  color:var(--terra);
+}
+.stats div:nth-child(even) b{color:var(--green)}
+.stats div:nth-child(3) b{color:var(--blue)}
+.stats span{
+  display:block;
+  margin-top:6px;
+  font-size:13.5px;
+  font-weight:600;
+  line-height:1.3;
+  color:var(--mute);
+}
+
+.hero-meta{
+  display:flex;
+  justify-content:flex-end;
+  padding-bottom:clamp(28px,4vw,44px);
+}
+.slidebox{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  background:rgba(255,252,245,0.92);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:12px 22px;
+  text-align:left;
+  box-shadow:0 20px 42px -26px rgba(20,35,26,0.4);
+}
+.slidebox b{display:block;font:600 1.2rem/1.1 var(--display);color:var(--ink)}
+.slidebox span.sub{font-size:13px;color:var(--mute)}
+.dots{display:flex;gap:8px;align-items:center}
+.dots button{
+  width:10px;
+  height:10px;
+  padding:0;
+  border:0;
+  border-radius:999px;
+  background:rgba(20,35,26,0.22);
+  transition:width 0.4s var(--ease),background 0.3s;
+}
+.dots button.on{width:32px;background:var(--terra)}
+
+/* cities snap row with curved 3D perspective */
+.snap{
+  display:flex;
+  gap:22px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding:12px 4px 28px;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  perspective:1200px;
+}
+.snap::-webkit-scrollbar{display:none}
+.snap>*{
+  flex:0 0 min(310px,82vw);
+  scroll-snap-align:start;
+  transition:box-shadow 0.4s,transform 0.4s;
+  will-change:transform;
+}
+
+/* editorial card */
+.card{
+  display:block;
+  text-decoration:none;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:12px 12px 20px;
+  box-shadow:var(--shadow-card);
+  transition:transform 0.4s var(--ease),box-shadow 0.4s var(--ease),border-color 0.3s;
+}
+.card:hover{
+  box-shadow:var(--shadow-hover);
+  border-color:rgba(232,122,24,0.3);
+}
+.card .art{
+  aspect-ratio:4/5;
+  border-radius:20px;
+}
+.card:hover .art-img{transform:scale(1.04)}
+.card h3{
+  font-size:1.75rem;
+  margin:18px 10px 6px;
+  color:var(--ink);
+  transition:color 0.25s;
+}
+.card:hover h3{color:var(--saf)}
+.card p{
+  font-size:14px;
+  color:var(--mute);
+  margin:0 10px 14px;
+  line-height:1.55;
+}
+.badges{display:flex;gap:8px;margin:0 10px}
+.badges span{
+  font-size:12px;
+  font-weight:700;
+  padding:5px 12px;
+  border-radius:999px;
+  background:var(--sand-light);
+  color:var(--ink);
+}
+.badges span.r{background:var(--ink);color:var(--ivory)}
+
+/* search tools bar */
+.tools{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:26px;
+}
+.field{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:4px 6px 4px 20px;
+  width:min(420px,100%);
+  box-shadow:var(--shadow-sm);
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.field:focus-within{
+  border-color:var(--saf);
+  box-shadow:0 0 0 3px rgba(232,122,24,0.14);
+}
+.field input{
+  flex:1;
+  min-width:0;
+  border:0;
+  background:none;
+  outline:0;
+  padding:11px 0;
+  font-size:15px;
+  color:var(--text);
+}
+.field button{
+  border:0;
+  border-radius:999px;
+  background:var(--ink);
+  color:var(--ivory);
+  padding:10px 18px;
+  font-size:14px;
+  font-weight:600;
+  transition:background 0.25s;
+}
+.field button:hover{background:var(--saf);color:#1b1206}
+
+/* featured destination spread */
+.feat{
+  display:grid;
+  grid-template-columns:1.05fr 0.95fr;
+  gap:clamp(32px,5vw,64px);
+  align-items:stretch;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:36px;
+  padding:clamp(20px,3.5vw,32px);
+  box-shadow:var(--shadow-md);
+}
+.feat-media{
+  position:relative;
+  border-radius:28px;
+  overflow:hidden;
+  min-height:460px;
+  box-shadow:inset 0 0 0 1px rgba(20,35,26,0.06);
+}
+.feat .feat-media .art{
+  position:absolute;
+  inset:0;
+  aspect-ratio:auto;
+  border-radius:0;
+}
+.fs{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity 0.75s ease;
+}
+.fs.on{opacity:1}
+.fs.on svg,
+.fs.on .art-img.is-loaded{
+  animation:kb 8s ease-out both;
+}
+.fprog{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:4px;
+  z-index:4;
+  background:rgba(255,252,245,0.4);
+}
+.fprog i{display:block;height:100%;width:0;background:var(--saf)}
+.fcount{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  z-index:4;
+  background:rgba(255,252,245,0.92);
+  backdrop-filter:blur(8px);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:8px 18px;
+  font:600 14px/1 var(--body);
+  font-variant-numeric:tabular-nums;
+  box-shadow:var(--shadow-sm);
+}
+.fcount small{color:var(--mute);font-weight:600;font-size:inherit}
+.fnav{
+  position:absolute;
+  right:18px;
+  bottom:18px;
+  z-index:4;
+  display:flex;
+  gap:8px;
+}
+.fnav button{
+  width:48px;
+  height:48px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,252,245,0.92);
+  backdrop-filter:blur(8px);
+  font-size:18px;
+  line-height:1;
+  display:grid;
+  place-items:center;
+  box-shadow:var(--shadow-sm);
+  transition:background 0.25s,color 0.25s,transform 0.25s;
+}
+.fnav button:hover{
+  background:var(--ink);
+  color:var(--ivory);
+  transform:scale(1.05);
+}
+
+.feat-copy{
+  padding:12px 14px;
+  align-self:center;
+}
+.fcopy{transition:opacity 0.3s ease,transform 0.3s ease}
+.fcopy.sw{opacity:0;transform:translateY(8px)}
+.feat h2{
+  font-size:clamp(2.4rem,4.4vw,3.8rem);
+  line-height:1.02;
+  margin:12px 0 10px;
+}
+.ftag{
+  font:italic 400 clamp(1.2rem,1.9vw,1.5rem)/1.25 var(--display);
+  color:var(--terra);
+  margin:0 0 16px;
+}
+.why{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:28px 0 32px;
+}
+.why div{
+  background:var(--ivory);
+  border:1px solid rgba(20,35,26,0.06);
+  border-radius:20px;
+  padding:16px 18px;
+  box-shadow:var(--shadow-sm);
+  transition:transform 0.25s,border-color 0.25s;
+}
+.why div:hover{transform:translateY(-2px);border-color:var(--saf)}
+.why b{display:block;font-size:15px;color:var(--ink);margin-bottom:2px}
+.why span{font-size:13px;color:var(--mute);line-height:1.4;display:block}
+
+.frail{
+  display:flex;
+  gap:9px;
+  overflow-x:auto;
+  margin-top:20px;
+  padding:6px 4px 10px;
+  scroll-snap-type:x proximity;
+  scrollbar-width:none;
+}
+.frail::-webkit-scrollbar{display:none}
+.frail button{
+  flex:none;
+  scroll-snap-align:center;
+  border:1px solid var(--line);
+  background:var(--paper);
+  border-radius:999px;
+  padding:9px 18px;
+  font-size:13.5px;
+  font-weight:600;
+  white-space:nowrap;
+  box-shadow:var(--shadow-sm);
+  transition:all 0.25s;
+}
+.frail button:hover{border-color:var(--saf);color:var(--saf)}
+.frail button[aria-current=true]{
+  background:var(--ink);
+  color:var(--ivory);
+  border-color:var(--ink);
+  box-shadow:0 4px 14px -3px var(--ink);
+}
+
+/* districts exploration */
+.dgrid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  list-style:none !important;
+  list-style-type:none !important;
+  padding:0;
+  margin:0;
+}
+.dgrid button{
+  border:1px solid var(--line);
+  background:var(--paper);
+  border-radius:999px;
+  padding:11px 20px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--ink);
+  cursor:pointer;
+  box-shadow:var(--shadow-sm);
+  transition:all 0.25s var(--ease);
+  list-style:none !important;
+  display:inline-block;
+  line-height:1.2;
+}
+.dgrid button::before,
+.dgrid button::after{
+  content:none !important;
+  display:none !important;
+}
+.dgrid button:hover{
+  border-color:var(--saf);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-md);
+}
+.dgrid button[aria-current=true]{
+  background:var(--ink);
+  color:var(--ivory);
+  border-color:var(--ink);
+}
+.count{font-size:14px;color:var(--mute);font-weight:600}
+
+/* hidden gems section */
+.gems{
+  background:var(--sand);
+  border-radius:52px 52px 0 0;
+  box-shadow:0 -20px 50px -20px rgba(20,35,26,0.12);
+}
+.gtabs{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:28px}
+.gtabs button{
+  border:0;
+  background:var(--paper);
+  border-radius:999px;
+  padding:10px 20px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--mute);
+  box-shadow:var(--shadow-sm);
+  transition:all 0.25s;
+}
+.gtabs button:hover{color:var(--ink)}
+.gtabs button[aria-pressed=true]{
+  background:var(--ink);
+  color:var(--ivory);
+  box-shadow:0 6px 18px -4px var(--ink);
+}
+.glist{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.gem{
+  border:0;
+  background:var(--paper);
+  border-radius:28px;
+  padding:14px;
+  text-align:left;
+  display:block;
+  width:100%;
+  box-shadow:var(--shadow-card);
+  transition:transform 0.4s var(--ease),box-shadow 0.4s var(--ease);
+}
+.gem:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-hover);
+}
+.gem .art{
+  aspect-ratio:4/5;
+  border-radius:20px;
+}
+.gem:hover .art-img{transform:scale(1.04)}
+.gem .meta{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin:16px 10px 4px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--terra);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.gem h3{
+  font-size:1.65rem;
+  margin:0 10px;
+  color:var(--ink);
+}
+.gem p{
+  font-size:14px;
+  color:var(--mute);
+  margin:8px 10px 14px;
+  line-height:1.55;
+}
+.gem .more{
+  margin-left:10px;
+  font-size:14px;
+  font-weight:700;
+  color:var(--saf);
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+
+/* gem dialog modal */
+dialog{
+  border:0;
+  padding:0;
+  background:var(--paper);
+  color:var(--ink);
+  width:min(920px,94vw);
+  max-height:90vh;
+  border-radius:32px;
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+dialog::backdrop{
+  background:rgba(20,35,26,0.55);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.dlg-art{
+  height:min(320px,36vh);
+  position:relative;
+}
+.dlg-close{
+  position:absolute;
+  right:18px;
+  top:18px;
+  z-index:5;
+  border:0;
+  background:rgba(255,252,245,0.92);
+  backdrop-filter:blur(8px);
+  border-radius:999px;
+  padding:10px 18px;
+  font-weight:600;
+  font-size:14px;
+  box-shadow:var(--shadow-sm);
+  transition:background 0.2s,transform 0.2s;
+}
+.dlg-close:hover{background:var(--ink);color:var(--ivory);transform:scale(1.05)}
+.dlg-body{
+  padding:clamp(24px,4.5vw,42px);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px 44px;
+}
+.dlg-body h3{font-size:2.5rem;grid-column:1/-1;color:var(--ink)}
+.dlg-body h4{
+  font-size:12px;
+  font-weight:700;
+  color:var(--terra);
+  margin:0 0 6px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+}
+.dlg-body p{font-size:15px;line-height:1.6}
+.dlg-foot{
+  grid-column:1/-1;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  border-top:1px solid var(--line);
+  padding-top:20px;
+}
+
+/* festivals */
+.fest{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+.fest article{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:20px;
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:20px;
+  align-items:center;
+  box-shadow:var(--shadow-sm);
+  transition:transform 0.3s var(--ease),box-shadow 0.3s;
+}
+.fest article:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-md);
+  border-color:rgba(232,122,24,0.3);
+}
+.fest-media{
+  aspect-ratio:1/1;
+  border-radius:18px;
+  position:relative;
+  overflow:hidden;
+}
+.fest-media:hover .art-img{transform:scale(1.05)}
+.fest-content{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.fest .when{
+  align-self:flex-start;
+  background:var(--sand-light);
+  border-radius:999px;
+  padding:6px 14px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--terra);
+}
+.fest h3{font-size:1.65rem;color:var(--ink)}
+.fest p{font-size:14px;color:var(--mute)}
+
+/* food trails */
+.food{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.trail{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:32px;
+  padding:16px;
+  box-shadow:var(--shadow-card);
+  transition:transform 0.35s var(--ease),box-shadow 0.35s;
+}
+.trail:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-hover);
+}
+.trail .art{
+  aspect-ratio:16/10;
+  border-radius:22px;
+}
+.trail:hover .art-img{transform:scale(1.03)}
+.trail .body{padding:22px 14px 10px}
+.trail h3{font-size:2rem;margin-bottom:8px;color:var(--ink)}
+.trail .chain{font-size:14.5px;color:var(--mute);margin-bottom:18px;line-height:1.55}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.steps li{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:var(--ivory);
+  border-radius:999px;
+  padding:10px 20px 10px 10px;
+  font-size:15px;
+  box-shadow:0 1px 3px rgba(20,35,26,0.04);
+}
+.steps i{
+  width:30px;
+  height:30px;
+  border-radius:999px;
+  background:var(--saf);
+  color:#1b1206;
+  display:grid;
+  place-items:center;
+  font:normal 700 13px var(--body);
+  flex:none;
+}
+.steps span{color:var(--mute);margin-left:auto;font-size:13px;font-weight:500}
+
+/* responsible & government */
+.resp{
+  display:grid;
+  grid-template-columns:0.9fr 1.1fr;
+  gap:clamp(32px,5vw,64px);
+  align-items:start;
+}
+.resp h2{font-size:clamp(2.4rem,4.6vw,3.8rem);margin-top:10px}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pillars div{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:24px;
+  box-shadow:var(--shadow-sm);
+  transition:transform 0.25s,border-color 0.25s;
+}
+.pillars div:hover{
+  transform:translateY(-3px);
+  border-color:var(--saf);
+  box-shadow:var(--shadow-md);
+}
+.pillars b{display:block;font:500 1.35rem/1.2 var(--display);margin-bottom:8px;color:var(--ink)}
+.pillars span{font-size:14px;color:var(--mute);line-height:1.5;display:block}
+.gov{
+  margin-top:18px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:22px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+  box-shadow:var(--shadow-sm);
+}
+.gov-who{display:flex;align-items:center;gap:18px}
+.gov-photo{
+  width:88px;
+  height:88px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--saf);
+  flex:none;
+  box-shadow:0 12px 26px -12px rgba(20,35,26,0.45);
+}
+.gov-name{
+  display:block;
+  font-family:var(--display);
+  font-weight:500;
+  font-size:clamp(1.6rem,2.6vw,2.1rem);
+  color:var(--ink);
+  margin-top:2px;
+}
+.gov-role{display:block;font-size:15px}
+
+/* trip planner section */
+.pl{
+  background:var(--olive);
+  color:var(--ivory);
+  border-radius:48px;
+  margin:0 clamp(10px,2vw,24px);
+  padding:clamp(48px,6vw,80px) 0;
+  box-shadow:0 30px 60px -20px rgba(10,46,27,0.35);
+}
+.pl-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-bottom:26px;
+}
+.pl-kick{display:block;font:italic 600 1.25rem var(--display);color:var(--saf)}
+.pl-head h2{font:500 clamp(2.3rem,4.4vw,3.6rem)/1.05 var(--display);margin-top:6px}
+.pl-head p{font-size:15.5px;opacity:0.88;margin-top:6px}
+.pl-saved{
+  border:1px solid rgba(251,246,236,0.45);
+  background:transparent;
+  color:var(--ivory);
+  border-radius:999px;
+  padding:11px 22px;
+  font-weight:600;
+  font-size:14.5px;
+  transition:all 0.25s;
+}
+.pl-saved:hover{background:rgba(251,246,236,0.15);border-color:var(--ivory)}
+.pl-modes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.sp-mode{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  text-align:left;
+  background:rgba(251,246,236,0.07);
+  border:1.5px solid rgba(251,246,236,0.22);
+  border-radius:20px;
+  padding:16px 18px;
+  color:var(--ivory);
+  transition:border-color 0.3s,background 0.3s;
+}
+.sp-mode.on{
+  border-color:var(--saf);
+  background:rgba(232,122,24,0.18);
+}
+.sp-mode b{font:600 1.05rem var(--body)}
+.sp-mode small{display:block;font-size:13px;opacity:0.85;margin-top:4px;line-height:1.4}
+.sp-radio{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  border:2px solid rgba(251,246,236,0.7);
+  flex:none;
+  margin-top:2px;
+  position:relative;
+}
+.sp-mode.on .sp-radio{border-color:var(--saf)}
+.sp-mode.on .sp-radio::after{
+  content:"";
+  position:absolute;
+  inset:3px;
+  border-radius:50%;
+  background:var(--saf);
+}
+.pl-badge{
+  font-style:normal;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  background:var(--saf);
+  color:#1b1206;
+  border-radius:999px;
+  padding:3px 9px;
+  margin-left:8px;
+  vertical-align:middle;
+}
+.pl-badge.ai{background:var(--clay)}
+
+.pl-acc{
+  background:rgba(251,246,236,0.06);
+  border:1px solid rgba(251,246,236,0.15);
+  border-radius:18px;
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.pl-acc>summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:15px 18px;
+  font-weight:700;
+  font-size:15.5px;
+}
+.pl-acc>summary::-webkit-details-marker{display:none}
+.pl-acc>summary::after{content:"+";margin-left:auto;font-size:22px;color:var(--saf);line-height:1}
+.pl-acc[open]>summary::after{content:"–"}
+.pl-acc>summary em{
+  font-style:normal;
+  font-size:12px;
+  font-weight:600;
+  background:rgba(251,246,236,0.14);
+  padding:4px 12px;
+  border-radius:999px;
+  margin-left:6px;
+}
+.pl-n{
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:var(--saf);
+  color:#1b1206;
+  display:grid;
+  place-items:center;
+  font-size:13px;
+  font-weight:700;
+  flex:none;
+}
+.pl-body{padding:4px 18px 20px;display:grid;gap:14px}
+.pl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pl-span2{grid-column:span 2}
+.pl-field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.pl-field>span{font-size:11.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;opacity:0.9}
+.pl-field>span em{font-style:normal;text-transform:none;font-weight:400;opacity:0.7}
+.pl-field input,.pl-field select,.pl-field textarea{
+  width:100%;
+  background:var(--paper);
+  color:var(--text);
+  border:0;
+  border-radius:12px;
+  padding:11px 14px;
+  font:500 15px var(--body);
+  outline:2px solid transparent;
+  transition:outline-color 0.2s,box-shadow 0.2s;
+}
+.pl-field input:focus,.pl-field select:focus,.pl-field textarea:focus{
+  outline-color:var(--saf);
+  box-shadow:0 0 0 3px rgba(232,122,24,0.3);
+}
+.pl-field textarea{resize:vertical}
+.sp-stepper{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--paper);
+  border-radius:12px;
+  padding:4px;
+  color:var(--text);
+}
+.sp-stepper button{
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:9px;
+  background:var(--sand);
+  color:var(--ink);
+  font-size:19px;
+  font-weight:700;
+  transition:background 0.2s,transform 0.15s;
+}
+.sp-stepper button:hover{background:var(--saf);transform:scale(1.04)}
+.sp-stepper b{font:600 1rem var(--body);min-width:58px;text-align:center}
+.sp-chips{display:flex;flex-wrap:wrap;gap:8px}
+.sp-chip{
+  border:1px solid rgba(251,246,236,0.35);
+  background:transparent;
+  color:var(--ivory);
+  border-radius:999px;
+  padding:8px 15px;
+  font-size:13.5px;
+  font-weight:600;
+  transition:all 0.2s;
+}
+.sp-chip:hover{border-color:var(--saf)}
+.sp-chip[aria-pressed=true]{
+  background:var(--saf);
+  color:#1b1206;
+  border-color:var(--saf);
+}
+.sp-tiers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.sp-tier{
+  border:1.5px solid rgba(251,246,236,0.22);
+  background:rgba(251,246,236,0.06);
+  border-radius:16px;
+  padding:12px;
+  text-align:center;
+  color:var(--ivory);
+  transition:all 0.2s;
+}
+.sp-tier b{display:block;font:600 1rem var(--body)}
+.sp-tier small{font-size:11px;opacity:0.8}
+.sp-tier[aria-pressed=true]{
+  border-color:var(--saf);
+  background:rgba(232,122,24,0.22);
+}
+.sp-seg{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  background:var(--paper);
+  border-radius:12px;
+  padding:5px;
+}
+.sp-seg button{
+  border:0;
+  background:none;
+  color:var(--text);
+  border-radius:9px;
+  padding:9px 6px;
+  font-weight:600;
+  font-size:13.5px;
+}
+.sp-seg button small{display:block;font-size:10px;font-weight:400;opacity:0.75}
+.sp-seg button[aria-pressed=true]{background:var(--olive);color:var(--ivory)}
+
+.pl-cost{
+  background:rgba(251,246,236,0.08);
+  border-radius:16px;
+  padding:16px;
+}
+.pl-costhead{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:14.5px}
+.pl-costhead b{color:var(--saf)}
+.pl-meter{
+  height:8px;
+  border-radius:999px;
+  background:rgba(251,246,236,0.2);
+  overflow:hidden;
+  margin:12px 0;
+}
+.pl-meter i{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--saf),var(--clay));
+  border-radius:999px;
+  transition:width 0.5s var(--ease);
+}
+.pl-cats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.pl-cats div{
+  background:var(--paper);
+  color:var(--text);
+  border-radius:12px;
+  padding:10px;
+}
+.pl-cats small{display:block;font-size:10.5px;opacity:0.75}
+.pl-cats b{font-size:13.5px}
+.pl-remain{font-size:13.5px;margin-top:12px;opacity:0.92}
+.pl-remain b{color:var(--saf)}
+
+.pl-actions{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:12px;
+  margin:16px 0;
+}
+.sp-btn{
+  border:1px solid rgba(251,246,236,0.35);
+  background:transparent;
+  color:var(--ivory);
+  border-radius:16px;
+  padding:14px 18px;
+  font-weight:700;
+  font-size:14.5px;
+  box-shadow:var(--shadow-sm);
+  transition:transform 0.2s,background 0.2s,border-color 0.2s;
+}
+.sp-btn:hover{transform:translateY(-2px);background:rgba(251,246,236,0.14)}
+.sp-btn.primary{
+  background:var(--saf);
+  color:#1b1206;
+  border-color:var(--saf);
+}
+.sp-btn.primary:hover{background:var(--clay)}
+.sp-btn.ghost{border-color:rgba(251,246,236,0.22)}
+
+.pl-summary{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  background:var(--ink);
+  border-radius:20px;
+  padding:18px 22px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow-sm);
+}
+.pl-kick2{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--saf)}
+.pl-summary h3{font:500 1.6rem/1.15 var(--display);margin:6px 0 10px}
+.pl-summary .sp-chip{cursor:default;font-size:12px;padding:5px 12px}
+.pl-sumbox{text-align:right;min-width:180px}
+.pl-sumbox span{font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;opacity:0.8;font-weight:700}
+.pl-sumbox b{display:block;font:500 2rem/1.1 var(--display);color:var(--saf)}
+.pl-sumbox small{font-size:12px;opacity:0.85}
+
+.sp-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.sp-tabs button{
+  border:1px solid rgba(251,246,236,0.25);
+  background:transparent;
+  color:var(--ivory);
+  border-radius:999px;
+  padding:10px 18px;
+  font-weight:600;
+  font-size:13.5px;
+  transition:all 0.2s;
+}
+.sp-tabs button.on{
+  background:var(--ivory);
+  color:var(--olive);
+  border-color:var(--ivory);
+  box-shadow:0 4px 12px rgba(251,246,236,0.25);
+}
+.sp-panel{display:none}
+.sp-panel.on{display:block}
+
+.pl-day{
+  background:rgba(251,246,236,0.06);
+  border-radius:16px;
+  margin-bottom:10px;
+}
+.pl-day>summary{
+  list-style:none;
+  cursor:pointer;
+  padding:14px 16px;
+  font:500 1.2rem var(--display);
+  display:flex;
+  gap:12px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.pl-day>summary::-webkit-details-marker{display:none}
+.pl-day>summary em{
+  font:600 12.5px var(--body);
+  font-style:normal;
+  opacity:0.85;
+  margin-left:auto;
+}
+.pl-day>div{padding:0 12px 14px;display:grid;gap:8px}
+.pl-stop{background:var(--paper);color:var(--text);border-radius:14px;box-shadow:var(--shadow-sm)}
+.pl-stop>summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  padding:12px 16px;
+}
+.pl-stop>summary::-webkit-details-marker{display:none}
+.pl-stop>summary .pl-slot{
+  font-size:11px;
+  font-weight:700;
+  background:var(--sand);
+  color:var(--ink);
+  border-radius:999px;
+  padding:4px 10px;
+}
+.pl-stop>summary b{font-size:14.5px}
+.pl-stop>summary em{font-style:normal;font-size:12.5px;color:var(--mute);margin-left:auto}
+.pl-stopbody{padding:0 16px 14px;font-size:14.5px;display:grid;gap:10px}
+.pl-stopbody p{color:var(--mute);line-height:1.55}
+.pl-meta{font-size:12.5px;color:var(--ink);font-weight:600;display:flex;flex-wrap:wrap;gap:4px 16px}
+.pl-tip{
+  background:#FFF1D6;
+  border-radius:10px;
+  padding:10px 12px;
+  font-size:13px;
+  color:#6b4a00;
+  line-height:1.45;
+}
+.pl-rec{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+.pl-rec span{background:rgba(251,246,236,0.12);border-radius:14px;padding:9px 14px}
+.pl-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.pl-cards div{background:rgba(251,246,236,0.08);border-radius:14px;padding:14px}
+.pl-cards small{font-size:12px;opacity:0.8}
+.pl-cards b{display:block;font:500 1.45rem var(--display);margin-top:2px}
+.pl-note{font-size:13.5px;opacity:0.85;padding:10px 0;line-height:1.5}
+.pl-saved-item{background:rgba(251,246,236,0.08);border-radius:14px;padding:12px 14px;font-size:13.5px;margin-bottom:8px}
+.pl-info-acc .pl-n{background:var(--clay)}
+.pl-info{font-size:14.5px;gap:10px}
+.pl-info i{opacity:0.85}
+.pl-help{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.pl-help a{color:var(--saf);font-weight:700;text-decoration:none}
+.pl-bottom{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.pl-bottom .sp-btn{padding:12px 16px;font-size:13.5px}
+
+.sp-toast{
+  position:fixed;
+  left:50%;
+  bottom:26px;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translate(-50%,24px);
+  background:var(--saf);
+  color:#1b1206;
+  border-radius:999px;
+  padding:12px 24px;
+  font-weight:700;
+  font-size:14.5px;
+  z-index:99;
+  box-shadow:0 12px 30px rgba(0,0,0,0.22);
+  transition:transform 0.4s var(--ease),opacity 0.3s,visibility 0.3s;
+  max-width:90vw;
+  text-align:center;
+}
+.sp-toast.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
+
+/* helplines */
+.help{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.help a{
+  display:block;
+  text-decoration:none;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:24px;
+  box-shadow:var(--shadow-sm);
+  transition:border-color 0.3s,transform 0.3s var(--ease),box-shadow 0.3s;
+}
+.help a:hover{
+  border-color:var(--saf);
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-md);
+}
+.help .num{
+  font:500 2.9rem/1 var(--display);
+  color:var(--terra);
+}
+.help b{display:block;font-size:15.5px;margin-top:12px;color:var(--ink)}
+.help small{font-size:13px;color:var(--mute);line-height:1.4;display:block;margin-top:2px}
+
+/* footer */
+footer{
+  background:#0A2E1B;
+  color:var(--sand);
+  border-radius:52px 52px 0 0;
+  padding:clamp(60px,7.5vw,88px) 0 28px;
+  box-shadow:0 -20px 50px -20px rgba(10,46,27,0.4);
+}
+.tri{
+  position:relative;
+  height:4px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--saf) 0 33.33%,#FFFFFF 33.33% 66.66%,var(--green) 66.66%);
+  box-shadow:0 1px 4px rgba(0,0,0,0.25);
+}
+.tri .chakra{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:44px;
+  height:44px;
+  margin:-22px 0 0 -22px;
+  border-radius:50%;
+  background:#FFFCF5;
+  display:grid;
+  place-items:center;
+  box-shadow:0 0 0 4px #0A2E1B;
+}
+.tri .chakra svg{width:36px;height:36px;animation:spin 24s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+footer .tri{margin:0 auto 48px;max-width:1120px}
+.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;padding-bottom:44px}
+footer .logo b{font-size:clamp(2.4rem,4.6vw,4rem);color:var(--ivory)}
+footer .logo small{color:var(--sand);opacity:0.75}
+footer h4{font:500 1.2rem var(--display);color:var(--ivory);margin:0 0 14px}
+footer ul{list-style:none;padding:0;margin:0;display:grid;gap:10px;font-size:15px}
+footer a{text-decoration:none;opacity:0.82;transition:opacity 0.2s,color 0.2s}
+footer a:hover{opacity:1;color:var(--saf)}
+.fbot{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  font-size:13.5px;
+  opacity:0.7;
+  border-top:1px solid rgba(244,228,200,0.18);
+  padding-top:22px;
+}
+
+/* floating favorites button */
+.fav{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:40;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:11px 20px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--ink);
+  box-shadow:0 12px 28px -12px rgba(20,35,26,0.35);
+  transition:transform 0.25s,box-shadow 0.25s;
+}
+.fav:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+
+/* intro animation screen */
+.intro{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:var(--ivory);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:24px;
+  cursor:pointer;
+  transition:opacity 0.9s var(--ease),transform 0.9s var(--ease);
+}
+.intro.gone{opacity:0;transform:scale(1.04);pointer-events:none}
+.intro-tri{position:absolute;left:0;right:0;top:0;height:4px;display:flex}
+.intro-tri i{flex:1}
+.intro-tri i:nth-child(1){background:var(--saf)}
+.intro-tri i:nth-child(2){background:#FFFFFF}
+.intro-tri i:nth-child(3){background:var(--green)}
+.intro-wheel{
+  width:min(230px,52vw);
+  height:auto;
+  filter:drop-shadow(0 0 26px rgba(30,55,133,0.3));
+  animation:pop 1s var(--ease) both;
+}
+.intro-wheel .spokes{
+  transform-origin:100px 100px;
+  transform-box:view-box;
+  animation:turn 2.4s var(--ease) both;
+}
+@keyframes pop{from{transform:scale(0.45);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes turn{from{transform:rotate(-120deg)}to{transform:rotate(0)}}
+.intro-txt{
+  font:700 clamp(2.2rem,6vw,3.6rem)/1 var(--f-sky);
+  color:var(--ink);
+  margin:0;
+  animation:up 0.8s 0.5s var(--ease) both;
+}
+.intro-txt i{font-style:normal;color:var(--saf);font-family:var(--f-triver)}
+
+/* cursor tilt 3D layer */
+.tl-in{
+  position:relative;
+  height:100%;
+  transition:transform 0.45s var(--ease);
+  transform-style:preserve-3d;
+  will-change:transform;
+  border-radius:inherit;
+}
+.tl-in::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,0.45),transparent 60%);
+  opacity:0;
+  transition:opacity 0.35s;
+}
+.tl-in:hover::after{opacity:1}
+.card,.gem{overflow:visible}
+
+/* scroll reveal */
+.rv{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.7s ease,transform 0.7s var(--ease);
+}
+.rv.on{opacity:1;transform:none}
+.rise{animation:up 0.75s var(--ease) both}
+.rise.d1{animation-delay:0.1s}
+.rise.d2{animation-delay:0.2s}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* responsive styles */
+@media(max-width:1020px){
+  .links{display:none}
+  .burger{display:flex}
+  .feat,.food,.resp{grid-template-columns:1fr}
+  .feat-media{min-height:0;aspect-ratio:5/4}
+  .glist{grid-template-columns:1fr 1fr}
+  .help{grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+  .stats{grid-template-columns:1fr 1fr}
+  .stats div{border-radius:20px;padding:16px 16px 14px}
+  .stats b{font-size:1.6rem}
+  .hero-meta{justify-content:center}
+  .slidebox{width:100%;justify-content:space-between}
+  .hero h1{font-size:clamp(2.3rem,9.5vw,3.4rem)}
+  .bar-r .btn{display:none}
+  .why,.pillars,.glist,.help{grid-template-columns:1fr}
+  .fest{grid-template-columns:1fr}
+  .fest article{grid-template-columns:96px 1fr;gap:14px;padding:16px}
+  .dlg-body{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .fgrid>:first-child{grid-column:1/-1}
+  .gems,.pl{border-radius:36px}
+  .pl{margin:0 8px}
+  .search button{padding:12px 18px}
+  .pl-grid{grid-template-columns:1fr 1fr}
+  .pl-span2{grid-column:span 2}
+  .sp-tiers{grid-template-columns:1fr 1fr}
+  .pl-cats{grid-template-columns:repeat(3,1fr)}
+  .pl-cards{grid-template-columns:1fr 1fr}
+}
+@media(max-width:540px){
+  .pl-modes{grid-template-columns:1fr}
+  .pl-grid,.pl-cards{grid-template-columns:1fr}
+  .pl-span2{grid-column:auto}
+  .pl-actions{grid-template-columns:1fr}
+  .pl-cats{grid-template-columns:1fr 1fr}
+  .pl-sumbox{text-align:left}
+  .fest article{grid-template-columns:1fr}
+  .fest-media{aspect-ratio:16/9}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+
+/* District-wise exploration: Clean text-only buttons with NO bullets or symbols */
+.dgrid {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+}
+.dgrid button {
+  list-style: none !important;
+  border: 1px solid var(--line) !important;
+  background: var(--paper) !important;
+  border-radius: 999px !important;
+  padding: 10px 18px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--ink) !important;
+  cursor: pointer !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: all 0.25s var(--ease) !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  line-height: 1.2 !important;
+}
+.dgrid button::before,
+.dgrid button::after {
+  content: none !important;
+  display: none !important;
+}
+.dgrid button:hover {
+  border-color: var(--saf) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+.dgrid button[aria-current="true"] {
+  background: var(--ink) !important;
+  color: var(--ivory) !important;
+  border-color: var(--ink) !important;
+}
+
+</style>
+</head>
+<body>
+<div class="intro" id="intro" aria-hidden="true"><div class="intro-tri"><i></i><i></i><i></i></div><svg class="intro-wheel" id="wheel" viewBox="0 0 200 200"></svg><p class="intro-txt">Explore<i>UP</i></p></div>
+
+<div class="prog" id="prog"></div>
+<div class="bar" id="bar"><div class="bar-in">
+<a class="logo" href="#top"><svg class="lpin" viewBox="0 0 48 60" aria-hidden="true"><defs><clipPath id="pinN"><path d="M24 2C12.4 2 3 11.4 3 23c0 15.4 17.6 33.6 20.3 36.2a1.2 1.2 0 0 0 1.4 0C27.4 56.6 45 38.4 45 23 45 11.4 35.6 2 24 2z"/></clipPath></defs><g clip-path="url(#pinN)"><rect width="48" height="21" fill="#F08A24"/><rect y="21" width="48" height="9" fill="#FFFFFF"/><rect y="30" width="48" height="30" fill="#0F6B3A"/></g><circle cx="24" cy="25" r="8.6" fill="#FFFFFF" fill-opacity=".9"/><circle cx="24" cy="25" r="8.6" fill="none" stroke="#233E91" stroke-width="1.2"/><g stroke="#233E91" stroke-width=".7"><line x1="25.60" y1="25.00" x2="32.40" y2="25.00"/><line x1="25.55" y1="25.41" x2="32.11" y2="27.17"/><line x1="25.39" y1="25.80" x2="31.27" y2="29.20"/><line x1="25.13" y1="26.13" x2="29.94" y2="30.94"/><line x1="24.80" y1="26.39" x2="28.20" y2="32.27"/><line x1="24.41" y1="26.55" x2="26.17" y2="33.11"/><line x1="24.00" y1="26.60" x2="24.00" y2="33.40"/><line x1="23.59" y1="26.55" x2="21.83" y2="33.11"/><line x1="23.20" y1="26.39" x2="19.80" y2="32.27"/><line x1="22.87" y1="26.13" x2="18.06" y2="30.94"/><line x1="22.61" y1="25.80" x2="16.73" y2="29.20"/><line x1="22.45" y1="25.41" x2="15.89" y2="27.17"/><line x1="22.40" y1="25.00" x2="15.60" y2="25.00"/><line x1="22.45" y1="24.59" x2="15.89" y2="22.83"/><line x1="22.61" y1="24.20" x2="16.73" y2="20.80"/><line x1="22.87" y1="23.87" x2="18.06" y2="19.06"/><line x1="23.20" y1="23.61" x2="19.80" y2="17.73"/><line x1="23.59" y1="23.45" x2="21.83" y2="16.89"/><line x1="24.00" y1="23.40" x2="24.00" y2="16.60"/><line x1="24.41" y1="23.45" x2="26.17" y2="16.89"/><line x1="24.80" y1="23.61" x2="28.20" y2="17.73"/><line x1="25.13" y1="23.87" x2="29.94" y2="19.06"/><line x1="25.39" y1="24.20" x2="31.27" y2="20.80"/><line x1="25.55" y1="24.59" x2="32.11" y2="22.83"/></g><circle cx="24" cy="25" r="1.5" fill="#233E91"/></svg><span class="ltext"><b>Explore<i>UP</i></b><small>HAR SHEHAR KI KAHANI</small></span></a>
+<ul class="links" id="menu">
+<li><a href="#cities">Cities</a></li>
+<li><a href="#districts">Districts</a></li>
+<li><a href="#gems">Hidden Gems</a></li>
+<li><a href="#festivals">Festivals</a></li>
+<li><a href="#food">Food</a></li>
+<li><a href="#planner">Planner</a></li>
+</ul>
+<div class="bar-r">
+<span class="pill">English</span>
+<button class="btn sm" id="arya">Ask Arya</button>
+<button class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="Open navigation"><span></span><span></span><span></span></button>
+</div>
+</div></div>
+
+<div class="drawer" id="drawer"><nav>
+<button class="dclose" id="dclose">Close</button>
+<a href="#top">Home</a>
+<a href="#cities">Explore All Cities</a>
+<a href="#districts">District-wise Exploration</a>
+<a href="#gems">Hidden Gems</a>
+<a href="#festivals">Festivals Calendar</a>
+<a href="#food">Food Trails</a>
+<a href="#responsible">Travel Responsibly</a>
+<a href="#planner">Trip Planner</a>
+<a href="#help">Emergency Helplines</a>
+</nav></div>
+
+<main id="top">
+<div class="hero-wrap">
+<div class="hero-bg" id="heroBg" aria-hidden="true"></div>
+<div class="wrap hero">
+<span class="greet rise"><i aria-hidden="true">🙏</i>Namaste, welcome</span>
+<h1 class="rise d1">Find your <em>Uttar Pradesh</em></h1>
+<p class="lede rise d1">Monuments, sacred rivers, street food and quiet hidden corners, planned city by city.</p>
+<form class="search rise d2" id="search" role="search">
+<input id="q" list="dl" placeholder="Search a city, monument or dish" aria-label="Search">
+<datalist id="dl"></datalist>
+<button type="submit">Search</button>
+</form>
+<div class="hint" id="hint" aria-live="polite"></div>
+<div class="quick rise d2"><span>Popular</span><a href="#districts" data-city="Agra">Agra</a><a href="#districts" data-city="Varanasi">Varanasi</a><a href="#districts" data-city="Lucknow">Lucknow</a><a href="#districts" data-city="Ayodhya">Ayodhya</a><a href="#gems">Hidden gems</a></div>
+<div class="cta rise d2"><a class="btn" href="#cities">Explore cities</a><a class="btn ghost" href="#planner">Plan a trip</a></div>
+<div class="stats rise d2"><div><b>75</b><span>Cities</span></div><div><b>36</b><span>Destinations</span></div><div><b>Live</b><span>Transport guides</span></div><div><b>Verified</b><span>Stays &amp; healthcare</span></div></div>
+</div>
+<div class="wrap hero-meta"><div class="slidebox rise d2" aria-live="off"><div><b id="hc">Agra</b><span class="sub" id="hs">Taj Mahal and Mughal forts</span></div><div class="dots" id="hdots"></div></div></div>
+</div>
+
+<section id="cities" style="padding-top:clamp(44px,6vw,76px)"><div class="wrap">
+<div class="head"><div><span class="eyebrow">Explore All Cities</span><h2>Explore Uttar Pradesh city by city</h2></div><p>Travel guides, transport, hotels and food for every stop. Swipe to see more.</p></div>
+<div class="tools"><div class="field"><input id="cfilter" type="search" placeholder="Search cities..." aria-label="Search cities"><button id="cgo">Search</button></div><span class="pill" id="cities-count">28 cities</span></div>
+<div class="snap" id="cgrid"></div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+<div class="feat" id="feat" role="group" aria-roledescription="carousel" aria-label="Featured districts">
+<div class="feat-media"><div class="art" id="feat-img"></div><div class="fprog" aria-hidden="true"><i id="fprog"></i></div><div class="fcount" id="fcount" aria-live="polite"></div><div class="fnav"><button type="button" id="fprev" aria-label="Previous district">←</button><button type="button" id="fnext" aria-label="Next district">→</button></div></div>
+<div class="feat-copy">
+<span class="eyebrow">Featured destination</span>
+<div class="fcopy" id="fcopy"><h2 id="fname"></h2><p class="ftag" id="ftag"></p>
+<p class="muted" id="fdesc"></p></div>
+<div class="why">
+<div><b>Complete City Directory</b><span>Places, food, stays and medical facilities</span></div>
+<div><b>Live Transport Routes</b><span>Airports, railway junctions &amp; expressways</span></div>
+<div><b>Local Food Trails</b><span>Must-try authentic dishes &amp; sweet shops</span></div>
+<div><b>Smart Trip Planning</b><span>Custom 1, 2, or 3-day itineraries</span></div>
+</div>
+<a class="btn" href="#districts" id="fgo">Explore Lucknow Guide →</a>
+</div>
+</div>
+<div class="frail" id="frail" aria-label="Jump to a district"></div>
+</div></section>
+
+<section id="districts" style="padding-top:0"><div class="wrap">
+<div class="head"><div><span class="eyebrow">District-wise Exploration</span><h2>Choose a district</h2></div><p>Explore its places, food, services and travel information.</p></div>
+<div class="tools"><div class="field"><input id="dfilter" type="search" placeholder="Filter districts" aria-label="Filter districts"></div><span class="count" id="dcount"></span></div>
+<div class="dgrid" id="dgrid"></div>
+</div></section>
+
+<section class="gems" id="gems"><div class="wrap">
+<div class="head"><div><span class="eyebrow">Hidden Gems of Uttar Pradesh</span><h2>Beyond the famous destinations</h2></div><p>Discover the lesser-known waterfalls, forests, forts, wildlife sanctuaries and historic places.</p></div>
+<div class="tools"><div class="gtabs" id="gtabs"></div><span class="pill">16 hidden gems to explore</span></div>
+<div class="glist" id="glist"></div>
+<div style="margin-top:32px;text-align:center"><button class="btn ghost" id="gem-toggle" type="button">View All Hidden Gems ↓</button></div>
+</div></section>
+
+<dialog id="dlg" aria-labelledby="dlg-t">
+<button class="dlg-close" id="dlg-x">Close</button>
+<div class="dlg-art art" id="dlg-img"></div>
+<div class="dlg-body" id="dlg-body"></div>
+</dialog>
+
+<section id="festivals" style="padding-top:0"><div class="wrap">
+<div class="head"><div><span class="eyebrow">Festivals Calendar</span><h2>Plan around the festivals</h2></div><p>Plan your Uttar Pradesh trip around vibrant cultural and spiritual festivals.</p></div>
+<div class="fest" id="fest"></div>
+</div></section>
+
+<section id="food" style="padding-top:0"><div class="wrap">
+<div class="head"><div><span class="eyebrow">Signature Food Trails</span><h2>Eat through two cities</h2></div><p>Experience Uttar Pradesh through its world-famous culinary traditions.</p></div>
+<div class="food">
+<article class="trail"><div class="art" id="t1"></div><div class="body"><h3>Banaras Street-Food Trail</h3><p class="chain">Puri-Kachori-Sabzi at Ram Bhandar, Tamatar Chaat at Kashi Chaat, Malaiyo &amp; Lassi, Banarasi Paan</p><ol class="steps">
+<li><i>1</i>Puri-Kachori-Sabzi<span>Ram Bhandar</span></li>
+<li><i>2</i>Tamatar Chaat<span>Kashi Chaat</span></li>
+<li><i>3</i>Malaiyo &amp; Lassi</li>
+<li><i>4</i>Banarasi Paan</li></ol></div></article>
+<article class="trail"><div class="art" id="t2"></div><div class="body"><h3>Lucknow Royal Awadhi Trail</h3><p class="chain">Tunday Galawati Kebab at Chowk, Dastarkhwan Biryani, Basket Chaat at Royal Cafe, Prakash Kulfi</p><ol class="steps">
+<li><i>1</i>Tunday Galawati Kebab<span>Chowk</span></li>
+<li><i>2</i>Dastarkhwan Biryani</li>
+<li><i>3</i>Basket Chaat<span>Royal Cafe</span></li>
+<li><i>4</i>Prakash Kulfi</li></ol></div></article>
+</div>
+</div></section>
+
+<section id="responsible" style="padding-top:0"><div class="wrap resp">
+<div><span class="eyebrow">Travel Responsibly</span><h2>Sustainable Travel in UP</h2><p class="muted" style="margin-top:14px;max-width:40ch">Help preserve Uttar Pradesh’s centuries-old monuments, sacred rivers, and natural habitats for future generations.</p></div>
+<div>
+<div class="pillars">
+<div><b>Avoid Single-use Plastic</b><span>Carry a reusable water bottle, especially around ghats and heritage sites.</span></div>
+<div><b>Support Local Artisans</b><span>Buy genuine Chikankari in Lucknow, Agra marble inlay, and Banarasi silk weavers.</span></div>
+<div><b>Respect Sacred Waters</b><span>Keep Ganga, Yamuna, and Sarayu ghats litter-free and honor local rituals.</span></div>
+<div><b>Green Local Transit</b><span>Prefer electric e-rickshaws, metro systems, and walking trails in old city cores.</span></div>
+</div>
+<div class="gov"><div class="gov-who"><img class="gov-photo" src="/assets/official/yogi-adityanath.jpg" alt="Yogi Adityanath, Honourable Chief Minister of Uttar Pradesh" loading="lazy" onerror="this.onerror=null; this.src='data:image/jpeg;base64,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'"><div><span class="eyebrow">Government of Uttar Pradesh</span><b class="gov-name">Yogi Adityanath</b><span class="muted gov-role">Honourable Chief Minister, Uttar Pradesh</span></div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill">Official Portal ↗</span><a class="pill" href="https://uptourism.gov.in" target="_blank" rel="noopener">UP Tourism Official (uptourism.gov.in) ↗</a></div></div>
+</div>
+</div></section>
+
+<section class="pl" id="planner"><div class="wrap">
+<div class="pl-head">
+<div><span class="pl-kick">Trip Planner</span><h2>Smart Trip Planner</h2><p>Craft your day-by-day Uttar Pradesh itinerary in seconds.</p></div>
+<button class="pl-saved" id="sp-saved-btn" type="button">My Saved Trips (<span id="sp-saved-n">0</span>)</button>
+</div>
+
+<div class="pl-modes" role="radiogroup" aria-label="Plan type">
+<button class="sp-mode on" type="button" data-mode="quick" aria-pressed="true"><span class="sp-radio"></span><span><b>Quick Plan</b><em class="pl-badge">Offline instant</em><small>Create a plan instantly using ExploreUP's built-in UP travel data.</small></span></button>
+<button class="sp-mode" type="button" data-mode="smart" aria-pressed="false"><span class="sp-radio"></span><span><b>Smart Plan</b><em class="pl-badge ai">Arya AI</em><small>Use Arya AI to create a personalized itinerary.</small></span></button>
+</div>
+
+<details class="pl-acc" open><summary><span class="pl-n">1</span>Destination, duration &amp; travelers<em id="sp-dur">3 days • 2 nights</em></summary>
+<div class="pl-body">
+<div class="pl-grid">
+<label class="pl-field pl-span2"><span>Destination / district *</span><input id="sp-dest" list="sp-dl" value="Agra" autocomplete="off"><datalist id="sp-dl"></datalist></label>
+<div class="pl-field"><span>Trip duration</span><div class="sp-stepper"><button type="button" data-k="days" data-d="-1" aria-label="Fewer days">−</button><b id="sp-days">3 days</b><button type="button" data-k="days" data-d="1" aria-label="More days">+</button></div></div>
+<div class="pl-field"><span>Adults · 12+</span><div class="sp-stepper"><button type="button" data-k="adults" data-d="-1" aria-label="Fewer adults">−</button><b id="sp-adults">2</b><button type="button" data-k="adults" data-d="1" aria-label="More adults">+</button></div></div>
+<div class="pl-field"><span>Children · under 12</span><div class="sp-stepper"><button type="button" data-k="children" data-d="-1" aria-label="Fewer children">−</button><b id="sp-children">0</b><button type="button" data-k="children" data-d="1" aria-label="More children">+</button></div></div>
+<label class="pl-field"><span>Start date <em>optional</em></span><input type="date" id="sp-start"></label>
+<label class="pl-field"><span>End date <em>sets duration</em></span><input type="date" id="sp-end"></label>
+</div>
+<div class="sp-chips" id="sp-destchips"></div>
+</div></details>
+
+<details class="pl-acc"><summary><span class="pl-n">2</span>Budget, transport, stay &amp; pace<em id="sp-total2">₹0</em></summary>
+<div class="pl-body">
+<div class="sp-tiers" id="sp-tiers"></div>
+<div class="pl-grid">
+<label class="pl-field pl-span2"><span>Custom total budget (₹) <em>optional</em></span><input id="sp-custom" type="number" min="0" placeholder="e.g. 18000"></label>
+<label class="pl-field"><span>Transport</span><select id="sp-trans"><option>Mixed Transport</option><option>Train + Local Auto</option><option>Private Car / Cab</option><option>Bus</option></select></label>
+<label class="pl-field"><span>Stay type</span><select id="sp-stay"><option>Budget Guesthouse</option><option selected>Standard Hotel</option><option>Premium Hotel</option><option>Heritage Haveli</option></select></label>
+</div>
+<div class="pl-field"><span>Travel style</span><div class="sp-seg" id="sp-pace"></div></div>
+<div class="pl-cost">
+<div class="pl-costhead"><span><b id="sp-cdest">Agra</b> • <span id="sp-cdays">3 days</span> • <span id="sp-cppl">2 travelers</span></span><span>Per person <b id="sp-pp">₹0</b></span></div>
+<div class="pl-meter"><i id="sp-meter"></i></div>
+<div class="pl-cats" id="sp-cats"></div>
+<div class="pl-remain">Remaining budget <b id="sp-remain">Set a budget</b></div>
+</div>
+</div></details>
+
+<details class="pl-acc"><summary><span class="pl-n">3</span>Interests &amp; special requirements</summary>
+<div class="pl-body">
+<div class="sp-chips" id="sp-ints"></div>
+<label class="pl-field"><span>Anything else? <em>optional</em></span><textarea id="sp-req" rows="2" placeholder="Vegetarian food, less walking, sunrise photography..."></textarea></label>
+</div></details>
+
+<div class="pl-actions">
+<button class="sp-btn primary" type="button" id="sp-make">Make My Plan</button>
+<button class="sp-btn" type="button" id="sp-calc">Calculate Budget</button>
+<button class="sp-btn ghost" type="button" id="sp-reset">Reset filters</button>
+</div>
+
+<div class="pl-summary">
+<div><span class="pl-kick2">Your trip summary</span><h3 id="sp-sumtitle">Agra • 3 Days • 2 Travelers</h3><div class="sp-chips" id="sp-sumchips"></div></div>
+<div class="pl-sumbox"><span>Estimated budget</span><b id="sp-sumtotal">₹0</b><small id="sp-sumpp"></small></div>
+</div>
+
+<div class="sp-tabs" role="tablist">
+<button class="on" type="button" data-tab="itin">Day-by-day itinerary</button>
+<button type="button" data-tab="rec">Recommendations</button>
+<button type="button" data-tab="cost">Cost estimate</button>
+<button type="button" data-tab="saved">Saved (<span id="sp-tab-saved">0</span>)</button>
+</div>
+<div class="sp-panel on" id="p-itin"></div>
+<div class="sp-panel" id="p-rec"></div>
+<div class="sp-panel" id="p-cost"></div>
+<div class="sp-panel" id="p-saved"></div>
+
+<details class="pl-acc pl-info-acc"><summary><span class="pl-n">+</span>Packing, weather &amp; helplines</summary>
+<div class="pl-body pl-info">
+<div><b>Best season:</b> Oct – Mar. <i>Check the IMD forecast before departure.</i></div>
+<div><b>Modest temple attire:</b> slip-on footwear and shoulder-covering cotton clothes for shrines and ghats.</div>
+<div><b>Essentials:</b> power bank, reusable water bottle, govt photo ID (Aadhaar/Passport), small cash or UPI.</div>
+<ul class="pl-help"><li>UP Integrated Police / Emergency <a href="tel:112">112</a></li><li>UP Tourism Toll-Free <a href="tel:1363">1363</a></li><li>Ambulance <a href="tel:108">108</a> · Women Powerline <a href="tel:1090">1090</a> · Railway <a href="tel:139">139</a></li></ul>
+</div></details>
+
+<div class="pl-bottom">
+<button class="sp-btn primary" type="button" id="sp-save">Save itinerary</button>
+<button class="sp-btn" type="button" id="sp-pdf">Print / PDF</button>
+<button class="sp-btn" type="button" id="sp-copy">Copy</button>
+<button class="sp-btn" type="button" id="sp-guide">City guide</button>
+<button class="sp-btn" type="button" id="sp-again">Start again</button>
+</div>
+<div class="sp-toast" id="sp-toast" role="status" aria-live="polite"></div>
+</div></section>
+
+<section id="help" style="padding-top:0"><div class="wrap">
+<div class="head"><div><span class="eyebrow">Safety &amp; Tourist Support</span><h2>Emergency &amp; 24/7 Helplines</h2></div><p>Official emergency helplines for travellers in Uttar Pradesh. Tap any number to call directly.</p></div>
+<div class="help" id="hgrid"></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+<div class="tri" aria-hidden="true"><span class="chakra" id="chakra"></span></div>
+<div class="fgrid">
+<div><a class="logo" href="#top"><svg class="lpin big" viewBox="0 0 48 60" aria-hidden="true"><defs><clipPath id="pinF"><path d="M24 2C12.4 2 3 11.4 3 23c0 15.4 17.6 33.6 20.3 36.2a1.2 1.2 0 0 0 1.4 0C27.4 56.6 45 38.4 45 23 45 11.4 35.6 2 24 2z"/></clipPath></defs><g clip-path="url(#pinF)"><rect width="48" height="21" fill="#F08A24"/><rect y="21" width="48" height="9" fill="#FFFFFF"/><rect y="30" width="48" height="30" fill="#0F6B3A"/></g><circle cx="24" cy="25" r="8.6" fill="#FFFFFF" fill-opacity=".9"/><circle cx="24" cy="25" r="8.6" fill="none" stroke="#233E91" stroke-width="1.2"/><g stroke="#233E91" stroke-width=".7"><line x1="25.60" y1="25.00" x2="32.40" y2="25.00"/><line x1="25.55" y1="25.41" x2="32.11" y2="27.17"/><line x1="25.39" y1="25.80" x2="31.27" y2="29.20"/><line x1="25.13" y1="26.13" x2="29.94" y2="30.94"/><line x1="24.80" y1="26.39" x2="28.20" y2="32.27"/><line x1="24.41" y1="26.55" x2="26.17" y2="33.11"/><line x1="24.00" y1="26.60" x2="24.00" y2="33.40"/><line x1="23.59" y1="26.55" x2="21.83" y2="33.11"/><line x1="23.20" y1="26.39" x2="19.80" y2="32.27"/><line x1="22.87" y1="26.13" x2="18.06" y2="30.94"/><line x1="22.61" y1="25.80" x2="16.73" y2="29.20"/><line x1="22.45" y1="25.41" x2="15.89" y2="27.17"/><line x1="22.40" y1="25.00" x2="15.60" y2="25.00"/><line x1="22.45" y1="24.59" x2="15.89" y2="22.83"/><line x1="22.61" y1="24.20" x2="16.73" y2="20.80"/><line x1="22.87" y1="23.87" x2="18.06" y2="19.06"/><line x1="23.20" y1="23.61" x2="19.80" y2="17.73"/><line x1="23.59" y1="23.45" x2="21.83" y2="16.89"/><line x1="24.00" y1="23.40" x2="24.00" y2="16.60"/><line x1="24.41" y1="23.45" x2="26.17" y2="16.89"/><line x1="24.80" y1="23.61" x2="28.20" y2="17.73"/><line x1="25.13" y1="23.87" x2="29.94" y2="19.06"/><line x1="25.39" y1="24.20" x2="31.27" y2="20.80"/><line x1="25.55" y1="24.59" x2="32.11" y2="22.83"/></g><circle cx="24" cy="25" r="1.5" fill="#233E91"/></svg><span class="ltext"><b>Explore<i style="color:var(--saf)">UP</i></b><small>HAR SHEHAR KI KAHANI • UTTAR PRADESH</small></span></a></div>
+<div><h4>Explore</h4><ul><li><a href="#top">Home</a></li><li><a href="#cities">Explore All Cities</a></li><li><a href="#planner">Trip Planner</a></li><li><a href="#help">Emergency</a></li></ul></div>
+<div><h4>Discover</h4><ul><li><a href="#gems">Hidden Gems</a></li><li><a href="#food">Food Trails</a></li><li><a href="#festivals">Festivals</a></li></ul></div>
+</div>
+<div class="fbot"><span>© 2026 ExploreUP</span><span>Design prototype. Verify details before publishing.</span></div>
+</div></footer>
+
+<button class="fav" id="fav">♡ My Favourites <span id="favn">0</span></button>
+
+<script>
+/* Helper: converts city/gem/district name to clean lowercase hyphen slug */
+function toSlug(s){
+  return String(s||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
+
+/* ILLUSTRATED SVG MOTIFS (FALLBACK IF REAL PHOTO IS MISSING OR NOT YET COPIED) */
+const PAL={
+  agra:['#F7DDB2','#FFF3DA','#F4A54F','#D9700F'],
+  varanasi:['#F9D3A0','#FFEBC8','#F08A32','#BE5A0E'],
+  lucknow:['#E6E8C8','#F8F3DC','#3E8E5E','#0F5C34'],
+  ayodhya:['#F8D9A6','#FFF0D2','#EE9A3A','#C25C10'],
+  mathura:['#DAE3F3','#F6F2E6','#5C7DD0','#233E91'],
+  forest:['#D8E6C4','#F4F1DC','#3F8A5A','#0F5C34'],
+  falls:['#DCE7EE','#F5F2E6','#5C86BA','#2A4A8C']
+};
+const MOTIF={
+  arch:(c,d)=>`<path d="M90 500V240Q90 110 200 110Q310 110 310 240V500Z" fill="${c}"/><path d="M140 500V260Q140 170 200 170Q260 170 260 260V500Z" fill="${d}" opacity=".55"/>`,
+  dome:(c,d)=>`<rect x="60" y="300" width="280" height="200" rx="8" fill="${c}"/><path d="M110 300Q110 150 200 150Q290 150 290 300Z" fill="${d}"/><rect x="40" y="290" width="16" height="210" rx="8" fill="${c}"/><rect x="344" y="290" width="16" height="210" rx="8" fill="${c}"/>`,
+  ghat:(c,d)=>`<path d="M0 360H400V500H0Z" fill="${d}" opacity=".45"/><rect x="60" y="260" width="280" height="30" rx="15" fill="${c}"/><rect x="90" y="300" width="220" height="30" rx="15" fill="${c}" opacity=".8"/><rect x="120" y="340" width="160" height="30" rx="15" fill="${c}" opacity=".6"/>`,
+  falls:(c,d)=>`<path d="M60 500Q80 220 200 200Q320 220 340 500Z" fill="${c}"/><path d="M180 220Q200 180 220 220V500H180Z" fill="${d}" opacity=".7"/><path d="M0 430Q200 390 400 430V500H0Z" fill="${d}" opacity=".5"/>`,
+  forestm:(c,d)=>`<path d="M40 360l50-130 50 130zM120 360l60-170 60 170zM250 360l50-120 50 120z" fill="${c}"/><rect y="360" width="400" height="140" fill="${d}" opacity=".6"/>`
+};
+
+/* Real photo with illustrated SVG fallback:
+   Displays SVG base, and layers <img> on top. If image fails, SVG shows seamlessly. */
+function art(k,m,imgSrc,altText){
+  const[s,l,c,d]=PAL[k]||PAL.agra;
+  const svg=`<svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true"><rect width="400" height="500" fill="${s}"/><circle cx="300" cy="120" r="54" fill="${l}" opacity=".9"/>${(MOTIF[m]||MOTIF.arch)(c,d)}</svg>`;
+  if(!imgSrc) return svg;
+  const alt=altText?altText.replace(/"/g,'&quot;'):'Uttar Pradesh Tourism';
+  return `${svg}<img src="${imgSrc}" alt="${alt}" loading="lazy" class="art-img" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">`;
+}
+function put(id,k,m,imgSrc,altText){
+  const el=document.getElementById(id);
+  if(el) el.innerHTML=art(k,m,imgSrc,altText);
+}
+
+/* ========================================================
+   TASK 2: SINGLE UNIFIED ARRAYS FOR CITIES, DISTRICTS & GEMS
+   Adding a new entry only requires a name and an image path!
+   ======================================================== */
+
+/* ========================================================
+   SINGLE SOURCE OF TRUTH (LOADED FROM /data/*.js)
+   ======================================================== */
+const CITIES = window.CITIES || [];
+const DISTRICTS = window.DISTRICTS || [];
+const GEMS = window.GEMS || [];
+
+/* 4. FESTIVALS (with real /assets/festivals/<slug>.jpg photo paths) */
+const FEST=[
+  ['Jan–Feb','Magh Mela & Kumbh','Prayagraj · Triveni Sangam','/assets/festivals/magh-mela-kumbh.jpg','varanasi','ghat'],
+  ['Feb 18–27','Taj Mahotsav','Agra · Shilpgram Arts & Crafts','/assets/festivals/taj-mahotsav.jpg','agra','arch'],
+  ['Feb–Mar','Braj Lathmar Holi','Mathura · Vrindavan · Barsana','/assets/festivals/braj-lathmar-holi.jpg','mathura','ghat'],
+  ['Mar–Apr','Ram Navami','Ayodhya · Sarayu Ghats','/assets/festivals/ram-navami.jpg','ayodhya','dome'],
+  ['Oct–Nov','Deepotsav','Ayodhya · Guinness Record Diya spectacle','/assets/festivals/deepotsav.jpg','ayodhya','dome'],
+  ['Nov (Kartik Purnima)','Dev Deepawali','Varanasi · 1 Million lamps on 84 Ghats','/assets/festivals/dev-deepawali.jpg','varanasi','ghat'],
+  ['Nov–Dec','Lucknow Mahotsav','Lucknow · Awadhi heritage & music','/assets/festivals/lucknow-mahotsav.jpg','lucknow','dome'],
+  ['Dec–Jan','Ganga Mahotsav','Varanasi · Classical dance & music','/assets/festivals/ganga-mahotsav.jpg','varanasi','ghat']
+];
+
+/* 5. HELPLINES */
+const HELP=[
+  ['112','Police / Immediate Help','UP Integrated Emergency Response'],
+  ['108','Ambulance Emergency','Free emergency ambulance service'],
+  ['1363','UP Tourist Helpline','Toll-free tourist guidance & assistance'],
+  ['1090','Women Powerline','Dedicated women safety support'],
+  ['1076','UP CM Helpline','Public grievances and assistance'],
+  ['139','Railway Help & Enquiry','Indian Railways 24x7 helpline']
+];
+
+/* 6. HERO ROTATION (Agra, Varanasi, Lucknow, Ayodhya, Mathura) */
+const HEROES=[
+  {n:'Agra',img:'/assets/hero/agra.jpg',k:'agra',m:'arch',s:'Taj Mahal and Mughal forts'},
+  {n:'Varanasi',img:'/assets/hero/varanasi.jpg',k:'varanasi',m:'ghat',s:'Ghats at dawn and evening aarti'},
+  {n:'Lucknow',img:'/assets/hero/lucknow.jpg',k:'lucknow',m:'dome',s:'Imambaras and Awadhi kitchens'},
+  {n:'Ayodhya',img:'/assets/hero/ayodhya.jpg',k:'ayodhya',m:'dome',s:'Ram temple and the Sarayu ghats'},
+  {n:'Mathura',img:'/assets/hero/mathura.jpg',k:'mathura',m:'ghat',s:'Krishna Janmabhoomi and Braj culture'}
+];
+
+const wide=(k,m)=>{
+  const[s,l,c,d]=PAL[k],M=MOTIF[m](c,d);
+  return `<svg viewBox="0 0 1400 1000" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><rect width="1400" height="1000" fill="${s}"/><circle cx="1010" cy="250" r="96" fill="${l}" opacity=".95"/><circle cx="330" cy="200" r="44" fill="${l}" opacity=".7"/><rect y="860" width="1400" height="140" fill="${d}" opacity=".3"/><g transform="translate(90 330) scale(1.3)">${M}</g><g transform="translate(1310 330) scale(-1.3 1.3)" opacity=".92">${M}</g><g class="mid" transform="translate(450 270) scale(1.4)" opacity=".75">${M}</g></svg>`;
+};
+
+const hbg=document.getElementById('heroBg'),hdots=document.getElementById('hdots');
+HEROES.forEach((h,i)=>{
+  hbg.insertAdjacentHTML('beforeend',
+    `<div class="slide">${wide(h.k,h.m)}<img src="${h.img}" alt="${h.n} - ${h.s}" loading="lazy" class="hero-img" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'"></div>`
+  );
+  hdots.insertAdjacentHTML('beforeend',`<button type="button" aria-label="Show ${h.n}"></button>`);
+});
+
+let hi=0,ht;
+function showHero(i){
+  hi=i;
+  [...hbg.children].forEach((el,j)=>el.classList.toggle('on',j===i));
+  [...hdots.children].forEach((el,j)=>el.classList.toggle('on',j===i));
+  document.getElementById('hc').textContent=HEROES[i].n;
+  document.getElementById('hs').textContent=HEROES[i].s;
+}
+function startHero(){
+  clearInterval(ht);
+  ht=setInterval(()=>showHero((hi+1)%HEROES.length),6500);
+}
+[...hdots.children].forEach((b,i)=>b.addEventListener('click',()=>{showHero(i);startHero()}));
+showHero(0);
+startHero();
+
+/* 7. FOOD TRAILS (/assets/food/<slug>.jpg) */
+put('t1','varanasi','ghat','/assets/food/banaras-street-food.jpg','Banaras Street-Food Trail — Puri, Kachori and Chaat');
+put('t2','lucknow','dome','/assets/food/lucknow-royal-awadhi.jpg','Lucknow Royal Awadhi Trail — Kebabs, Biryani and Kulfi');
+
+/* 8. SEARCH AUTOCOMPLETE */
+/* 8. SEARCH AUTOCOMPLETE & DISTRICT NAVIGATION */
+const allNames = [...new Set([
+  ...((window.CITIES || []).map(c => c.name || c.n)),
+  ...((window.DISTRICTS || []).map(d => d.name || d.n)),
+  ...((window.GEMS || []).map(g => g.name || g.n))
+])];
+const dl = document.getElementById('dl');
+if (dl) dl.innerHTML = allNames.map(n => `<option value="${n}">`).join('');
+
+let currentSelectedDistrict = '';
+function goDist(v) {
+  const q = (v || '').trim().toLowerCase();
+  const allD = window.DISTRICTS || [];
+  const found = allD.find(x => (x.name || x.n || '').toLowerCase() === q)
+    || allD.find(x => (x.name || x.n || '').toLowerCase().includes(q));
+
+  const targetName = found ? (found.name || found.n) : v;
+  currentSelectedDistrict = targetName;
+
+  const hint = document.getElementById('hint');
+  if (hint) {
+    hint.textContent = q ? (found ? 'Showing ' + targetName + '.' : 'No exact match. Showing all districts.') : '';
+  }
+
+  const dfilter = document.getElementById('dfilter');
+  if (dfilter) {
+    dfilter.value = targetName || '';
+  }
+  
+  filterD(targetName || '');
+
+  // Highlight matching button in #dgrid
+  const g = document.getElementById('dgrid');
+  if (g && targetName) {
+    const btn = [...g.querySelectorAll('button')].find(b => b.dataset.name && b.dataset.name.toLowerCase() === targetName.toLowerCase());
+    if (btn) {
+      g.querySelectorAll('button').forEach(x => x.setAttribute('aria-current', 'false'));
+      btn.setAttribute('aria-current', 'true');
+    }
+  }
+
+  const distSec = document.getElementById('districts');
+  if (distSec) {
+    distSec.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+document.getElementById('search').onsubmit=e=>{e.preventDefault();goDist(document.getElementById('q').value)};
+document.getElementById('cgo').onclick=()=>goDist(document.getElementById('cfilter').value);
+document.getElementById('arya').onclick=()=>{
+  document.getElementById('q').focus();
+  document.getElementById('hint').textContent='Ask Arya is coming soon. For now, search a city or place.';
+};
+
+/* 9. FEATURED DESTINATION SLIDESHOW (Featured Lucknow Slideshow /assets/featured/lucknow-1.jpg to 4.jpg) */
+const FD=[
+  ['Lucknow','City of Nawabs & Tehzeeb','Explore Bara Imambara, Bhool Bhulaiya, and Rumi Darwaza. Savor world-renowned Tunday Galawati kebabs, Awadhi Dum Biryani, and shop for delicate Chikankari craftsmanship.','lucknow','dome','/assets/featured/lucknow-1.jpg'],
+  ['Agra','City of the Taj','Taj Mahal, Agra Fort and Fatehpur Sikri, with petha, chaat and Mughlai kitchens in the old lanes.','agra','arch','/assets/districts/agra.jpg'],
+  ['Varanasi','City of Ghats','Ganga ghats, Kashi Vishwanath and the evening aarti, with Banarasi silk and kachori-jalebi breakfasts.','varanasi','ghat','/assets/districts/varanasi.jpg'],
+  ['Ayodhya','City of Ram','Ram Janmabhoomi, Hanuman Garhi and the Sarayu ghats, lit up every year for Deepotsav.','ayodhya','dome','/assets/districts/ayodhya.jpg'],
+  ['Mathura','Birthplace of Krishna','Krishna Janmabhoomi, Vishram Ghat on the Yamuna and the sweet peda shops of Braj.','mathura','ghat','/assets/districts/mathura.jpg'],
+  ['Vrindavan','Land of Radha and Krishna','Banke Bihari, ISKCON and hundreds of temples where the Holi celebrations run for days.','ayodhya','arch','/assets/districts/vrindavan.jpg'],
+  ['Prayagraj','Where the rivers meet','Triveni Sangam, Allahabad Fort and Anand Bhawan, home to the Magh Mela and the Kumbh.','varanasi','ghat','/assets/districts/prayagraj.jpg'],
+  ['Kanpur','Industrial city on the Ganga','JK Temple, riverside ghats and the nearby Bithoor, with thaggu ke laddu to take home.','lucknow','arch','/assets/districts/kanpur-nagar.jpg'],
+  ['Jhansi','Fort of Rani Lakshmibai','Jhansi Fort and Rani Mahal, and a convenient base for visiting Orchha.','ayodhya','arch','/assets/districts/jhansi.jpg'],
+  ['Chitrakoot','Forests of the Ramayana','Ramghat, Kamadgiri and Hanuman Dhara, where Ram is said to have spent years of exile.','forest','forestm','/assets/districts/chitrakoot.jpg'],
+  ['Meerut','1857 and sports goods','Martyrs’ memorial sites from 1857, famous gajak, and a long-running cricket bat industry.','lucknow','dome','/assets/districts/meerut.jpg'],
+  ['Moradabad','The Brass City','Workshops that export hand-finished brassware around the world.','ayodhya','arch','/assets/districts/moradabad.jpg'],
+  ['Rampur','Nawabi Rohilkhand','The Raza Library and the palaces and gates of the Rampur nawabs.','lucknow','dome','/assets/districts/rampur.jpg'],
+  ['Bareilly','Zari, surma and cane','Alahazrat Dargah, the ruins of Ahichchhatra and workshops for zardozi embroidery and cane furniture.','agra','dome','/assets/districts/bareilly.jpg'],
+  ['Saharanpur','Wood-carving town','Intricately carved wooden furniture and the Shakumbhari Devi temple in the Shivalik foothills.','forest','forestm','/assets/districts/saharanpur.jpg'],
+  ['Firozabad','The Glass City','Furnaces and workshops that make most of India’s glass bangles.','varanasi','arch','/assets/districts/firozabad.jpg'],
+  ['Jaunpur','Sharqi Sultanate capital','Atala Masjid, the Shahi Bridge and Jaunpur Fort, plus the local imarti.','lucknow','dome','/assets/districts/jaunpur.jpg'],
+  ['Gorakhpur','Home of Gorakhnath','Gorakhnath Temple, Geeta Press and the lake at Ramgarh Tal.','ayodhya','dome','/assets/districts/gorakhpur.jpg'],
+  ['Kushinagar','Where the Buddha attained Mahaparinirvana','The Mahaparinirvana Temple and a ring of monasteries built by Buddhist countries.','agra','dome','/assets/districts/kushinagar.jpg'],
+  ['Lakhimpur Kheri','Gateway to Dudhwa','Dudhwa National Park and Tiger Reserve, with sal forests and swamp deer grasslands.','forest','forestm','/assets/districts/lakhimpur-kheri.jpg'],
+  ['Pratapgarh','Land of amla','Amla orchards and quiet villages in the Ganga-Sai plains of Awadh.','forest','forestm','/assets/districts/pratapgarh.jpg'],
+  ['Etawah','Chambal ravines and lions','Etawah Lion Safari and the river landscapes around the Yamuna and Chambal.','falls','falls','/assets/districts/etawah.jpg'],
+  ['Aligarh','Lock city and university town','The Aligarh Muslim University campus and a locksmith trade that is over a century old.','varanasi','arch','/assets/districts/aligarh.jpg'],
+  ['Bulandshahr','Ganga-side towns','Anupshahr, a quiet Ganga pilgrimage town between Delhi and Aligarh.','agra','ghat','/assets/districts/bulandshahr.jpg'],
+  ['Pilibhit','Tiger reserve and bamboo flutes','Pilibhit Tiger Reserve and workshops that make bamboo flutes.','forest','forestm','/assets/districts/pilibhit.jpg'],
+  ['Amroha','Mangoes and dholak','Mango orchards and a workshop tradition of making dholak drums.','ayodhya','arch','/assets/districts/amroha.jpg'],
+  ['Budaun','Sufi heritage','Jama Masjid Shamsi, one of the oldest and largest mosques in India, and Sufi dargahs.','lucknow','dome','/assets/districts/budaun.jpg'],
+  ['Chandauli','Waterfalls of Chakia','Rajdari and Devdari falls and the Chandraprabha Wildlife Sanctuary in the Vindhyan hills.','falls','falls','/assets/districts/chandauli.jpg']
+];
+
+/* Lucknow specific slideshow rotation: /assets/featured/lucknow-1.jpg to lucknow-4.jpg */
+const LUCKNOW_FEATURED_PHOTOS=[
+  '/assets/featured/lucknow-1.jpg',
+  '/assets/featured/lucknow-2.jpg',
+  '/assets/featured/lucknow-3.jpg',
+  '/assets/featured/lucknow-4.jpg'
+];
+
+(function(){
+  const img=document.getElementById('feat-img'),bar=document.getElementById('fprog'),cp=document.getElementById('fcopy'),rail=document.getElementById('frail'),box=document.getElementById('feat');
+  const fname=document.getElementById('fname'),ftag=document.getElementById('ftag'),fdesc=document.getElementById('fdesc'),fgo=document.getElementById('fgo'),fcount=document.getElementById('fcount'),fprev=document.getElementById('fprev'),fnext=document.getElementById('fnext');
+  const DUR=4200;
+  let lkoPhotoIdx=0;
+
+  FD.forEach((d,i)=>{
+    img.insertAdjacentHTML('beforeend',
+      `<div class="fs" id="fs-${i}">${art(d[3],d[4],d[5],'Featured Destination: '+d[0])}</div>`
+    );
+    rail.insertAdjacentHTML('beforeend',`<button type="button" aria-current="false">${d[0]}</button>`);
+  });
+
+  let fi=-1,tm,elapsed=0,last=performance.now(),hover=false,inView=true;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function fshow(i){
+    i=(i+FD.length)%FD.length;
+    const d=FD[i];
+    
+    // If Lucknow is active, cycle through lucknow-1.jpg to lucknow-4.jpg
+    if(d[0]==='Lucknow'){
+      const lkoImg=img.children[i].querySelector('.art-img');
+      if(lkoImg){
+        lkoImg.src=LUCKNOW_FEATURED_PHOTOS[lkoPhotoIdx%LUCKNOW_FEATURED_PHOTOS.length];
+        lkoPhotoIdx++;
+      }
+    }
+
+    [...img.children].forEach((el,j)=>el.classList.toggle('on',j===i));
+    [...rail.children].forEach((el,j)=>el.setAttribute('aria-current',j===i));
+    
+    const b=rail.children[i];
+    if(b){
+      rail.scrollTo({left:b.offsetLeft-(rail.clientWidth-b.offsetWidth)/2,behavior:fi<0?'auto':'smooth'});
+    }
+    
+    const set=()=>{
+      fname.textContent=d[0];
+      ftag.textContent=d[1];
+      fdesc.textContent=d[2];
+      fgo.textContent='Explore '+d[0]+' Guide →';
+      fgo.onclick=e=>{e.preventDefault();goDist(d[0])};
+      cp.classList.remove('sw');
+    };
+    
+    clearTimeout(tm);
+    if(fi<0){set();}else{cp.classList.add('sw');tm=setTimeout(set,200);}
+    fi=i;
+    fcount.innerHTML=`${String(i+1).padStart(2,'0')} <small>/ ${FD.length}</small>`;
+    elapsed=0;
+    bar.style.width='0%';
+  }
+
+  function tick(now){
+    const dt=Math.min(now-last,100);
+    last=now;
+    if(!reduce&&!hover&&inView&&!document.hidden){
+      elapsed+=dt;
+      bar.style.width=Math.min(elapsed/DUR*100,100)+'%';
+      if(elapsed>=DUR) fshow(fi+1);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  box.addEventListener('mouseenter',()=>hover=true);
+  box.addEventListener('mouseleave',()=>hover=false);
+  new IntersectionObserver(e=>{inView=e[0].isIntersecting},{threshold:0.25}).observe(box);
+  rail.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>fshow(i));
+  fprev.onclick=()=>fshow(fi-1);
+  fnext.onclick=()=>fshow(fi+1);
+  box.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')fshow(fi-1);if(e.key==='ArrowRight')fshow(fi+1)});
+  fshow(0);
+  requestAnimationFrame(t=>{last=t;tick(t)});
+})();
+
+/* 10. ASHOKA CHAKRA (24 SPOKES) */
+(function(){
+  let sp='';
+  for(let i=0;i<24;i++){
+    const a=i*15*Math.PI/180;
+    sp+=`<line x1="${(50+10*Math.sin(a)).toFixed(2)}" y1="${(50-10*Math.cos(a)).toFixed(2)}" x2="${(50+40*Math.sin(a)).toFixed(2)}" y2="${(50-40*Math.cos(a)).toFixed(2)}"/>`;
+  }
+  const el=document.getElementById('chakra');
+  if(el){
+    el.innerHTML=`<svg viewBox="0 0 100 100" fill="none" stroke="#233E91" stroke-width="2.6" stroke-linecap="round"><circle cx="50" cy="50" r="44" stroke-width="5"/><circle cx="50" cy="50" r="6" fill="#233E91" stroke="none"/>${sp}</svg>`;
+  }
+})();
+
+/* 11. CITIES ROW: SHOW ALL CITIES IN THE EXISTING ROW */
+function renderCityCard(c, i) {
+  const name = c.name || c.n || '';
+  const slug = c.slug || toSlug(name);
+  const image = c.image || c.img || ('/assets/cities/' + slug + '.jpg');
+  const desc = c.description || c.desc || c.t || ('Experience the heritage, food, and culture of ' + name + '.');
+  const rating = c.rating !== undefined ? c.rating : (c.r !== undefined ? c.r : null);
+  const price = c.price || c.p || null;
+  const k = PAL[slug] ? slug : (i % 2 === 0 ? 'agra' : 'lucknow');
+  const m = (i % 3 === 0) ? 'arch' : ((i % 3 === 1) ? 'ghat' : 'dome');
+
+  return `
+    <a class="card" href="#districts" data-city="${name}">
+      <div class="art" id="c${i}">
+        ${art(k, m, image, name + ' city panorama')}
+      </div>
+      <h3>${name}</h3>
+      <p>${desc}</p>
+      ${(price || rating) ? `
+      <div class="badges">
+        ${price ? `<span>${price}</span>` : ''}
+        ${rating ? `<span class="r">★ ${rating}</span>` : ''}
+      </div>` : ''}
+    </a>
+  `;
+}
+
+function renderCities() {
+  const allCities = window.CITIES || [];
+  const q = (document.getElementById('cfilter') ? document.getElementById('cfilter').value : '').trim().toLowerCase();
+  const list = q ? allCities.filter(c => (c.name || c.n || '').toLowerCase().includes(q)) : allCities;
+  const cgrid = document.getElementById('cgrid');
+  
+  if (cgrid) {
+    cgrid.innerHTML = list.length
+      ? list.map((c, i) => renderCityCard(c, i)).join('')
+      : '<p class="muted" style="padding:40px 20px;">No cities match your search. Try another spelling.</p>';
+
+    cgrid.querySelectorAll('[data-city]').forEach(a => {
+      a.onclick = e => {
+        e.preventDefault();
+        goDist(a.dataset.city);
+      };
+    });
+  }
+
+  const countEl = document.getElementById('cities-count');
+  if (countEl) {
+    countEl.textContent = q ? `${list.length} of ${allCities.length} cities shown` : `${allCities.length} cities`;
+  }
+
+  if (typeof tiltAll === 'function') tiltAll();
+  if (typeof carousel === 'function') carousel();
+}
+
+const cfilter = document.getElementById('cfilter');
+if (cfilter) {
+  cfilter.addEventListener('input', renderCities);
+  cfilter.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (e.target.value.trim()) goDist(e.target.value.trim());
+    }
+  });
+}
+const cgo = document.getElementById('cgo');
+if (cgo) {
+  cgo.onclick = () => {
+    if (cfilter && cfilter.value.trim()) goDist(cfilter.value.trim());
+  };
+}
+
+renderCities();
+
+/* 12. DISTRICTS GRID: CLEAN TEXT-ONLY BUTTONS (NO BULLETS OR DOTS) */
+function filterD(v) {
+  const q = (v || '').trim().toLowerCase();
+  const allD = window.DISTRICTS || [];
+  const list = allD.filter(d => (d.name || d.n || '').toLowerCase().includes(q));
+  const g = document.getElementById('dgrid');
+  
+  if (g) {
+    g.innerHTML = list.length
+      ? list.map(d => {
+          const name = d.name || d.n || '';
+          const isSelected = name.toLowerCase() === (currentSelectedDistrict || '').toLowerCase();
+          return `<button type="button" aria-current="${isSelected ? 'true' : 'false'}" data-name="${name}">${name}</button>`;
+        }).join('')
+      : '<p class="muted">No district matches. Try another spelling.</p>';
+
+    g.querySelectorAll('button').forEach(b => {
+      b.onclick = () => {
+        g.querySelectorAll('button').forEach(x => x.setAttribute('aria-current', 'false'));
+        b.setAttribute('aria-current', 'true');
+        currentSelectedDistrict = b.dataset.name;
+        goDist(b.dataset.name);
+      };
+    });
+  }
+
+  const dcount = document.getElementById('dcount');
+  if (dcount) {
+    dcount.textContent = q ? `${list.length} of ${allD.length} districts shown` : `${list.length} shown`;
+  }
+}
+
+const dfilter = document.getElementById('dfilter');
+if (dfilter) {
+  dfilter.addEventListener('input', e => filterD(e.target.value));
+}
+filterD('');
+
+/* 13. HIDDEN GEMS (BUILDS FROM window.GEMS, PRESERVES ALL DETAIL PANELS) */
+const GT = ['All (16)', 'Nature & Waterfalls', 'History & Heritage', 'Wildlife', 'Spiritual'];
+let gcur = 'All (16)';
+const gtabs = document.getElementById('gtabs');
+if (gtabs) {
+  gtabs.innerHTML = GT.map(t => `<button type="button" aria-pressed="${t === gcur}">${t}</button>`).join('');
+  gtabs.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      gcur = b.textContent;
+      gtabs.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+      drawG();
+    };
+  });
+}
+
+let gShowAll = false;
+function gMatch(g) {
+  if (gcur.startsWith('All')) return true;
+  const k = gcur.toLowerCase();
+  const cat = (g.category || g.cat || '').toLowerCase();
+  if (k.startsWith('nature')) return /waterfall|nature/i.test(cat);
+  if (k.startsWith('wildlife')) return /wildlife/i.test(cat);
+  if (k.startsWith('history')) return /history|heritage/i.test(cat);
+  return /spiritual|religio/i.test(cat);
+}
+
+function drawG() {
+  const allGems = window.GEMS || [];
+  const matched = allGems.filter(gMatch);
+  const list = gShowAll ? matched : matched.slice(0, 3);
+  const glist = document.getElementById('glist');
+  
+  if (glist) {
+    glist.innerHTML = list.length ? list.map(g => {
+      const idx = allGems.findIndex(x => (x.name || x.n) === (g.name || g.n));
+      const name = g.name || g.n || '';
+      const cat = g.category || g.cat || '';
+      const loc = g.location || g.loc || '';
+      const desc = g.description || g.desc || g.t || '';
+      const image = g.image || g.img || ('/assets/gems/' + (g.slug || toSlug(name)) + '.jpg');
+      const k = (cat.includes('Wildlife') || cat.includes('Nature')) ? 'forest' : (cat.includes('Water') ? 'falls' : 'lucknow');
+      const m = cat.includes('Water') ? 'falls' : (cat.includes('Wildlife') ? 'forestm' : 'arch');
+
+      return `
+        <button class="gem" data-g="${idx}" type="button">
+          <div class="art" id="g${idx}">
+            ${art(k, m, image, name)}
+          </div>
+          <div class="meta"><span>${cat}</span><span>${loc}</span></div>
+          <h3>${name}</h3>
+          <p>${desc}</p>
+          <span class="more">View details</span>
+        </button>
+      `;
+    }).join('') : '<p class="muted">No gems in this category yet.</p>';
+
+    glist.querySelectorAll('.gem').forEach(b => {
+      b.onclick = () => openG(+b.dataset.g);
+    });
+  }
+
+  const tg = document.getElementById('gem-toggle');
+  if (tg) {
+    tg.hidden = matched.length <= 3;
+    tg.textContent = gShowAll ? 'Show less ↑' : 'View All Hidden Gems ↓';
+  }
+}
+
+const gemToggle = document.getElementById('gem-toggle');
+if (gemToggle) {
+  gemToggle.onclick = () => {
+    gShowAll = !gShowAll;
+    drawG();
+  };
+}
+
+drawG();
+
+function openG(i) {
+  const allGems = window.GEMS || [];
+  const g = allGems[i] || allGems[0];
+  const dlg = document.getElementById('dlg');
+  if (!dlg) return;
+
+  const name = g.name || g.n || '';
+  const cat = g.category || g.cat || '';
+  const desc = g.description || g.desc || g.t || '';
+  const image = g.image || g.img || ('/assets/gems/' + (g.slug || toSlug(name)) + '.jpg');
+  const k = (cat.includes('Wildlife') || cat.includes('Nature')) ? 'forest' : (cat.includes('Water') ? 'falls' : 'lucknow');
+  const m = cat.includes('Water') ? 'falls' : (cat.includes('Wildlife') ? 'forestm' : 'arch');
+
+  const dlgImg = document.getElementById('dlg-img');
+  if (dlgImg) {
+    dlgImg.innerHTML = art(k, m, image, name);
+  }
+
+  const d = g.details || g.d || {
+    see: 'Scenic natural views, cultural traditions, and historic heritage.',
+    why: 'A peaceful, lesser-known destination showcasing Uttar Pradesh off the beaten path.',
+    best: 'October to March.',
+    how: 'Accessible by regional road connections from the nearest district headquarters.'
+  };
+
+  const dlgBody = document.getElementById('dlg-body');
+  if (dlgBody) {
+    dlgBody.innerHTML = `
+      <h3 id="dlg-t">${name}</h3>
+      <div><h4>What to see</h4><p>${d.see}</p></div>
+      <div><h4>Why it is special</h4><p>${d.why}</p></div>
+      <div><h4>Best time to visit</h4><p>${d.best}</p></div>
+      <div><h4>Basic travel information</h4><p>${d.how}</p></div>
+      <div class="dlg-foot">
+        <button class="btn ghost sm" id="dlg-back" type="button">← Back to Hidden Gems</button>
+        <button class="btn sm" id="dlg-share" type="button">↗ Share Destination</button>
+      </div>
+    `;
+    const backBtn = document.getElementById('dlg-back');
+    if (backBtn) backBtn.onclick = () => dlg.close();
+
+    const shareBtn = document.getElementById('dlg-share');
+    if (shareBtn) {
+      shareBtn.onclick = () => {
+        if (navigator.share) {
+          navigator.share({ title: name + ' - ExploreUP', text: desc, url: window.location.href }).catch(() => {});
+        } else {
+          navigator.clipboard && navigator.clipboard.writeText(window.location.href);
+          alert('Link copied to clipboard!');
+        }
+      };
+    }
+  }
+
+  dlg.showModal();
+}
+
+document.getElementById('dlg-x').onclick = () => document.getElementById('dlg').close();
+document.getElementById('dlg').onclick = e => { if (e.target.id === 'dlg') e.target.close(); };
+
+/* 14. FESTIVALS */
+document.getElementById('fest').innerHTML=FEST.map((f,i)=>`
+  <article>
+    <div class="fest-media art" id="fest-${i}"></div>
+    <div class="fest-content">
+      <span class="when">${f[0]}</span>
+      <h3>${f[1]}</h3>
+      <p>${f[2]}</p>
+    </div>
+  </article>
+`).join('');
+FEST.forEach((f,i)=>{
+  put('fest-'+i,f[4],f[5],f[3],f[1]+' festival celebration');
+});
+
+/* 15. HELPLINES */
+document.getElementById('hgrid').innerHTML=HELP.map(h=>`
+  <a href="tel:${h[0]}">
+    <span class="num">${h[0]}</span>
+    <b>${h[1]}</b>
+    <small>${h[2]}</small>
+  </a>
+`).join('');
+
+/* 16. TRIP PLANNER */
+(function(){
+  const DEST=['Agra','Varanasi','Lucknow','Ayodhya','Mathura','Prayagraj','Kanpur','Gorakhpur'];
+  const TIERS=[{k:'Budget',s:'Economy',m:.65},{k:'Standard',s:'Balanced',m:1},{k:'Premium',s:'Comfort+',m:1.6},{k:'Luxury',s:'5-Star / Royal',m:2.5}];
+  const STAY={'Budget Guesthouse':.75,'Standard Hotel':1,'Premium Hotel':1.4,'Heritage Haveli':1.8};
+  const TRANS={'Mixed Transport':1,'Train + Local Auto':.9,'Private Car / Cab':1.5,'Bus':.8};
+  const PACE={'Relaxed':{m:.92,l:'Leisurely'},'Balanced':{m:1,l:'Classic'},'Fast-paced':{m:1.08,l:'Max sights'}};
+  const BASE=[['Stay',6048,'stay'],['Food',5508,'food'],['Local',2550,'local'],['Intercity',3300,'inter'],['Activities',1680,'act'],['Shopping',2700,'shop']];
+  const INTS=['History','Religion','Nature','Food','Shopping','Photography','Family','Architecture','Adventure','Culture','Nightlife','Spirituality'];
+  
+  const AGRA=[
+    {title:'Agra Iconic Landmarks & Signature Flavors',stops:[
+      {slot:'Morning',cat:'History',name:'Agra Fort (Red Fort of Agra)',desc:'Monumental 16th-century UNESCO Mughal fortress featuring Jahangiri Mahal, Diwan-i-Khas, Musamman Burj, and views toward the Taj.',dur:'2 hours',best:'09:30 AM – 11:30 AM',cost:'₹50 Indian / ₹650 Foreigner',tip:'Enter via Amar Singh Gate and notice the acoustic plaster work in Diwan-i-Khas. Check current timings before visiting.',tags:['History','Architecture']},
+      {slot:'Lunch & Local Flavors',cat:'Food',name:'Sadar Bazaar & Classic Bedai-Jalebi / Mughlai Lunch',desc:"Agra's vibrant culinary hub serving crisp Bedai with spicy aloo sabzi, Panchhi Petha, and royal Mughlai gravies.",dur:'1.5 hours',best:'01:00 PM – 02:30 PM',cost:'₹250 – ₹600 per person',tip:'Pick up authentic Angoori and Kesar Petha from original Panchhi Petha outlets.',tags:['Food','Shopping']},
+      {slot:'Afternoon',cat:'Photography',name:'Mehtab Bagh (Moonlight Garden Sunset View)',desc:'Charbagh garden complex directly across the Yamuna River offering the most symmetrical sunset reflection view of the Taj Mahal.',dur:'1.5 hours',best:'05:00 PM – 06:30 PM (Sunset)',cost:'₹25 Indian / ₹300 Foreigner',tip:'Ideal golden-hour photography spot without the main complex crowds. Check current timings before visiting.',tags:['Photography','Nature']},
+      {slot:'Evening',cat:'History',name:'Fatehpur Sikri UNESCO World Heritage Excursion',desc:"Emperor Akbar's preserved 16th-century red sandstone walled capital featuring Buland Darwaza, Panch Mahal, and Salim Chishti Tomb.",dur:'3 hours',best:'08:30 AM – 11:30 AM',cost:'₹50 Indian',tip:'Take an official prepaid shuttle bus from the parking lot to Buland Darwaza. Check current timings before visiting.',tags:['History','Architecture']}
+    ]},
+    {title:'Taj Mahal & Heritage Walk',stops:[
+      {slot:'Morning',cat:'Architecture',name:'Taj Mahal (sunrise visit)',desc:'The white-marble mausoleum at its most peaceful before the crowds arrive.',dur:'2 hours',best:'Check ASI timings for sunrise',cost:'₹50 Indian (+₹200 main mausoleum)',tip:'Taj Mahal is closed every Friday. Book tickets online via the ASI portal. Check current timings before visiting.',tags:['Architecture','Photography','History']},
+      {slot:'Afternoon',cat:'Architecture',name:'Itimad-ud-Daulah',desc:'A smaller marble tomb across the river, known for its pietra dura inlay work.',dur:'1 hour',best:'Late morning or afternoon',cost:'Check current entry fee',tip:'Placeholder day: confirm before publishing.',tags:['Architecture','History']}
+    ]},
+    {title:'Riverfront & Sunrise',stops:[
+      {slot:'Evening',cat:'Architecture',name:'Agra Riverfront / Nature Promenade & Sunrise View',desc:'Curated Day 3 exploration in Agra tailored for balanced pace (History, Food, Photography).',dur:'2.5 hours',best:'06:00 AM – 08:30 AM (Sunrise)',cost:'₹50 Indian (+₹200 main mausoleum)',tip:'Taj Mahal is closed every Friday. Book tickets online via the ASI portal. Check current timings before visiting.',tags:['Architecture','Photography','Nature']}
+    ]}
+  ];
+
+  const S={dest:'Agra',days:3,adults:2,children:0,tier:'Standard',stay:'Standard Hotel',trans:'Mixed Transport',pace:'Balanced',custom:'',ints:new Set(['History','Food','Photography']),saved:[]};
+  const $=id=>document.getElementById(id);
+  const inr=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+  const ppl=()=>S.adults+S.children;
+
+  function costs(){
+    const f=(S.adults+.5*S.children)/2*(S.days/3);
+    const tier=TIERS.find(t=>t.k===S.tier).m;
+    const out={};
+    BASE.forEach(([label,val,key])=>{
+      let m=tier;
+      if(key==='stay') m*=STAY[S.stay];
+      if(key==='inter'||key==='local') m*=TRANS[S.trans];
+      if(key==='act') m*=PACE[S.pace].m;
+      out[label]=Math.round(val*f*m);
+    });
+    const total=Object.values(out).reduce((a,b)=>a+b,0);
+    return{out,total,pp:total/Math.max(1,ppl())};
+  }
+
+  function toast(m){
+    const t=$('sp-toast');
+    t.textContent=m;
+    t.classList.add('show');
+    clearTimeout(t._h);
+    t._h=setTimeout(()=>t.classList.remove('show'),2300);
+  }
+
+  function renderChoices(){
+    $('sp-destchips').innerHTML=DEST.map(d=>`<button class="sp-chip" type="button" data-dest="${d}" aria-pressed="${S.dest===d}">${d}</button>`).join('');
+    $('sp-dl').innerHTML=DEST.map(d=>`<option value="${d}">`).join('');
+    $('sp-tiers').innerHTML=TIERS.map(t=>`<button class="sp-tier" type="button" data-tier="${t.k}" aria-pressed="${S.tier===t.k}"><b>${t.k}</b><small>${t.s}</small></button>`).join('');
+    $('sp-pace').innerHTML=Object.keys(PACE).map(k=>`<button type="button" data-pace="${k}" aria-pressed="${S.pace===k}">${k}<small>${PACE[k].l}</small></button>`).join('');
+    $('sp-ints').innerHTML=INTS.map(n=>`<button class="sp-chip" type="button" data-int="${n}" aria-pressed="${S.ints.has(n)}">${n}</button>`).join('');
+  }
+
+  function renderHeader(){
+    const c=costs();
+    $('sp-days').textContent=S.days+(S.days>1?' days':' day');
+    $('sp-dur').textContent=`${S.days} day${S.days>1?'s':''} • ${Math.max(0,S.days-1)} night${S.days-1===1?'':'s'}`;
+    $('sp-adults').textContent=S.adults;
+    $('sp-children').textContent=S.children;
+    $('sp-total2').textContent=inr(c.total);
+    $('sp-pp').textContent=inr(c.pp);
+    $('sp-cdest').textContent=S.dest;
+    $('sp-cdays').textContent=S.days+' day'+(S.days>1?'s':'');
+    $('sp-cppl').textContent=ppl()+' traveler'+(ppl()>1?'s':'');
+    const cap=Number(S.custom)||0;
+    const rem=cap-c.total;
+    $('sp-remain').textContent=cap?(rem>=0?inr(rem)+' left':'Over by '+inr(-rem)):'Set a budget';
+    $('sp-remain').style.color=cap&&rem<0?'#FFB4A8':'';
+    $('sp-meter').style.width=Math.min(100,cap?c.total/cap*100:100)+'%';
+    $('sp-cats').innerHTML=Object.entries(c.out).map(([k,v])=>`<div><small>${k}</small><b>${inr(v)}</b></div>`).join('');
+    $('sp-sumtitle').textContent=`${S.dest} • ${S.days} Day${S.days>1?'s':''} • ${ppl()} Traveler${ppl()>1?'s':''}`;
+    $('sp-sumchips').innerHTML=[
+      `${S.adults} Adult${S.adults>1?'s':''}${S.children?' + '+S.children+' child':''}`,
+      S.stay,
+      S.trans,
+      PACE[S.pace].l,
+      ...[...S.ints].slice(0,4)
+    ].map(t=>`<span class="sp-chip">${t}</span>`).join('');
+    $('sp-sumtotal').textContent=inr(c.total);
+    $('sp-sumpp').textContent=`${inr(c.pp)}/person • ${inr(c.total/S.days)}/day`;
+    $('sp-saved-n').textContent=S.saved.length;
+    $('sp-tab-saved').textContent=S.saved.length;
+  }
+
+  function stopOK(s){return !S.ints.size||s.tags.some(t=>S.ints.has(t))}
+
+  function renderItin(){
+    if(S.dest!=='Agra'){
+      $('p-itin').innerHTML='<p class="pl-note">Detailed day-by-day stops for '+S.dest+' are coming soon. Agra is available in full.</p>';
+      return;
+    }
+    const days=AGRA.slice(0,S.days);
+    let h='';
+    days.forEach((d,i)=>{
+      const shown=d.stops.filter(stopOK);
+      h+=`<details class="pl-day" ${i===0?'open':''}><summary>Day ${i+1} — ${d.title}<em>${shown.length} stop${shown.length===1?'':'s'} • ${S.pace}</em></summary><div>`;
+      h+=shown.length?shown.map(s=>`
+        <details class="pl-stop">
+          <summary><span class="pl-slot">${s.slot}</span><b>${s.name}</b><em>${s.dur}</em></summary>
+          <div class="pl-stopbody">
+            <p>${s.desc}</p>
+            <div class="pl-meta"><span>Best time: ${s.best}</span><span>Cost: ${s.cost}</span><span>${s.cat}</span></div>
+            <div class="pl-tip"><b>Tip:</b> ${s.tip}</div>
+          </div>
+        </details>
+      `).join(''):'<p class="pl-note">No stops match these interests.</p>';
+      h+='</div></details>';
+    });
+    if(S.days>AGRA.length) h+=`<p class="pl-note">Days ${AGRA.length+1}–${S.days} are not in the planner data yet.</p>`;
+    $('p-itin').innerHTML=h;
+  }
+
+  function renderRec(){
+    const items=AGRA.flatMap(d=>d.stops).filter(s=>s.tags.some(t=>S.ints.has(t)));
+    $('p-rec').innerHTML=S.dest!=='Agra'
+      ?'<p class="pl-note">Recommendations for '+S.dest+' are coming soon.</p>'
+      :`<p class="pl-note">Matched to: ${[...S.ints].join(', ')||'no interests selected'}</p><div class="pl-rec">${items.map(s=>`<span>${s.name}</span>`).join('')||'<span>Select interests to see places.</span>'}</div>`;
+  }
+
+  function renderCost(){
+    const c=costs();
+    $('p-cost').innerHTML=`
+      <div class="pl-cards">
+        <div><small>Total</small><b>${inr(c.total)}</b></div>
+        <div><small>Per person</small><b>${inr(c.pp)}</b></div>
+        <div><small>Per day</small><b>${inr(c.total/S.days)}</b></div>
+        <div><small>Travelers</small><b>${ppl()}</b></div>
+      </div>
+      <div class="pl-cards" style="margin-top:10px">${Object.entries(c.out).map(([k,v])=>`<div><small>${k}</small><b>${inr(v)}</b></div>`).join('')}</div>
+      <p class="pl-note">Approximate estimates. They scale with travelers, days, tier, stay, transport and pace.</p>
+    `;
+  }
+
+  function renderSaved(){
+    $('p-saved').innerHTML=S.saved.length?S.saved.map(t=>`<div class="pl-saved-item">${t}</div>`).join(''):'<p class="pl-note">No saved trips yet. Use Save itinerary to keep one here.</p>';
+  }
+
+  function renderAll(){
+    renderChoices();
+    renderHeader();
+    renderItin();
+    renderRec();
+    renderCost();
+    renderSaved();
+  }
+
+  function setTab(t){
+    document.querySelectorAll('.sp-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
+    ['itin','rec','cost','saved'].forEach(p=>$('p-'+p).classList.toggle('on',p===t));
+  }
+
+  document.querySelectorAll('.sp-mode').forEach(b=>b.onclick=()=>{
+    if(b.dataset.mode==='smart'){
+      toast('Smart Plan with Arya AI is not connected yet. Quick Plan works now.');
+      return;
+    }
+  });
+
+  document.querySelectorAll('.sp-stepper button').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.k,d=+b.dataset.d;
+    if(k==='days') S.days=Math.min(10,Math.max(1,S.days+d));
+    if(k==='adults') S.adults=Math.min(10,Math.max(1,S.adults+d));
+    if(k==='children') S.children=Math.min(8,Math.max(0,S.children+d));
+    renderAll();
+  });
+
+  $('sp-destchips').onclick=e=>{
+    const b=e.target.closest('[data-dest]');
+    if(!b)return;
+    S.dest=b.dataset.dest;
+    $('sp-dest').value=S.dest;
+    renderAll();
+  };
+
+  $('sp-dest').onchange=e=>{
+    const v=e.target.value.trim();
+    if(DEST.includes(v)){
+      S.dest=v;
+      renderAll();
+    }else{
+      toast('Choose a destination from the list');
+      e.target.value=S.dest;
+    }
+  };
+
+  $('sp-start').onchange=$('sp-end').onchange=()=>{
+    const s=$('sp-start').value,e=$('sp-end').value;
+    if(s&&e){
+      const d=Math.round((new Date(e)-new Date(s))/86400000)+1;
+      if(d>=1){S.days=Math.min(10,d);renderAll();}
+    }
+  };
+
+  $('sp-tiers').onclick=e=>{
+    const b=e.target.closest('[data-tier]');
+    if(!b)return;
+    S.tier=b.dataset.tier;
+    renderAll();
+  };
+
+  $('sp-pace').onclick=e=>{
+    const b=e.target.closest('[data-pace]');
+    if(!b)return;
+    S.pace=b.dataset.pace;
+    renderAll();
+  };
+
+  $('sp-trans').onchange=e=>{S.trans=e.target.value;renderAll();};
+  $('sp-stay').onchange=e=>{S.stay=e.target.value;renderAll();};
+  $('sp-custom').oninput=e=>{S.custom=e.target.value;renderAll();};
+
+  $('sp-ints').onclick=e=>{
+    const b=e.target.closest('[data-int]');
+    if(!b)return;
+    const n=b.dataset.int;
+    S.ints.has(n)?S.ints.delete(n):S.ints.add(n);
+    renderAll();
+  };
+
+  $('sp-make').onclick=()=>{
+    renderAll();
+    setTab('itin');
+    toast('Your plan is ready');
+    $('p-itin').scrollIntoView({behavior:'smooth',block:'start'});
+  };
+
+  $('sp-calc').onclick=()=>{renderAll();setTab('cost');toast('Budget updated');};
+  $('sp-reset').onclick=()=>{
+    Object.assign(S,{dest:'Agra',days:3,adults:2,children:0,tier:'Standard',stay:'Standard Hotel',trans:'Mixed Transport',pace:'Balanced',custom:'',ints:new Set(['History','Food','Photography'])});
+    $('sp-dest').value='Agra';
+    $('sp-stay').value='Standard Hotel';
+    $('sp-trans').value='Mixed Transport';
+    $('sp-custom').value='';
+    $('sp-start').value='';
+    $('sp-end').value='';
+    renderAll();
+    toast('Filters reset');
+  };
+  $('sp-again').onclick=()=>$('sp-reset').click();
+
+  document.querySelectorAll('.sp-tabs button').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+  $('sp-saved-btn').onclick=()=>{
+    setTab('saved');
+    $('p-saved').scrollIntoView({behavior:'smooth',block:'nearest'});
+  };
+
+  const summary=()=>{
+    const c=costs();
+    return `${S.dest} • ${S.days} day(s) • ${ppl()} traveler(s) • ${S.tier} • ${S.stay} • ${S.trans} • ${S.pace} • Est. ${inr(c.total)}`;
+  };
+
+  $('sp-save').onclick=()=>{
+    S.saved.push(summary());
+    renderAll();
+    toast('Itinerary saved');
+    setTab('saved');
+  };
+
+  $('sp-pdf').onclick=()=>{
+    try{window.print()}catch(e){toast('Use your browser Print to save as PDF')}
+  };
+
+  $('sp-copy').onclick=()=>{
+    const txt=summary()+'\n'+$('p-itin').innerText;
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject())
+      .then(()=>toast('Copied'))
+      .catch(()=>toast('Copy not available here'));
+  };
+
+  $('sp-guide').onclick=()=>{
+    const c=$('cities');
+    c?c.scrollIntoView({behavior:'smooth'}):toast('City guide not available');
+  };
+
+  renderAll();
+})();
+
+/* 17. ASHOKA CHAKRA INTRO DISMISS */
+(function(){
+  const I=document.getElementById('intro');
+  if(!I)return;
+  const W=document.getElementById('wheel');
+  let s='<g class="spokes"><circle cx="100" cy="100" r="90" fill="none" stroke="#233E91" stroke-width="5"/><circle cx="100" cy="100" r="14" fill="#233E91"/>';
+  for(let i=0;i<24;i++){
+    const a=i*Math.PI/12;
+    s+=`<line x1="${(100+18*Math.cos(a)).toFixed(2)}" y1="${(100+18*Math.sin(a)).toFixed(2)}" x2="${(100+88*Math.cos(a)).toFixed(2)}" y2="${(100+88*Math.sin(a)).toFixed(2)}" stroke="#233E91" stroke-width="3" stroke-linecap="round"/>`;
+  }
+  W.innerHTML=s+'</g>';
+  const end=()=>{
+    I.classList.add('gone');
+    setTimeout(()=>I.remove(),900);
+  };
+  I.onclick=end;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){I.remove();return}
+  setTimeout(end,2600);
+})();
+
+/* 18. FAVOURITES COUNTER */
+let fav=0;
+document.getElementById('fav').onclick=()=>{
+  fav++;
+  document.getElementById('favn').textContent=fav;
+};
+
+/* 19. NAV DRAWER & SCROLL SHADOW */
+const bar=document.getElementById('bar');
+addEventListener('scroll',()=>{
+  bar.style.boxShadow=scrollY>10?'0 14px 38px -18px rgba(20,35,26,0.3)':'none';
+},{passive:true});
+
+const dr=document.getElementById('drawer'),bg=document.getElementById('burger');
+const setD=o=>{
+  dr.classList.toggle('open',o);
+  bg.setAttribute('aria-expanded',o);
+};
+bg.onclick=()=>setD(!dr.classList.contains('open'));
+dr.onclick=e=>{if(e.target===dr||e.target.id==='dclose'||e.target.tagName==='A')setD(false)};
+addEventListener('keydown',e=>{if(e.key==='Escape')setD(false)});
+
+/* 20. 3D CURVED CITY CAROUSEL & SCROLL PROGRESS */
+const prog=document.getElementById('prog');
+const cg=document.getElementById('cgrid');
+let cgRaf=0;
+
+function carousel(){
+  if(!cg||cgRaf)return;
+  cgRaf=requestAnimationFrame(()=>{
+    cgRaf=0;
+    const W=cg.clientWidth,mid=cg.getBoundingClientRect().left+W/2;
+    [...cg.children].forEach(el=>{
+      const r=el.getBoundingClientRect();
+      const t=Math.max(-1.2,Math.min(1.2,((r.left+r.width/2)-mid)/(W/2)));
+      const a=Math.abs(t);
+      el.style.transform=`perspective(1200px) rotateY(${(-t*14).toFixed(2)}deg) scale(${(1-a*.07).toFixed(3)}) translateZ(${(-a*30).toFixed(1)}px)`;
+      el.style.opacity=(1-a*.25).toFixed(3);
+    });
+  });
+}
+
+cg.addEventListener('scroll',carousel,{passive:true});
+
+function fx3(){
+  prog.style.width=(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)*100).toFixed(2)+'%';
+  carousel();
+}
+addEventListener('scroll',fx3,{passive:true});
+addEventListener('resize',fx3);
+fx3();
+
+/* 21. SCROLL REVEAL & DESKTOP CURSOR TILT */
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('on',e.isIntersecting)),{threshold:0.12});
+
+function reveal(){
+  document.querySelectorAll('section .head,.feat,.fest article,.help a,.pillars div,.trail').forEach(el=>{
+    if(!el.classList.contains('rv')){
+      el.classList.add('rv');
+      io.observe(el);
+    }
+  });
+}
+reveal();
+new MutationObserver(reveal).observe(document.body,{childList:true,subtree:true});
+
+function wrapTL(el){
+  const ex=el.querySelector(':scope > .tl-in');
+  if(ex)return ex;
+  const w=document.createElement('div');
+  w.className='tl-in';
+  while(el.firstChild) w.appendChild(el.firstChild);
+  el.appendChild(w);
+  return w;
+}
+
+function tilt(el){
+  const w=wrapTL(el);
+  el.addEventListener('mousemove',e=>{
+    if(RM||innerWidth<720)return;
+    const r=el.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-0.5;
+    const y=(e.clientY-r.top)/r.height-0.5;
+    w.style.transform=`perspective(900px) rotateX(${(-y*9).toFixed(2)}deg) rotateY(${(x*11).toFixed(2)}deg) translateZ(12px)`;
+    w.style.setProperty('--gx',((x+0.5)*100).toFixed(1)+'%');
+    w.style.setProperty('--gy',((y+0.5)*100).toFixed(1)+'%');
+  });
+  el.addEventListener('mouseleave',()=>{
+    w.style.transform='';
+  });
+}
+
+function tiltAll(){
+  document.querySelectorAll('.card,.gem,.dgrid button').forEach(el=>{
+    if(!el.dataset.tl){
+      el.dataset.tl=1;
+      tilt(el);
+    }
+  });
+}
+tiltAll();
+new MutationObserver(tiltAll).observe(document.body,{childList:true,subtree:true});
+</script>
+</body>
+</html>
