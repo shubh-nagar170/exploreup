@@ -1748,8 +1748,13 @@ footer a:hover{opacity:1;color:var(--saf)}
   gap:24px;
   cursor:pointer;
   transition:opacity 0.9s var(--ease),transform 0.9s var(--ease);
+  animation:introFailsafe 3.2s ease 0.5s forwards;
 }
 .intro.gone{opacity:0;transform:scale(1.04);pointer-events:none}
+@keyframes introFailsafe{
+  0%, 75%{opacity:1;pointer-events:auto}
+  100%{opacity:0;transform:scale(1.04);pointer-events:none;visibility:hidden}
+}
 .intro-tri{position:absolute;left:0;right:0;top:0;height:4px;display:flex}
 .intro-tri i{flex:1}
 .intro-tri i:nth-child(1){background:var(--saf)}
@@ -2141,6 +2146,30 @@ footer a:hover{opacity:1;color:var(--saf)}
 <button class="fav" id="fav">♡ My Favourites <span id="favn">0</span></button>
 
 <script>
+/* 17. ASHOKA CHAKRA INTRO DISMISS */
+(function(){
+  const I=document.getElementById('intro');
+  if(!I)return;
+  const W=document.getElementById('wheel');
+  let s='<g class="spokes"><circle cx="100" cy="100" r="90" fill="none" stroke="#233E91" stroke-width="5"/><circle cx="100" cy="100" r="14" fill="#233E91"/>';
+  for(let i=0;i<24;i++){
+    const a=i*Math.PI/12;
+    s+=`<line x1="${(100+18*Math.cos(a)).toFixed(2)}" y1="${(100+18*Math.sin(a)).toFixed(2)}" x2="${(100+88*Math.cos(a)).toFixed(2)}" y2="${(100+88*Math.sin(a)).toFixed(2)}" stroke="#233E91" stroke-width="3" stroke-linecap="round"/>`;
+  }
+  if(W) W.innerHTML=s+'</g>';
+  const end=()=>{
+    I.classList.add('gone');
+    setTimeout(()=>I.remove(),900);
+  };
+  I.onclick=end;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){I.remove();return}
+  setTimeout(end,2600);
+})();
+
+/* Safe forward-declared state variables for carousel, tilt and animation */
+var cg=null, cgRaf=0, RM=false;
+try{ RM=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+
 /* Helper: converts city/gem/district name to clean lowercase hyphen slug */
 function toSlug(s){
   return String(s||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -2997,25 +3026,7 @@ document.getElementById('hgrid').innerHTML=HELP.map(h=>`
   renderAll();
 })();
 
-/* 17. ASHOKA CHAKRA INTRO DISMISS */
-(function(){
-  const I=document.getElementById('intro');
-  if(!I)return;
-  const W=document.getElementById('wheel');
-  let s='<g class="spokes"><circle cx="100" cy="100" r="90" fill="none" stroke="#233E91" stroke-width="5"/><circle cx="100" cy="100" r="14" fill="#233E91"/>';
-  for(let i=0;i<24;i++){
-    const a=i*Math.PI/12;
-    s+=`<line x1="${(100+18*Math.cos(a)).toFixed(2)}" y1="${(100+18*Math.sin(a)).toFixed(2)}" x2="${(100+88*Math.cos(a)).toFixed(2)}" y2="${(100+88*Math.sin(a)).toFixed(2)}" stroke="#233E91" stroke-width="3" stroke-linecap="round"/>`;
-  }
-  W.innerHTML=s+'</g>';
-  const end=()=>{
-    I.classList.add('gone');
-    setTimeout(()=>I.remove(),900);
-  };
-  I.onclick=end;
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){I.remove();return}
-  setTimeout(end,2600);
-})();
+/* 17. ASHOKA CHAKRA INTRO (Moved to top for instant execution) */
 
 /* 18. FAVOURITES COUNTER */
 let fav=0;
@@ -3041,28 +3052,30 @@ addEventListener('keydown',e=>{if(e.key==='Escape')setD(false)});
 
 /* 20. 3D CURVED CITY CAROUSEL & SCROLL PROGRESS */
 const prog=document.getElementById('prog');
-const cg=document.getElementById('cgrid');
-let cgRaf=0;
+cg=document.getElementById("cgrid");
 
 function carousel(){
-  if(!cg||cgRaf)return;
+  const el = cg || document.getElementById('cgrid');
+  if(!el || cgRaf) return;
   cgRaf=requestAnimationFrame(()=>{
     cgRaf=0;
-    const W=cg.clientWidth,mid=cg.getBoundingClientRect().left+W/2;
-    [...cg.children].forEach(el=>{
-      const r=el.getBoundingClientRect();
+    const W=el.clientWidth,mid=el.getBoundingClientRect().left+W/2;
+    [...el.children].forEach(c=>{
+      const r=c.getBoundingClientRect();
       const t=Math.max(-1.2,Math.min(1.2,((r.left+r.width/2)-mid)/(W/2)));
       const a=Math.abs(t);
-      el.style.transform=`perspective(1200px) rotateY(${(-t*14).toFixed(2)}deg) scale(${(1-a*.07).toFixed(3)}) translateZ(${(-a*30).toFixed(1)}px)`;
-      el.style.opacity=(1-a*.25).toFixed(3);
+      c.style.transform=`perspective(1200px) rotateY(${(-t*14).toFixed(2)}deg) scale(${(1-a*.07).toFixed(3)}) translateZ(${(-a*30).toFixed(1)}px)`;
+      c.style.opacity=(1-a*.25).toFixed(3);
     });
   });
 }
 
-cg.addEventListener('scroll',carousel,{passive:true});
+if(cg) cg.addEventListener('scroll',carousel,{passive:true});
 
 function fx3(){
-  prog.style.width=(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)*100).toFixed(2)+'%';
+  if(prog){
+    prog.style.width=(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)*100).toFixed(2)+'%';
+  }
   carousel();
 }
 addEventListener('scroll',fx3,{passive:true});
@@ -3070,7 +3083,6 @@ addEventListener('resize',fx3);
 fx3();
 
 /* 21. SCROLL REVEAL & DESKTOP CURSOR TILT */
-const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('on',e.isIntersecting)),{threshold:0.12});
 
 function reveal(){
